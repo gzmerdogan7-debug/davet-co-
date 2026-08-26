@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr" data-tema="kemer">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Fotoğraflarınızı Paylaşın · Davet &amp; Co.</title>
+    <link rel="stylesheet" href="davetiye.css" />
+    <style>
+      body { display: flex; align-items: flex-start; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+      .sayfa { width: 100%; max-width: 500px; text-align: center; }
+      .onizleme-alani { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+      .onizleme-alani figure { position: relative; margin: 0; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--kart); border: 1px solid var(--cizgi); }
+      .onizleme-alani img { width: 100%; height: 100%; object-fit: cover; }
+      .onizleme-alani figure.yuklendi::after { content: "✓"; position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,0.4); color: #fff; font-size: 1.4rem; }
+      .durum-yazi { margin-top: 18px; min-height: 1.5em; color: var(--vurgu); font-size: 0.92rem; font-weight: 400; }
+      input[type="file"] { display: none; }
+    </style>
+  </head>
+  <body>
+    <div class="sayfa">
+      <p class="etiket">Anılarımız</p>
+      <h2 id="baslik">Melisa &amp; Kerem</h2>
+      <p>Bugün çektiğiniz güzel anları bizimle paylaşır mısınız? Hiçbir uygulama indirmenize gerek yoktur.</p>
+
+      <div style="margin: 24px 0 16px;">
+        <label for="fotoGirdi" class="dugme dolu" style="font-size: 0.78rem; padding: 15px 30px; cursor: pointer;">Fotoğraf Seç &amp; Yükle</label>
+        <input type="file" id="fotoGirdi" accept="image/*" multiple />
+      </div>
+
+      <div style="max-width: 300px; margin: 0 auto; text-align: left;">
+        <label for="gonderen" style="display:block; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--metin-soluk); margin-bottom: 6px;">Adınız (İsteğe bağlı)</label>
+        <input type="text" id="gonderen" placeholder="Örn: Ayşe Yılmaz" style="width:100%; padding: 11px 14px; border: 1px solid var(--cizgi); border-radius: 8px; background: var(--kart); color: var(--metin); font-family: inherit; font-size: 0.92rem;" />
+      </div>
+
+      <div class="onizleme-alani" id="onizleme"></div>
+      <p class="durum-yazi" id="durum"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="db.js"></script>
+    <script>
+      (function() {
+        "use strict";
+        const p = new URLSearchParams(location.search);
+        const davetiyeKod = p.get("davetiye") || "genel";
+        const isim1 = p.get("isim1") || "Melisa";
+        const isim2 = p.get("isim2") || "Kerem";
+        document.getElementById("baslik").textContent = `${isim1} & ${isim2}`;
+
+        const girdi = document.getElementById("fotoGirdi");
+        const onizleme = document.getElementById("onizleme");
+        const durum = document.getElementById("durum");
+
+        function kucultBlob(dosya) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = () => reject(new Error("okunamadi"));
+            reader.onload = () => {
+              const img = new Image();
+              img.onerror = () => reject(new Error("acilamadi"));
+              img.onload = () => {
+                const maxDim = 1600;
+                const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+                const canvas = document.createElement("canvas");
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.82);
+              };
+              img.src = reader.result;
+            };
+            reader.readAsDataURL(dosya);
+          });
+        }
+
+        girdi.addEventListener("change", async () => {
+          const dosyalar = Array.from(girdi.files || []).slice(0, 15);
+          if (!dosyalar.length) return;
+          girdi.disabled = true;
+          const gonderen = document.getElementById("gonderen").value.trim() || "İsimsiz Misafir";
+
+          let basarili = 0;
+          for (let i = 0; i < dosyalar.length; i++) {
+            durum.textContent = `Yükleniyor… (${i + 1}/${dosyalar.length})`;
+            const fig = document.createElement("figure");
+            const gorsel = document.createElement("img");
+            fig.append(gorsel);
+            onizleme.append(fig);
+
+            try {
+              const blob = await kucultBlob(dosyalar[i]);
+              gorsel.src = URL.createObjectURL(blob);
+              if (window.DB) {
+                await window.DB.fotoYukle(davetiyeKod, blob, dosyalar[i].name, gonderen);
+              }
+              fig.classList.add("yuklendi");
+              basarili++;
+            } catch(e) {
+              fig.style.opacity = "0.4";
+            }
+          }
+
+          durum.textContent = basarili ? `${basarili} fotoğraf albüme ekle
