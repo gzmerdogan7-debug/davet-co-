@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="tr" data-tema="kemer">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Davet &amp; Co. · Davetiyeniz</title>
+    <link rel="stylesheet" href="davetiye.css" />
+  </head>
+  <body class="kilitli">
+    <!-- Kapak -->
+    <div id="kapak">
+      <div class="kapak-cerceve">
+        <p class="ust-yazi" id="kapakUst">Davetlisiniz</p>
+        <h1 class="isimler"><span id="isim1">Melisa</span><span class="ve">&amp;</span><span id="isim2">Kerem</span></h1>
+        <p class="kapak-misafir">Sayın<strong id="kapakMisafir">Değerli Misafirimiz</strong></p>
+        <button id="acBtn" type="button">Davetiyeyi Açmak İçin Dokunun</button>
+      </div>
+    </div>
+
+    <!-- İçerik -->
+    <main id="icerik" aria-hidden="true">
+      <section class="bolum">
+        <p class="etiket gizli">Hoş Geldiniz</p>
+        <h2 class="gizli" id="karsilamaBaslik">Sayın Değerli Misafirimiz</h2>
+        <p class="gizli" id="karsilamaMetin" style="font-size: 1.1rem; line-height: 1.6;">
+          Hayatımızın en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+        </p>
+      </section>
+
+      <section class="bolum serit">
+        <p class="etiket gizli">O Güne Kalan</p>
+        <div class="sayac gizli" id="sayac">
+          <div><b id="sGun">—</b><span>Gün</span></div>
+          <div><b id="sSaat">—</b><span>Saat</span></div>
+          <div><b id="sDakika">—</b><span>Dakika</span></div>
+          <div><b id="sSaniye">—</b><span>Saniye</span></div>
+        </div>
+      </section>
+
+      <!-- Çoklu Etkinlik & Mekân -->
+      <section class="bolum" id="etkinliklerBolumu">
+        <p class="etiket gizli">Etkinlik Programı &amp; Mekân</p>
+        <div class="etkinlik-sekmeler gizli" id="etkinlikSekmeler" style="display: none;">
+          <button type="button" class="sekme secili" id="sekme1Btn">1. Etkinlik</button>
+          <button type="button" class="sekme" id="sekme2Btn">2. Etkinlik</button>
+        </div>
+
+        <div class="etkinlik-kart gizli" id="etkinlik1Kart">
+          <span class="etkinlik-tur" id="e1Tur">Düğün &amp; Kutlama</span>
+          <div class="tarih-saat-vurgu">
+            <span id="e1Tarih">19 Eylül 2026</span> · <span id="e1Saat">19:30</span>
+          </div>
+          <h3 id="e1MekanAdi" style="margin: 6px 0; font-size: 1.25rem;">Kalamış Marina Teras</h3>
+          <p id="e1Adres" style="margin-bottom: 16px;">Kadıköy / İstanbul</p>
+          <div>
+            <a class="dugme" id="e1HaritaBtn" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              Yol Tarifi Al
+            </a>
+          </div>
+        </div>
+
+        <div class="etkinlik-kart gizli" id="etkinlik2Kart" style="display: none; margin-top: 16px;">
+          <span class="etkinlik-tur" id="e2Tur">Nikâh Töreni</span>
+          <div class="tarih-saat-vurgu">
+            <span id="e2Tarih">19 Eylül 2026</span> · <span id="e2Saat">16:30</span>
+          </div>
+          <h3 id="e2MekanAdi" style="margin: 6px 0; font-size: 1.25rem;">Kadıköy Evlendirme Dairesi</h3>
+          <p id="e2Adres" style="margin-bottom: 16px;">Kadıköy / İstanbul</p>
+          <div>
+            <a class="dugme" id="e2HaritaBtn" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              Yol Tarifi Al
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rozetler -->
+      <section class="bolum serit" id="notlarBolumu">
+        <p class="etiket gizli">Önemli Notlar</p>
+        <div class="rozet-izgara gizli" id="rozetlerAlani"></div>
+      </section>
+
+      <!-- IBAN (İsteğe Bağlı) -->
+      <section class="bolum" id="hediyeBolumu" style="display: none;">
+        <p class="etiket gizli">Tebrik &amp; Hediye</p>
+        <p class="gizli">Uzaktan tebriklerini ve hediyelerini iletmek isteyen misafirlerimiz için detaylar:</p>
+        <div class="iban-kart gizli">
+          <span class="iban-sahip" id="ibanSahip">Melisa &amp; Kerem</span>
+          <span class="iban-banka" id="ibanBanka">Garanti BBVA</span>
+          <code class="iban-no" id="ibanNo">TR00 0000 0000 0000 0000 0000 00</code>
+          <button class="dugme" type="button" id="ibanKopyalaBtn">IBAN'ı Kopyala</button>
+        </div>
+      </section>
+
+      <!-- LCV Formu -->
+      <section class="bolum serit">
+        <p class="etiket gizli">L.C.V.</p>
+        <h2 class="gizli">Bizimle Olacak mısınız?</h2>
+        <div class="lcv-secim gizli">
+          <button type="button" id="geliyorumBtn">Katılıyorum</button>
+          <button type="button" id="gelmiyorumBtn">Maalesef Katılamıyorum</button>
+        </div>
+
+        <form class="lcv-alan" id="lcvForm">
+          <label for="lcvIsim">Adınız Soyadınız</label>
+          <input type="text" id="lcvIsim" required />
+
+          <div id="kisiAlani">
+            <label for="lcvKisi">Kaç kişi katılacaksınız?</label>
+            <select id="lcvKisi">
+              <option value="1">1 kişi</option>
+              <option value="2" selected>2 kişi</option>
+              <option value="3">3 kişi</option>
+              <option value="4">4 kişi</option>
+              <option value="5">5+ kişi</option>
+            </select>
+          </div>
+
+          <label for="lcvMesaj">Çifte Mesajınız (İsteğe bağlı)</label>
+          <textarea id="lcvMesaj"></textarea>
+
+          <p style="margin-top: 18px">
+            <button class="dugme dolu" type="submit" id="lcvGonder">Yanıtı Gönder</button>
+          </p>
+        </form>
+        <p id="lcvSonuc" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- Fotoğraf Paylaşım QR -->
+      <section class="bolum">
+        <p class="etiket gizli">Anılarımız</p>
+        <h2 class="gizli">O Günü Bizimle Paylaşın</h2>
+        <p class="gizli">Çektiğiniz fotoğrafları hiçbir uygulama indirmeden albümümüze gönderebilirsiniz.</p>
+        <div class="qr-kutu gizli" id="fotoQr"></div>
+      </section>
+
+      <footer>
+        <p id="altBilgi">Davet &amp; Co. Tasarım Atölyesi</p>
+      </footer>
+    </main>
+
+    <!-- Yüzen Müzik Kontrolü -->
+    <button id="muzikBtn" type="button" aria-label="Müziği aç/kapat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+    </button>
+
+    <!-- Kütüphaneler & Kodlar -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="db.js"></script>
+    <script src="qr.js"></script>
+    <script src="muzik.js"></script>
+    <script src="davetiye.js"></script>
+  </body>
+</html>
