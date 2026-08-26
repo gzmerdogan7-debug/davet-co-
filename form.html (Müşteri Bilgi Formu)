@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Davet &amp; Co. · Tasarım Bilgi Formu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      :root {
+        --zemin: #f7f4ef; --kart: #ffffff; --cizgi: #e4dcce; --metin: #2b2622;
+        --soluk: #7c7269; --altin: #a8834c; --altin-koyu: #8a6834;
+        --f-baslik: "Cormorant Garamond", Georgia, serif; --f-govde: "Jost", system-ui, sans-serif;
+      }
+      body {
+        margin: 0; background: var(--zemin); color: var(--metin); font-family: var(--f-govde);
+        font-weight: 300; line-height: 1.6; padding: 40px 20px 80px;
+      }
+      .sarmal { max-width: 600px; margin: 0 auto; }
+      .baslik-alani { text-align: center; margin-bottom: 32px; }
+      .logo-yazi { font-family: var(--f-baslik); font-size: 1.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--altin-koyu); margin: 0; }
+      .alt-logo { font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--soluk); margin-top: 4px; }
+      .form-kutu { background: var(--kart); border: 1px solid var(--cizgi); border-radius: 16px; padding: 30px 24px; box-shadow: 0 10px 30px -15px rgba(43, 38, 34, 0.08); }
+      .bolum-baslik { font-family: var(--f-baslik); font-size: 1.3rem; font-weight: 500; color: var(--metin); margin: 26px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--cizgi); }
+      .bolum-baslik:first-of-type { margin-top: 0; }
+      label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soluk); margin: 14px 0 6px; font-weight: 500; }
+      input[type="text"], input[type="datetime-local"], input[type="tel"], select {
+        width: 100%; padding: 12px 14px; border: 1px solid var(--cizgi); border-radius: 8px;
+        background: #fdfcfb; color: var(--metin); font-family: inherit; font-size: 0.95rem;
+      }
+      input:focus, select:focus { outline: none; border-color: var(--altin); }
+      .secenek-kartlar { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-top: 8px; }
+      .secenek-kart { border: 1px solid var(--cizgi); border-radius: 10px; padding: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
+      .secenek-kart input { display: none; }
+      .secenek-kart.secili { border-color: var(--altin); background: #faf6f0; box-shadow: inset 0 0 0 1px var(--altin); }
+      .secenek-kart b { display: block; font-size: 0.82rem; }
+      .secenek-kart small { display: block; font-size: 0.68rem; color: var(--soluk); margin-top: 2px; }
+      .onay-kutu { display: flex; align-items: flex-start; gap: 10px; margin: 12px 0; cursor: pointer; }
+      .onay-kutu input { margin-top: 4px; accent-color: var(--altin); }
+      .onay-kutu span { font-size: 0.85rem; color: var(--metin); }
+      .gonder-btn {
+        width: 100%; margin-top: 28px; padding: 16px; border: 0; border-radius: 999px;
+        background: var(--altin); color: #fff; font-family: inherit; font-size: 0.82rem;
+        font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+      }
+      .gonder-btn:hover { background: var(--altin-koyu); }
+      .basari-kutu { display: none; text-align: center; padding: 40px 20px; }
+      .basari-kutu h2 { font-family: var(--f-baslik); font-size: 1.8rem; color: var(--altin); margin: 0 0 10px; }
+    </style>
+  </head>
+  <body>
+    <div class="sarmal">
+      <div class="baslik-alani">
+        <h1 class="logo-yazi">Davet &amp; Co.</h1>
+        <p class="alt-logo">Dijital Tasarım Atölyesi</p>
+      </div>
+
+      <div class="form-kutu" id="formKutu">
+        <form id="siparisFormu">
+          <h2 class="bolum-baslik">1. Çift Bilgileri</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label for="isim1">Gelin Adı *</label>
+              <input type="text" id="isim1" required placeholder="Örn: Melisa" />
+            </div>
+            <div>
+              <label for="isim2">Damat Adı *</label>
+              <input type="text" id="isim2" required placeholder="Örn: Kerem" />
+            </div>
+          </div>
+          <label for="telefon">WhatsApp Numaranız *</label>
+          <input type="tel" id="telefon" required placeholder="05XX XXX XX XX" />
+
+          <h2 class="bolum-baslik">2. Tasarım Teması</h2>
+          <div class="secenek-kartlar" id="temaSecici">
+            <label class="secenek-kart secili"><input type="radio" name="tema" value="kemer" checked /><b>Kemer</b><small>Sıcak Nötr</small></label>
+            <label class="secenek-kart"><input type="radio" name="tema" value="editoryal" /><b>Editoryal</b><small>Minimal</small></label>
+            <label class="secenek-kart"><input type="radio" name="tema" value="bordo" /><b>Eski Dünya</b><small>Bordo/Altın</small></label>
+            <label class="secenek-kart"><input type="radio" name="tema" value="retro" /><b>Retro</b><small>70'ler</small></label>
+          </div>
+
+          <h2 class="bolum-baslik">3. Etkinlik Detayları</h2>
+          <label class="onay-kutu">
+            <input type="checkbox" id="cokluEtkinlik" />
+            <span><b>Çoklu Etkinlik:</b> Nikâh ve Düğün (veya Kına ve Düğün) ayrı yer/saatte olacak.</span>
+          </label>
+
+          <div id="e1Alani">
+            <label for="e1Tur">Etkinlik Türü</label>
+            <input type="text" id="e1Tur" value="Düğün &amp; Kutlama" />
+            <label for="e1Tarih">Tarih ve Saat *</label>
+            <input type="datetime-local" id="e1Tarih" required value="2026-09-19T19:30" />
+            <label for="e1Mekan">Mekân Adı *</label>
+            <input type="text" id="e1Mekan" required placeholder="Örn: Kalamış Marina Teras" />
+            <label for="e1Adres">Açık Adres</label>
+            <input type="text" id="e1Adres" placeholder="Kadıköy / İstanbul" />
+          </div>
+
+          <div id="e2Alani" style="display: none; margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--cizgi);">
+            <label for="e2Tur">2. Etkinlik Türü</label>
+            <input type="text" id="e2Tur" value="Nikâh Töreni" />
+            <label for="e2Tarih">2. Tarih ve Saat</label>
+            <input type="datetime-local" id="e2Tarih" value="2026-09-19T16:30" />
+            <label for="e2Mekan">2. Mekân Adı</label>
+            <input type="text" id="e2Mekan" placeholder="Örn: Kadıköy Evlendirme Dairesi" />
+            <label for="e2Adres">2. Açık Adres</label>
+            <input type="text" id="e2Adres" />
+          </div>
+
+          <h2 class="bolum-baslik">4. Özel Notlar &amp; Rozetler</h2>
+          <label class="onay-kutu"><input type="checkbox" id="notCocuk" checked /><span><b>Çocuksuz Etkinlik Rozeti</b></span></label>
+          <label class="onay-kutu"><input type="checkbox" id="notZemin" checked /><span><b>Çim Zemin Rozeti</b></span></label>
+
+          <h2 class="bolum-baslik">5. Tebrik / IBAN (İsteğe Bağlı)</h2>
+          <label class="onay-kutu"><input type="checkbox" id="ibanAktif" /><span>Davetiyede IBAN / Tebrik kutusu görünsün.</span></label>
+          <div id="ibanDetayAlani" style="display: none;">
+            <label for="ibanSahip">Hesap Sahibi</label><input type="text" id="ibanSahip" />
+            <label for="ibanBanka">Banka Adı</label><input type="text" id="ibanBanka" />
+            <label for="ibanNo">IBAN</label><input type="text" id="ibanNo" placeholder="TR00..." />
+          </div>
+
+          <h2 class="bolum-baslik">6. Fon Müziği</h2>
+          <select id="muzikSecim">
+            <option value="dugun">Romantik Piyano &amp; Akustik</option>
+            <option value="kina">Kına Gecesi Özel</option>
+            <option value="retro">Retro / Jazz Akustik</option>
+          </select>
+
+          <button type="submit" class="gonder-btn" id="gonderBtn">Tasarım Bilgilerini İlet</button>
+        </form>
+      </div>
+
+      <div class="basari-kutu" id="basariKutu">
+        <h2>Tasarım Talebiniz Alındı! ✨</h2>
+        <p>Bilgileriniz <b>Davet &amp; Co. Atölyesi</b>'ne ulaştı. En kısa sürede WhatsApp üzerinden iletişime geçilecektir.</p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="db.js"></script>
+    <script>
+      (function() {
+        "use strict";
+        const el = (id) => document.getElementById(id);
+        document.querySelectorAll("#temaSecici .secenek-kart").forEach(kart => {
+          kart.addEventListener("click", () => {
+            document.querySelectorAll("#temaSecici .secenek-kart").forEach(k => k.classList.remove("secili"));
+            kart.classList.add("secili");
+          });
+        });
+
+        el("cokluEtkinlik").addEventListener("change", (e) => { el("e2Alani").style.display = e.target.checked ? "block" : "none"; });
+        el("ibanAktif").addEventListener("change", (e) => { el("ibanDetayAlani").style.display = e.target.checked ? "block" : "none"; });
+
+        el("siparisFormu").addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const btn = el("gonderBtn");
+          btn.disabled = true;
+          btn.textContent = "İletiliyor…";
+
+          const detaylar = {
+            e1Tur: el("e1Tur").value, e1Tarih: el("e1Tarih").value, e1Mekan: el("e1Mekan").value, e1Adres: el("e1Adres").value,
+            coklu: el("cokluEtkinlik").checked ? "1" : "0",
+            e2Tur: el("e2Tur").value, e2Tarih: el("e2Tarih").value, e2Mekan: el("e2Mekan").value, e2Adres: el("e2Adres").value,
+            notCocuk: el("notCocuk").checked ? "1" : "0", notZemin: el("notZemin").checked ? "1" : "0",
+            ibanAktif: el("ibanAktif").checked ? "1" : "0", ibanSahip: el("ibanSahip").value, ibanBanka: el("ibanBanka").value, ibanNo: el("ibanNo").value,
+            muzik: el("muzikSecim").value
+          };
+
+          try {
+            if (window.DB) {
+              await window.DB.talepEkle({
+                isim1: el("isim1").value, isim2: el("isim2").value, telefon: el("telefon").value,
+                tema: document.querySelector('input[name="tema"]:checked').value, detaylar: detaylar
+              });
+            }
+            el("formKutu").style.display = "none";
+            el("basariKutu").style.display = "block";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } catch(err) {
+            alert("İletilemedi, lütfen tekrar deneyin.");
+          } finally {
+            btn.disabled = false;
+            btn.textContent = "Tasarım Bilgilerini İlet";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
