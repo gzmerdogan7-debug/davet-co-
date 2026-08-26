@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Davet &amp; Co. · Dijital Tasarım Atölyesi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      :root {
+        --zemin: #14110f; --panel: #1d1917; --panel-2: #262120;
+        --cizgi: #38312e; --metin: #f0e9e2; --soluk: #a2938a; --vurgu: #c9a26a;
+      }
+      body {
+        margin: 0; min-height: 100vh; background: var(--zemin); color: var(--metin);
+        font-family: "Jost", system-ui, sans-serif; font-weight: 300; line-height: 1.6;
+      }
+      header { padding: 24px 28px; border-bottom: 1px solid var(--cizgi); }
+      header h1 { margin: 0; font-family: "Cormorant Garamond", serif; font-size: 1.7rem; font-weight: 500; }
+      header p { margin: 4px 0 0; color: var(--soluk); font-size: 0.85rem; }
+      .duzen { display: grid; grid-template-columns: minmax(320px, 400px) 1fr; gap: 26px; padding: 26px 28px 60px; max-width: 1200px; margin: 0 auto; }
+      @media (max-width: 900px) { .duzen { grid-template-columns: 1fr; } }
+      .kart { background: var(--panel); border: 1px solid var(--cizgi); border-radius: 14px; padding: 22px; margin-bottom: 18px; }
+      .kart h2 { margin: 0 0 16px; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--vurgu); }
+      label { display: block; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soluk); margin: 12px 0 5px; }
+      input, select { width: 100%; padding: 11px 13px; border: 1px solid var(--cizgi); border-radius: 8px; background: var(--panel-2); color: var(--metin); font-family: inherit; font-size: 0.92rem; }
+      .dugme { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 10px; padding: 13px; border: 1px solid var(--vurgu); border-radius: 8px; background: transparent; color: var(--vurgu); font-family: inherit; font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all 0.2s; }
+      .dugme:hover { background: var(--vurgu); color: #14110f; }
+      .link-kutu { margin-top: 12px; padding: 10px 12px; border: 1px dashed var(--cizgi); border-radius: 8px; background: var(--panel-2); font-size: 0.75rem; color: var(--soluk); word-break: break-all; }
+      .qr-satir { display: flex; gap: 14px; align-items: center; margin-top: 12px; }
+      .qr-kutu { padding: 8px; border-radius: 8px; background: #fff; line-height: 0; }
+      .qr-kutu svg { width: 100px; height: 100px; }
+      .telefon-alan { display: flex; justify-content: center; }
+      .telefon { width: 380px; height: 780px; padding: 10px; border-radius: 46px; background: #2b2622; box-shadow: 0 30px 70px -30px rgba(0,0,0,0.9); }
+      .ekran { width: 100%; height: 100%; border-radius: 38px; overflow: hidden; background: #fff; }
+      .ekran iframe { width: 100%; height: 100%; border: 0; display: block; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Davet &amp; Co. · Dijital Tasarım Atölyesi</h1>
+      <p>Canlı önizleme ekranı ve davetiye link üreticisi.</p>
+    </header>
+
+    <div class="duzen">
+      <div>
+        <div class="kart">
+          <h2>Hızlı Ayarlar &amp; Link Üretici</h2>
+          <label>Tema</label>
+          <select id="tema">
+            <option value="kemer" selected>Kemer (Sıcak Nötr & Keten)</option>
+            <option value="editoryal">Editoryal (Minimalist)</option>
+            <option value="bordo">Eski Dünya (Bordo & Altın)</option>
+            <option value="retro">Retro 70'ler</option>
+          </select>
+          <label>Misafir Adı (Kişiselleştirme)</label>
+          <input type="text" id="misafir" value="Ayşe Yılmaz" />
+          <label>Gelin Adı</label>
+          <input type="text" id="isim1" value="Melisa" />
+          <label>Damat Adı</label>
+          <input type="text" id="isim2" value="Kerem" />
+        </div>
+
+        <div class="kart">
+          <h2>Paylaşım Linki &amp; QR</h2>
+          <div class="qr-satir">
+            <div class="qr-kutu" id="qrKutu"></div>
+            <p style="margin:0; font-size:0.8rem; color:var(--soluk);">Kameranızla okutarak telefonunuzda canlı açabilirsiniz.</p>
+          </div>
+          <div class="link-kutu" id="linkKutu">Hazırlanıyor…</div>
+          <button class="dugme" type="button" id="kopyalaBtn">Linki Kopyala</button>
+        </div>
+
+        <div class="kart">
+          <h2>Hızlı Bağlantılar</h2>
+          <a class="dugme" href="form.html" target="_blank">Müşteri Tasarım Formu</a>
+          <a class="dugme" href="panel.html" target="_blank">Yönetim &amp; LCV Paneli</a>
+        </div>
+      </div>
+
+      <div class="telefon-alan">
+        <div class="telefon">
+          <div class="ekran">
+            <iframe id="onizleme" title="Önizleme"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="qr.js"></script>
+    <script>
+      (function() {
+        "use strict";
+        const el = (id) => document.getElementById(id);
+        const alanlar = ["tema", "misafir", "isim1", "isim2"];
+
+        function linkUret() {
+          const p = new URLSearchParams({
+            tema: el("tema").value,
+            misafir: el("misafir").value.trim(),
+            isim1: el("isim1").value.trim(),
+            isim2: el("isim2").value.trim()
+          });
+          return `${location.origin}/davetiye.html?${p.toString()}`;
+        }
+
+        function guncelle() {
+          const link = linkUret();
+          el("onizleme").src = link;
+          el("linkKutu").textContent = link;
+          try {
+            el("qrKutu").innerHTML = window.Karekod.svgUret(link, { boyut: 100 });
+          } catch(e) {}
+        }
+
+        alanlar.forEach(a => el(a).addEventListener("input", guncelle));
+        el("kopyalaBtn").addEventListener("click", async () => {
+          await navigator.clipboard.writeText(el("linkKutu").textContent);
+          el("kopyalaBtn").textContent = "Kopyalandı ✓";
+          setTimeout(() => el("kopyalaBtn").textContent = "Linki Kopyala", 1800);
+        });
+
+        guncelle();
+      })();
+    </script>
+  </body>
+</html>
