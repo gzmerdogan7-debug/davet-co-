@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Davet &amp; Co. · Yönetim Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      :root {
+        --zemin: #14110f; --panel: #1d1917; --cizgi: #38312e;
+        --metin: #f0e9e2; --soluk: #a2938a; --vurgu: #c9a26a; --yesil: #7fb686; --kirmizi: #c98080;
+      }
+      body {
+        margin: 0; min-height: 100vh; background: var(--zemin); color: var(--metin);
+        font-family: "Jost", system-ui, sans-serif; font-weight: 300; line-height: 1.6;
+      }
+      .sarmal { max-width: 960px; margin: 0 auto; padding: 36px 20px 80px; }
+      h1 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.8rem; font-weight: 500; }
+      .alt { margin: 0 0 24px; color: var(--soluk); font-size: 0.85rem; }
+      .ozet { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 30px; }
+      .ozet div { padding: 18px; border: 1px solid var(--cizgi); border-radius: 12px; background: var(--panel); }
+      .ozet b { display: block; font-family: "Cormorant Garamond", serif; font-size: 2.2rem; font-weight: 500; line-height: 1; color: var(--vurgu); }
+      .ozet span { display: block; margin-top: 6px; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--soluk); }
+      h2 { margin: 36px 0 14px; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--vurgu); }
+      table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      th { text-align: left; padding: 10px 12px; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--soluk); border-bottom: 1px solid var(--cizgi); }
+      td { padding: 12px; border-bottom: 1px solid var(--cizgi); vertical-align: top; }
+      .rozet { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; border: 1px solid currentColor; }
+      .geliyor { color: var(--yesil); } .gelmiyor { color: var(--kirmizi); }
+      .bos { padding: 30px; text-align: center; color: var(--soluk); border: 1px dashed var(--cizgi); border-radius: 12px; }
+      .galeri { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+      .galeri a { display: block; aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid var(--cizgi); }
+      .galeri img { width: 100%; height: 100%; object-fit: cover; }
+      .sarma { overflow-x: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="sarmal">
+      <h1>Davet &amp; Co. · Yönetim Paneli</h1>
+      <p class="alt">Canlı Supabase veritabanı bağlantısı aktiftir.</p>
+
+      <div class="ozet">
+        <div><b id="oGeliyor">0</b><span>Katılıyor</span></div>
+        <div><b id="oKisi">0</b><span>Toplam Kişi</span></div>
+        <div><b id="oGelmiyor">0</b><span>Katılamıyor</span></div>
+        <div><b id="oFoto">0</b><span>Fotoğraf</span></div>
+      </div>
+
+      <h2>Gelen Katılım (LCV) Yanıtları</h2>
+      <div id="liste"></div>
+
+      <h2>Misafir Fotoğraf Albümü</h2>
+      <div id="galeri"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="db.js"></script>
+    <script>
+      (function() {
+        "use strict";
+        const el = (id) => document.getElementById(id);
+
+        async function yenile() {
+          if (!window.DB) return;
+          const [kayitlar, fotograflar] = await Promise.all([
+            window.DB.lcvGetir("hepsi"),
+            window.DB.fotoGetir("hepsi")
+          ]);
+
+          const geliyor = kayitlar.filter(k => k.durum === "geliyor");
+          el("oGeliyor").textContent = geliyor.length;
+          el("oKisi").textContent = geliyor.reduce((t, k) => t + (Number(k.kisi) || 0), 0);
+          el("oGelmiyor").textContent = kayitlar.length - geliyor.length;
+          el("oFoto").textContent = fotograflar.length;
+
+          // LCV Tablosu
+          const liste = el("liste");
+          liste.innerHTML = "";
+          if (!kayitlar.length) {
+            liste.innerHTML = '<div class="bos">Henüz bir katılım bildirimi gelmedi.</div>';
+          } else {
+            let html = '<div class="sarma"><table><thead><tr><th>Misafir</th><th>Durum</th><th>Kişi</th><th>Mesaj</th><th>Zaman</th></tr></thead><tbody>';
+            for (const k of kayitlar) {
+              const tarih = new Date(k.created_at).toLocaleString("tr-TR", { dateStyle: "short", timeStyle: "short" });
+              html += `<tr>
+                <td><b>${k.misafir || "İsimsiz"}</b></td>
+                <td><span class="rozet ${k.durum}">${k.durum === "geliyor" ? "Katılıyor" : "Katılamıyor"}</span></td>
+                <td>${k.kisi || "—"}</td>
+                <td>${k.mesaj || "—"}</td>
+                <td><small style="color:var(--soluk)">${tarih}</small></td>
+              </tr>`;
+            }
+            html += '</tbody></table></div>';
+            liste.innerHTML = html;
+          }
+
+          // Foto Galeri
+          const galeri = el("galeri");
+          galeri.innerHTML = "";
+          if (!fotograflar.length) {
+            galeri.innerHTML = '<div class="bos">Henüz fotoğraf yüklenmedi.</div>';
+          } else {
+            let html = '<div class="galeri">';
+            for (const f of fotograflar) {
+              html += `<a href="${f.foto_url}" target="_blank" rel="noopener"><img src="${f.foto_url}" loading="lazy" /></a>`;
+            }
+            html += '</div>';
+            galeri.innerHTML = html;
+          }
+        }
+
+        yenile();
+        setInterval(yenile, 8000);
+      })();
+    </script>
+  </body>
+</html>
