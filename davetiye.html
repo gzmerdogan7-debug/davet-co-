@@ -61,6 +61,9 @@
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
       background-color: #EFE7DA;
+      background-image: url('kapi.png');
+      background-size: cover;
+      background-position: center;
     }
 
     @media (max-width: 640px) {
@@ -71,28 +74,6 @@
         border-radius: 0;
         box-shadow: none;
       }
-    }
-
-    /* Arka Plan Sinematik Video Katmanı */
-    .bg-video-layer {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* Videoyu Kapının Fildişi/Altın Paletine Çeken Renk Filtresi */
-    .cinema-viewport::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 6;
-      pointer-events: none;
-      background: rgba(224, 209, 181, 0.6);
-      mix-blend-mode: color;
     }
 
     /* Kenarlara Sinematik Vinyet */
@@ -122,13 +103,13 @@
       max-width: 290px;
       padding: 28px 22px;
       border-radius: 24px;
-      background: rgba(254, 252, 249, 0.62);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(197, 168, 128, 0.32);
+      background: rgba(254, 252, 249, 0.86);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(197, 168, 128, 0.4);
       box-shadow:
-        0 12px 30px -14px rgba(68, 55, 44, 0.15),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-        inset 0 0 0 4px rgba(197, 168, 128, 0.14);
+        0 15px 35px -14px rgba(68, 55, 44, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.75),
+        inset 0 0 0 4px rgba(197, 168, 128, 0.18);
       position: relative;
       z-index: 25;
     }
@@ -273,8 +254,8 @@
 }
 .kapak-sol { left: 0; background-position: left top; }
 .kapak-sag { right: 0; background-position: right top; }
-.kapak-overlay.acik .kapak-sol { transform: translateX(-102%); }
-.kapak-overlay.acik .kapak-sag { transform: translateX(102%); }
+.kapak-overlay.acik .kapak-sol { transform: translateX(-115%) rotate(-8deg); }
+.kapak-overlay.acik .kapak-sag { transform: translateX(115%) rotate(8deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
 .kapak-icerik {
   position: absolute; left: 0; right: 0; bottom: 15%; z-index: 10;
@@ -300,11 +281,6 @@
     <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
   </div>
 </div>
-
-    <!-- CANLI SİNEMATİK ARKA PLAN VİDEOSU -->
-    <video autoplay loop muted playsinline class="bg-video-layer">
-      <source src="arka.mp4" type="video/mp4">
-    </video>
 
     <!-- ================= 9 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
