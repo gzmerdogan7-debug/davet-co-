@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>İpek & Kaan — Düğün Davetiyesi | DAVET & CO.</title>
   
-  <!-- GSAP Sinematik Animasyon Motoru -->
+  <!-- GSAP Animasyon Motoru -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts: WindSong (Fırça Fontu), Cormorant Garamond, Montserrat & Cinzel -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --text-bronze: #483C32;
-      --text-muted: #736456;
+      --text-bronze: #46392F;
+      --text-muted: #736354;
       --gold-line: #C5A880;
       --gold-deep: #8E7047;
     }
@@ -29,8 +29,8 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: #0A0807;
-      background-image: radial-gradient(circle at 50% 50%, #1A1512 0%, #050403 100%);
+      background-color: #070605;
+      background-image: radial-gradient(circle at 50% 50%, #15110E 0%, #030302 100%);
       color: var(--text-bronze);
       margin: 0;
       padding: 0;
@@ -41,7 +41,6 @@
       overflow: hidden;
     }
 
-    /* Seçtiğin WindSong Fırça Fontu */
     .font-windsong { 
       font-family: 'WindSong', cursive; 
       letter-spacing: 0.02em;
@@ -51,7 +50,7 @@
     .font-cormorant { font-family: 'Cormorant Garamond', serif; }
     .font-sans-sub { font-family: 'Montserrat', sans-serif; letter-spacing: 0.28em; }
 
-    /* iPhone Sahnesi */
+    /* iPhone Sahnesi (Desktopta Lüks Mockup, Mobilde %100 Tam Ekran) */
     .cinema-viewport {
       width: 100%;
       max-width: 414px;
@@ -59,7 +58,7 @@
       max-height: 896px;
       position: relative;
       border-radius: 42px;
-      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
       background-color: #EFE7DA;
       background-image: url('arkaplan.jpg');
@@ -77,18 +76,30 @@
       }
     }
 
-    /* Kemerin İçine Oturan Şeffaf İçerik Alanı */
-    .arch-inner-container {
+    /* Uçuşan Işık Tozları (Canvas Katmanı) */
+    #particle-canvas {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      max-width: 290px;
-      padding: 24px 16px;
-      border-radius: 20px;
-      background: rgba(253, 250, 246, 0.72);
-      backdrop-filter: blur(5px);
-      box-shadow: 0 10px 30px -10px rgba(72, 60, 50, 0.12);
-      border: 1px solid rgba(197, 168, 128, 0.35);
+      height: 100%;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    /* Kemerin İçine Oturan Şeffaf İpeksi Kart */
+    .arch-content-box {
+      width: 100%;
+      max-width: 285px;
+      padding: 22px 16px;
+      border-radius: 22px;
+      background: rgba(254, 252, 249, 0.78);
+      backdrop-filter: blur(6px);
+      box-shadow: 
+        0 15px 35px -10px rgba(70, 57, 47, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+        inset 0 0 0 2px rgba(197, 168, 128, 0.3);
       position: relative;
-      margin-top: -20px;
+      margin-top: -30px;
     }
 
     /* Story Scroll Slider */
@@ -132,9 +143,9 @@
     }
 
     .scroll-pill-btn {
-      background: rgba(254, 252, 249, 0.92);
+      background: rgba(254, 252, 249, 0.94);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(197, 168, 128, 0.45);
+      border: 1px solid rgba(197, 168, 128, 0.5);
       border-radius: 999px;
       padding: 9px 20px;
       display: flex;
@@ -142,12 +153,17 @@
       gap: 8px;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scroll-pill-btn:active {
+      transform: scale(0.96);
     }
 
     .audio-pill-btn {
-      background: rgba(254, 252, 249, 0.92);
+      background: rgba(254, 252, 249, 0.94);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(197, 168, 128, 0.45);
+      border: 1px solid rgba(197, 168, 128, 0.5);
       border-radius: 999px;
       width: 42px;
       height: 42px;
@@ -218,55 +234,58 @@
 </head>
 <body>
 
-  <!-- ARKA PLAN ENSTRÜMANTAL PİYANO MÜZİĞİ -->
+  <!-- ARKA PLAN FON MÜZİĞİ -->
   <audio id="bg-audio" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
   </audio>
 
-  <!-- ================= CINEMA VIEWPORT (GERÇEKÇİ BAROK & ŞAMDAN SAHNESİ) ================= -->
+  <!-- ================= CINEMA VIEWPORT (9:16 KADRAJ) ================= -->
   <div class="cinema-viewport">
+
+    <!-- Işık Zerrecikleri & Parıltı Canvas'ı -->
+    <canvas id="particle-canvas"></canvas>
 
     <!-- ================= 9 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
 
-      <!-- ================= 1. MODÜL: KAPAK (WINDSONG & VOGUE EDİTORYAL DİZİM) ================= -->
+      <!-- ================= 1. MODÜL: KAPAK ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
+        <div class="arch-content-box text-center">
           <span class="text-xs text-[#C5A880] block mb-1">❦</span>
           
-          <h1 class="font-windsong text-4xl sm:text-5xl text-[#483C32] leading-tight my-1">
+          <h1 class="font-windsong text-4xl sm:text-5xl text-[#46392F] leading-tight my-1">
             İpek &amp; Kaan
           </h1>
 
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-3"></div>
 
-          <p class="font-sans-sub text-[7px] uppercase text-[#736456] leading-relaxed mb-3 font-medium">
+          <p class="font-sans-sub text-[7px] uppercase text-[#736354] leading-relaxed mb-3 font-medium">
             AİLELERİMİZLE BİRLİKTE BU ÖZEL GECEYE SİZİ DAVET EDİYORUZ.
           </p>
 
           <!-- Aile İsimleri -->
           <div class="grid grid-cols-2 gap-2 text-center pt-2.5 border-t border-[#C5A880]/30">
             <div>
-              <span class="font-sans-sub text-[7px] text-[#483C32] block font-semibold">ERDOĞAN</span>
-              <span class="font-sans-sub text-[5.5px] text-[#736456] uppercase block">AİLESİ</span>
+              <span class="font-sans-sub text-[7px] text-[#46392F] block font-semibold">ERDOĞAN</span>
+              <span class="font-sans-sub text-[5.5px] text-[#736354] uppercase block">AİLESİ</span>
             </div>
             <div>
-              <span class="font-sans-sub text-[7px] text-[#483C32] block font-semibold">İNCE</span>
-              <span class="font-sans-sub text-[5.5px] text-[#736456] uppercase block">AİLESİ</span>
+              <span class="font-sans-sub text-[7px] text-[#46392F] block font-semibold">İNCE</span>
+              <span class="font-sans-sub text-[5.5px] text-[#736354] uppercase block">AİLESİ</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ================= 2. MODÜL: TARİH (EYLÜL 2026 MİNİ TAKVİM) ================= -->
+      <!-- ================= 2. MODÜL: TARİH ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
+        <div class="arch-content-box text-center">
           <svg class="w-5 h-5 mx-auto stroke-[#C5A880] fill-none stroke-[1.2] mb-0.5" viewBox="0 0 24 24">
             <path d="M12 2C12 2 13 8 7 10C1 12 2 18 2 18C2 18 8 17 10 11C12 5 18 4 18 4M12 2C12 2 16 7 22 9"/>
           </svg>
 
-          <span class="font-sans-sub text-[7px] uppercase text-[#736456] tracking-[0.25em] font-semibold">TARİH &amp; SAAT</span>
-          <h3 class="font-cinzel text-base text-[#483C32] mt-1 mb-0.5">EYLÜL 2026</h3>
+          <span class="font-sans-sub text-[7px] uppercase text-[#736354] tracking-[0.25em] font-semibold">TARİH &amp; SAAT</span>
+          <h3 class="font-cinzel text-base text-[#46392F] mt-1 mb-0.5">EYLÜL 2026</h3>
 
           <!-- Mini Ay Takvimi -->
           <div class="calendar-grid">
@@ -311,7 +330,7 @@
             <span class="cal-day">27</span>
           </div>
 
-          <p class="font-sans-sub text-[7.5px] tracking-[0.2em] text-[#483C32] font-semibold my-1.5">CUMARTESİ • 18:30</p>
+          <p class="font-sans-sub text-[7.5px] tracking-[0.2em] text-[#46392F] font-semibold my-1.5">CUMARTESİ • 18:30</p>
 
           <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%C4%B0pek+%26+Kaan+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20260912T153000Z/20260912T203000Z&details=%C4%B0pek+%26+Kaan+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Sait+Halim+Pasa+Yalisi,+Istanbul" target="_blank" class="gold-action-btn mt-1">
             + GOOGLE TAKVİME EKLE
@@ -319,17 +338,17 @@
         </div>
       </section>
 
-      <!-- ================= 3. MODÜL: MEKAN (SAİT HALİM PAŞA YALISI) ================= -->
+      <!-- ================= 3. MODÜL: MEKAN ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
-          <span class="font-sans-sub text-[7px] uppercase text-[#736456] tracking-[0.25em] font-semibold block mb-1.5">KUTLAMA MEKANI</span>
+        <div class="arch-content-box text-center">
+          <span class="font-sans-sub text-[7px] uppercase text-[#736354] tracking-[0.25em] font-semibold block mb-1.5">KUTLAMA MEKANI</span>
           
           <div class="w-full h-24 rounded-xl overflow-hidden mb-2 border border-[#C5A880]/50 shadow-sm">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Said_Halim_Pa%C5%9Fa_Yal%C4%B1s%C4%B1.jpg" alt="Sait Halim Paşa Yalısı Yeniköy" class="w-full h-full object-cover"/>
           </div>
 
-          <h3 class="font-cinzel text-sm text-[#483C32] mb-0.5 tracking-[0.18em] font-medium">SAİT HALİM PAŞA YALISI</h3>
-          <p class="font-cormorant text-[11px] text-[#736456] italic leading-tight mb-2.5">
+          <h3 class="font-cinzel text-sm text-[#46392F] mb-0.5 tracking-[0.18em] font-medium">SAİT HALİM PAŞA YALISI</h3>
+          <p class="font-cormorant text-[11px] text-[#736354] italic leading-tight mb-2.5">
             Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul
           </p>
 
@@ -341,72 +360,68 @@
 
       <!-- ================= 4. MODÜL: GERİ SAYIM ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
-          <span class="font-windsong text-3xl text-[#483C32] block mb-0.5">Buluşmaya Kalan</span>
+        <div class="arch-content-box text-center">
+          <span class="font-windsong text-3xl text-[#46392F] block mb-0.5">Buluşmaya Kalan</span>
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-2"></div>
 
           <div class="grid grid-cols-4 gap-1.5 my-3">
             <div class="bg-[#FCFAF7] py-2 rounded-lg border border-[#C5A880]/40 shadow-sm">
-              <span id="cd-days" class="font-cormorant text-xl text-[#483C32] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736456] font-semibold">GÜN</span>
+              <span id="cd-days" class="font-cormorant text-xl text-[#46392F] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736354] font-semibold">GÜN</span>
             </div>
             <div class="bg-[#FCFAF7] py-2 rounded-lg border border-[#C5A880]/40 shadow-sm">
-              <span id="cd-hours" class="font-cormorant text-xl text-[#483C32] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736456] font-semibold">SAAT</span>
+              <span id="cd-hours" class="font-cormorant text-xl text-[#46392F] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736354] font-semibold">SAAT</span>
             </div>
             <div class="bg-[#FCFAF7] py-2 rounded-lg border border-[#C5A880]/40 shadow-sm">
-              <span id="cd-mins" class="font-cormorant text-xl text-[#483C32] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736456] font-semibold">DAKİKA</span>
+              <span id="cd-mins" class="font-cormorant text-xl text-[#46392F] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736354] font-semibold">DAKİKA</span>
             </div>
             <div class="bg-[#FCFAF7] py-2 rounded-lg border border-[#C5A880]/40 shadow-sm">
-              <span id="cd-secs" class="font-cormorant text-xl text-[#483C32] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736456] font-semibold">SANİYE</span>
+              <span id="cd-secs" class="font-cormorant text-xl text-[#46392F] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[5.5px] tracking-widest text-[#736354] font-semibold">SANİYE</span>
             </div>
           </div>
 
-          <p class="font-cormorant text-[11px] text-[#736456] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
+          <p class="font-cormorant text-[11px] text-[#736354] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
         </div>
       </section>
 
-      <!-- ================= 5. MODÜL: PROGRAM (GRAVÜR İKONLAR) ================= -->
+      <!-- ================= 5. MODÜL: PROGRAM ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
-          <span class="font-sans-sub text-[7px] uppercase text-[#736456] tracking-[0.25em] font-semibold block mb-3">GÜNÜN PROGRAMI</span>
+        <div class="arch-content-box text-center">
+          <span class="font-sans-sub text-[7px] uppercase text-[#736354] tracking-[0.25em] font-semibold block mb-3">GÜNÜN PROGRAMI</span>
           
           <div class="space-y-2 text-left max-w-[250px] mx-auto">
-            <!-- Nikah -->
             <div class="flex items-center gap-2.5 p-1.5 bg-[#FAF7F2]/90 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
               <div>
                 <span class="font-sans-sub text-[6.5px] text-[#8E7047] font-semibold block">18:30</span>
-                <h5 class="font-cormorant text-xs text-[#483C32] font-medium leading-none">Nikah Seremonisi</h5>
+                <h5 class="font-cormorant text-xs text-[#46392F] font-medium leading-none">Nikah Seremonisi</h5>
               </div>
             </div>
 
-            <!-- Kokteyl -->
             <div class="flex items-center gap-2.5 p-1.5 bg-[#FAF7F2]/90 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/></svg>
               <div>
                 <span class="font-sans-sub text-[6.5px] text-[#8E7047] font-semibold block">19:30</span>
-                <h5 class="font-cormorant text-xs text-[#483C32] font-medium leading-none">Kokteyl &amp; Karşılama</h5>
+                <h5 class="font-cormorant text-xs text-[#46392F] font-medium leading-none">Kokteyl &amp; Karşılama</h5>
               </div>
             </div>
 
-            <!-- Yemek -->
             <div class="flex items-center gap-2.5 p-1.5 bg-[#FAF7F2]/90 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/></svg>
               <div>
                 <span class="font-sans-sub text-[6.5px] text-[#8E7047] font-semibold block">20:30</span>
-                <h5 class="font-cormorant text-xs text-[#483C32] font-medium leading-none">Kutlama Yemeği</h5>
+                <h5 class="font-cormorant text-xs text-[#46392F] font-medium leading-none">Kutlama Yemeği</h5>
               </div>
             </div>
 
-            <!-- After Party -->
             <div class="flex items-center gap-2.5 p-1.5 bg-[#FAF7F2]/90 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
               <div>
                 <span class="font-sans-sub text-[6.5px] text-[#8E7047] font-semibold block">23:00</span>
-                <h5 class="font-cormorant text-xs text-[#483C32] font-medium leading-none">After Party</h5>
+                <h5 class="font-cormorant text-xs text-[#46392F] font-medium leading-none">After Party</h5>
               </div>
             </div>
           </div>
@@ -415,24 +430,24 @@
 
       <!-- ================= 6. MODÜL: DÜĞÜN MENÜSÜ ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
-          <h3 class="font-cinzel text-sm text-[#483C32] my-0 tracking-[0.2em]">M E N Ü</h3>
+        <div class="arch-content-box text-center">
+          <h3 class="font-cinzel text-sm text-[#46392F] my-0 tracking-[0.2em]">M E N Ü</h3>
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-2"></div>
 
           <div class="space-y-2 my-1 text-center">
             <div>
               <span class="font-sans-sub text-[6.5px] uppercase text-[#8E7047] block font-semibold">Başlangıç Tabağı</span>
-              <p class="font-cormorant text-[11px] text-[#736456] italic mt-0.5">Ege otlu enginar kalbi, somon tartar, kestaneli bruschetta</p>
+              <p class="font-cormorant text-[11px] text-[#736354] italic mt-0.5">Ege otlu enginar kalbi, somon tartar, kestaneli bruschetta</p>
             </div>
 
             <div>
               <span class="font-sans-sub text-[6.5px] uppercase text-[#8E7047] block font-semibold">Ana Yemek</span>
-              <p class="font-cormorant text-[11px] text-[#736456] italic mt-0.5">Ağır ateşte pişmiş dana antrikot, trüf aromalı patates püresi ile</p>
+              <p class="font-cormorant text-[11px] text-[#736354] italic mt-0.5">Ağır ateşte pişmiş dana antrikot, trüf aromalı patates püresi ile</p>
             </div>
 
             <div>
               <span class="font-sans-sub text-[6.5px] uppercase text-[#8E7047] block font-semibold">Tatlı &amp; Düğün Pastası</span>
-              <p class="font-cormorant text-[11px] text-[#736456] italic mt-0.5">Orman meyveli Callebaut çikolatalı özel düğün pastası</p>
+              <p class="font-cormorant text-[11px] text-[#736354] italic mt-0.5">Orman meyveli Callebaut çikolatalı özel düğün pastası</p>
             </div>
           </div>
         </div>
@@ -440,8 +455,8 @@
 
       <!-- ================= 7. MODÜL: FOTOĞRAF GALERİSİ ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
-          <span class="font-windsong text-3xl text-[#483C32] block mb-0.5">Hikayemiz</span>
+        <div class="arch-content-box text-center">
+          <span class="font-windsong text-3xl text-[#46392F] block mb-0.5">Hikayemiz</span>
 
           <div class="grid grid-cols-3 gap-1 my-2">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&q=80" alt="Fotoğraf 1" class="w-full h-20 object-cover rounded-lg border border-[#C5A880]/30 shadow-sm"/>
@@ -449,7 +464,7 @@
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&q=80" alt="Fotoğraf 3" class="w-full h-20 object-cover rounded-lg border border-[#C5A880]/30 shadow-sm"/>
           </div>
 
-          <p class="font-cormorant text-[10px] text-[#736456] italic px-1">
+          <p class="font-cormorant text-[10px] text-[#736354] italic px-1">
             "Birlikte geçen her anımız, bu masalın en güzel parçası..."
           </p>
         </div>
@@ -457,24 +472,24 @@
 
       <!-- ================= 8. MODÜL: LCV FORMU ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
-          <span class="font-windsong text-3xl text-[#483C32] block mb-0.5">Bize Katılın!</span>
-          <p class="font-cormorant text-[10px] text-[#736456] italic mb-2">Lütfen 1 Ağustos'a kadar bildiriniz.</p>
+        <div class="arch-content-box text-center">
+          <span class="font-windsong text-3xl text-[#46392F] block mb-0.5">Bize Katılın!</span>
+          <p class="font-cormorant text-[10px] text-[#736354] italic mb-2">Lütfen 1 Ağustos'a kadar bildiriniz.</p>
 
           <div id="rsvp-ok" class="hidden py-3 text-center">
             <span class="font-windsong text-3xl text-[#8E7047] block mb-1">Teşekkürler</span>
-            <h4 class="font-cinzel text-xs text-[#483C32] tracking-widest">Yanıtınız Alındı</h4>
+            <h4 class="font-cinzel text-xs text-[#46392F] tracking-widest">Yanıtınız Alındı</h4>
           </div>
 
           <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-1.5 text-left w-full font-sans-sub text-[6.5px]">
             <div>
-              <label class="block uppercase tracking-wider text-[#736456] mb-0.5 font-medium">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-lg text-[9px] text-[#483C32] focus:outline-none focus:border-[#8E7047]">
+              <label class="block uppercase tracking-wider text-[#736354] mb-0.5 font-medium">Adınız Soyadınız</label>
+              <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-lg text-[9px] text-[#46392F] focus:outline-none focus:border-[#8E7047]">
             </div>
 
             <div>
-              <label class="block uppercase tracking-wider text-[#736456] mb-0.5 font-medium">Katılım Durumu</label>
-              <select class="w-full p-1.5 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-lg text-[9px] text-[#483C32] focus:outline-none focus:border-[#8E7047]">
+              <label class="block uppercase tracking-wider text-[#736354] mb-0.5 font-medium">Katılım Durumu</label>
+              <select class="w-full p-1.5 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-lg text-[9px] text-[#46392F] focus:outline-none focus:border-[#8E7047]">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
                 <option value="0">Maalesef Katılamayacağım</option>
@@ -482,11 +497,11 @@
             </div>
 
             <div>
-              <label class="block uppercase tracking-wider text-[#736456] mb-0.5 font-medium">Özel Not / Diyet Tercihi</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-lg text-[9px] text-[#483C32] focus:outline-none focus:border-[#8E7047]"></textarea>
+              <label class="block uppercase tracking-wider text-[#736354] mb-0.5 font-medium">Özel Not / Diyet Tercihi</label>
+              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-lg text-[9px] text-[#46392F] focus:outline-none focus:border-[#8E7047]"></textarea>
             </div>
 
-            <button type="submit" class="w-full py-2 bg-[#483C32] text-[#FCFAF7] uppercase font-semibold rounded-lg hover:bg-[#302821] transition-all tracking-[0.2em] shadow-sm mt-1">
+            <button type="submit" class="w-full py-2 bg-[#46392F] text-[#FCFAF7] uppercase font-semibold rounded-lg hover:bg-[#302821] transition-all tracking-[0.2em] shadow-sm mt-1">
               GÖNDER
             </button>
           </form>
@@ -495,13 +510,13 @@
 
       <!-- ================= 9. MODÜL: KAPANIŞ & TEŞEKKÜR ================= -->
       <section class="story-screen">
-        <div class="arch-inner-container text-center">
+        <div class="arch-content-box text-center">
           <span class="text-xs text-[#C5A880] block mb-1">❦</span>
           
-          <h3 class="font-windsong text-3xl text-[#483C32] my-0 leading-none">Teşekkür Ederiz</h3>
+          <h3 class="font-windsong text-3xl text-[#46392F] my-0 leading-none">Teşekkür Ederiz</h3>
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-2"></div>
 
-          <p class="font-cormorant text-xs text-[#736456] italic leading-relaxed max-w-[220px] mx-auto mb-3">
+          <p class="font-cormorant text-xs text-[#736354] italic leading-relaxed max-w-[220px] mx-auto mb-3">
             "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
           </p>
 
@@ -509,7 +524,7 @@
             <span class="font-windsong text-xl text-[#8E7047]">İ &amp; K</span>
           </div>
 
-          <span class="font-sans-sub text-[6px] text-[#736456]/80 uppercase tracking-[0.25em] font-medium block">
+          <span class="font-sans-sub text-[6px] text-[#736354]/80 uppercase tracking-[0.25em] font-medium block">
             DAVET &amp; CO. • DİJİTAL TASARIM ATÖLYESİ
           </span>
         </div>
@@ -521,8 +536,8 @@
     <!-- ================= ALT YÜZEN CAM KAPSÜL BAR ================= -->
     <div id="floating-bar" class="floating-pill-bar">
       <button onclick="scrollToNextStory()" class="scroll-pill-btn">
-        <span class="font-sans-sub text-[7.5px] uppercase tracking-[0.22em] text-[#483C32] font-semibold">Aşağı Kaydır</span>
-        <span class="text-xs text-[#736456]">↓</span>
+        <span class="font-sans-sub text-[7.5px] uppercase tracking-[0.22em] text-[#46392F] font-semibold">Aşağı Kaydır</span>
+        <span class="text-xs text-[#736354]">↓</span>
       </button>
 
       <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
@@ -532,19 +547,72 @@
 
   </div>
 
-  <!-- ================= GSAP VE SİNEMA MOTORU ================= -->
+  <!-- ================= GSAP & IŞIK ZERRECİKLERİ MOTORU ================= -->
   <script>
+    // 1. Canlı Işık Tozları (Golden Particles Simulation)
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 20;
+        this.size = Math.random() * 2 + 0.6;
+        this.speedY = Math.random() * 0.7 + 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.6 + 0.2;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < 0) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(245, 205, 135, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 28; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 2. Sinematik Story Kaydırma
     function scrollToNextStory() {
       const container = document.getElementById('story-slider');
       const nextScroll = container.scrollTop + container.clientHeight;
       
       gsap.to(container, {
         scrollTop: nextScroll,
-        duration: 0.85,
+        duration: 0.9,
         ease: "power3.inOut"
       });
     }
 
+    // 3. Müzik Aç / Kapa
     function toggleAudio() {
       const audio = document.getElementById('bg-audio');
       const icon = document.getElementById('audio-icon');
@@ -552,7 +620,7 @@
         audio.play().then(() => {
           icon.innerText = '🎵';
         }).catch(() => {
-          console.log("Müzik manuel başlatılamadı.");
+          console.log("Ses politikası.");
         });
       } else {
         audio.pause();
@@ -560,13 +628,14 @@
       }
     }
 
+    // 4. LCV Gönderimi
     function submitRSVP(e) {
       e.preventDefault();
       document.getElementById('rsvp-form').classList.add('hidden');
       document.getElementById('rsvp-ok').classList.remove('hidden');
     }
 
-    // 12 Eylül 2026 Canlı Geri Sayım
+    // 5. 12 Eylül 2026 Canlı Geri Sayım
     const targetDate = new Date("2026-09-12T18:30:00").getTime();
     setInterval(() => {
       const now = new Date().getTime();
