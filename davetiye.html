@@ -228,24 +228,27 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-.kapak-overlay {
+..kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; transition: opacity 0.8s ease 0.6s;
+  overflow: hidden; transition: opacity 0.9s ease 0.9s;
 }
 .kapak-kanat {
   position: absolute; top: 0; bottom: 0; width: 50%;
   background-image: url('kapi.png');
   background-size: 200% 100%; background-repeat: no-repeat;
-  transition: transform 1s cubic-bezier(0.7,0,0.3,1);
+  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .kapak-sol { left: 0; background-position: left top; }
 .kapak-sag { right: 0; background-position: right top; }
-.kapak-overlay.acik .kapak-sol { transform: translateX(-100%); }
-.kapak-overlay.acik .kapak-sag { transform: translateX(100%); }
+.kapak-overlay.acik .kapak-sol { transform: translateX(-102%); }
+.kapak-overlay.acik .kapak-sag { transform: translateX(102%); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
-.kapak-icerik { position: relative; z-index: 10; text-align: center; transition: opacity 0.5s ease; }
+.kapak-icerik {
+  position: absolute; left: 0; right: 0; bottom: 15%; z-index: 10;
+  text-align: center; transition: opacity 0.45s ease;
+}
 .kapak-overlay.acik .kapak-icerik { opacity: 0; }
+
 
   </style>
 </head>
@@ -255,15 +258,14 @@
   <audio id="bg-audio" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
   </audio>
-
-  <!-- ================= CINEMA VIEWPORT (CANLI VİDEO MOTORU) ================= -->
-  <div class="cinema-viewport">
 <div id="kapak" class="kapak-overlay">
   <div class="kapak-kanat kapak-sol"></div>
   <div class="kapak-kanat kapak-sag"></div>
   <div class="kapak-icerik">
-    <span class="text-xs text-[#C5A880] block mb-2">❦</span>
-    <h1 class="font-windsong text-3xl text-[#44372C] mb-4">İpek &amp; Kaan</h1>
+    <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
+  </div>
+</div>
+
     <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
   </div>
 </div>
@@ -620,10 +622,11 @@
         document.getElementById('cd-hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
         document.getElementById('cd-mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
         document.getElementById('cd-secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-      }
-    }, 1000);
-    document.getElementById('acBtn').addEventListener('click', function () {
+      document.getElementById('acBtn').addEventListener('click', function () {
   document.getElementById('kapak').classList.add('acik');
+  setTimeout(function () { document.getElementById('kapak').remove(); }, 1900);
+}, { once: true });
+
   setTimeout(function () { document.getElementById('kapak').remove(); }, 1600);
 }, { once: true });
 
