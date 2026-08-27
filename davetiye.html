@@ -2,277 +2,303 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>İpek & Kaan — Düğün Davetiyesi | DAVET & CO.</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-cotton: #FAF7F2;
-      --card-cotton: #FDFBF8;
-      --gold-primary: #C5A059;
+      --candle-warmth: rgba(238, 204, 150, 0.18);
+      --bg-atelier: #141210;
+      --card-bg: #FAF7F2;
+      --gold-foil: #C5A059;
       --gold-dark: #8F6D2E;
-      --ink-dark: #241F1C;
-      --ink-muted: #7A6F64;
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Cormorant Garamond', serif;
-      background-color: var(--bg-cotton);
-      color: var(--ink-dark);
-      background-image: 
-        radial-gradient(#E8DFCFA0 0.8px, transparent 0.8px),
-        linear-gradient(to bottom, #FAF7F2, #F4EEE4);
-      background-size: 16px 16px, 100% 100%;
+      background-color: var(--bg-atelier);
+      color: #26211C;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
     }
 
-    /* Narin Romantik Kaligrafi */
     .calligraphy {
-      font-family: 'Great Vibes', 'Alex Brush', cursive;
+      font-family: 'Alex Brush', cursive;
     }
-    
+
     .sans-sub {
       font-family: 'Montserrat', sans-serif;
       letter-spacing: 0.22em;
     }
 
-    /* 3D Zarf Mimarisi */
-    .envelope-perspective {
-      perspective: 1200px;
+    /* Mum Işığı Atmosferi (Candela Glow) */
+    .candle-aura {
+      background: radial-gradient(circle at 50% 45%, rgba(224, 185, 126, 0.25) 0%, rgba(20, 18, 16, 0.95) 70%);
     }
 
-    .envelope-box {
+    /* Pamuklu Kağıt Dokusu & İnce Altın Varak */
+    .cotton-paper {
+      background-color: #FAF7F2;
+      background-image: radial-gradient(#E5DBCB 0.75px, transparent 0.75px);
+      background-size: 14px 14px;
+      box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px #E8DEC $d$,
+        inset 0 0 0 1px #ECE3D4,
+        inset 0 0 0 6px #FAF7F2,
+        inset 0 0 0 7px #DFD2BD;
+    }
+
+    /* 3D Zarf Sahnesi */
+    .envelope-stage {
+      perspective: 1400px;
+      width: 320px;
+      height: 220px;
       position: relative;
-      width: 330px;
-      height: 235px;
-      background: #ECE5D8;
-      border-radius: 4px 4px 10px 10px;
-      box-shadow: 0 25px 45px -12px rgba(36, 31, 28, 0.22), 0 0 0 1px #DFD5C4;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .envelope-flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 165px solid transparent;
-      border-right: 165px solid transparent;
-      border-top: 130px solid #DFC8;
-      border-top-color: #E2D9CA;
-      transform-origin: top;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, z-index 0.2s 0.3s;
-      z-index: 5;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));
+    .envelope-flap-svg {
+      transform-origin: top center;
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.3s;
+      z-index: 20;
     }
 
-    .envelope-box.open .envelope-flap {
+    .envelope-stage.opened .envelope-flap-svg {
       transform: rotateX(180deg);
-      z-index: 1;
-    }
-
-    /* Kartın Zarf İçinden Süzülüşü */
-    .envelope-card {
-      position: absolute;
-      top: 10px;
-      left: 15px;
-      width: 300px;
-      height: 210px;
-      background: var(--card-cotton);
-      border-radius: 3px;
-      border: 1px solid #EADBCE;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
       z-index: 2;
     }
 
-    .envelope-box.open .envelope-card {
-      transform: translateY(-165px) scale(1.03);
+    /* Zarfın İçinden Çıkan Kart */
+    .letter-preview {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      width: 300px;
+      height: 200px;
+      background: #FAF7F2;
+      border-radius: 4px;
+      border: 1px solid #E8DFD1;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: transform 1s cubic-bezier(0.35, 0, 0.15, 1) 0.5s;
+      z-index: 5;
     }
 
-    /* Altın Balmumu Mühür */
-    .wax-seal {
+    .envelope-stage.opened .letter-preview {
+      transform: translateY(-160px) scale(1.04);
+    }
+
+    /* Gerçek 3D Balmumu Mühür */
+    .seal-btn {
       position: absolute;
-      top: 95px;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 72px;
-      height: 72px;
-      background: radial-gradient(circle at 35% 35%, #E6C57A, #A68036 65%, #6E5118 100%);
-      border-radius: 50%;
-      box-shadow: 
-        0 12px 25px -4px rgba(110, 81, 24, 0.45),
-        inset 0 3px 6px rgba(255, 255, 255, 0.5),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.4);
-      z-index: 10;
+      z-index: 30;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition: transform 0.3s ease, opacity 0.4s ease;
-      border: 2px solid rgba(255, 248, 230, 0.45);
+      filter: drop-shadow(0 12px 20px rgba(74, 52, 13, 0.55));
     }
 
-    .wax-seal:hover {
+    .seal-btn:hover {
       transform: translate(-50%, -50%) scale(1.06);
     }
 
-    .envelope-box.open .wax-seal {
+    .envelope-stage.opened .seal-btn {
       opacity: 0;
       pointer-events: none;
       transform: translate(-50%, -50%) scale(1.25);
     }
 
-    /* Pamuklu Kağıt Kart Kenarlığı */
-    .atelier-card {
-      background: #FDFBF8;
-      border: 1px solid #E8DEC $\rightarrow$ #E5DAC9;
-      border-color: #E8DEC $e$;
-      border: 1px solid #E5DACB;
-      box-shadow: 
-        0 15px 35px -15px rgba(36, 31, 28, 0.07),
-        inset 0 0 0 5px #FDFBF8,
-        inset 0 0 0 6px #ECE3D4;
+    /* Canlı Geri Sayım Kutusu */
+    .timer-tile {
+      background: #F4EFE6;
+      border: 1px solid #E5DAC9;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#EAE0D2]">
+<body class="min-h-screen flex justify-center items-center">
 
   <!-- ARKA PLAN FON MÜZİĞİ -->
   <audio id="bg-audio" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
   </audio>
 
-  <!-- ================= 1. AŞAMA: MÜHÜRLÜ 3D ZARF KARŞILAMA ================= -->
-  <div id="envelope-scene" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#171412]/92 backdrop-blur-md px-4 transition-opacity duration-1000">
+  <!-- ================= 1. AŞAMA: CANDELA 3D ZARF SAHNESİ ================= -->
+  <div id="intro-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center candle-aura px-4 transition-opacity duration-1000">
     
-    <div class="text-center mb-8">
-      <span class="sans-sub text-[9px] uppercase text-[#B5A595] block mb-1.5">ÖZEL DÜĞÜN DAVETİYESİ</span>
-      <h2 class="calligraphy text-4xl text-[#F9F5EE]">İpek & Kaan</h2>
+    <!-- Üst Başlık -->
+    <div class="text-center mb-10">
+      <span class="sans-sub text-[9px] uppercase text-[#CDBEAE] block mb-2 tracking-[0.35em]">ÖZEL DÜĞÜN DAVETİYESİ</span>
+      <h2 class="calligraphy text-4xl sm:text-5xl text-[#F9F5EE]">İpek & Kaan</h2>
     </div>
 
-    <!-- 3D İnteraktif Zarf -->
-    <div class="envelope-perspective my-3">
-      <div id="envelope-box" class="envelope-box">
-        
-        <!-- Zarfın Kapağı -->
-        <div class="envelope-flap"></div>
+    <!-- 3D Vektörel Zarf Sahnesi -->
+    <div id="envelope-stage" class="envelope-stage">
+      
+      <!-- Zarfın Arka Katmanı -->
+      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 220" fill="none">
+        <rect width="320" height="220" rx="6" fill="#DDD4C5"/>
+        <rect x="6" y="6" width="308" height="208" rx="4" fill="#D3C7B5"/>
+      </svg>
 
-        <!-- Balmumu Monogram Mühür -->
-        <div onclick="openAtelierEnvelope()" class="wax-seal">
-          <span class="calligraphy text-[#FCF6E8] text-3xl font-medium tracking-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
-            İ&K
-          </span>
-        </div>
-
-        <!-- Zarf İçindeki Küçük Kart -->
-        <div class="envelope-card p-5 flex flex-col items-center justify-center text-center">
-          <span class="sans-sub text-[8px] text-[#96897A] block mb-1">BİRLİKTELİĞİMİZE DAVETLİSİNİZ</span>
-          <h3 class="calligraphy text-3xl text-[#241F1C]">İpek & Kaan</h3>
-          <div class="w-8 h-[0.5px] bg-[#C5A059] my-2"></div>
-          <span class="sans-sub text-[8px] text-[#6E6254]">12 EYLÜL 2026</span>
-        </div>
-
+      <!-- Zarfın İçinden Çıkan Kart Önizlemesi -->
+      <div class="letter-preview p-5 flex flex-col items-center justify-center text-center">
+        <span class="sans-sub text-[8px] text-[#918374] block mb-1">DAVETLİSİNİZ</span>
+        <h3 class="calligraphy text-3xl text-[#241F1C]">İpek & Kaan</h3>
+        <div class="w-8 h-[0.5px] bg-[#C5A059] my-2"></div>
+        <span class="sans-sub text-[8px] text-[#6E6254]">12 EYLÜL 2026</span>
       </div>
+
+      <!-- Zarfın Yan ve Alt Katmanları (SVG ile Kusursuz Gölgeli) -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 320 220" fill="none">
+        <!-- Sol Kanat -->
+        <path d="M0 0 L160 115 L0 220 Z" fill="#E8DEC $e$" fill="#E4DBCB" opacity="0.95"/>
+        <!-- Sağ Kanat -->
+        <path d="M320 0 L160 115 L320 220 Z" fill="#DDD2C0" opacity="0.95"/>
+        <!-- Alt Kanat -->
+        <path d="M0 220 L160 100 L320 220 Z" fill="#EDE4D6"/>
+        <!-- İnce Gölge Çizgileri -->
+        <path d="M0 220 L160 100 L320 220" stroke="rgba(0,0,0,0.06)" stroke-width="1.5"/>
+      </svg>
+
+      <!-- Zarfın Açılan Üst Kapağı (SVG) -->
+      <div class="envelope-flap-svg absolute top-0 left-0 w-full h-[120px]">
+        <svg class="w-full h-full" viewBox="0 0 320 120" fill="none">
+          <path d="M0 0 L160 115 L320 0 Z" fill="#E2D7C5"/>
+          <path d="M0 0 L160 115 L320 0" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <path d="M0 0 L160 115 L320 0" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <!-- 3D Kabartmalı Altın Balmumu Mühür (SVG) -->
+      <div onclick="unlockInvitation()" class="seal-btn">
+        <svg width="76" height="76" viewBox="0 0 76 76" fill="none">
+          <defs>
+            <radialGradient id="goldGlow" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#F3DC9B"/>
+              <stop offset="50%" stop-color="#C5A059"/>
+              <stop offset="85%" stop-color="#8F6D2E"/>
+              <stop offset="100%" stop-color="#5E4314"/>
+            </radialGradient>
+          </defs>
+          <!-- Mühür Dış Halka -->
+          <circle cx="38" cy="38" r="36" fill="url(#goldGlow)" stroke="#FFF2D1" stroke-width="1.5" stroke-opacity="0.6"/>
+          <circle cx="38" cy="38" r="28" fill="none" stroke="#6E501C" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+          <!-- İ&K Kabartması -->
+          <text x="38" y="47" font-family="'Alex Brush', cursive" font-size="28" fill="#FFF8EB" text-anchor="middle" font-weight="600" style="filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));">
+            İ&K
+          </text>
+        </svg>
+      </div>
+
     </div>
 
-    <p class="sans-sub text-[9px] uppercase text-[#D8CAB8] mt-10 animate-pulse">
+    <!-- Alt Çağrı Metni -->
+    <p class="sans-sub text-[9px] uppercase text-[#DBCBB9] mt-12 animate-pulse tracking-[0.3em]">
       MÜHRE DOKUNARAK AÇINIZ
     </p>
-    <span class="sans-sub text-[8px] text-[#827467] mt-2.5">DAVET & CO. DİJİTAL ATÖLYE</span>
+    <span class="sans-sub text-[8px] text-[#7A6F62] mt-3 tracking-[0.25em]">DAVET & CO. ATÖLYE</span>
   </div>
 
 
-  <!-- ================= 2. AŞAMA: TAM EKRAN ROMANTİK DAVETİYE ================= -->
-  <main id="main-invitation" class="opacity-0 max-w-md mx-auto px-5 py-10 transition-opacity duration-1000 flex flex-col items-center">
+  <!-- ================= 2. AŞAMA: TAM EKRAN LÜKS DAVETİYE ================= -->
+  <main id="main-card" class="opacity-0 max-w-[420px] w-full mx-auto px-4 py-8 transition-opacity duration-1000 flex flex-col items-center">
     
-    <!-- Müzik Butonu -->
-    <button onclick="toggleAudio()" id="music-btn" class="fixed top-5 right-5 z-40 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full shadow-md border border-[#E5DACB] flex items-center justify-center text-[#7A6F64] hover:text-[#241F1C] transition-all">
-      <span id="music-icon" class="text-xs">🎵</span>
+    <!-- Müzik Kontrolü -->
+    <button onclick="toggleAudio()" id="audio-toggle" class="fixed top-5 right-5 z-40 w-11 h-11 bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-[#E5DAC9] flex items-center justify-center text-[#7E7368] hover:text-[#221D1A]">
+      <span id="music-indicator" class="text-xs">🎵</span>
     </button>
 
-    <!-- Başlık Kartı -->
-    <div class="atelier-card w-full rounded-2xl p-8 sm:p-10 text-center mb-7 relative">
-      <span class="sans-sub text-[9px] uppercase text-[#8F7E6E] block mb-2">Birlikteliğimizi Kutluyoruz</span>
+    <!-- Ana Pamuklu Davetiye Kartı -->
+    <div class="cotton-paper w-full rounded-3xl p-8 sm:p-10 text-center mb-6 relative">
       
-      <h1 class="calligraphy text-6xl text-[#1E1916] my-1 leading-tight">
+      <span class="sans-sub text-[9px] uppercase text-[#8F7D6B] block mb-2 tracking-[0.3em]">BİRLİKTELİĞİMİZİ KUTLUYORUZ</span>
+      
+      <h1 class="calligraphy text-6xl text-[#1E1916] my-2 leading-tight">
         İpek & Kaan
       </h1>
 
       <div class="flex items-center justify-center space-x-3 my-4">
         <div class="w-8 h-[0.5px] bg-[#C5A059]"></div>
-        <span class="text-xs text-[#8F6D2E] tracking-[0.25em] uppercase font-light">12 Eylül 2026</span>
+        <span class="sans-sub text-[10px] text-[#8F6D2E] uppercase font-medium">12 EYLÜL 2026</span>
         <div class="w-8 h-[0.5px] bg-[#C5A059]"></div>
       </div>
 
-      <p class="text-base text-[#5E5246] italic font-light leading-relaxed max-w-xs mx-auto">
-        "Hayatımızın en özel gününde, sevgimizi ve mutluluğumuzu sizinle paylaşmaktan büyük bir onur duyarız."
+      <p class="text-base text-[#5E5246] italic leading-relaxed max-w-xs mx-auto">
+        "Hayatımızın en özel gününde, mutluluğumuzu sizinle paylaşmaktan büyük bir onur duyarız."
       </p>
-    </div>
 
-    <!-- Canlı Geri Sayım -->
-    <div class="w-full bg-[#FDFBF8]/90 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFCFA0] shadow-sm mb-7 text-center">
-      <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-3">BÜYÜK GÜNE KALAN ZAMAN</span>
-      <div class="grid grid-cols-4 gap-2.5">
-        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
-          <span id="cd-days" class="text-2xl font-light text-[#241F1C] block">00</span>
-          <span class="sans-sub text-[7px] text-[#8F7E6E]">GÜN</span>
-        </div>
-        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
-          <span id="cd-hours" class="text-2xl font-light text-[#241F1C] block">00</span>
-          <span class="sans-sub text-[7px] text-[#8F7E6E]">SAAT</span>
-        </div>
-        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
-          <span id="cd-mins" class="text-2xl font-light text-[#241F1C] block">00</span>
-          <span class="sans-sub text-[7px] text-[#8F7E6E]">DAKİKA</span>
-        </div>
-        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
-          <span id="cd-secs" class="text-2xl font-light text-[#241F1C] block">00</span>
-          <span class="sans-sub text-[7px] text-[#8F7E6E]">SANİYE</span>
+      <!-- Geri Sayım -->
+      <div class="mt-8 pt-6 border-t border-[#E8DFCFA0]">
+        <span class="sans-sub text-[8px] uppercase text-[#8F7D6B] block mb-3 tracking-[0.25em]">BÜYÜK GÜNE KALAN ZAMAN</span>
+        <div class="grid grid-cols-4 gap-2">
+          <div class="timer-tile py-2.5 rounded-xl">
+            <span id="cd-days" class="text-2xl font-light text-[#1E1916] block">00</span>
+            <span class="sans-sub text-[7px] text-[#8F7D6B]">GÜN</span>
+          </div>
+          <div class="timer-tile py-2.5 rounded-xl">
+            <span id="cd-hours" class="text-2xl font-light text-[#1E1916] block">00</span>
+            <span class="sans-sub text-[7px] text-[#8F7D6B]">SAAT</span>
+          </div>
+          <div class="timer-tile py-2.5 rounded-xl">
+            <span id="cd-mins" class="text-2xl font-light text-[#1E1916] block">00</span>
+            <span class="sans-sub text-[7px] text-[#8F7D6B]">DAKİKA</span>
+          </div>
+          <div class="timer-tile py-2.5 rounded-xl">
+            <span id="cd-secs" class="text-2xl font-light text-[#1E1916] block">00</span>
+            <span class="sans-sub text-[7px] text-[#8F7D6B]">SANİYE</span>
+          </div>
         </div>
       </div>
+
     </div>
 
-    <!-- Tarih & Mekan -->
-    <div class="w-full space-y-4 mb-7">
+    <!-- Tarih & Konum Kartları -->
+    <div class="w-full space-y-4 mb-6">
       
       <!-- Tarih -->
-      <div class="atelier-card rounded-2xl p-5 text-center">
-        <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-1">NİKAH & KUTLAMA</span>
-        <h3 class="text-xl text-[#1E1916] font-normal">12 Eylül 2026, Cumartesi</h3>
+      <div class="cotton-paper rounded-2xl p-5 text-center">
+        <span class="sans-sub text-[8px] uppercase text-[#8F7D6B] block mb-1">NİKAH & KUTLAMA</span>
+        <h3 class="text-xl text-[#1E1916]">12 Eylül 2026, Cumartesi</h3>
         <p class="sans-sub text-[11px] text-[#7A6F64] mt-1">Saat: 18:30</p>
-        <a href="https://calendar.google.com" target="_blank" class="sans-sub inline-block mt-2.5 text-[9px] text-[#8F6D2E] border-b border-[#C5A059] pb-0.5 hover:text-[#5E4317]">
+        <a href="https://calendar.google.com" target="_blank" class="sans-sub inline-block mt-2.5 text-[9px] text-[#8F6D2E] border-b border-[#C5A059] pb-0.5 font-medium">
           + GOOGLE TAKVİME EKLE
         </a>
       </div>
 
       <!-- Konum -->
-      <div class="atelier-card rounded-2xl p-5 text-center">
-        <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-1">DÜĞÜN MEKANI</span>
-        <h3 class="text-xl text-[#1E1916] font-normal">Sait Halim Paşa Yalısı</h3>
+      <div class="cotton-paper rounded-2xl p-5 text-center">
+        <span class="sans-sub text-[8px] uppercase text-[#8F7D6B] block mb-1">DÜĞÜN MEKANI</span>
+        <h3 class="text-xl text-[#1E1916]">Sait Halim Paşa Yalısı</h3>
         <p class="sans-sub text-[11px] text-[#7A6F64] mt-1">Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul</p>
-        <a href="https://maps.google.com/?q=Sait+Halim+Pasa+Yalisi" target="_blank" class="sans-sub inline-block mt-2.5 text-[9px] text-[#8F6D2E] border-b border-[#C5A059] pb-0.5 hover:text-[#5E4317]">
+        <a href="https://maps.google.com/?q=Sait+Halim+Pasa+Yalisi" target="_blank" class="sans-sub inline-block mt-2.5 text-[9px] text-[#8F6D2E] border-b border-[#C5A059] pb-0.5 font-medium">
           HARİTADA AÇ & YOL TARİFİ AL →
         </a>
       </div>
 
     </div>
 
-    <!-- Günün Akışı -->
-    <div class="w-full bg-[#FDFBF8] rounded-2xl p-6 border border-[#E8DFCFA0] shadow-sm mb-7">
-      <span class="sans-sub text-center text-[9px] uppercase text-[#8F7E6E] block mb-5">GÜNÜN PROGRAMI</span>
+    <!-- Günün Programı -->
+    <div class="cotton-paper w-full rounded-2xl p-6 mb-6">
+      <span class="sans-sub text-center text-[9px] uppercase text-[#8F7D6B] block mb-5 tracking-[0.25em]">GÜNÜN PROGRAMI</span>
       
       <div class="space-y-4 max-w-xs mx-auto text-left">
         <div class="flex items-start space-x-3.5 border-l border-[#C5A059] pl-4 relative">
           <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
             <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">18:30</span>
-            <h5 class="text-base text-[#1E1916] leading-tight">Karşılama & Kokteyl</h5>
+            <h5 class="text-base text-[#1E1916]">Karşılama & Kokteyl</h5>
             <p class="text-xs text-[#7A6F64] italic">Boğaz esintisinde ikramlar</p>
           </div>
         </div>
@@ -281,7 +307,7 @@
           <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
             <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">19:30</span>
-            <h5 class="text-base text-[#1E1916] leading-tight">Nikah Töreni</h5>
+            <h5 class="text-base text-[#1E1916]">Nikah Töreni</h5>
             <p class="text-xs text-[#7A6F64] italic">Ömür boyu mutluluğa ilk adım</p>
           </div>
         </div>
@@ -290,7 +316,7 @@
           <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
             <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">20:30</span>
-            <h5 class="text-base text-[#1E1916] leading-tight">Kutlama Yemeği</h5>
+            <h5 class="text-base text-[#1E1916]">Kutlama Yemeği</h5>
             <p class="text-xs text-[#7A6F64] italic">Yalı bahçesinde akşam yemeği</p>
           </div>
         </div>
@@ -299,17 +325,17 @@
           <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
             <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">23:00</span>
-            <h5 class="text-base text-[#1E1916] leading-tight">After Party</h5>
+            <h5 class="text-base text-[#1E1916]">After Party</h5>
             <p class="text-xs text-[#7A6F64] italic">Müzik ve dans dolu kapanış</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- LCV / Katılım Formu -->
-    <div class="atelier-card w-full rounded-2xl p-7 text-center mb-8">
-      <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-1">KATILIM DURUMU</span>
-      <h3 class="text-2xl text-[#1E1916] font-normal mb-1">LCV Bildirimi</h3>
+    <!-- LCV / Katılım Bildirim Formu -->
+    <div class="cotton-paper w-full rounded-2xl p-7 text-center mb-8">
+      <span class="sans-sub text-[8px] uppercase text-[#8F7D6B] block mb-1">KATILIM DURUMU</span>
+      <h3 class="text-2xl text-[#1E1916] mb-1">LCV Bildirimi</h3>
       <p class="text-xs text-[#7A6F64] italic mb-5">Lütfen katılım durumunuzu en geç 1 Ağustos 2026'ya kadar iletiniz.</p>
 
       <div id="rsvp-success-box" class="hidden py-4 text-center">
@@ -353,30 +379,33 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    function openAtelierEnvelope() {
-      const envelope = document.getElementById('envelope-box');
-      const scene = document.getElementById('envelope-scene');
-      const main = document.getElementById('main-invitation');
+    function unlockInvitation() {
+      const stage = document.getElementById('envelope-stage');
+      const intro = document.getElementById('intro-screen');
+      const main = document.getElementById('main-card');
       const audio = document.getElementById('bg-audio');
 
-      envelope.classList.add('open');
+      // 1. Zarf kapağı açılır ve kart süzülür
+      stage.classList.add('opened');
 
+      // 2. Müzik başlar
       try { audio.play(); } catch(e){}
 
+      // 3. 1.3 saniye sonra intro ekranı solar ve davetiye açılır
       setTimeout(() => {
-        scene.style.opacity = '0';
-        scene.style.pointerEvents = 'none';
+        intro.style.opacity = '0';
+        intro.style.pointerEvents = 'none';
         
         setTimeout(() => {
-          scene.style.display = 'none';
+          intro.style.display = 'none';
           main.style.opacity = '1';
-        }, 800);
-      }, 1400);
+        }, 700);
+      }, 1300);
     }
 
     function toggleAudio() {
       const audio = document.getElementById('bg-audio');
-      const icon = document.getElementById('music-icon');
+      const icon = document.getElementById('music-indicator');
       if (audio.paused) {
         audio.play();
         icon.innerText = '🎵';
