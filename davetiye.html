@@ -228,6 +228,25 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+.kapak-overlay {
+  position: absolute; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; transition: opacity 0.8s ease 0.6s;
+}
+.kapak-kanat {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  background-image: url('kapi.png');
+  background-size: 200% 100%; background-repeat: no-repeat;
+  transition: transform 1s cubic-bezier(0.7,0,0.3,1);
+}
+.kapak-sol { left: 0; background-position: left top; }
+.kapak-sag { right: 0; background-position: right top; }
+.kapak-overlay.acik .kapak-sol { transform: translateX(-100%); }
+.kapak-overlay.acik .kapak-sag { transform: translateX(100%); }
+.kapak-overlay.acik { opacity: 0; pointer-events: none; }
+.kapak-icerik { position: relative; z-index: 10; text-align: center; transition: opacity 0.5s ease; }
+.kapak-overlay.acik .kapak-icerik { opacity: 0; }
+
   </style>
 </head>
 <body>
@@ -239,6 +258,15 @@
 
   <!-- ================= CINEMA VIEWPORT (CANLI VİDEO MOTORU) ================= -->
   <div class="cinema-viewport">
+<div id="kapak" class="kapak-overlay">
+  <div class="kapak-kanat kapak-sol"></div>
+  <div class="kapak-kanat kapak-sag"></div>
+  <div class="kapak-icerik">
+    <span class="text-xs text-[#C5A880] block mb-2">❦</span>
+    <h1 class="font-windsong text-3xl text-[#44372C] mb-4">İpek &amp; Kaan</h1>
+    <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
+  </div>
+</div>
 
     <!-- CANLI SİNEMATİK ARKA PLAN VİDEOSU -->
     <video autoplay loop muted playsinline class="bg-video-layer">
@@ -594,6 +622,11 @@
         document.getElementById('cd-secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
       }
     }, 1000);
+    document.getElementById('acBtn').addEventListener('click', function () {
+  document.getElementById('kapak').classList.add('acik');
+  setTimeout(function () { document.getElementById('kapak').remove(); }, 1600);
+}, { once: true });
+
   </script>
 
 </body>
