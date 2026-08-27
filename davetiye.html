@@ -102,4 +102,162 @@
         </div>
         <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
           <span id="minutes" class="text-2xl font-light text-[#1E1916] block">00</span>
-          <span class="sans-t
+          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">DAKİKA</span>
+        </div>
+        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
+          <span id="seconds" class="text-2xl font-light text-[#1E1916] block">00</span>
+          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">SANİYE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarih & Konum -->
+    <div class="w-full space-y-4 mb-8">
+      <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFD3] shadow-sm">
+        <h4 class="text-base text-[#1E1916] font-medium">🗓️ 12 Eylül 2026, Cumartesi</h4>
+        <p class="sans-text text-xs text-[#736B63] mt-1">Saat: 18:30 Nikah & Kokteyl</p>
+        <a href="https://calendar.google.com" target="_blank" class="sans-text inline-block mt-3 text-[10px] uppercase tracking-wider text-[#A07828] underline font-medium">
+          + Google Takvime Ekle
+        </a>
+      </div>
+
+      <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFD3] shadow-sm">
+        <h4 class="text-base text-[#1E1916] font-medium">📍 Sait Halim Paşa Yalısı</h4>
+        <p class="sans-text text-xs text-[#736B63] mt-1">Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul</p>
+        <a href="https://maps.google.com/?q=Sait+Halim+Pasa+Yalisi" target="_blank" class="sans-text inline-block mt-3 text-[10px] uppercase tracking-wider text-[#A07828] underline font-medium">
+          Haritada Aç & Yol Tarifi Al →
+        </a>
+      </div>
+    </div>
+
+    <!-- Akış Programı -->
+    <div class="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#E8DFD3] shadow-sm mb-8">
+      <h3 class="sans-text text-center text-[10px] uppercase tracking-[0.3em] text-[#8C7A6B] mb-5">Günün Akışı</h3>
+      <div class="space-y-4">
+        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
+          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">18:30</span>
+          <div>
+            <h5 class="text-sm font-medium text-[#1E1916]">Karşılama & Kokteyl</h5>
+            <p class="sans-text text-[11px] text-[#736B63]">Boğaz kenarında hafif müzik ve ikramlar</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
+          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">19:30</span>
+          <div>
+            <h5 class="text-sm font-medium text-[#1E1916]">Nikah Töreni</h5>
+            <p class="sans-text text-[11px] text-[#736B63]">Ömür boyu mutluluğa ilk adım</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
+          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">20:30</span>
+          <div>
+            <h5 class="text-sm font-medium text-[#1E1916]">Düğün Yemeği</h5>
+            <p class="sans-text text-[11px] text-[#736B63]">Yalı bahçesinde kutlama yemeği</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
+          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">23:00</span>
+          <div>
+            <h5 class="text-sm font-medium text-[#1E1916]">After Party</h5>
+            <p class="sans-text text-[11px] text-[#736B63]">Gece boyu sürecek eğlence</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LCV Formu -->
+    <div class="w-full bg-white rounded-2xl p-6 border border-[#E8DFD3] shadow-md mb-8">
+      <h3 class="sans-text text-center text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] mb-1">LCV / KATILIM BİLDİRİMİ</h3>
+      <p class="sans-text text-center text-[11px] text-[#736B63] mb-5">Katılım durumunuzu lütfen 1 Ağustos'a kadar bildiriniz.</p>
+
+      <div id="rsvp-success" class="hidden text-center py-5">
+        <span class="text-3xl block mb-2">🌿</span>
+        <h4 class="text-base text-[#1E1916]">Katılımınız Kaydedildi</h4>
+        <p class="sans-text text-[11px] text-[#736B63] mt-1">Sizi aramızda göreceğimiz için çok heyecanlıyız!</p>
+      </div>
+
+      <form id="rsvp-form" onsubmit="handleRsvp(event)" class="space-y-3.5 sans-text text-xs">
+        <div>
+          <label class="block text-[11px] text-[#61564C] mb-1">Adınız ve Soyadınız</label>
+          <input type="text" required placeholder="Örn: Ayşe Yılmaz" class="w-full p-3 bg-[#FAF7F2] border border-[#E3DACF] rounded-xl focus:outline-none focus:border-[#A07828]">
+        </div>
+        <div>
+          <label class="block text-[11px] text-[#61564C] mb-1">Katılım Durumu</label>
+          <select class="w-full p-3 bg-[#FAF7F2] border border-[#E3DACF] rounded-xl focus:outline-none focus:border-[#A07828]">
+            <option value="1">1 Kişi Katılacağım</option>
+            <option value="2">2 Kişi Katılacağız</option>
+            <option value="0">Maalesef Katılamayacağım</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[11px] text-[#61564C] mb-1">Çifte Özel Not / Diyet Tercihi</label>
+          <textarea rows="2" placeholder="Tebrik mesajınız veya özel notunuz..." class="w-full p-3 bg-[#FAF7F2] border border-[#E3DACF] rounded-xl focus:outline-none focus:border-[#A07828]"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3.5 bg-[#1E1916] text-[#FAF7F2] text-[10px] uppercase tracking-[0.25em] rounded-xl hover:bg-[#38312B] transition-all font-medium cursor-pointer">
+          Katılımı Onayla
+        </button>
+      </form>
+    </div>
+
+    <!-- Marka İmzası -->
+    <footer class="sans-text text-center py-4 text-[9px] uppercase tracking-[0.3em] text-[#A89C90]">
+      DAVET & CO. • DİJİTAL TASARIM ATÖLYESİ
+    </footer>
+
+  </main>
+
+  <script>
+    function openInvitation() {
+      var modal = document.getElementById('envelope-modal');
+      var content = document.getElementById('invitation-content');
+      var audio = document.getElementById('bg-audio');
+
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      
+      setTimeout(function() {
+        modal.style.display = 'none';
+        content.classList.remove('hidden');
+      }, 500);
+
+      try {
+        audio.play();
+      } catch (e) {
+        console.log("Müzik otomatik başlatılamadı");
+      }
+    }
+
+    function toggleMusic() {
+      var audio = document.getElementById('bg-audio');
+      var icon = document.getElementById('music-icon');
+      if (audio.paused) {
+        audio.play();
+        icon.innerText = '🎵';
+      } else {
+        audio.pause();
+        icon.innerText = '🔇';
+      }
+    }
+
+    function handleRsvp(e) {
+      e.preventDefault();
+      document.getElementById('rsvp-form').classList.add('hidden');
+      document.getElementById('rsvp-success').classList.remove('hidden');
+    }
+
+    // Geri Sayım
+    var targetDate = new Date("2026-09-12T18:30:00").getTime();
+    setInterval(function() {
+      var now = new Date().getTime();
+      var diff = targetDate - now;
+
+      if (diff > 0) {
+        document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
