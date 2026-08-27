@@ -263,13 +263,13 @@
 .kapak-kanat {
   position: absolute; top: 0; bottom: 0; width: 50%;
   background-image: url('kapi.png');
-  background-size: 200% 130%; background-repeat: no-repeat;
-  filter: contrast(1.12) saturate(1.08);
+  background-size: 200% 155%; background-repeat: no-repeat;
+  filter: contrast(1.2) saturate(1.1) brightness(1.03);
   backface-visibility: hidden;
   transition: transform 1.8s cubic-bezier(0.45, 0, 0.2, 1);
 }
-.kapak-sol { left: 0; background-position: left center; transform-origin: left center; }
-.kapak-sag { right: 0; background-position: right center; transform-origin: right center; }
+.kapak-sol { left: 0; background-position: left 35%; transform-origin: left center; }
+.kapak-sag { right: 0; background-position: right 35%; transform-origin: right center; }
 .kapak-overlay.acik .kapak-sol { transform: rotateY(-100deg); }
 .kapak-overlay.acik .kapak-sag { transform: rotateY(100deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
@@ -681,4 +681,3 @@
 
 </body>
 </html>
-
