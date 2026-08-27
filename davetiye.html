@@ -117,12 +117,12 @@
       max-width: 290px;
       padding: 28px 22px;
       border-radius: 24px;
-      background: rgba(255, 253, 250, 0.4);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(197, 168, 128, 0.35);
+      background: rgba(255, 253, 250, 0.22);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(197, 168, 128, 0.5);
       box-shadow:
-        0 10px 25px -16px rgba(68, 55, 44, 0.15),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+        0 8px 20px -14px rgba(68, 55, 44, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
       position: relative;
       z-index: 25;
     }
@@ -258,18 +258,20 @@
 .kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
   overflow: hidden; transition: opacity 0.9s ease 0.9s;
+  perspective: 1400px;
 }
 .kapak-kanat {
   position: absolute; top: 0; bottom: 0; width: 50%;
   background-image: url('kapi.png');
-  background-size: 240% 115%; background-repeat: no-repeat;
+  background-size: 200% 130%; background-repeat: no-repeat;
   filter: contrast(1.12) saturate(1.08);
-  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  backface-visibility: hidden;
+  transition: transform 1.8s cubic-bezier(0.45, 0, 0.2, 1);
 }
-.kapak-sol { left: 0; background-position: 8% center; }
-.kapak-sag { right: 0; background-position: 92% center; }
-.kapak-overlay.acik .kapak-sol { transform: translateX(-115%) rotate(-8deg); }
-.kapak-overlay.acik .kapak-sag { transform: translateX(115%) rotate(8deg); }
+.kapak-sol { left: 0; background-position: left center; transform-origin: left center; }
+.kapak-sag { right: 0; background-position: right center; transform-origin: right center; }
+.kapak-overlay.acik .kapak-sol { transform: rotateY(-100deg); }
+.kapak-overlay.acik .kapak-sag { transform: rotateY(100deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
 .kapak-icerik {
   position: absolute; left: 0; right: 0; bottom: 15%; z-index: 10;
@@ -679,3 +681,4 @@
 
 </body>
 </html>
+
