@@ -8,228 +8,375 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-cotton: #FAF7F2;
+      --card-cotton: #FDFBF8;
+      --gold-primary: #C5A059;
+      --gold-dark: #8F6D2E;
+      --ink-dark: #241F1C;
+      --ink-muted: #7A6F64;
+    }
+
     body {
       font-family: 'Cormorant Garamond', serif;
-      background-color: #FAF7F2;
-      color: #2D2621;
+      background-color: var(--bg-cotton);
+      color: var(--ink-dark);
+      background-image: 
+        radial-gradient(#E8DFCFA0 0.8px, transparent 0.8px),
+        linear-gradient(to bottom, #FAF7F2, #F4EEE4);
+      background-size: 16px 16px, 100% 100%;
     }
-    .sans-text {
+
+    /* Narin Romantik Kaligrafi */
+    .calligraphy {
+      font-family: 'Great Vibes', 'Alex Brush', cursive;
+    }
+    
+    .sans-sub {
       font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.22em;
     }
-    .paper-texture {
-      background-color: #FAF7F2;
-      background-image: radial-gradient(#E8DFD3 0.75px, transparent 0.75px);
-      background-size: 16px 16px;
+
+    /* 3D Zarf Mimarisi */
+    .envelope-perspective {
+      perspective: 1200px;
     }
-    .gold-seal {
-      background: radial-gradient(circle at 30% 30%, #DFBA67, #A07828 60%, #684C12 100%);
-      box-shadow: 0 10px 25px -5px rgba(160, 120, 40, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+
+    .envelope-box {
+      position: relative;
+      width: 330px;
+      height: 235px;
+      background: #ECE5D8;
+      border-radius: 4px 4px 10px 10px;
+      box-shadow: 0 25px 45px -12px rgba(36, 31, 28, 0.22), 0 0 0 1px #DFD5C4;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .fade-enter {
-      animation: fadeIn 0.8s ease forwards;
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 165px solid transparent;
+      border-right: 165px solid transparent;
+      border-top: 130px solid #DFC8;
+      border-top-color: #E2D9CA;
+      transform-origin: top;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, z-index 0.2s 0.3s;
+      z-index: 5;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    .envelope-box.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    /* Kartın Zarf İçinden Süzülüşü */
+    .envelope-card {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      width: 300px;
+      height: 210px;
+      background: var(--card-cotton);
+      border-radius: 3px;
+      border: 1px solid #EADBCE;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+      z-index: 2;
+    }
+
+    .envelope-box.open .envelope-card {
+      transform: translateY(-165px) scale(1.03);
+    }
+
+    /* Altın Balmumu Mühür */
+    .wax-seal {
+      position: absolute;
+      top: 95px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: radial-gradient(circle at 35% 35%, #E6C57A, #A68036 65%, #6E5118 100%);
+      border-radius: 50%;
+      box-shadow: 
+        0 12px 25px -4px rgba(110, 81, 24, 0.45),
+        inset 0 3px 6px rgba(255, 255, 255, 0.5),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, opacity 0.4s ease;
+      border: 2px solid rgba(255, 248, 230, 0.45);
+    }
+
+    .wax-seal:hover {
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    .envelope-box.open .wax-seal {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(1.25);
+    }
+
+    /* Pamuklu Kağıt Kart Kenarlığı */
+    .atelier-card {
+      background: #FDFBF8;
+      border: 1px solid #E8DEC $\rightarrow$ #E5DAC9;
+      border-color: #E8DEC $e$;
+      border: 1px solid #E5DACB;
+      box-shadow: 
+        0 15px 35px -15px rgba(36, 31, 28, 0.07),
+        inset 0 0 0 5px #FDFBF8,
+        inset 0 0 0 6px #ECE3D4;
     }
   </style>
 </head>
-<body class="paper-texture min-h-screen relative selection:bg-[#EAD8C7]">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#EAE0D2]">
 
-  <!-- Müzik Kaynağı -->
+  <!-- ARKA PLAN FON MÜZİĞİ -->
   <audio id="bg-audio" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
   </audio>
 
-  <!-- 1. AŞAMA: MÜHÜRLÜ ZARF EKRANI -->
-  <div id="envelope-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#181513]/90 backdrop-blur-md p-4 transition-all duration-500">
-    <div class="w-full max-w-sm bg-[#FCFAF7] rounded-3xl p-8 sm:p-10 text-center shadow-2xl border border-[#EADBCE] relative">
-      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent"></div>
-      
-      <p class="sans-text text-[10px] uppercase tracking-[0.35em] text-[#918173] mb-4">ÖZEL DÜĞÜN DAVETİYESİ</p>
-      
-      <h1 class="text-3xl text-[#1E1916] font-light tracking-wide mb-1">İpek & Kaan</h1>
-      <p class="sans-text text-[11px] text-[#7A6E63] tracking-widest mb-8">12 EYLÜL 2026 • İSTANBUL</p>
-
-      <!-- Doğrudan Tıklanabilir Altın Mühür -->
-      <div class="my-8 flex justify-center">
-        <button onclick="openInvitation()" type="button" class="group focus:outline-none flex flex-col items-center cursor-pointer">
-          <div class="w-20 h-20 rounded-full gold-seal flex items-center justify-center transform group-hover:scale-105 group-active:scale-95 transition-all duration-300 border-2 border-[#FCFAF7]">
-            <svg class="w-8 h-8 text-[#FFF8E7] animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
-            </svg>
-          </div>
-          <span class="sans-text mt-4 text-[11px] uppercase tracking-[0.25em] text-[#6E6155] font-medium">Mührü Dokunarak Aç</span>
-        </button>
-      </div>
-
-      <p class="sans-text text-[9px] uppercase tracking-[0.2em] text-[#B0A397]">DAVET & CO. ATÖLYE</p>
+  <!-- ================= 1. AŞAMA: MÜHÜRLÜ 3D ZARF KARŞILAMA ================= -->
+  <div id="envelope-scene" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#171412]/92 backdrop-blur-md px-4 transition-opacity duration-1000">
+    
+    <div class="text-center mb-8">
+      <span class="sans-sub text-[9px] uppercase text-[#B5A595] block mb-1.5">ÖZEL DÜĞÜN DAVETİYESİ</span>
+      <h2 class="calligraphy text-4xl text-[#F9F5EE]">İpek & Kaan</h2>
     </div>
+
+    <!-- 3D İnteraktif Zarf -->
+    <div class="envelope-perspective my-3">
+      <div id="envelope-box" class="envelope-box">
+        
+        <!-- Zarfın Kapağı -->
+        <div class="envelope-flap"></div>
+
+        <!-- Balmumu Monogram Mühür -->
+        <div onclick="openAtelierEnvelope()" class="wax-seal">
+          <span class="calligraphy text-[#FCF6E8] text-3xl font-medium tracking-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+            İ&K
+          </span>
+        </div>
+
+        <!-- Zarf İçindeki Küçük Kart -->
+        <div class="envelope-card p-5 flex flex-col items-center justify-center text-center">
+          <span class="sans-sub text-[8px] text-[#96897A] block mb-1">BİRLİKTELİĞİMİZE DAVETLİSİNİZ</span>
+          <h3 class="calligraphy text-3xl text-[#241F1C]">İpek & Kaan</h3>
+          <div class="w-8 h-[0.5px] bg-[#C5A059] my-2"></div>
+          <span class="sans-sub text-[8px] text-[#6E6254]">12 EYLÜL 2026</span>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="sans-sub text-[9px] uppercase text-[#D8CAB8] mt-10 animate-pulse">
+      MÜHRE DOKUNARAK AÇINIZ
+    </p>
+    <span class="sans-sub text-[8px] text-[#827467] mt-2.5">DAVET & CO. DİJİTAL ATÖLYE</span>
   </div>
 
-  <!-- 2. AŞAMA: DAVETİYE İÇERİĞİ -->
-  <main id="invitation-content" class="hidden max-w-md mx-auto px-6 py-10 fade-enter flex flex-col items-center">
+
+  <!-- ================= 2. AŞAMA: TAM EKRAN ROMANTİK DAVETİYE ================= -->
+  <main id="main-invitation" class="opacity-0 max-w-md mx-auto px-5 py-10 transition-opacity duration-1000 flex flex-col items-center">
     
-    <!-- Müzik Aç / Kapa Butonu -->
-    <button onclick="toggleMusic()" type="button" id="music-btn" class="fixed top-5 right-5 z-40 p-3 bg-white/90 backdrop-blur-md rounded-full shadow-md border border-[#E3DACF] text-[#6E6155] cursor-pointer">
-      <span id="music-icon">🎵</span>
+    <!-- Müzik Butonu -->
+    <button onclick="toggleAudio()" id="music-btn" class="fixed top-5 right-5 z-40 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full shadow-md border border-[#E5DACB] flex items-center justify-center text-[#7A6F64] hover:text-[#241F1C] transition-all">
+      <span id="music-icon" class="text-xs">🎵</span>
     </button>
 
-    <!-- Başlık & İsimler -->
-    <div class="text-center pt-6 pb-8 w-full">
-      <span class="sans-text text-[10px] uppercase tracking-[0.35em] text-[#8C7A6B] block mb-3">Birlikteliğimizi Kutluyoruz</span>
-      <h2 class="text-5xl text-[#1E1916] font-light tracking-tight my-2">İpek & Kaan</h2>
-      <div class="w-12 h-[1px] bg-[#C5A059] mx-auto my-5"></div>
-      <p class="text-base text-[#61564C] italic font-light max-w-xs mx-auto leading-relaxed">
-        "Hayatımızın en özel gününde, sevgimizi ve mutluluğumuzu sizinle paylaşmaktan onur duyarız."
+    <!-- Başlık Kartı -->
+    <div class="atelier-card w-full rounded-2xl p-8 sm:p-10 text-center mb-7 relative">
+      <span class="sans-sub text-[9px] uppercase text-[#8F7E6E] block mb-2">Birlikteliğimizi Kutluyoruz</span>
+      
+      <h1 class="calligraphy text-6xl text-[#1E1916] my-1 leading-tight">
+        İpek & Kaan
+      </h1>
+
+      <div class="flex items-center justify-center space-x-3 my-4">
+        <div class="w-8 h-[0.5px] bg-[#C5A059]"></div>
+        <span class="text-xs text-[#8F6D2E] tracking-[0.25em] uppercase font-light">12 Eylül 2026</span>
+        <div class="w-8 h-[0.5px] bg-[#C5A059]"></div>
+      </div>
+
+      <p class="text-base text-[#5E5246] italic font-light leading-relaxed max-w-xs mx-auto">
+        "Hayatımızın en özel gününde, sevgimizi ve mutluluğumuzu sizinle paylaşmaktan büyük bir onur duyarız."
       </p>
     </div>
 
-    <!-- Geri Sayım -->
-    <div class="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFD3] shadow-sm mb-8 text-center">
-      <p class="sans-text text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] mb-3">Büyük Güne Kalan Zaman</p>
-      <div class="grid grid-cols-4 gap-2">
-        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
-          <span id="days" class="text-2xl font-light text-[#1E1916] block">00</span>
-          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">GÜN</span>
+    <!-- Canlı Geri Sayım -->
+    <div class="w-full bg-[#FDFBF8]/90 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFCFA0] shadow-sm mb-7 text-center">
+      <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-3">BÜYÜK GÜNE KALAN ZAMAN</span>
+      <div class="grid grid-cols-4 gap-2.5">
+        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
+          <span id="cd-days" class="text-2xl font-light text-[#241F1C] block">00</span>
+          <span class="sans-sub text-[7px] text-[#8F7E6E]">GÜN</span>
         </div>
-        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
-          <span id="hours" class="text-2xl font-light text-[#1E1916] block">00</span>
-          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">SAAT</span>
+        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
+          <span id="cd-hours" class="text-2xl font-light text-[#241F1C] block">00</span>
+          <span class="sans-sub text-[7px] text-[#8F7E6E]">SAAT</span>
         </div>
-        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
-          <span id="minutes" class="text-2xl font-light text-[#1E1916] block">00</span>
-          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">DAKİKA</span>
+        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
+          <span id="cd-mins" class="text-2xl font-light text-[#241F1C] block">00</span>
+          <span class="sans-sub text-[7px] text-[#8F7E6E]">DAKİKA</span>
         </div>
-        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
-          <span id="seconds" class="text-2xl font-light text-[#1E1916] block">00</span>
-          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">SANİYE</span>
+        <div class="bg-[#F8F4EC] py-2.5 rounded-xl border border-[#ECE2D2]">
+          <span id="cd-secs" class="text-2xl font-light text-[#241F1C] block">00</span>
+          <span class="sans-sub text-[7px] text-[#8F7E6E]">SANİYE</span>
         </div>
       </div>
     </div>
 
-    <!-- Tarih & Konum -->
-    <div class="w-full space-y-4 mb-8">
-      <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFD3] shadow-sm">
-        <h4 class="text-base text-[#1E1916] font-medium">🗓️ 12 Eylül 2026, Cumartesi</h4>
-        <p class="sans-text text-xs text-[#736B63] mt-1">Saat: 18:30 Nikah & Kokteyl</p>
-        <a href="https://calendar.google.com" target="_blank" class="sans-text inline-block mt-3 text-[10px] uppercase tracking-wider text-[#A07828] underline font-medium">
-          + Google Takvime Ekle
+    <!-- Tarih & Mekan -->
+    <div class="w-full space-y-4 mb-7">
+      
+      <!-- Tarih -->
+      <div class="atelier-card rounded-2xl p-5 text-center">
+        <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-1">NİKAH & KUTLAMA</span>
+        <h3 class="text-xl text-[#1E1916] font-normal">12 Eylül 2026, Cumartesi</h3>
+        <p class="sans-sub text-[11px] text-[#7A6F64] mt-1">Saat: 18:30</p>
+        <a href="https://calendar.google.com" target="_blank" class="sans-sub inline-block mt-2.5 text-[9px] text-[#8F6D2E] border-b border-[#C5A059] pb-0.5 hover:text-[#5E4317]">
+          + GOOGLE TAKVİME EKLE
         </a>
       </div>
 
-      <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFD3] shadow-sm">
-        <h4 class="text-base text-[#1E1916] font-medium">📍 Sait Halim Paşa Yalısı</h4>
-        <p class="sans-text text-xs text-[#736B63] mt-1">Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul</p>
-        <a href="https://maps.google.com/?q=Sait+Halim+Pasa+Yalisi" target="_blank" class="sans-text inline-block mt-3 text-[10px] uppercase tracking-wider text-[#A07828] underline font-medium">
-          Haritada Aç & Yol Tarifi Al →
+      <!-- Konum -->
+      <div class="atelier-card rounded-2xl p-5 text-center">
+        <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-1">DÜĞÜN MEKANI</span>
+        <h3 class="text-xl text-[#1E1916] font-normal">Sait Halim Paşa Yalısı</h3>
+        <p class="sans-sub text-[11px] text-[#7A6F64] mt-1">Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul</p>
+        <a href="https://maps.google.com/?q=Sait+Halim+Pasa+Yalisi" target="_blank" class="sans-sub inline-block mt-2.5 text-[9px] text-[#8F6D2E] border-b border-[#C5A059] pb-0.5 hover:text-[#5E4317]">
+          HARİTADA AÇ & YOL TARİFİ AL →
         </a>
       </div>
+
     </div>
 
-    <!-- Akış Programı -->
-    <div class="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#E8DFD3] shadow-sm mb-8">
-      <h3 class="sans-text text-center text-[10px] uppercase tracking-[0.3em] text-[#8C7A6B] mb-5">Günün Akışı</h3>
-      <div class="space-y-4">
-        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
-          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">18:30</span>
+    <!-- Günün Akışı -->
+    <div class="w-full bg-[#FDFBF8] rounded-2xl p-6 border border-[#E8DFCFA0] shadow-sm mb-7">
+      <span class="sans-sub text-center text-[9px] uppercase text-[#8F7E6E] block mb-5">GÜNÜN PROGRAMI</span>
+      
+      <div class="space-y-4 max-w-xs mx-auto text-left">
+        <div class="flex items-start space-x-3.5 border-l border-[#C5A059] pl-4 relative">
+          <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
-            <h5 class="text-sm font-medium text-[#1E1916]">Karşılama & Kokteyl</h5>
-            <p class="sans-text text-[11px] text-[#736B63]">Boğaz kenarında hafif müzik ve ikramlar</p>
+            <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">18:30</span>
+            <h5 class="text-base text-[#1E1916] leading-tight">Karşılama & Kokteyl</h5>
+            <p class="text-xs text-[#7A6F64] italic">Boğaz esintisinde ikramlar</p>
           </div>
         </div>
-        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
-          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">19:30</span>
+
+        <div class="flex items-start space-x-3.5 border-l border-[#C5A059] pl-4 relative">
+          <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
-            <h5 class="text-sm font-medium text-[#1E1916]">Nikah Töreni</h5>
-            <p class="sans-text text-[11px] text-[#736B63]">Ömür boyu mutluluğa ilk adım</p>
+            <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">19:30</span>
+            <h5 class="text-base text-[#1E1916] leading-tight">Nikah Töreni</h5>
+            <p class="text-xs text-[#7A6F64] italic">Ömür boyu mutluluğa ilk adım</p>
           </div>
         </div>
-        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
-          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">20:30</span>
+
+        <div class="flex items-start space-x-3.5 border-l border-[#C5A059] pl-4 relative">
+          <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
-            <h5 class="text-sm font-medium text-[#1E1916]">Düğün Yemeği</h5>
-            <p class="sans-text text-[11px] text-[#736B63]">Yalı bahçesinde kutlama yemeği</p>
+            <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">20:30</span>
+            <h5 class="text-base text-[#1E1916] leading-tight">Kutlama Yemeği</h5>
+            <p class="text-xs text-[#7A6F64] italic">Yalı bahçesinde akşam yemeği</p>
           </div>
         </div>
-        <div class="flex items-start space-x-4 border-l-2 border-[#C5A059] pl-4">
-          <span class="sans-text text-xs font-semibold text-[#A07828] min-w-[45px]">23:00</span>
+
+        <div class="flex items-start space-x-3.5 border-l border-[#C5A059] pl-4 relative">
+          <div class="w-1.5 h-1.5 rounded-full bg-[#8F6D2E] absolute -left-[3.5px] top-1.5"></div>
           <div>
-            <h5 class="text-sm font-medium text-[#1E1916]">After Party</h5>
-            <p class="sans-text text-[11px] text-[#736B63]">Gece boyu sürecek eğlence</p>
+            <span class="sans-sub text-[11px] font-semibold text-[#8F6D2E]">23:00</span>
+            <h5 class="text-base text-[#1E1916] leading-tight">After Party</h5>
+            <p class="text-xs text-[#7A6F64] italic">Müzik ve dans dolu kapanış</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- LCV Formu -->
-    <div class="w-full bg-white rounded-2xl p-6 border border-[#E8DFD3] shadow-md mb-8">
-      <h3 class="sans-text text-center text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] mb-1">LCV / KATILIM BİLDİRİMİ</h3>
-      <p class="sans-text text-center text-[11px] text-[#736B63] mb-5">Katılım durumunuzu lütfen 1 Ağustos'a kadar bildiriniz.</p>
+    <!-- LCV / Katılım Formu -->
+    <div class="atelier-card w-full rounded-2xl p-7 text-center mb-8">
+      <span class="sans-sub text-[8px] uppercase text-[#8F7E6E] block mb-1">KATILIM DURUMU</span>
+      <h3 class="text-2xl text-[#1E1916] font-normal mb-1">LCV Bildirimi</h3>
+      <p class="text-xs text-[#7A6F64] italic mb-5">Lütfen katılım durumunuzu en geç 1 Ağustos 2026'ya kadar iletiniz.</p>
 
-      <div id="rsvp-success" class="hidden text-center py-5">
-        <span class="text-3xl block mb-2">🌿</span>
-        <h4 class="text-base text-[#1E1916]">Katılımınız Kaydedildi</h4>
-        <p class="sans-text text-[11px] text-[#736B63] mt-1">Sizi aramızda göreceğimiz için çok heyecanlıyız!</p>
+      <div id="rsvp-success-box" class="hidden py-4 text-center">
+        <span class="calligraphy text-4xl text-[#8F6D2E] block mb-1">Teşekkürler</span>
+        <h4 class="text-base text-[#1E1916]">Katılımınız Alındı</h4>
+        <p class="sans-sub text-[9px] text-[#7A6F64] mt-1">Sizi aramızda göreceğimiz için çok mutluyuz.</p>
       </div>
 
-      <form id="rsvp-form" onsubmit="handleRsvp(event)" class="space-y-3.5 sans-text text-xs">
+      <form id="lcv-form" onsubmit="submitRSVP(event)" class="space-y-3.5 text-left">
         <div>
-          <label class="block text-[11px] text-[#61564C] mb-1">Adınız ve Soyadınız</label>
-          <input type="text" required placeholder="Örn: Ayşe Yılmaz" class="w-full p-3 bg-[#FAF7F2] border border-[#E3DACF] rounded-xl focus:outline-none focus:border-[#A07828]">
+          <label class="sans-sub block text-[8px] uppercase text-[#6E6254] mb-1">Adınız Soyadınız</label>
+          <input type="text" required placeholder="Örn: Aslı Güneş" class="sans-sub w-full p-3 bg-[#FAF7F2] border border-[#DFD5C4] rounded-xl text-xs focus:outline-none focus:border-[#8F6D2E]">
         </div>
+
         <div>
-          <label class="block text-[11px] text-[#61564C] mb-1">Katılım Durumu</label>
-          <select class="w-full p-3 bg-[#FAF7F2] border border-[#E3DACF] rounded-xl focus:outline-none focus:border-[#A07828]">
+          <label class="sans-sub block text-[8px] uppercase text-[#6E6254] mb-1">Katılım Durumunuz</label>
+          <select class="sans-sub w-full p-3 bg-[#FAF7F2] border border-[#DFD5C4] rounded-xl text-xs focus:outline-none focus:border-[#8F6D2E]">
             <option value="1">1 Kişi Katılacağım</option>
             <option value="2">2 Kişi Katılacağız</option>
             <option value="0">Maalesef Katılamayacağım</option>
           </select>
         </div>
+
         <div>
-          <label class="block text-[11px] text-[#61564C] mb-1">Çifte Özel Not / Diyet Tercihi</label>
-          <textarea rows="2" placeholder="Tebrik mesajınız veya özel notunuz..." class="w-full p-3 bg-[#FAF7F2] border border-[#E3DACF] rounded-xl focus:outline-none focus:border-[#A07828]"></textarea>
+          <label class="sans-sub block text-[8px] uppercase text-[#6E6254] mb-1">Çifte Not / Diyet Tercihi</label>
+          <textarea rows="2" placeholder="Tebrik mesajınız veya vegan/alerji notunuz..." class="sans-sub w-full p-3 bg-[#FAF7F2] border border-[#DFD5C4] rounded-xl text-xs focus:outline-none focus:border-[#8F6D2E]"></textarea>
         </div>
-        <button type="submit" class="w-full py-3.5 bg-[#1E1916] text-[#FAF7F2] text-[10px] uppercase tracking-[0.25em] rounded-xl hover:bg-[#38312B] transition-all font-medium cursor-pointer">
-          Katılımı Onayla
+
+        <button type="submit" class="sans-sub w-full py-3.5 bg-[#1E1916] text-[#FAF7F2] text-[9px] uppercase font-medium rounded-xl hover:bg-[#38312B] transition-all tracking-[0.25em] shadow-md cursor-pointer mt-1">
+          KATILIMI ONAYLA
         </button>
       </form>
     </div>
 
     <!-- Marka İmzası -->
-    <footer class="sans-text text-center py-4 text-[9px] uppercase tracking-[0.3em] text-[#A89C90]">
+    <footer class="sans-sub text-center py-4 text-[8px] uppercase text-[#A69B8F] tracking-[0.3em]">
       DAVET & CO. • DİJİTAL TASARIM ATÖLYESİ
     </footer>
 
   </main>
 
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
-    function openInvitation() {
-      var modal = document.getElementById('envelope-modal');
-      var content = document.getElementById('invitation-content');
-      var audio = document.getElementById('bg-audio');
+    function openAtelierEnvelope() {
+      const envelope = document.getElementById('envelope-box');
+      const scene = document.getElementById('envelope-scene');
+      const main = document.getElementById('main-invitation');
+      const audio = document.getElementById('bg-audio');
 
-      modal.style.opacity = '0';
-      modal.style.pointerEvents = 'none';
-      
-      setTimeout(function() {
-        modal.style.display = 'none';
-        content.classList.remove('hidden');
-      }, 500);
+      envelope.classList.add('open');
 
-      try {
-        audio.play();
-      } catch (e) {
-        console.log("Müzik otomatik başlatılamadı");
-      }
+      try { audio.play(); } catch(e){}
+
+      setTimeout(() => {
+        scene.style.opacity = '0';
+        scene.style.pointerEvents = 'none';
+        
+        setTimeout(() => {
+          scene.style.display = 'none';
+          main.style.opacity = '1';
+        }, 800);
+      }, 1400);
     }
 
-    function toggleMusic() {
-      var audio = document.getElementById('bg-audio');
-      var icon = document.getElementById('music-icon');
+    function toggleAudio() {
+      const audio = document.getElementById('bg-audio');
+      const icon = document.getElementById('music-icon');
       if (audio.paused) {
         audio.play();
         icon.innerText = '🎵';
@@ -239,25 +386,26 @@
       }
     }
 
-    function handleRsvp(e) {
+    function submitRSVP(e) {
       e.preventDefault();
-      document.getElementById('rsvp-form').classList.add('hidden');
-      document.getElementById('rsvp-success').classList.remove('hidden');
+      document.getElementById('lcv-form').classList.add('hidden');
+      document.getElementById('rsvp-success-box').classList.remove('hidden');
     }
 
-    // Geri Sayım
-    var targetDate = new Date("2026-09-12T18:30:00").getTime();
-    setInterval(function() {
-      var now = new Date().getTime();
-      var diff = targetDate - now;
+    // 12 Eylül 2026 Geri Sayım
+    const weddingDate = new Date("2026-09-12T18:30:00").getTime();
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
 
       if (diff > 0) {
-        document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-        document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-        document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-        document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+        document.getElementById('cd-days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById('cd-hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        document.getElementById('cd-mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        document.getElementById('cd-secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
       }
     }, 1000);
   </script>
+
 </body>
 </html>
