@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>İpek & Kaan — Düğün Davetiyesi | DAVET & CO.</title>
   
-  <!-- GSAP Sinematik Animasyon Motoru -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Lüks Fontlar: Cinzel, Cormorant Garamond, Montserrat & Pinyon Script -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -73,7 +71,7 @@
       }
     }
 
-    /* Sabit Şamdan & Mum Işığı Parıltısı */
+    /* Sabit Mum Işığı Parıltısı */
     .candle-light-overlay {
       position: absolute;
       bottom: -15px;
@@ -93,32 +91,38 @@
       100% { opacity: 0.7; transform: translateX(-50%) scale(1.0); }
     }
 
-    /* ================= SEÇENEK C: SİNEMATİK İPEK TÜL DUVAK ================= */
+    /* ================= GERÇEKÇİ İPEK TÜL & DUVAK KATMANI ================= */
     .tulle-veil-stage {
       position: absolute;
       inset: 0;
       z-index: 60;
-      background: rgba(251, 248, 243, 0.65);
-      backdrop-filter: blur(12px);
-      background-image: 
-        radial-gradient(rgba(215, 195, 165, 0.25) 1px, transparent 1px),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(245, 237, 225, 0.7) 100%);
-      background-size: 10px 10px, 100% 100%;
+      cursor: pointer;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
-      box-shadow: inset 0 0 80px rgba(197, 168, 128, 0.2);
+      background: 
+        radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.75) 0%, rgba(246, 238, 226, 0.88) 100%);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 100px rgba(185, 155, 115, 0.3);
     }
 
-    .tulle-ripple {
-      animation: veilRipple 5s ease-in-out infinite alternate;
+    /* Tülün Kumaş Dokusu & İpek Kıvrım Çizgileri */
+    .tulle-mesh-texture {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.4) 1px, transparent 1px, transparent 4px),
+        repeating-linear-gradient(-45deg, rgba(200,175,140,0.18) 0px, rgba(200,175,140,0.18) 1px, transparent 1px, transparent 4px),
+        linear-gradient(to right, rgba(0,0,0,0.03) 0%, rgba(255,255,255,0.3) 25%, rgba(0,0,0,0.04) 50%, rgba(255,255,255,0.3) 75%, rgba(0,0,0,0.03) 100%);
+      pointer-events: none;
+      animation: drapeWave 6s ease-in-out infinite alternate;
     }
 
-    @keyframes veilRipple {
-      0% { transform: scale(1) translateY(0); }
-      100% { transform: scale(1.015) translateY(-4px); }
+    @keyframes drapeWave {
+      0% { opacity: 0.85; transform: scaleY(1) skewX(0deg); }
+      100% { opacity: 1; transform: scaleY(1.02) skewX(0.5deg); }
     }
 
     /* Modern İtalyan Kemer Çerçevesi */
@@ -209,7 +213,6 @@
       cursor: pointer;
     }
 
-    /* Altın İnce Buton */
     .gold-action-btn {
       background: rgba(255, 253, 250, 0.92);
       border: 1px solid var(--gold-line);
@@ -257,7 +260,6 @@
       box-shadow: 0 2px 6px rgba(142, 112, 71, 0.4);
     }
 
-    /* El Çizimi Altın Çizgi İkonları */
     .line-icon {
       width: 22px;
       height: 22px;
@@ -282,16 +284,25 @@
     <!-- Sabit Mum Işığı Parıltısı -->
     <div class="candle-light-overlay"></div>
 
-    <!-- ================= SEÇENEK C: SİNEMATİK İPEK TÜL DUVAK EKRANI ================= -->
-    <div id="tulle-veil" onclick="liftTulleVeil()" class="tulle-veil-stage tulle-ripple">
-      <div class="text-center px-6">
-        
+    <!-- ================= GERÇEKÇİ İPEK TÜL & DUVAK AÇILIŞI ================= -->
+    <div id="tulle-veil" onclick="liftTulleVeil()" class="tulle-veil-stage">
+      
+      <!-- Tül Kumaş Dokusu & Kıvrım Katmanı -->
+      <div class="tulle-mesh-texture"></div>
+
+      <!-- Dantel Alt Etek Bordürü (SVG) -->
+      <svg class="absolute bottom-0 left-0 w-full h-14 opacity-40" viewBox="0 0 400 60" fill="none" preserveAspectRatio="none">
+        <path d="M0 30 Q25 0 50 30 T100 30 T150 30 T200 30 T250 30 T300 30 T350 30 T400 30 V60 H0 Z" fill="rgba(255,255,255,0.7)"/>
+        <path d="M0 30 Q25 0 50 30 T100 30 T150 30 T200 30 T250 30 T300 30 T350 30 T400 30" stroke="#C5A880" stroke-width="1"/>
+      </svg>
+
+      <div class="relative z-10 text-center px-6">
         <!-- İnce Çizgisel Monogram -->
-        <div class="w-14 h-14 rounded-full border border-[#C5A880]/60 flex items-center justify-center mx-auto mb-6 bg-[#FCFAF7]/40 shadow-sm">
+        <div class="w-14 h-14 rounded-full border border-[#C5A880]/70 flex items-center justify-center mx-auto mb-6 bg-[#FCFAF7]/60 shadow-md backdrop-blur-sm">
           <span class="font-pinyon text-2xl text-[#8E7047]">İ & K</span>
         </div>
 
-        <span class="font-sans-sub text-[8px] uppercase text-[#8E7047] block mb-2 tracking-[0.35em] font-medium">
+        <span class="font-sans-sub text-[8px] uppercase text-[#8E7047] block mb-2 tracking-[0.35em] font-semibold">
           DÜĞÜN DAVETİYESİ
         </span>
 
@@ -301,12 +312,12 @@
 
         <div class="w-10 h-[0.5px] bg-[#C5A880] mx-auto my-5"></div>
 
-        <!-- Dokunmatik Çağrı Butonu / Rozeti -->
-        <div class="mt-8 inline-flex items-center gap-2 bg-[#FCFAF7]/90 px-6 py-2.5 rounded-full border border-[#C5A880]/50 shadow-md">
+        <!-- Dokunmatik Çağrı Rozeti -->
+        <div class="mt-8 inline-flex items-center gap-2 bg-[#FCFAF7]/95 px-6 py-2.5 rounded-full border border-[#C5A880]/60 shadow-lg">
           <span class="font-sans-sub text-[8px] uppercase text-[#362E27] font-semibold tracking-[0.3em]">
-            DOKUNARAK ARALAYINIZ
+            DUVAĞI ARALAYINIZ
           </span>
-          <span class="text-xs text-[#8E7047]">→</span>
+          <span class="text-xs text-[#8E7047]">✨</span>
         </div>
 
         <span class="font-sans-sub text-[7px] text-[#A89C8F] uppercase tracking-[0.3em] block mt-10">
@@ -319,12 +330,11 @@
     <!-- ================= 9 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
 
-      <!-- ================= 1. MODÜL: KAPAK (VOGUE EDİTORYAL DİZİM) ================= -->
+      <!-- ================= 1. MODÜL: KAPAK ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="text-xs text-[#C5A880] block mb-1">❦</span>
           
-          <!-- Vogue Büyük Harf Roma Dizimi -->
           <h1 class="font-cinzel text-2xl sm:text-3xl text-[#362E27] leading-relaxed my-2">
             İ P E K
           </h1>
@@ -353,11 +363,11 @@
         </div>
       </section>
 
-      <!-- ================= 2. MODÜL: TARİH (EYLÜL 2026 EDİTORYAL MİNİ TAKVİM) ================= -->
+      <!-- ================= 2. MODÜL: TARİH (EYLÜL 2026 TAKVİMİ) ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           
-          <!-- El Çizimi Botanik Zeytin Dalı SVG -->
+          <!-- Zeytin Dalı SVG -->
           <svg class="w-6 h-6 mx-auto stroke-[#C5A880] fill-none stroke-[1.2] mb-1" viewBox="0 0 24 24">
             <path d="M12 2C12 2 13 8 7 10C1 12 2 18 2 18C2 18 8 17 10 11C12 5 18 4 18 4M12 2C12 2 16 7 22 9"/>
           </svg>
@@ -416,13 +426,14 @@
         </div>
       </section>
 
-      <!-- ================= 3. MODÜL: MEKAN & BOĞAZ FOTOĞRAFI ================= -->
+      <!-- ================= 3. MODÜL: MEKAN & SAİT HALİM PAŞA YALISI GERÇEK FOTOĞRAFI ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="font-sans-sub text-[7.5px] uppercase text-[#7C6F61] tracking-[0.3em] font-semibold block mb-2">KUTLAMA MEKANI</span>
           
-          <div class="w-full h-28 rounded-2xl overflow-hidden mb-3 border border-[#C5A880]/40 shadow-sm">
-            <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=600&q=80" alt="Sait Halim Paşa Yalısı" class="w-full h-full object-cover grayscale-[30%] contrast-[105%]"/>
+          <!-- Sait Halim Paşa Yalısı Gerçek Tarihi Boğaz Fotoğrafı -->
+          <div class="w-full h-32 rounded-2xl overflow-hidden mb-3 border border-[#C5A880]/50 shadow-md">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Said_Halim_Pa%C5%9Fa_Yal%C4%B1s%C4%B1.jpg" alt="Sait Halim Paşa Yalısı Yeniköy" class="w-full h-full object-cover"/>
           </div>
 
           <h3 class="font-cinzel text-base text-[#362E27] mb-0.5 tracking-[0.2em] font-medium">SAİT HALİM PAŞA YALISI</h3>
@@ -436,7 +447,7 @@
         </div>
       </section>
 
-      <!-- ================= 4. MODÜL: GERİ SAYIM (4'LÜ ALTIN KUTU) ================= -->
+      <!-- ================= 4. MODÜL: GERİ SAYIM ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="font-pinyon text-4xl text-[#362E27] block mb-1">Buluşmaya Kalan</span>
@@ -465,14 +476,12 @@
         </div>
       </section>
 
-      <!-- ================= 5. MODÜL: PROGRAM (EL ÇİZİMİ ALTIN İKONLAR) ================= -->
+      <!-- ================= 5. MODÜL: PROGRAM (EL ÇİZİMİ İKONLAR) ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="font-sans-sub text-[7.5px] uppercase text-[#7C6F61] tracking-[0.3em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
           
           <div class="space-y-2.5 text-left max-w-[260px] mx-auto">
-            
-            <!-- Nikah: Alyans Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24">
                 <circle cx="9" cy="12" r="6"/>
@@ -484,7 +493,6 @@
               </div>
             </div>
 
-            <!-- Kokteyl: Kristal Kadeh Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24">
                 <path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/>
@@ -495,7 +503,6 @@
               </div>
             </div>
 
-            <!-- Yemek: Cloche & Tabak Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24">
                 <path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/>
@@ -506,7 +513,6 @@
               </div>
             </div>
 
-            <!-- After Party: Gramofon / Nota Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24">
                 <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -516,7 +522,6 @@
                 <h5 class="font-cormorant text-sm text-[#362E27] font-medium leading-none">After Party</h5>
               </div>
             </div>
-
           </div>
         </div>
       </section>
