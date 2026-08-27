@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Italiana&family=Playfair+Display:ital,wght@1,400;1,500&family=Tenor+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Italiana&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=Tenor+Sans&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -24,8 +24,8 @@
 
     body {
       font-family: 'Tenor Sans', sans-serif;
-      background-color: #0F0D0C;
-      background-image: radial-gradient(circle at 50% 50%, #201A16 0%, #0A0808 100%);
+      background-color: #0E0C0A;
+      background-image: radial-gradient(circle at 50% 50%, #221D18 0%, #0A0808 100%);
       color: var(--text-bronze);
       margin: 0;
       padding: 0;
@@ -36,26 +36,18 @@
       overflow: hidden;
     }
 
-    /* Tipografi Sınıfları */
     .font-italiana { font-family: 'Italiana', serif; }
     .font-playfair-italic { font-family: 'Playfair Display', serif; font-style: italic; }
     .font-cormorant { font-family: 'Cormorant Garamond', serif; }
     .font-tenor { font-family: 'Tenor Sans', sans-serif; }
 
-    /* Altın Varak & Kabartma Yazı Efekti */
-    .gold-foil-text {
-      background: linear-gradient(135deg, #7A581F 0%, #C9A254 45%, #EADB9E 55%, #8C6623 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8));
+    /* İtalyan Letterpress Kabartma Yazı */
+    .letterpress-title {
+      color: #382E25;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9), 0 -1px 1px rgba(0, 0, 0, 0.1);
     }
 
-    .letterpress-text {
-      color: #3E332A;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.85), 0 -1px 1px rgba(0, 0, 0, 0.12);
-    }
-
-    /* Telefon Sahnesi (Desktopta Lüks Mockup, Mobilde Tam Ekran) */
+    /* iPhone Sahnesi */
     .cinema-viewport {
       width: 100%;
       max-width: 414px;
@@ -78,7 +70,7 @@
       }
     }
 
-    /* 3D Gatefold (İki Yana Açılan Kapı Zarf) */
+    /* 3D Gatefold (İki Yana Açılan Kapı) */
     .gatefold-stage {
       position: absolute;
       inset: 0;
@@ -105,20 +97,20 @@
       left: 0;
       background-position: left center;
       border-right: 1px solid rgba(160, 130, 75, 0.35);
-      box-shadow: inset -15px 0 30px rgba(0,0,0,0.08);
+      box-shadow: inset -15px 0 30px rgba(0,0,0,0.06);
     }
 
     .gate-right {
       right: 0;
       background-position: right center;
       border-left: 1px solid rgba(160, 130, 75, 0.35);
-      box-shadow: inset 15px 0 30px rgba(0,0,0,0.08);
+      box-shadow: inset 15px 0 30px rgba(0,0,0,0.06);
     }
 
     .gatefold-stage.opened .gate-left { transform: translateX(-100%); }
     .gatefold-stage.opened .gate-right { transform: translateX(100%); }
 
-    /* Oval Mühür */
+    /* Mühür & Buton Konteyneri */
     .gate-seal-btn {
       position: absolute;
       top: 50%;
@@ -137,22 +129,6 @@
       opacity: 0;
       pointer-events: none;
       transform: translate(-50%, -50%) scale(1.2);
-    }
-
-    .oval-wax {
-      width: 82px;
-      height: 98px;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      background: radial-gradient(circle at 35% 30%, #F5DE9C, #B68D3E 60%, #6E4F16 100%);
-      box-shadow: 
-        0 15px 30px -5px rgba(90, 65, 20, 0.45),
-        inset 0 3px 6px rgba(255, 255, 255, 0.6),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid rgba(255, 245, 225, 0.5);
     }
 
     /* Sinematik Story Slider */
@@ -185,10 +161,10 @@
 
     /* İpeksi Saydam Metin Kalkanı */
     .silk-card {
-      background: rgba(255, 253, 250, 0.72);
+      background: rgba(255, 253, 250, 0.75);
       backdrop-filter: blur(6px);
       border-radius: 26px;
-      border: 1px solid rgba(212, 178, 108, 0.3);
+      border: 1px solid rgba(212, 178, 108, 0.35);
       box-shadow: 0 15px 35px -10px rgba(60, 45, 30, 0.06);
       width: 100%;
       padding: 24px 20px;
@@ -253,15 +229,34 @@
       <div class="gatefold-door gate-left"></div>
       <div class="gatefold-door gate-right"></div>
 
+      <!-- Mühür ve Aç Butonu -->
       <div onclick="openCinemaEnvelope()" class="gate-seal-btn">
-        <div class="oval-wax">
-          <span class="font-playfair-italic text-3xl text-[#FFF8EB] leading-none mb-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-            İ & K
-          </span>
-          <span class="font-tenor text-[6px] tracking-[0.25em] text-[#FFF8EB]/85 uppercase">ATÖLYE</span>
-        </div>
+        
+        <!-- MODEL 1: DOĞAL FİLDİŞİ KABARTMALI BALMUMU MÜHÜR -->
+        <svg width="105" height="105" viewBox="0 0 150 150" fill="none" style="filter: drop-shadow(0 12px 20px rgba(60, 45, 25, 0.35));">
+          <defs>
+            <radialGradient id="ivoryMatte" cx="38%" cy="32%" r="65%">
+              <stop offset="0%" stop-color="#FAF7F2"/>
+              <stop offset="45%" stop-color="#EFE8DC"/>
+              <stop offset="80%" stop-color="#DFD5C4"/>
+              <stop offset="100%" stop-color="#C5B8A3"/>
+            </radialGradient>
+          </defs>
 
-        <div class="mt-6 bg-[#FCFAF7]/95 px-6 py-2.5 rounded-full border border-[#D4B26C]/50 shadow-md">
+          <!-- Doğal Erimiş Mum Konturu -->
+          <path d="M75 14 C95 12, 115 22, 126 38 C138 55, 139 78, 131 98 C123 118, 103 134, 82 136 C61 138, 38 129, 25 112 C12 95, 11 71, 20 50 C29 29, 55 16, 75 14 Z" 
+                fill="url(#ivoryMatte)" stroke="#F5EFE6" stroke-width="1.5"/>
+          
+          <!-- İç Çukur -->
+          <circle cx="75" cy="76" r="42" fill="#E8DFD1" stroke="#DFD5C4" stroke-width="1.5"/>
+          
+          <!-- İ & K Monogramı -->
+          <text x="75" y="85" font-family="'Playfair Display', serif" font-style="italic" font-size="28" fill="#7E6E5C" text-anchor="middle" font-weight="600" style="filter: drop-shadow(0 1px 1px #FFF);">
+            İ &amp; K
+          </text>
+        </svg>
+
+        <div class="mt-4 bg-[#FCFAF7]/95 px-6 py-2.5 rounded-full border border-[#D4B26C]/45 shadow-md">
           <span class="font-tenor text-[8px] uppercase text-[#3E332A] font-medium tracking-[0.3em]">
             DAVETİYEYİ AÇ
           </span>
@@ -269,16 +264,16 @@
       </div>
     </div>
 
-    <!-- ================= 2. SİNEMATİK STORY SAHNELERİ ================= -->
+    <!-- ================= 2. 4 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
 
-      <!-- SAHNE 1: KAPAK (VOGUE / SARAY ZERAFETİ) -->
+      <!-- SAHNE 1: KAPAK & AİLE METNİ -->
       <section class="story-screen text-center">
         <div class="pt-4">
           <span class="font-tenor text-[8px] uppercase tracking-[0.35em] text-[#8E6D2F] block mb-2 font-medium">
             BİRLİKTELİĞİMİZİ KUTLUYORUZ
           </span>
-          <h1 class="font-italiana text-5xl sm:text-6xl letterpress-text my-1 tracking-wider leading-none">
+          <h1 class="font-italiana text-5xl sm:text-6xl letterpress-title my-1 tracking-wider leading-none">
             İpek <span class="font-playfair-italic text-3xl sm:text-4xl text-[#B38D43]">&</span> Kaan
           </h1>
           <div class="w-12 h-[0.5px] bg-[#C9A254] mx-auto my-4"></div>
@@ -305,11 +300,11 @@
       <section class="story-screen text-center">
         <div class="pt-4">
           <span class="font-tenor text-[8px] uppercase tracking-[0.35em] text-[#8E6D2F] block mb-1">GÜNÜ BİRLİKTE SAYIYORUZ</span>
-          <span class="font-italiana text-3xl letterpress-text tracking-wide">Tarih & Saat</span>
+          <span class="font-italiana text-3xl letterpress-title tracking-wide">Tarih & Saat</span>
         </div>
 
         <div class="my-auto w-full max-w-[280px]">
-          <h2 class="font-italiana text-7xl letterpress-text tracking-normal my-0">12</h2>
+          <h2 class="font-italiana text-7xl letterpress-title tracking-normal my-0">12</h2>
           <span class="font-tenor text-base text-[#8E6D2F] uppercase tracking-[0.3em] font-medium block my-1">EYLÜL 2026</span>
           <p class="font-tenor text-[9px] tracking-[0.25em] text-[#7E7062]">CUMARTESİ • SAAT 18:30</p>
 
@@ -349,14 +344,14 @@
       <section class="story-screen text-center">
         <div class="pt-4">
           <span class="font-tenor text-[8px] uppercase tracking-[0.35em] text-[#8E6D2F] block mb-1">KUTLAMA MEKANI</span>
-          <span class="font-italiana text-3xl letterpress-text tracking-wide">Konum & Ulaşım</span>
+          <span class="font-italiana text-3xl letterpress-title tracking-wide">Konum & Ulaşım</span>
         </div>
 
         <div class="silk-card my-auto max-w-[280px]">
           <div class="w-11 h-11 rounded-full bg-[#FCFAF7] border border-[#D4B26C]/40 flex items-center justify-center mx-auto mb-3 text-base shadow-sm">
             🏛️
           </div>
-          <h3 class="font-italiana text-2xl letterpress-text mb-1">Sait Halim Paşa Yalısı</h3>
+          <h3 class="font-italiana text-2xl letterpress-title mb-1">Sait Halim Paşa Yalısı</h3>
           <p class="font-cormorant text-sm text-[#7E7062] leading-relaxed italic">
             Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul
           </p>
@@ -373,58 +368,11 @@
       </section>
 
 
-      <!-- SAHNE 4: GÜNÜN PROGRAMI -->
-      <section class="story-screen text-center">
-        <div class="pt-4">
-          <span class="font-tenor text-[8px] uppercase tracking-[0.35em] text-[#8E6D2F] block mb-1">ETKİNLİK AKIŞI</span>
-          <span class="font-italiana text-3xl letterpress-text tracking-wide">Günün Programı</span>
-        </div>
-
-        <div class="silk-card my-auto max-w-[270px] text-left space-y-4">
-          <div class="flex items-start gap-3 border-l border-[#C9A254] pl-3.5 relative">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#8E6D2F] absolute -left-[4px] top-1.5"></div>
-            <div>
-              <span class="font-tenor text-[9px] font-semibold text-[#8E6D2F] tracking-wider">18:30</span>
-              <h5 class="font-cormorant text-base text-[#3E332A] font-medium leading-none mt-0.5">Karşılama & Kokteyl</h5>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 border-l border-[#C9A254] pl-3.5 relative">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#8E6D2F] absolute -left-[4px] top-1.5"></div>
-            <div>
-              <span class="font-tenor text-[9px] font-semibold text-[#8E6D2F] tracking-wider">19:30</span>
-              <h5 class="font-cormorant text-base text-[#3E332A] font-medium leading-none mt-0.5">Nikah Seremonisi</h5>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 border-l border-[#C9A254] pl-3.5 relative">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#8E6D2F] absolute -left-[4px] top-1.5"></div>
-            <div>
-              <span class="font-tenor text-[9px] font-semibold text-[#8E6D2F] tracking-wider">20:30</span>
-              <h5 class="font-cormorant text-base text-[#3E332A] font-medium leading-none mt-0.5">Kutlama Yemeği</h5>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 border-l border-[#C9A254] pl-3.5 relative">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#8E6D2F] absolute -left-[4px] top-1.5"></div>
-            <div>
-              <span class="font-tenor text-[9px] font-semibold text-[#8E6D2F] tracking-wider">23:00</span>
-              <h5 class="font-cormorant text-base text-[#3E332A] font-medium leading-none mt-0.5">After Party</h5>
-            </div>
-          </div>
-        </div>
-
-        <div class="pb-2">
-          <span class="font-tenor text-[7px] text-[#8E7E6E] uppercase tracking-[0.3em]">DAVET & CO. ATÖLYE</span>
-        </div>
-      </section>
-
-
-      <!-- SAHNE 5: LCV & KATILIM BİLDİRİMİ -->
+      <!-- SAHNE 4: LCV & KATILIM BİLDİRİMİ -->
       <section class="story-screen text-center">
         <div class="pt-3">
           <span class="font-tenor text-[8px] uppercase tracking-[0.35em] text-[#8E6D2F] block mb-0.5">KATILIM DURUMU</span>
-          <span class="font-italiana text-3xl letterpress-text tracking-wide">LCV Bildirimi</span>
+          <span class="font-italiana text-3xl letterpress-title tracking-wide">LCV Bildirimi</span>
           <p class="font-cormorant text-xs text-[#7E7062] italic mt-0.5">Lütfen 1 Ağustos'a kadar iletiniz.</p>
         </div>
 
@@ -523,7 +471,7 @@
       document.getElementById('rsvp-ok').classList.remove('hidden');
     }
 
-    // Geri Sayım
+    // 12 Eylül 2026 Geri Sayım
     const targetDate = new Date("2026-09-12T18:30:00").getTime();
     setInterval(() => {
       const now = new Date().getTime();
