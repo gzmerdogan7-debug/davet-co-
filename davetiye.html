@@ -60,10 +60,7 @@
       border-radius: 42px;
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      background-color: #EFE7DA;
-      background-image: url('kapi.png');
-      background-size: cover;
-      background-position: center;
+      background-color: #F3EEE4;
     }
 
     @media (max-width: 640px) {
@@ -86,6 +83,23 @@
       background: radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(7,6,5,0.55) 100%);
     }
 
+    /* Köşelere Yumuşak Geçişli Çiçek Çerçevesi */
+    .cerceve-cicek {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      z-index: 6;
+      pointer-events: none;
+      background-image: url('kapi.png');
+      background-size: 480% 480%;
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0) 72%);
+      mask-image: radial-gradient(circle, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0) 72%);
+    }
+    .cerceve-sol-ust { top: -25px; left: -25px; background-position: 0% 0%; }
+    .cerceve-sag-ust { top: -25px; right: -25px; background-position: 100% 0%; }
+    .cerceve-sol-alt { bottom: -25px; left: -25px; background-position: 0% 100%; }
+    .cerceve-sag-alt { bottom: -25px; right: -25px; background-position: 100% 100%; }
+
     /* Kart Giriş Animasyonu */
     .kart-giris {
       opacity: 0;
@@ -103,13 +117,12 @@
       max-width: 290px;
       padding: 28px 22px;
       border-radius: 24px;
-      background: rgba(254, 252, 249, 0.86);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(197, 168, 128, 0.4);
+      background: rgba(255, 253, 250, 0.4);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(197, 168, 128, 0.35);
       box-shadow:
-        0 15px 35px -14px rgba(68, 55, 44, 0.2),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.75),
-        inset 0 0 0 4px rgba(197, 168, 128, 0.18);
+        0 10px 25px -16px rgba(68, 55, 44, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.45);
       position: relative;
       z-index: 25;
     }
@@ -249,11 +262,12 @@
 .kapak-kanat {
   position: absolute; top: 0; bottom: 0; width: 50%;
   background-image: url('kapi.png');
-  background-size: 200% 100%; background-repeat: no-repeat;
+  background-size: 240% 115%; background-repeat: no-repeat;
+  filter: contrast(1.12) saturate(1.08);
   transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.kapak-sol { left: 0; background-position: left top; }
-.kapak-sag { right: 0; background-position: right top; }
+.kapak-sol { left: 0; background-position: 8% center; }
+.kapak-sag { right: 0; background-position: 92% center; }
 .kapak-overlay.acik .kapak-sol { transform: translateX(-115%) rotate(-8deg); }
 .kapak-overlay.acik .kapak-sag { transform: translateX(115%) rotate(8deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
@@ -281,6 +295,11 @@
     <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
   </div>
 </div>
+
+    <div class="cerceve-cicek cerceve-sol-ust"></div>
+    <div class="cerceve-cicek cerceve-sag-ust"></div>
+    <div class="cerceve-cicek cerceve-sol-alt"></div>
+    <div class="cerceve-cicek cerceve-sag-alt"></div>
 
     <!-- ================= 9 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
