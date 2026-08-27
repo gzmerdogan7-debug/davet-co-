@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>İpek & Kaan — Düğün Davetiyesi | DAVET & CO.</title>
   
-  <!-- Tailwind CSS & Google Lüks Yazı Tipleri -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
-  
-  <!-- Lucide Simgeleri -->
-  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
@@ -23,34 +19,33 @@
     .sans-text {
       font-family: 'Montserrat', sans-serif;
     }
-    /* Kağıt Dokusu */
     .paper-texture {
       background-color: #FAF7F2;
       background-image: radial-gradient(#E8DFD3 0.75px, transparent 0.75px);
       background-size: 16px 16px;
     }
-    /* Altın Yaldız Mühür Parlaması */
     .gold-seal {
       background: radial-gradient(circle at 30% 30%, #DFBA67, #A07828 60%, #684C12 100%);
       box-shadow: 0 10px 25px -5px rgba(160, 120, 40, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4);
     }
-    /* Zarif Geçiş Animasyonu */
     .fade-enter {
-      animation: fadeIn 1s ease forwards;
+      animation: fadeIn 0.8s ease forwards;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body class="paper-texture min-h-screen relative selection:bg-[#EAD8C7]">
 
-  <!-- ARKA PLAN MÜZİĞİ -->
-  <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3"></audio>
+  <!-- Müzik Kaynağı -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
+  </audio>
 
-  <!-- 1. AŞAMA: MÜHÜRLÜ ZARF KARŞILAMA EKRANI -->
-  <div id="envelope-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#181513]/90 backdrop-blur-md p-4 transition-opacity duration-700">
+  <!-- 1. AŞAMA: MÜHÜRLÜ ZARF EKRANI -->
+  <div id="envelope-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#181513]/90 backdrop-blur-md p-4 transition-all duration-500">
     <div class="w-full max-w-sm bg-[#FCFAF7] rounded-3xl p-8 sm:p-10 text-center shadow-2xl border border-[#EADBCE] relative">
       <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent"></div>
       
@@ -59,13 +54,15 @@
       <h1 class="text-3xl text-[#1E1916] font-light tracking-wide mb-1">İpek & Kaan</h1>
       <p class="sans-text text-[11px] text-[#7A6E63] tracking-widest mb-8">12 EYLÜL 2026 • İSTANBUL</p>
 
-      <!-- Tıklanabilir Altın Mühür -->
+      <!-- Doğrudan Tıklanabilir Altın Mühür -->
       <div class="my-8 flex justify-center">
-        <button id="open-btn" class="group focus:outline-none flex flex-col items-center">
+        <button onclick="openInvitation()" type="button" class="group focus:outline-none flex flex-col items-center cursor-pointer">
           <div class="w-20 h-20 rounded-full gold-seal flex items-center justify-center transform group-hover:scale-105 group-active:scale-95 transition-all duration-300 border-2 border-[#FCFAF7]">
-            <i data-lucide="sparkles" class="w-8 h-8 text-[#FFF8E7] animate-pulse"></i>
+            <svg class="w-8 h-8 text-[#FFF8E7] animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
+            </svg>
           </div>
-          <span class="sans-text mt-4 text-[11px] uppercase tracking-[0.25em] text-[#6E6155]">Mührü Dokunarak Aç</span>
+          <span class="sans-text mt-4 text-[11px] uppercase tracking-[0.25em] text-[#6E6155] font-medium">Mührü Dokunarak Aç</span>
         </button>
       </div>
 
@@ -76,12 +73,12 @@
   <!-- 2. AŞAMA: DAVETİYE İÇERİĞİ -->
   <main id="invitation-content" class="hidden max-w-md mx-auto px-6 py-10 fade-enter flex flex-col items-center">
     
-    <!-- Müzik Kontrol Butonu -->
-    <button id="music-btn" class="fixed top-5 right-5 z-40 p-3 bg-white/85 backdrop-blur-md rounded-full shadow-md border border-[#E3DACF] text-[#6E6155]">
-      <i data-lucide="music" class="w-4 h-4"></i>
+    <!-- Müzik Aç / Kapa Butonu -->
+    <button onclick="toggleMusic()" type="button" id="music-btn" class="fixed top-5 right-5 z-40 p-3 bg-white/90 backdrop-blur-md rounded-full shadow-md border border-[#E3DACF] text-[#6E6155] cursor-pointer">
+      <span id="music-icon">🎵</span>
     </button>
 
-    <!-- Başlık & Çift İsimleri -->
+    <!-- Başlık & İsimler -->
     <div class="text-center pt-6 pb-8 w-full">
       <span class="sans-text text-[10px] uppercase tracking-[0.35em] text-[#8C7A6B] block mb-3">Birlikteliğimizi Kutluyoruz</span>
       <h2 class="text-5xl text-[#1E1916] font-light tracking-tight my-2">İpek & Kaan</h2>
@@ -91,7 +88,7 @@
       </p>
     </div>
 
-    <!-- Canlı Geri Sayım -->
+    <!-- Geri Sayım -->
     <div class="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-[#E8DFD3] shadow-sm mb-8 text-center">
       <p class="sans-text text-[10px] uppercase tracking-[0.25em] text-[#8C7A6B] mb-3">Büyük Güne Kalan Zaman</p>
       <div class="grid grid-cols-4 gap-2">
@@ -99,4 +96,10 @@
           <span id="days" class="text-2xl font-light text-[#1E1916] block">00</span>
           <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">GÜN</span>
         </div>
-        <div cl
+        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
+          <span id="hours" class="text-2xl font-light text-[#1E1916] block">00</span>
+          <span class="sans-text text-[9px] tracking-wider text-[#8C7A6B]">SAAT</span>
+        </div>
+        <div class="bg-[#FAF7F2] py-2.5 rounded-xl border border-[#EDE5DA]">
+          <span id="minutes" class="text-2xl font-light text-[#1E1916] block">00</span>
+          <span class="sans-t
