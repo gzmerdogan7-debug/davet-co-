@@ -9,15 +9,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts: Cinzel, Cormorant Garamond, Montserrat & Pinyon Script -->
+  <!-- Lüks Fontlar: Cinzel, Cormorant Garamond, Montserrat & Pinyon Script -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --text-ink: #362E27;
-      --text-muted: #7A6E61;
+      --text-muted: #7C6F61;
       --gold-line: #C5A880;
       --gold-deep: #8E7047;
       --candle-glow: rgba(240, 185, 110, 0.4);
@@ -93,63 +93,35 @@
       100% { opacity: 0.7; transform: translateX(-50%) scale(1.0); }
     }
 
-    /* 3D Gatefold (Saray Kapısı Açılış) */
-    .gatefold-stage {
+    /* ================= SEÇENEK C: SİNEMATİK İPEK TÜL DUVAK ================= */
+    .tulle-veil-stage {
       position: absolute;
       inset: 0;
-      z-index: 50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .gatefold-door {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 50%;
-      background-image: url('arkaplan.jpg');
-      background-size: 414px 100%;
-      background-repeat: no-repeat;
-      z-index: 20;
-    }
-
-    .gate-left {
-      left: 0;
-      background-position: left center;
-      border-right: 1px solid rgba(197, 168, 128, 0.4);
-      box-shadow: inset -15px 0 30px rgba(0,0,0,0.06);
-    }
-
-    .gate-right {
-      right: 0;
-      background-position: right center;
-      border-left: 1px solid rgba(197, 168, 128, 0.4);
-      box-shadow: inset 15px 0 30px rgba(0,0,0,0.06);
-    }
-
-    .gate-seal-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 30;
-      cursor: pointer;
+      z-index: 60;
+      background: rgba(251, 248, 243, 0.65);
+      backdrop-filter: blur(12px);
+      background-image: 
+        radial-gradient(rgba(215, 195, 165, 0.25) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(245, 237, 225, 0.7) 100%);
+      background-size: 10px 10px, 100% 100%;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
+      cursor: pointer;
+      box-shadow: inset 0 0 80px rgba(197, 168, 128, 0.2);
     }
 
-    .botanical-seal-img {
-      width: 112px;
-      height: 112px;
-      object-fit: cover;
-      border-radius: 50%;
-      mix-blend-mode: multiply;
-      filter: drop-shadow(0 16px 24px rgba(54, 46, 39, 0.4));
+    .tulle-ripple {
+      animation: veilRipple 5s ease-in-out infinite alternate;
     }
 
-    /* 2. Seçenek: Modern İtalyan Kemer Çerçevesi */
+    @keyframes veilRipple {
+      0% { transform: scale(1) translateY(0); }
+      100% { transform: scale(1.015) translateY(-4px); }
+    }
+
+    /* Modern İtalyan Kemer Çerçevesi */
     .italian-arch-card {
       background: rgba(254, 252, 248, 0.84);
       backdrop-filter: blur(8px);
@@ -284,6 +256,17 @@
       font-weight: 600;
       box-shadow: 0 2px 6px rgba(142, 112, 71, 0.4);
     }
+
+    /* El Çizimi Altın Çizgi İkonları */
+    .line-icon {
+      width: 22px;
+      height: 22px;
+      stroke: var(--gold-deep);
+      fill: none;
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   </style>
 </head>
 <body>
@@ -299,33 +282,49 @@
     <!-- Sabit Mum Işığı Parıltısı -->
     <div class="candle-light-overlay"></div>
 
-    <!-- ================= 1. AŞAMA: 3D GATEFOLD SARAY KAPISI ================= -->
-    <div id="gatefold-scene" class="gatefold-stage">
-      <div id="door-left" class="gatefold-door gate-left"></div>
-      <div id="door-right" class="gatefold-door gate-right"></div>
-
-      <!-- Mühür ve Aç Butonu -->
-      <div id="seal-container" onclick="triggerCinematicOpening()" class="gate-seal-btn">
-        <img src="muhur.png" alt="Botanik Mühür" class="botanical-seal-img" />
-
-        <div id="open-badge" class="mt-4 bg-[#FCFAF7]/95 px-6 py-2.5 rounded-full border border-[#C5A880]/45 shadow-md">
-          <span class="font-sans-sub text-[8px] uppercase text-[#362E27] font-semibold tracking-[0.3em]">
-            DAVETİYEYİ AÇ
-          </span>
+    <!-- ================= SEÇENEK C: SİNEMATİK İPEK TÜL DUVAK EKRANI ================= -->
+    <div id="tulle-veil" onclick="liftTulleVeil()" class="tulle-veil-stage tulle-ripple">
+      <div class="text-center px-6">
+        
+        <!-- İnce Çizgisel Monogram -->
+        <div class="w-14 h-14 rounded-full border border-[#C5A880]/60 flex items-center justify-center mx-auto mb-6 bg-[#FCFAF7]/40 shadow-sm">
+          <span class="font-pinyon text-2xl text-[#8E7047]">İ & K</span>
         </div>
+
+        <span class="font-sans-sub text-[8px] uppercase text-[#8E7047] block mb-2 tracking-[0.35em] font-medium">
+          DÜĞÜN DAVETİYESİ
+        </span>
+
+        <h2 class="font-cinzel text-xl sm:text-2xl text-[#362E27] tracking-[0.35em] my-2 font-normal">
+          İ P E K &nbsp;&amp;&nbsp; K A A N
+        </h2>
+
+        <div class="w-10 h-[0.5px] bg-[#C5A880] mx-auto my-5"></div>
+
+        <!-- Dokunmatik Çağrı Butonu / Rozeti -->
+        <div class="mt-8 inline-flex items-center gap-2 bg-[#FCFAF7]/90 px-6 py-2.5 rounded-full border border-[#C5A880]/50 shadow-md">
+          <span class="font-sans-sub text-[8px] uppercase text-[#362E27] font-semibold tracking-[0.3em]">
+            DOKUNARAK ARALAYINIZ
+          </span>
+          <span class="text-xs text-[#8E7047]">→</span>
+        </div>
+
+        <span class="font-sans-sub text-[7px] text-[#A89C8F] uppercase tracking-[0.3em] block mt-10">
+          DAVET & CO. • HAUTE COUTURE
+        </span>
       </div>
     </div>
 
 
-    <!-- ================= 2. AŞAMA: 9 SİNEMATİK STORY SAHNESİ ================= -->
+    <!-- ================= 9 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
 
-      <!-- ================= 1. MODÜL: KAPAK (VOGUE EDİTORYAL ROMA DİZİMİ) ================= -->
+      <!-- ================= 1. MODÜL: KAPAK (VOGUE EDİTORYAL DİZİM) ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="text-xs text-[#C5A880] block mb-1">❦</span>
           
-          <!-- B Seçeneği: Büyük Harfli Vogue Dizimi -->
+          <!-- Vogue Büyük Harf Roma Dizimi -->
           <h1 class="font-cinzel text-2xl sm:text-3xl text-[#362E27] leading-relaxed my-2">
             İ P E K
           </h1>
@@ -336,7 +335,7 @@
 
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
 
-          <p class="font-sans-sub text-[7.5px] uppercase text-[#7A6E61] leading-relaxed mb-4 px-2 font-medium">
+          <p class="font-sans-sub text-[7.5px] uppercase text-[#7C6F61] leading-relaxed mb-4 px-2 font-medium">
             AİLELERİMİZLE BİRLİKTE BU ÖZEL GECEYE SİZİ DAVET EDİYORUZ.
           </p>
 
@@ -344,11 +343,11 @@
           <div class="grid grid-cols-2 gap-2 text-center pt-3 border-t border-[#C5A880]/30">
             <div>
               <span class="font-sans-sub text-[7.5px] text-[#362E27] block font-semibold">ERDOĞAN</span>
-              <span class="font-sans-sub text-[6px] text-[#7A6E61] uppercase block">AİLESİ</span>
+              <span class="font-sans-sub text-[6px] text-[#7C6F61] uppercase block">AİLESİ</span>
             </div>
             <div>
               <span class="font-sans-sub text-[7.5px] text-[#362E27] block font-semibold">İNCE</span>
-              <span class="font-sans-sub text-[6px] text-[#7A6E61] uppercase block">AİLESİ</span>
+              <span class="font-sans-sub text-[6px] text-[#7C6F61] uppercase block">AİLESİ</span>
             </div>
           </div>
         </div>
@@ -357,12 +356,16 @@
       <!-- ================= 2. MODÜL: TARİH (EYLÜL 2026 EDİTORYAL MİNİ TAKVİM) ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
-          <span class="text-sm text-[#C5A880] block mb-0.5">🌿</span>
-          <span class="font-sans-sub text-[7.5px] uppercase text-[#7A6E61] tracking-[0.3em] font-semibold">TARİH & SAAT</span>
+          
+          <!-- El Çizimi Botanik Zeytin Dalı SVG -->
+          <svg class="w-6 h-6 mx-auto stroke-[#C5A880] fill-none stroke-[1.2] mb-1" viewBox="0 0 24 24">
+            <path d="M12 2C12 2 13 8 7 10C1 12 2 18 2 18C2 18 8 17 10 11C12 5 18 4 18 4M12 2C12 2 16 7 22 9"/>
+          </svg>
 
+          <span class="font-sans-sub text-[7.5px] uppercase text-[#7C6F61] tracking-[0.3em] font-semibold">TARİH & SAAT</span>
           <h3 class="font-cinzel text-lg text-[#362E27] mt-2 mb-1">EYLÜL 2026</h3>
 
-          <!-- Mini Ay Takvimi (12 Eylül Altın Çemberli) -->
+          <!-- Mini Ay Takvimi -->
           <div class="calendar-grid px-2">
             <span class="cal-head">Pt</span>
             <span class="cal-head">Sa</span>
@@ -413,18 +416,17 @@
         </div>
       </section>
 
-      <!-- ================= 3. MODÜL: MEKAN & BOĞAZ ATMOSFERİ ================= -->
+      <!-- ================= 3. MODÜL: MEKAN & BOĞAZ FOTOĞRAFI ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
-          <span class="font-sans-sub text-[7.5px] uppercase text-[#7A6E61] tracking-[0.3em] font-semibold block mb-2">KUTLAMA MEKANI</span>
+          <span class="font-sans-sub text-[7.5px] uppercase text-[#7C6F61] tracking-[0.3em] font-semibold block mb-2">KUTLAMA MEKANI</span>
           
-          <!-- Boğaz / Yalı Atmosfer Fotoğrafı -->
           <div class="w-full h-28 rounded-2xl overflow-hidden mb-3 border border-[#C5A880]/40 shadow-sm">
             <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=600&q=80" alt="Sait Halim Paşa Yalısı" class="w-full h-full object-cover grayscale-[30%] contrast-[105%]"/>
           </div>
 
           <h3 class="font-cinzel text-base text-[#362E27] mb-0.5 tracking-[0.2em] font-medium">SAİT HALİM PAŞA YALISI</h3>
-          <p class="font-cormorant text-xs text-[#7A6E61] italic leading-relaxed mb-3">
+          <p class="font-cormorant text-xs text-[#7C6F61] italic leading-relaxed mb-3">
             Yeniköy, Köybaşı Cd. No:83, Sarıyer / İstanbul
           </p>
 
@@ -440,68 +442,81 @@
           <span class="font-pinyon text-4xl text-[#362E27] block mb-1">Buluşmaya Kalan</span>
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-3"></div>
 
-          <!-- 4'lü Altın Çerçeveli Kutucuklar -->
           <div class="grid grid-cols-4 gap-2 my-4">
             <div class="bg-[#FCFAF7] py-2.5 rounded-xl border border-[#C5A880]/40 shadow-sm">
               <span id="cd-days" class="font-cormorant text-2xl text-[#362E27] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[6px] tracking-widest text-[#7A6E61] font-semibold">GÜN</span>
+              <span class="font-sans-sub text-[6px] tracking-widest text-[#7C6F61] font-semibold">GÜN</span>
             </div>
             <div class="bg-[#FCFAF7] py-2.5 rounded-xl border border-[#C5A880]/40 shadow-sm">
               <span id="cd-hours" class="font-cormorant text-2xl text-[#362E27] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[6px] tracking-widest text-[#7A6E61] font-semibold">SAAT</span>
+              <span class="font-sans-sub text-[6px] tracking-widest text-[#7C6F61] font-semibold">SAAT</span>
             </div>
             <div class="bg-[#FCFAF7] py-2.5 rounded-xl border border-[#C5A880]/40 shadow-sm">
               <span id="cd-mins" class="font-cormorant text-2xl text-[#362E27] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[6px] tracking-widest text-[#7A6E61] font-semibold">DAKİKA</span>
+              <span class="font-sans-sub text-[6px] tracking-widest text-[#7C6F61] font-semibold">DAKİKA</span>
             </div>
             <div class="bg-[#FCFAF7] py-2.5 rounded-xl border border-[#C5A880]/40 shadow-sm">
               <span id="cd-secs" class="font-cormorant text-2xl text-[#362E27] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[6px] tracking-widest text-[#7A6E61] font-semibold">SANİYE</span>
+              <span class="font-sans-sub text-[6px] tracking-widest text-[#7C6F61] font-semibold">SANİYE</span>
             </div>
           </div>
 
-          <p class="font-cormorant text-xs text-[#7A6E61] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
+          <p class="font-cormorant text-xs text-[#7C6F61] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
         </div>
       </section>
 
-      <!-- ================= 5. MODÜL: PROGRAM (MİNİMALİST İKONLU LİSTE) ================= -->
+      <!-- ================= 5. MODÜL: PROGRAM (EL ÇİZİMİ ALTIN İKONLAR) ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
-          <span class="font-sans-sub text-[7.5px] uppercase text-[#7A6E61] tracking-[0.3em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
+          <span class="font-sans-sub text-[7.5px] uppercase text-[#7C6F61] tracking-[0.3em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
           
-          <!-- 3. Seçenek: Minimalist İkonlu Liste -->
-          <div class="space-y-3 text-left max-w-[260px] mx-auto">
+          <div class="space-y-2.5 text-left max-w-[260px] mx-auto">
+            
+            <!-- Nikah: Alyans Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
-              <span class="text-base">💍</span>
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <circle cx="9" cy="12" r="6"/>
+                <circle cx="15" cy="12" r="6"/>
+              </svg>
               <div>
                 <span class="font-sans-sub text-[7.5px] text-[#8E7047] font-semibold block">18:30</span>
                 <h5 class="font-cormorant text-sm text-[#362E27] font-medium leading-none">Nikah Seremonisi</h5>
               </div>
             </div>
 
+            <!-- Kokteyl: Kristal Kadeh Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
-              <span class="text-base">🥂</span>
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/>
+              </svg>
               <div>
                 <span class="font-sans-sub text-[7.5px] text-[#8E7047] font-semibold block">19:30</span>
                 <h5 class="font-cormorant text-sm text-[#362E27] font-medium leading-none">Kokteyl & Karşılama</h5>
               </div>
             </div>
 
+            <!-- Yemek: Cloche & Tabak Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
-              <span class="text-base">🍽️</span>
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/>
+              </svg>
               <div>
                 <span class="font-sans-sub text-[7.5px] text-[#8E7047] font-semibold block">20:30</span>
                 <h5 class="font-cormorant text-sm text-[#362E27] font-medium leading-none">Kutlama Yemeği</h5>
               </div>
             </div>
 
+            <!-- After Party: Gramofon / Nota Çizimi -->
             <div class="flex items-center gap-3 p-2 bg-[#FAF7F2]/90 rounded-xl border border-[#C5A880]/30">
-              <span class="text-base">🎶</span>
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              </svg>
               <div>
                 <span class="font-sans-sub text-[7.5px] text-[#8E7047] font-semibold block">23:00</span>
                 <h5 class="font-cormorant text-sm text-[#362E27] font-medium leading-none">After Party</h5>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -515,17 +530,17 @@
           <div class="space-y-3 my-2 text-center">
             <div>
               <span class="font-sans-sub text-[7.5px] uppercase text-[#8E7047] block font-semibold">Başlangıç Tabağı</span>
-              <p class="font-cormorant text-xs text-[#7A6E61] italic mt-0.5">Ege otlu enginar kalbi, somon tartar, kestaneli bruschetta</p>
+              <p class="font-cormorant text-xs text-[#7C6F61] italic mt-0.5">Ege otlu enginar kalbi, somon tartar, kestaneli bruschetta</p>
             </div>
 
             <div>
               <span class="font-sans-sub text-[7.5px] uppercase text-[#8E7047] block font-semibold">Ana Yemek</span>
-              <p class="font-cormorant text-xs text-[#7A6E61] italic mt-0.5">Ağır ateşte pişmiş dana antrikot, trüf aromalı patates püresi ile</p>
+              <p class="font-cormorant text-xs text-[#7C6F61] italic mt-0.5">Ağır ateşte pişmiş dana antrikot, trüf aromalı patates püresi ile</p>
             </div>
 
             <div>
               <span class="font-sans-sub text-[7.5px] uppercase text-[#8E7047] block font-semibold">Tatlı & Düğün Pastası</span>
-              <p class="font-cormorant text-xs text-[#7A6E61] italic mt-0.5">Orman meyveli Callebaut çikolatalı özel düğün pastası</p>
+              <p class="font-cormorant text-xs text-[#7C6F61] italic mt-0.5">Orman meyveli Callebaut çikolatalı özel düğün pastası</p>
             </div>
           </div>
         </div>
@@ -536,14 +551,13 @@
         <div class="italian-arch-card text-center">
           <span class="font-pinyon text-3xl text-[#362E27] block mb-1">Hikayemiz</span>
 
-          <!-- 3'lü Yan Yana Izgara -->
           <div class="grid grid-cols-3 gap-1.5 my-3">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&q=80" alt="Fotoğraf 1" class="w-full h-24 object-cover rounded-lg border border-[#C5A880]/30 shadow-sm"/>
             <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=300&q=80" alt="Fotoğraf 2" class="w-full h-24 object-cover rounded-lg border border-[#C5A880]/30 shadow-sm"/>
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&q=80" alt="Fotoğraf 3" class="w-full h-24 object-cover rounded-lg border border-[#C5A880]/30 shadow-sm"/>
           </div>
 
-          <p class="font-cormorant text-xs text-[#7A6E61] italic px-2">
+          <p class="font-cormorant text-xs text-[#7C6F61] italic px-2">
             "Birlikte geçen her anımız, bu masalın en güzel parçası..."
           </p>
         </div>
@@ -553,7 +567,7 @@
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="font-pinyon text-4xl text-[#362E27] block mb-0.5">Bize Katılın!</span>
-          <p class="font-cormorant text-xs text-[#7A6E61] italic mb-3">Lütfen 1 Ağustos'a kadar bildiriniz.</p>
+          <p class="font-cormorant text-xs text-[#7C6F61] italic mb-3">Lütfen 1 Ağustos'a kadar bildiriniz.</p>
 
           <div id="rsvp-ok" class="hidden py-4 text-center">
             <span class="font-pinyon text-3xl text-[#8E7047] block mb-1">Teşekkürler</span>
@@ -562,12 +576,12 @@
 
           <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-2 text-left w-full font-sans-sub text-[7.5px]">
             <div>
-              <label class="block uppercase tracking-wider text-[#7A6E61] mb-0.5 font-medium">Adınız Soyadınız</label>
+              <label class="block uppercase tracking-wider text-[#7C6F61] mb-0.5 font-medium">Adınız Soyadınız</label>
               <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-2 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-xl text-[9.5px] text-[#362E27] focus:outline-none focus:border-[#8E7047]">
             </div>
 
             <div>
-              <label class="block uppercase tracking-wider text-[#7A6E61] mb-0.5 font-medium">Katılım Durumu</label>
+              <label class="block uppercase tracking-wider text-[#7C6F61] mb-0.5 font-medium">Katılım Durumu</label>
               <select class="w-full p-2 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-xl text-[9.5px] text-[#362E27] focus:outline-none focus:border-[#8E7047]">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
@@ -576,7 +590,7 @@
             </div>
 
             <div>
-              <label class="block uppercase tracking-wider text-[#7A6E61] mb-0.5 font-medium">Özel Not / Diyet Tercihi</label>
+              <label class="block uppercase tracking-wider text-[#7C6F61] mb-0.5 font-medium">Özel Not / Diyet Tercihi</label>
               <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1.5 bg-[#FCFAF7] border border-[#C5A880]/45 rounded-xl text-[9.5px] text-[#362E27] focus:outline-none focus:border-[#8E7047]"></textarea>
             </div>
 
@@ -587,24 +601,23 @@
         </div>
       </section>
 
-      <!-- ================= 9. MODÜL: KAPANIŞ & TEŞEKKÜR (MODEL 3) ================= -->
+      <!-- ================= 9. MODÜL: KAPANIŞ & TEŞEKKÜR ================= -->
       <section class="story-screen">
         <div class="italian-arch-card text-center">
           <span class="text-sm text-[#C5A880] block mb-2">❦</span>
           
           <h3 class="font-pinyon text-4xl text-[#362E27] my-0 leading-none">Teşekkür Ederiz</h3>
-          
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
 
-          <p class="font-cormorant text-base text-[#7A6E61] italic leading-relaxed max-w-[240px] mx-auto mb-6">
+          <p class="font-cormorant text-base text-[#7C6F61] italic leading-relaxed max-w-[240px] mx-auto mb-6">
             "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
           </p>
 
-          <div class="w-12 h-12 rounded-full border border-[#C5A880]/40 flex items-center justify-center mx-auto mb-4 bg-[#FCFAF7]">
+          <div class="w-12 h-12 rounded-full border border-[#C5A880]/40 flex items-center justify-center mx-auto mb-4 bg-[#FCFAF7] shadow-sm">
             <span class="font-pinyon text-2xl text-[#8E7047]">İ & K</span>
           </div>
 
-          <span class="font-sans-sub text-[7px] text-[#7A6E61]/80 uppercase tracking-[0.3em] font-medium block">
+          <span class="font-sans-sub text-[7px] text-[#7C6F61]/80 uppercase tracking-[0.3em] font-medium block">
             DAVET & CO. • DİJİTAL TASARIM ATÖLYESİ
           </span>
         </div>
@@ -613,11 +626,11 @@
     </div>
 
 
-    <!-- ================= 3. AŞAMA: ALT YÜZEN CAM KAPSÜL BAR ================= -->
+    <!-- ================= 3. ALT YÜZEN CAM KAPSÜL BAR ================= -->
     <div id="floating-bar" class="floating-pill-bar">
       <button onclick="scrollToNextStory()" class="scroll-pill-btn">
         <span class="font-sans-sub text-[8px] uppercase tracking-[0.25em] text-[#362E27] font-medium">Aşağı Kaydır</span>
-        <span class="text-xs text-[#7A6E61]">↓</span>
+        <span class="text-xs text-[#7C6F61]">↓</span>
       </button>
 
       <button onclick="toggleAudio()" class="audio-pill-btn">
@@ -627,38 +640,25 @@
 
   </div>
 
-  <!-- ================= GSAP & ETKİLEŞİM MOTORU ================= -->
+  <!-- ================= GSAP VE SİNEMA MOTORU ================= -->
   <script>
-    function triggerCinematicOpening() {
+    function liftTulleVeil() {
       const audio = document.getElementById('bg-audio');
       try { audio.play(); } catch(e){}
 
       const tl = gsap.timeline();
 
-      // 1. Mühür nefes alıp kalkar
-      tl.to("#seal-container", {
-        scale: 1.15,
+      // İpek Tül Duvağın Rüzgarla Süzülerek Açılışı
+      tl.to("#tulle-veil", {
+        yPercent: -100,
         opacity: 0,
-        duration: 0.5,
-        ease: "power2.inOut"
+        duration: 1.4,
+        ease: "power3.inOut"
       })
-      // 2. İki kapı saray kapısı gibi 60 FPS açılır
-      .to("#door-left", {
-        xPercent: -100,
-        duration: 1.2,
-        ease: "power4.inOut"
-      }, "-=0.2")
-      .to("#door-right", {
-        xPercent: 100,
-        duration: 1.2,
-        ease: "power4.inOut"
-      }, "<")
-      // 3. Kapı sahnesi kapanır
-      .to("#gatefold-scene", {
+      .to("#tulle-veil", {
         display: "none",
         duration: 0.1
       })
-      // 4. Alt kontrol barı yumuşakça belirir
       .to("#floating-bar", {
         opacity: 1,
         y: 0,
