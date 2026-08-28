@@ -12,7 +12,7 @@
   <!-- Google Fonts: Alex Brush, Cormorant Garamond, Jost & Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -151,21 +151,18 @@
       flex-direction: column;
       align-items: center;
     }
-        .kapak-isim span {
+    .kapak-isim span {
       font-family: 'Pinyon Script', cursive;
       color: #44372C;
       line-height: 1.2;
     }
-    .isim-ilk, .isim-ikinci { font-size: 92px; }
-    .ve-satir { font-size: 46px; color: #8E7047; margin: 4px 0; }
-
-
-        .isim-ilk, .isim-ikinci { font-size: 76px; }
-    .ve-satir { font-size: 38px; color: #8E7047; margin: 2px 0; }
+    .isim-ilk, .isim-ikinci { font-size: 76px; }
+    .ve-satir { font-size: 34px; color: #8E7047; margin: -4px 0; }
 
     .kapak-ekran .isim-ilk,
     .kapak-ekran .ve-satir,
-    .kapak-ekran .isim-ikinci {
+    .kapak-ekran .isim-ikinci,
+    .kapak-ekran .kapak-tarih {
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
@@ -173,13 +170,9 @@
     .kapak-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.25s; }
     .kapak-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.75s; }
     .kapak-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 1.25s; }
+    .kapak-ekran.gorundu .kapak-tarih { opacity: 1; transform: none; transition-delay: 1.9s; }
 
-    /* Kapak: İsim Bittikten Sonra Tarih Daktilo Gibi Yazılsın */
-    .kapak-tarih-kutu {
-      width: 230px;
-      margin: 22px auto 0;
-      overflow: hidden;
-    }
+    /* Kapak: İsim Bittikten Sonra Beliren Tarih */
     .kapak-tarih {
       display: block;
       font-family: 'Jost', sans-serif;
@@ -187,22 +180,7 @@
       font-size: 11px;
       font-weight: 600;
       color: #8E7047;
-      white-space: nowrap;
-      width: 0;
-      border-right: 1.5px solid rgba(142, 112, 71, 0.7);
-      opacity: 0;
-    }
-    .kapak-ekran.gorundu .kapak-tarih {
-      opacity: 1;
-      animation: kt-daktilo 1.3s steps(22, end) 2.3s forwards,
-                 kt-imlec 0.7s step-end 2.3s 5;
-    }
-    @keyframes kt-daktilo {
-      from { width: 0; }
-      to { width: 215px; }
-    }
-    @keyframes kt-imlec {
-      50% { border-color: transparent; }
+      margin: 22px auto 0;
     }
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
@@ -264,12 +242,11 @@
       z-index: 40;
     }
 
-        .scroll-pill-btn {
+    .scroll-pill-btn {
       background: rgba(255, 253, 250, 0.94);
       backdrop-filter: blur(12px);
       border: 1px solid var(--gold-line);
       border-radius: 999px;
-
       padding: 9px 20px;
       display: flex;
       align-items: center;
@@ -419,21 +396,20 @@
 
       <!-- ================= 1. MODÜL: KAPAK (İSİM) ================= -->
       <section class="story-screen kapak-ekran">
-                  <div class="kapak-isim">
+        <div class="arch-content-box text-center">
+          <div class="kapak-isim">
             <span class="isim-ilk">İpek</span>
             <span class="ve-satir">&amp;</span>
             <span class="isim-ikinci">Kaan</span>
           </div>
 
-          <div class="kapak-tarih-kutu">
-            <span class="kapak-tarih">12 EYLÜL 2026, CUMARTESİ</span>
-          </div>
+          <span class="kapak-tarih">12.09.2026</span>
         </div>
       </section>
 
       <!-- ================= 2. MODÜL: KARŞILAMA ================= -->
       <section class="story-screen">
-                <div class="arch-content-box text-center kart-giris">
+        <div class="arch-content-box text-center kart-giris">
           <span class="text-xs text-[#C5A880] block mb-3">❦</span>
 
           <p class="font-cormorant text-[19px] text-[#44372C] italic leading-relaxed mb-5">
@@ -446,7 +422,6 @@
 
           <!-- Aile İsimleri -->
           <div class="grid grid-cols-2 gap-2.5 text-center">
-
             <div>
               <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">ERDOĞAN</span>
               <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
@@ -675,12 +650,8 @@
     <!-- ================= ALT YÜZEN CAM KAPSÜL BAR ================= -->
     <div id="floating-bar" class="floating-pill-bar">
       <button onclick="scrollToNextStory()" class="scroll-pill-btn">
-               <span class="font-sans-sub text-[12px] uppercase tracking-[0.25em] text-[#44372C] font-semibold">Aşağı Kaydır</span>
-        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#8E7047" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 9l6 6 6-6"/>
-        </svg>
+        <span class="font-sans-sub text-[12px] uppercase tracking-[0.25em] text-[#44372C] font-semibold">Aşağı Kaydır ↓</span>
       </button>
-
 
       <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
         <span id="audio-icon" class="text-sm">🎧</span>
