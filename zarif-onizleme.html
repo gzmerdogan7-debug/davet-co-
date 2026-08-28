@@ -62,26 +62,27 @@
       padding: 16px 20px 78px 20px; position: relative;
     }
 
-    /* Hareketli Çiçek/Mum Arka Planı — kapak sonrası ilk ekranda, yavaş sinematik yakınlaşma */
+    /* Hareketli Çiçek/Mum Arka Planı — tüm ekranların arkasında sabit, yavaş sinematik yakınlaşma.
+       background-size: 100% auto kullanıyoruz (cover değil) ki mumlar kesilmesin — üstte/altta kalan
+       boşluk cinema-viewport'un krem rengiyle (aşağıdaki sıcak overlay sayesinde) kaynaşıyor. */
     .floral-bg-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
     .floral-bg {
-      position: absolute; inset: -24px;
+      position: absolute; inset: 0;
       background-image: url('arka-plan-zarif.jpg');
-      background-size: cover; background-position: center;
-      animation: kenburns 28s ease-in-out infinite;
+      background-size: 100% auto; background-position: center; background-repeat: no-repeat;
+      animation: kenburns 32s ease-in-out infinite;
+    }
+    /* Beyaz çiçekleri mühürle uyumlu sıcak bej/krem tona çekmek için renk katmanı */
+    .floral-bg::after {
+      content: ""; position: absolute; inset: 0;
+      background: #EEDFC0;
+      mix-blend-mode: multiply;
+      opacity: 0.34;
     }
     @keyframes kenburns {
-      0%   { transform: scale(1.05) translate(0, 0); }
-      50%  { transform: scale(1.13) translate(-1.5%, -1%); }
-      100% { transform: scale(1.05) translate(0, 0); }
-    }
-
-    /* Süslü Çerçeve Kutusu — bilgi ekranlarında metin bu çerçevenin içine oturur */
-    .cerceve-kutu { position: relative; width: 100%; max-width: 260px; margin: 0 auto; z-index: 25; }
-    .cerceve-kutu img { width: 100%; display: block; }
-    .cerceve-icerik {
-      position: absolute; top: 25%; left: 18%; right: 18%; bottom: 25%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      0%   { transform: scale(1) translate(0, 0); }
+      50%  { transform: scale(1.06) translate(-1%, -0.5%); }
+      100% { transform: scale(1) translate(0, 0); }
     }
 
     /* İsim Bloğu */
@@ -147,6 +148,7 @@
 <body>
 
   <div class="cinema-viewport">
+    <div class="floral-bg-wrap"><div class="floral-bg"></div></div>
 
     <div id="kapak" class="kapak-overlay">
       <div class="zarf"></div>
@@ -155,7 +157,6 @@
 
     <div id="story-slider">
       <section class="story-screen kapak-ekran">
-        <div class="floral-bg-wrap"><div class="floral-bg"></div></div>
         <div class="arch-content-box text-center">
           <div class="kapak-isim">
             <span class="isim-ilk">Selin</span>
@@ -166,14 +167,11 @@
         </div>
       </section>
 
-      <!-- İkinci ekran: sadece çerçeve grafiğini denemek için örnek -->
+      <!-- İkinci ekran: aynı arka plan üzerinde, çerçevesiz sade metin -->
       <section class="story-screen">
-        <div class="cerceve-kutu">
-          <img src="cerceve-1.png" alt="">
-          <div class="cerceve-icerik">
-            <span style="font-family:'Jost',sans-serif; font-size:10px; letter-spacing:0.25em; color:var(--text-muted); font-weight:600;">TARİH &amp; SAAT</span>
-            <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; color:var(--terracotta); margin-top:12px;">18 Ekim 2026, Pazar</span>
-          </div>
+        <div class="arch-content-box text-center">
+          <span style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.25em; color:var(--text-muted); font-weight:600;">TARİH &amp; SAAT</span>
+          <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:20px; color:var(--terracotta); margin-top:14px;">18 Ekim 2026, Pazar</p>
         </div>
       </section>
     </div>
