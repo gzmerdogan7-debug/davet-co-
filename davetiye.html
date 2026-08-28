@@ -131,17 +131,10 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Kapak Ekranı: İçerik Üstte, Mumlar Ekranın Altından Yükseliyor */
-    .kapak-ekran {
-      justify-content: flex-start;
-      padding-top: 58px;
-    }
-
-    /* İlk Kartta Sıralı Beliriş: İsim → Davetlisiniz → Aile → Mumlar */
+    /* İlk Kartta Sıralı Beliriş: İsim → Davetlisiniz → Aile */
     .kapak-ekran h1,
     .kapak-ekran .selam-satiri,
-    .kapak-ekran .aile-blok,
-    .kapak-ekran .mum-alt-bant {
+    .kapak-ekran .aile-blok {
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
@@ -149,27 +142,6 @@
     .kapak-ekran.gorundu h1 { opacity: 1; transform: none; transition-delay: 0.15s; }
     .kapak-ekran.gorundu .selam-satiri { opacity: 1; transform: none; transition-delay: 0.7s; }
     .kapak-ekran.gorundu .aile-blok { opacity: 1; transform: none; transition-delay: 1.25s; }
-    .kapak-ekran.gorundu .mum-alt-bant { opacity: 1; transform: none; transition-delay: 1.7s; }
-
-    /* Mumlar — Ekranın Tabanından Yükselen, Zemine Yedirilmiş Bant */
-    .mum-alt-bant {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 46%;
-      z-index: 4;
-      pointer-events: none;
-    }
-    .mum-alt-bant img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 22%;
-      display: block;
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
-    }
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
     .arch-content-box {
@@ -403,25 +375,21 @@
 
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
 
-          <p class="selam-satiri font-sans-sub text-[9.5px] uppercase text-[#6E5E50] leading-relaxed mb-4 font-medium">
+          <p class="selam-satiri font-sans-sub text-[11px] uppercase text-[#6E5E50] leading-relaxed mb-4 font-medium">
             DAVETLİSİNİZ
           </p>
 
           <!-- Aile İsimleri -->
           <div class="aile-blok grid grid-cols-2 gap-2.5 text-center pt-3 border-t border-[#C5A880]/30">
             <div>
-              <span class="font-sans-sub text-[9.5px] text-[#44372C] block font-semibold">ERDOĞAN</span>
-              <span class="font-sans-sub text-[7.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
+              <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">ERDOĞAN</span>
+              <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
             </div>
             <div>
-              <span class="font-sans-sub text-[9.5px] text-[#44372C] block font-semibold">İNCE</span>
-              <span class="font-sans-sub text-[7.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
+              <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">İNCE</span>
+              <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
             </div>
           </div>
-        </div>
-
-        <div class="mum-alt-bant">
-          <img src="mumlar.png" alt="">
         </div>
       </section>
 
@@ -432,8 +400,8 @@
             <path d="M12 2C12 2 13 8 7 10C1 12 2 18 2 18C2 18 8 17 10 11C12 5 18 4 18 4M12 2C12 2 16 7 22 9"/>
           </svg>
 
-          <span class="font-sans-sub text-[9.5px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold">TARİH &amp; SAAT</span>
-          <h3 class="font-cormorant-caps text-base text-[#44372C] mt-1.5 mb-1.5">EYLÜL 2026</h3>
+          <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold">TARİH &amp; SAAT</span>
+          <h3 class="font-cormorant-caps text-lg text-[#44372C] mt-1.5 mb-1.5">EYLÜL 2026</h3>
 
           <!-- Mini Ay Takvimi -->
           <div class="calendar-grid">
@@ -478,7 +446,7 @@
             <span class="cal-day">27</span>
           </div>
 
-          <p class="font-sans-sub text-[10.5px] tracking-[0.25em] text-[#44372C] font-semibold my-2">CUMARTESİ • 18:30</p>
+          <p class="font-sans-sub text-[12px] tracking-[0.25em] text-[#44372C] font-semibold my-2">CUMARTESİ • 18:30</p>
 
           <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%C4%B0pek+%26+Kaan+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20260912T153000Z/20260912T203000Z&details=%C4%B0pek+%26+Kaan+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Sait+Halim+Pasa+Yalisi,+Istanbul" target="_blank" class="gold-action-btn mt-1.5">
             + GOOGLE TAKVİME EKLE
@@ -489,14 +457,14 @@
       <!-- ================= 3. MODÜL: MEKAN ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-sans-sub text-[9.5px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">KUTLAMA MEKANI</span>
+          <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">KUTLAMA MEKANI</span>
 
           <svg class="w-10 h-10 mx-auto mb-3" viewBox="0 0 24 24" fill="none" stroke="#8E7047" stroke-width="1.1">
             <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21z"/>
             <circle cx="12" cy="9.5" r="2.6" fill="#8E7047" stroke="none"/>
           </svg>
 
-          <h3 class="font-cormorant-caps text-base text-[#44372C] mb-4">SES LOUNGE EVENTS</h3>
+          <h3 class="font-cormorant-caps text-lg text-[#44372C] mb-4">SES LOUNGE EVENTS</h3>
 
           <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="gold-action-btn">
             KONUMA GİT &amp; YOL TARİFİ →
@@ -507,67 +475,67 @@
       <!-- ================= 4. MODÜL: GERİ SAYIM ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik text-4xl text-[#44372C] block mb-1.5">Buluşmaya Kalan</span>
+          <span class="font-cormorant-baslik text-5xl text-[#44372C] block mb-1.5">Buluşmaya Kalan</span>
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
 
           <div class="grid grid-cols-4 my-4">
             <div class="py-1.5 border-l border-[#C5A880]/35 first:border-l-0">
-              <span id="cd-days" class="font-cormorant text-2xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[7.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">GÜN</span>
+              <span id="cd-days" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">GÜN</span>
             </div>
             <div class="py-1.5 border-l border-[#C5A880]/35">
-              <span id="cd-hours" class="font-cormorant text-2xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[7.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SAAT</span>
+              <span id="cd-hours" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SAAT</span>
             </div>
             <div class="py-1.5 border-l border-[#C5A880]/35">
-              <span id="cd-mins" class="font-cormorant text-2xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[7.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">DAKİKA</span>
+              <span id="cd-mins" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">DAKİKA</span>
             </div>
             <div class="py-1.5 border-l border-[#C5A880]/35">
-              <span id="cd-secs" class="font-cormorant text-2xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[7.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SANİYE</span>
+              <span id="cd-secs" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SANİYE</span>
             </div>
           </div>
 
-          <p class="font-cormorant text-[15px] text-[#6E5E50] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
+          <p class="font-cormorant text-[17px] text-[#6E5E50] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
         </div>
       </section>
 
       <!-- ================= 5. MODÜL: PROGRAM ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-sans-sub text-[9.5px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
+          <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
           
           <div class="space-y-2.5 text-left max-w-[250px] mx-auto">
             <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
               <div>
-                <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">18:30</span>
-                <h5 class="font-cormorant text-xs text-[#44372C] font-medium leading-none">Nikah Seremonisi</h5>
+                <span class="font-sans-sub text-[9.5px] text-[#8E7047] font-semibold block">18:30</span>
+                <h5 class="font-cormorant text-sm text-[#44372C] font-medium leading-none">Nikah Seremonisi</h5>
               </div>
             </div>
 
             <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/></svg>
               <div>
-                <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">19:30</span>
-                <h5 class="font-cormorant text-xs text-[#44372C] font-medium leading-none">Kokteyl &amp; Karşılama</h5>
+                <span class="font-sans-sub text-[9.5px] text-[#8E7047] font-semibold block">19:30</span>
+                <h5 class="font-cormorant text-sm text-[#44372C] font-medium leading-none">Kokteyl &amp; Karşılama</h5>
               </div>
             </div>
 
             <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/></svg>
               <div>
-                <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">20:30</span>
-                <h5 class="font-cormorant text-xs text-[#44372C] font-medium leading-none">Kutlama Yemeği</h5>
+                <span class="font-sans-sub text-[9.5px] text-[#8E7047] font-semibold block">20:30</span>
+                <h5 class="font-cormorant text-sm text-[#44372C] font-medium leading-none">Kutlama Yemeği</h5>
               </div>
             </div>
 
             <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
               <div>
-                <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">23:00</span>
-                <h5 class="font-cormorant text-xs text-[#44372C] font-medium leading-none">After Party</h5>
+                <span class="font-sans-sub text-[9.5px] text-[#8E7047] font-semibold block">23:00</span>
+                <h5 class="font-cormorant text-sm text-[#44372C] font-medium leading-none">After Party</h5>
               </div>
             </div>
           </div>
@@ -577,23 +545,23 @@
       <!-- ================= 8. MODÜL: LCV FORMU ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik text-4xl text-[#44372C] block mb-1.5">Bize Katılın!</span>
-          <p class="font-cormorant text-[13.5px] text-[#6E5E50] italic mb-3">Lütfen 1 Ağustos'a kadar bildiriniz.</p>
+          <span class="font-cormorant-baslik text-5xl text-[#44372C] block mb-1.5">Bize Katılın!</span>
+          <p class="font-cormorant text-[15.5px] text-[#6E5E50] italic mb-3">Lütfen 1 Ağustos'a kadar bildiriniz.</p>
 
           <div id="rsvp-ok" class="hidden py-3.5 text-center">
-            <span class="font-cormorant-baslik text-4xl text-[#8E7047] block mb-2">Teşekkürler</span>
-            <h4 class="font-cormorant-caps text-xs text-[#44372C]">Yanıtınız Alındı</h4>
+            <span class="font-cormorant-baslik text-5xl text-[#8E7047] block mb-2">Teşekkürler</span>
+            <h4 class="font-cormorant-caps text-sm text-[#44372C]">Yanıtınız Alındı</h4>
           </div>
 
-          <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-2 text-left w-full font-sans-sub text-[8.5px]">
+          <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-2 text-left w-full font-sans-sub text-[9.5px]">
             <div>
               <label class="block uppercase tracking-wider text-[#6E5E50] mb-1.5 font-medium font-sans-sub">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
+              <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[13.5px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
             </div>
 
             <div>
               <label class="block uppercase tracking-wider text-[#6E5E50] mb-1.5 font-medium font-sans-sub">Katılım Durumu</label>
-              <select class="w-full p-1.5 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
+              <select class="w-full p-1.5 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[13.5px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
                 <option value="0">Maalesef Katılamayacağım</option>
@@ -602,7 +570,7 @@
 
             <div>
               <label class="block uppercase tracking-wider text-[#6E5E50] mb-1.5 font-medium font-sans-sub">Özel Not / Diyet Tercihi</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]"></textarea>
+              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[13.5px] text-[#44372C] focus:outline-none focus:border-[#8E7047]"></textarea>
             </div>
 
             <button type="submit" class="w-full py-2.5 bg-[#44372C] text-[#FCFAF7] uppercase font-semibold rounded-lg hover:bg-[#2F261E] transition-all tracking-[0.25em] shadow-sm mt-1.5">
@@ -617,19 +585,19 @@
         <div class="arch-content-box text-center kart-giris">
           <span class="text-xs text-[#C5A880] block mb-2">❦</span>
           
-          <h3 class="font-cormorant-baslik text-4xl text-[#44372C] my-0 leading-none">Teşekkür Ederiz</h3>
+          <h3 class="font-cormorant-baslik text-5xl text-[#44372C] my-0 leading-none">Teşekkür Ederiz</h3>
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
 
-          <p class="font-cormorant text-xs text-[#6E5E50] italic leading-relaxed max-w-[220px] mx-auto mb-4">
+          <p class="font-cormorant text-sm text-[#6E5E50] italic leading-relaxed max-w-[220px] mx-auto mb-4">
             "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
           </p>
         </div>
 
         <div class="marka-imza">
-          <span class="font-cormorant-caps block text-[15px] font-bold tracking-[0.3em] text-[#44372C]">
+          <span class="font-cormorant-caps block text-[17px] font-bold tracking-[0.3em] text-[#44372C]">
             DAVET &amp; CO.
           </span>
-          <span class="font-sans-sub block text-[8px] font-bold tracking-[0.22em] text-[#8E7047] uppercase" style="margin-top: 6px;">
+          <span class="font-sans-sub block text-[9px] font-bold tracking-[0.22em] text-[#8E7047] uppercase" style="margin-top: 6px;">
             DİJİTAL TASARIM ATÖLYESİ
           </span>
         </div>
@@ -641,7 +609,7 @@
     <!-- ================= ALT YÜZEN CAM KAPSÜL BAR ================= -->
     <div id="floating-bar" class="floating-pill-bar">
       <button onclick="scrollToNextStory()" class="scroll-pill-btn">
-        <span class="font-sans-sub text-[10.5px] uppercase tracking-[0.25em] text-[#44372C] font-semibold">Aşağı Kaydır</span>
+        <span class="font-sans-sub text-[12px] uppercase tracking-[0.25em] text-[#44372C] font-semibold">Aşağı Kaydır</span>
         <span class="text-xs text-[#6E5E50]">↓</span>
       </button>
 
