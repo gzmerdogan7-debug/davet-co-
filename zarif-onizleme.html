@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -33,7 +33,7 @@
       overflow: hidden;
     }
 
-    .font-cormorant-baslik { font-family: 'Pinyon Script', cursive; font-weight: 400; }
+    .font-cormorant-baslik { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; }
     .font-cormorant { font-family: 'Cormorant Garamond', serif; }
     .font-cormorant-caps { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.26em; }
     .font-sans-sub { font-family: 'Jost', sans-serif; letter-spacing: 0.26em; }
@@ -52,10 +52,10 @@
 
     .arch-content-box {
       width: 100%; max-width: 320px; padding: 30px 24px; position: relative; z-index: 25;
-      background: rgba(246, 241, 228, 0.96);
-      border-radius: 20px;
-      box-shadow: 0 14px 40px -10px rgba(42, 46, 34, 0.25);
-      border: 1px solid rgba(74, 82, 64, 0.14);
+      background: rgba(246, 241, 228, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 22px;
+      box-shadow: 0 10px 32px -14px rgba(42, 46, 34, 0.16);
     }
 
     #story-slider {
@@ -97,9 +97,9 @@
 
     /* İsim Bloğu */
     .kapak-isim { display: flex; flex-direction: column; align-items: center; }
-    .kapak-isim span { font-family: 'Pinyon Script', cursive; color: var(--text-deep); line-height: 1.2; }
-    .isim-ilk, .isim-ikinci { font-size: 82px; }
-    .ve-satir { font-size: 36px; color: var(--terracotta); margin: -4px 0; }
+    .kapak-isim span { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; color: var(--text-deep); line-height: 1.15; }
+    .isim-ilk, .isim-ikinci { font-size: 58px; }
+    .ve-satir { font-size: 28px; color: var(--terracotta); margin: 2px 0; font-weight: 500; }
 
     .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
       opacity: 0; transform: translateY(14px);
@@ -243,11 +243,11 @@
           <span class="font-sans-sub" style="font-size:11px; color:var(--terracotta); font-weight:600; display:block; margin-bottom:12px;">AİLELERİMİZ</span>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center;">
             <div>
-              <span class="font-sans-sub" style="font-size:12px; color:var(--text-deep); font-weight:600; display:block;">AYDIN</span>
+              <span class="font-sans-sub" style="font-size:12px; color:var(--text-deep); font-weight:600; display:block;">KAYA</span>
               <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); text-transform:uppercase; display:block;">AİLESİ</span>
             </div>
             <div>
-              <span class="font-sans-sub" style="font-size:12px; color:var(--text-deep); font-weight:600; display:block;">DEMİR</span>
+              <span class="font-sans-sub" style="font-size:12px; color:var(--text-deep); font-weight:600; display:block;">ÖZDEMİR</span>
               <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); text-transform:uppercase; display:block;">AİLESİ</span>
             </div>
           </div>
@@ -276,7 +276,7 @@
 
           <p class="font-sans-sub" style="font-size:11px; color:var(--terracotta); font-weight:600; margin-top:14px; margin-bottom:14px;">PAZAR · 17:30</p>
 
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20261018T143000Z/20261018T173000Z&details=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Zeytin+Bah%C3%A7esi,+%C4%B0stanbul" target="_blank" class="aksiyon-btn">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20261018T143000Z/20261018T173000Z&details=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Ses+Lounge+Events,+Eskisehir" target="_blank" class="aksiyon-btn">
             + GOOGLE TAKVİME EKLE
           </a>
         </div>
@@ -290,8 +290,8 @@
             <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21z"/>
             <circle cx="12" cy="9.5" r="2.6" fill="var(--terracotta)" stroke="none"/>
           </svg>
-          <h3 class="font-cormorant-caps" style="font-size:19px; color:var(--text-deep); margin-bottom:16px;">ZEYTİN BAHÇESİ</h3>
-          <a href="https://maps.google.com/?q=Zeytin+Bahcesi+Istanbul" target="_blank" class="aksiyon-btn">
+          <h3 class="font-cormorant-caps" style="font-size:19px; color:var(--text-deep); margin-bottom:16px;">SES LOUNGE EVENTS</h3>
+          <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="aksiyon-btn">
             KONUMA GİT &amp; YOL TARİFİ →
           </a>
         </div>
@@ -342,34 +342,26 @@
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600; display:block; margin-bottom:18px;">GÜNÜN PROGRAMI</span>
-          <div style="display:flex; flex-direction:column; gap:11px; text-align:left; max-width:255px; margin:0 auto;">
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
+          <div style="display:flex; flex-direction:column; gap:11px; text-align:center; max-width:255px; margin:0 auto;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:3px; padding:10px; background:rgba(246,241,228,0.45); border-radius:10px;">
               <svg class="line-icon" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
-              <div>
-                <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">17:30</span>
-                <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Nikah Töreni</h5>
-              </div>
+              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">17:30</span>
+              <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Nikah Töreni</h5>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:3px; padding:10px; background:rgba(246,241,228,0.45); border-radius:10px;">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/></svg>
-              <div>
-                <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">18:30</span>
-                <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Kokteyl Saati</h5>
-              </div>
+              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">18:30</span>
+              <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Kokteyl Saati</h5>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:3px; padding:10px; background:rgba(246,241,228,0.45); border-radius:10px;">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/></svg>
-              <div>
-                <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">19:30</span>
-                <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Akşam Yemeği</h5>
-              </div>
+              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">19:30</span>
+              <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Akşam Yemeği</h5>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:3px; padding:10px; background:rgba(246,241,228,0.45); border-radius:10px;">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
-              <div>
-                <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">22:00</span>
-                <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Dans &amp; Kutlama</h5>
-              </div>
+              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">22:00</span>
+              <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Dans &amp; Kutlama</h5>
             </div>
           </div>
         </div>
@@ -378,7 +370,7 @@
       <!-- 8. MODÜL: GERİ SAYIM -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik" style="font-size:56px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
+          <span class="font-cormorant-baslik" style="font-size:34px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
           <div style="width:32px; height:0.5px; background:var(--terracotta); margin:16px auto;"></div>
           <div style="display:grid; grid-template-columns:repeat(4,1fr); margin:16px 0;">
             <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
@@ -405,22 +397,22 @@
       <!-- 9. MODÜL: RSVP -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik" style="font-size:56px; color:var(--text-deep); display:block; margin-bottom:8px;">Bize Katılın!</span>
+          <span class="font-cormorant-baslik" style="font-size:34px; color:var(--text-deep); display:block; margin-bottom:8px;">Bize Katılın!</span>
           <p class="font-cormorant" style="font-size:17px; font-style:italic; color:var(--text-muted); margin-bottom:16px;">Lütfen 15 Eylül'e kadar bildiriniz.</p>
 
           <div id="rsvp-ok" class="hidden" style="padding:14px 0; text-align:center;">
-            <span class="font-cormorant-baslik" style="font-size:56px; color:var(--terracotta); display:block; margin-bottom:8px;">Teşekkürler</span>
+            <span class="font-cormorant-baslik" style="font-size:34px; color:var(--terracotta); display:block; margin-bottom:8px;">Teşekkürler</span>
             <h4 class="font-cormorant-caps" style="font-size:14px; color:var(--text-deep);">Yanıtınız Alındı</h4>
           </div>
 
-          <form id="rsvp-form" onsubmit="submitRSVP(event)" style="text-align:left; width:100%;">
+          <form id="rsvp-form" onsubmit="submitRSVP(event)" style="text-align:center; width:100%;">
             <div style="margin-bottom:18px;">
-              <label class="font-sans-sub" style="display:block; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
+              <label class="font-sans-sub" style="display:block; text-align:center; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Adınız Soyadınız</label>
+              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
             </div>
             <div style="margin-bottom:18px;">
-              <label class="font-sans-sub" style="display:block; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Katılım Durumu</label>
-              <select style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
+              <label class="font-sans-sub" style="display:block; text-align:center; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Katılım Durumu</label>
+              <select style="width:100%; text-align:center; text-align-last:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
                 <option value="3">3 Kişi Katılacağız</option>
@@ -429,8 +421,8 @@
               </select>
             </div>
             <div style="margin-bottom:20px;">
-              <label class="font-sans-sub" style="display:block; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Özel Not / Diyet Tercihi</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif; resize:none;"></textarea>
+              <label class="font-sans-sub" style="display:block; text-align:center; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Özel Not / Diyet Tercihi</label>
+              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif; resize:none;"></textarea>
             </div>
             <button type="submit" style="width:100%; padding:11px 0; background:transparent; border:1px solid var(--text-deep); color:var(--text-deep); text-transform:uppercase; font-weight:600; border-radius:999px; letter-spacing:0.24em; font-size:11px; font-family:'Jost',sans-serif; cursor:pointer;">
               GÖNDER
@@ -443,7 +435,7 @@
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span style="font-size:12px; color:var(--terracotta); display:block; margin-bottom:10px;">❦</span>
-          <h3 class="font-cormorant-baslik" style="font-size:56px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
+          <h3 class="font-cormorant-baslik" style="font-size:34px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
           <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 18px;"></div>
           <p class="font-cormorant" style="font-size:16px; font-style:italic; color:var(--text-muted); line-height:1.6; max-width:230px; margin:0 auto;">
             "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
