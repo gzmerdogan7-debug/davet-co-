@@ -12,7 +12,7 @@
   <!-- Google Fonts: Alex Brush, Cormorant Garamond, Jost & Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -151,13 +151,14 @@
       flex-direction: column;
       align-items: center;
     }
-    .kapak-isim span {
-      font-family: 'Alex Brush', cursive;
+        .kapak-isim span {
+      font-family: 'Pinyon Script', cursive;
       color: #44372C;
-      line-height: 1.05;
+      line-height: 1.2;
     }
-    .isim-ilk, .isim-ikinci { font-size: 74px; }
-    .ve-satir { font-size: 38px; color: #8E7047; margin: 2px 0; }
+    .isim-ilk, .isim-ikinci { font-size: 92px; }
+    .ve-satir { font-size: 46px; color: #8E7047; margin: 4px 0; }
+
 
     .kapak-ekran .isim-ilk,
     .kapak-ekran .ve-satir,
@@ -229,11 +230,12 @@
       z-index: 40;
     }
 
-    .scroll-pill-btn {
-      background: rgba(254, 252, 249, 0.94);
+        .scroll-pill-btn {
+      background: rgba(255, 253, 250, 0.94);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(197, 168, 128, 0.5);
+      border: 1px solid var(--gold-line);
       border-radius: 999px;
+
       padding: 9px 20px;
       display: flex;
       align-items: center;
@@ -635,9 +637,12 @@
     <!-- ================= ALT YÜZEN CAM KAPSÜL BAR ================= -->
     <div id="floating-bar" class="floating-pill-bar">
       <button onclick="scrollToNextStory()" class="scroll-pill-btn">
-        <span class="font-sans-sub text-[12px] uppercase tracking-[0.25em] text-[#44372C] font-semibold">Aşağı Kaydır</span>
-        <span class="text-xs text-[#6E5E50]">↓</span>
+               <span class="font-sans-sub text-[12px] uppercase tracking-[0.25em] text-[#44372C] font-semibold">Aşağı Kaydır</span>
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="#8E7047" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
       </button>
+
 
       <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
         <span id="audio-icon" class="text-sm">🎧</span>
