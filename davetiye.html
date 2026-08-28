@@ -257,25 +257,24 @@
     }
 .kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
-  overflow: hidden; transition: opacity 0.9s ease 0.9s;
-  perspective: 1400px;
+  overflow: hidden; transition: opacity 0.9s ease 0.8s;
+  perspective: 1600px;
 }
-.kapak-kanat {
-  position: absolute; top: 0; bottom: 0; width: 50%;
+.zarf {
+  position: absolute; inset: 0;
   background-image: url('kapi.png');
-  background-size: 200% 155%; background-repeat: no-repeat;
-  filter: contrast(1.2) saturate(1.1) brightness(1.03);
+  background-size: cover;
+  background-position: center;
+  filter: contrast(1.08) saturate(1.04) brightness(1.02);
+  transform-origin: top center;
   backface-visibility: hidden;
-  transition: transform 1.8s cubic-bezier(0.45, 0, 0.2, 1);
+  transition: transform 1.7s cubic-bezier(0.5, 0, 0.2, 1);
 }
-.kapak-sol { left: 0; background-position: left 35%; transform-origin: left center; }
-.kapak-sag { right: 0; background-position: right 35%; transform-origin: right center; }
-.kapak-overlay.acik .kapak-sol { transform: rotateY(-100deg); }
-.kapak-overlay.acik .kapak-sag { transform: rotateY(100deg); }
+.kapak-overlay.acik .zarf { transform: rotateX(-115deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
 .kapak-icerik {
   position: absolute; left: 0; right: 0; bottom: 15%; z-index: 10;
-  text-align: center; transition: opacity 0.45s ease;
+  text-align: center; transition: opacity 0.4s ease;
 }
 .kapak-overlay.acik .kapak-icerik { opacity: 0; }
 
@@ -285,14 +284,13 @@
 
   <!-- ARKA PLAN ENSTRÜMANTAL PİYANO MÜZİĞİ -->
   <audio id="bg-audio" loop preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mp3">
+    <source src="muzik.mp3" type="audio/mpeg">
   </audio>
 
   <!-- ================= CINEMA VIEWPORT (CANLI VİDEO MOTORU) ================= -->
   <div class="cinema-viewport">
 <div id="kapak" class="kapak-overlay">
-  <div class="kapak-kanat kapak-sol"></div>
-  <div class="kapak-kanat kapak-sag"></div>
+  <div class="zarf"></div>
   <div class="kapak-icerik">
     <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
   </div>
@@ -661,7 +659,7 @@
   const icon = document.getElementById('audio-icon');
   audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
 
-  setTimeout(function () { document.getElementById('kapak').remove(); }, 1900);
+  setTimeout(function () { document.getElementById('kapak').remove(); }, 1750);
 }, { once: true });
 
     /* Kaydırınca Kartların Belirmesi */
