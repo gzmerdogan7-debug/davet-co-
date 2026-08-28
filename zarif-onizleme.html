@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Herr+Von+Muellerhoff&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Herr+Von+Muellerhoff&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -115,9 +115,12 @@
 
     /* İsim Bloğu */
     .kapak-isim { display: flex; flex-direction: column; align-items: center; }
-    .kapak-isim span { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; color: var(--text-deep); line-height: 1.25; }
-    .isim-ilk, .isim-ikinci { font-size: 68px; }
-    .ve-satir { font-size: 30px; color: var(--terracotta); margin: 0; }
+    .kapak-isim span { color: var(--text-deep); line-height: 1.25; }
+    .isim-ilk, .isim-ikinci {
+      font-family: 'Cinzel', serif; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; font-size: 44px;
+    }
+    .ve-satir { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; font-size: 30px; color: var(--terracotta); margin: 4px 0; }
 
     .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
       opacity: 0; transform: translateY(14px);
@@ -226,18 +229,16 @@
 
     <div id="story-slider">
 
-     <!-- 1. MODÜL: KAPAK -->
-<section class="story-screen kapak-ekran">
-  <div class="arch-content-box text-center">
-    <div class="kapak-isim">
-      <span class="isim-ilk">Selin</span>
-      <span class="ve-satir">&amp;</span>
-      <span class="isim-ikinci">Emir</span>
-    </div>
-  </div>
-</section>
-
-
+      <!-- 1. MODÜL: KAPAK -->
+      <section class="story-screen kapak-ekran">
+        <div class="arch-content-box text-center">
+          <div class="kapak-isim">
+            <span class="isim-ilk">Selin</span>
+            <span class="ve-satir">&amp;</span>
+            <span class="isim-ikinci">Emir</span>
+          </div>
+        </div>
+      </section>
 
       <!-- 2. MODÜL: KARŞILAMA -->
       <section class="story-screen">
