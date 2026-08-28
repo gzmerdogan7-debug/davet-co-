@@ -52,13 +52,37 @@
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
 
-    /* Altın Oval Süslü Çerçeve — gerçek görsel, kartın boyutuna göre gerilerek oturuyor */
+    /* İnce Çift Çizgi Çerçeve — uzun içerikli ekranlarda (form, liste vb), gölgesiz */
     .arch-content-box {
       width: 100%; max-width: 300px; padding: 38px 22px; position: relative; z-index: 25;
-      background-image: url('cerceveson.jpg');
+      border: 1px solid rgba(62, 68, 48, 0.55);
+      border-radius: 2px;
+    }
+    .arch-content-box::before {
+      content: ""; position: absolute; inset: 7px;
+      border: 1px solid rgba(62, 68, 48, 0.28);
+      pointer-events: none;
+    }
+
+    /* Gül Oval Çerçeve — SADECE kapak ekranında, kendi gerçek oranıyla (gerilmeden) */
+    .kapak-ekran .arch-content-box {
+      border: none;
+      padding: 0;
+      width: 84%;
+      max-width: 300px;
+      aspect-ratio: 0.75;
+      background-image: url('cerceve5.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
-      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kapak-ekran .arch-content-box::before { display: none; }
+    .kapak-ic-alan {
+      position: absolute;
+      left: 29%; right: 30%; top: 33%; bottom: 34%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
 
     #story-slider {
@@ -106,16 +130,8 @@
     /* İsim Bloğu */
     .kapak-isim { display: flex; flex-direction: column; align-items: center; }
     .kapak-isim span { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; color: var(--text-deep); line-height: 1.25; }
-    .isim-ilk, .isim-ikinci { font-size: 86px; }
-    .ve-satir { font-size: 38px; color: var(--terracotta); margin: 0; }
-
-    /* Monogram — kapak ekranında isimlerin üstünde */
-    .monogram {
-      width: 54px; height: 54px; border-radius: 50%;
-      border: 1px solid var(--terracotta);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 18px;
-    }
+    .isim-ilk, .isim-ikinci { font-size: 32px; }
+    .ve-satir { font-size: 15px; color: var(--terracotta); margin: 0; }
 
     .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
       opacity: 0; transform: translateY(14px);
@@ -128,7 +144,7 @@
 
     .kapak-tarih {
       display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
-      letter-spacing: 0.16em; font-size: 28px; color: var(--terracotta); margin: 92px auto 0;
+      letter-spacing: 0.08em; font-size: 10px; color: var(--terracotta); margin: 5px auto 0;
     }
 
     .kapak-ekran .arch-content-box {
@@ -227,15 +243,14 @@
       <!-- 1. MODÜL: KAPAK -->
       <section class="story-screen kapak-ekran">
         <div class="arch-content-box text-center">
-          <div class="monogram">
-            <span class="font-sans-sub" style="font-size:11px; letter-spacing:0.15em; color:var(--terracotta); font-weight:600;">S&nbsp;•&nbsp;E</span>
+          <div class="kapak-ic-alan">
+            <div class="kapak-isim">
+              <span class="isim-ilk">Selin</span>
+              <span class="ve-satir">&amp;</span>
+              <span class="isim-ikinci">Emir</span>
+            </div>
+            <span class="kapak-tarih">18.10.2026</span>
           </div>
-          <div class="kapak-isim">
-            <span class="isim-ilk">Selin</span>
-            <span class="ve-satir">&amp;</span>
-            <span class="isim-ikinci">Emir</span>
-          </div>
-          <span class="kapak-tarih">18.10.2026</span>
         </div>
       </section>
 
