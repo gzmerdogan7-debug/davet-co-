@@ -64,16 +64,17 @@
 
     /* Botanik Çizim Arka Planı — satın alınan illüstrasyon, tüm ekranların arkasında
        sabit, yavaş sinematik yakınlaşmayla. Mühür fotoğrafı sadece zarf açılışında kalıyor. */
-    .floral-bg-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+    .floral-bg-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; background: var(--cream); }
     .floral-bg {
-      position: absolute; inset: -20px;
+      position: absolute; inset: 0;
       background-image: url('arka-plan-cizim.jpg');
-      background-size: cover; background-position: center;
+      background-size: 100% auto; background-position: center bottom; background-repeat: no-repeat;
+      transform-origin: center bottom;
       animation: kenburns 34s ease-in-out infinite;
     }
     @keyframes kenburns {
       0%   { transform: scale(1) translate(0, 0); }
-      50%  { transform: scale(1.06) translate(-1%, 0.5%); }
+      50%  { transform: scale(1.04) translate(0, 0); }
       100% { transform: scale(1) translate(0, 0); }
     }
 
@@ -181,3 +182,4 @@
 
 </body>
 </html>
+
