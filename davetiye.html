@@ -295,9 +295,9 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-.kapak-overlay {
+.k.kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
-  overflow: hidden; transition: opacity 1.8s ease 2.4s;
+  overflow: hidden; transition: opacity 1.2s ease 1.9s;
   perspective: 2000px;
 }
 .zarf {
@@ -307,16 +307,17 @@
   background-position: center;
   filter: contrast(1.08) saturate(1.04) brightness(1.02);
   backface-visibility: hidden;
-  transition: transform 3.3s cubic-bezier(0.7, 0, 0.15, 1);
 }
-.zarf-ust { clip-path: polygon(0 0, 100% 0, 50% 50%); transform-origin: 50% 0%; }
+.zarf-ust {
+  clip-path: polygon(0 0, 100% 0, 50% 50%);
+  transform-origin: 50% 0%;
+  transition: transform 1.3s cubic-bezier(0.7, 0, 0.15, 1) 0.5s;
+}
 .zarf-alt { clip-path: polygon(0 100%, 100% 100%, 50% 50%); transform-origin: 50% 100%; }
 .zarf-sol { clip-path: polygon(0 0, 0 100%, 50% 50%); transform-origin: 0% 50%; }
 .zarf-sag { clip-path: polygon(100% 0, 100% 100%, 50% 50%); transform-origin: 100% 50%; }
-.kapak-overlay.acik .zarf-ust { transform: rotateX(-95deg); }
-.kapak-overlay.acik .zarf-alt { transform: rotateX(95deg); }
-.kapak-overlay.acik .zarf-sol { transform: rotateY(95deg); }
-.kapak-overlay.acik .zarf-sag { transform: rotateY(-95deg); }
+.kapak-overlay.acik .zarf-ust { transform: rotateX(-165deg); }
+
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
 .muhur-dokun {
   position: absolute; left: 50%; top: 46.5%;
@@ -679,13 +680,14 @@
   document.getElementById('kapak').classList.add('acik');
 
   const kapakEkrani = document.querySelector('.kapak-ekran');
-  if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2600); }
+    if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2000); }
 
   const audio = document.getElementById('bg-audio');
   const icon = document.getElementById('audio-icon');
   audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
 
-  setTimeout(function () { document.getElementById('kapak').remove(); }, 4300);
+    setTimeout(function () { document.getElementById('kapak').remove(); }, 3300);
+
 }, { once: true });
 
     /* Kaydırınca Kartların Belirmesi */
