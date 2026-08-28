@@ -9,10 +9,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts: Cormorant Garamond & Montserrat -->
+  <!-- Google Fonts: Alex Brush, Cormorant Garamond, Jost & Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -41,11 +41,11 @@
       overflow: hidden;
     }
 
-    .font-cormorant-baslik { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; }
+    .font-cormorant-baslik { font-family: 'Alex Brush', cursive; font-weight: 400; }
 
     .font-cormorant { font-family: 'Cormorant Garamond', serif; }
     .font-cormorant-caps { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.28em; }
-    .font-sans-sub { font-family: 'Montserrat', sans-serif; letter-spacing: 0.28em; }
+    .font-sans-sub { font-family: 'Jost', sans-serif; letter-spacing: 0.28em; }
 
     /* iPhone Sahnesi */
     .cinema-viewport {
@@ -57,7 +57,7 @@
       border-radius: 42px;
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      background-color: #E9E0CE;
+      background-color: #F5F0E4;
       background-image:
         repeating-linear-gradient(90deg, rgba(68,55,44,0.05) 0px, rgba(68,55,44,0.05) 1px, transparent 1px, transparent 2.5px),
         repeating-linear-gradient(0deg, rgba(68,55,44,0.045) 0px, rgba(68,55,44,0.045) 1px, transparent 1px, transparent 2.5px),
@@ -354,7 +354,7 @@
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-3"></div>
 
           <p class="font-sans-sub text-[8.5px] uppercase text-[#6E5E50] leading-relaxed mb-3 font-medium">
-            AİLELERİMİZLE BİRLİKTE BU ÖZEL GECEYE SİZİ DAVET EDİYORUZ.
+            DAVETLİSİNİZ.
           </p>
 
           <!-- Aile İsimleri -->
@@ -436,18 +436,15 @@
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-sans-sub text-[8.5px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-1.5">KUTLAMA MEKANI</span>
-          
-          <div class="w-full h-28 rounded-xl overflow-hidden mb-2 border border-[#C5A880]/50 shadow-sm">
-            <img src="mekan.jpg" alt="Ses Lounge Events" class="w-full h-full object-cover"/>
+
+          <h3 class="font-cormorant-caps text-sm text-[#44372C] mb-2">SES LOUNGE EVENTS</h3>
+
+          <div class="w-full h-32 rounded-xl overflow-hidden mb-3 border border-[#C5A880]/50 shadow-sm" style="position:relative;">
+            <iframe src="https://maps.google.com/maps?q=Bilim%20K%C3%BClt%C3%BCr%20ve%20Sanat%20Park%C4%B1%20%C4%B0%C3%A7i%2C%20Sazova%2C%20Ulusal%20Egemenlik%20Blv.%20D%3A211%2F1%2C%2026150%20Tepeba%C5%9F%C4%B1%2FEski%C5%9Fehir&output=embed" class="w-full h-full border-0" loading="lazy" title="Mekan Haritası" style="filter: sepia(0.35) saturate(0.65) brightness(1.03) contrast(0.95); pointer-events:none;"></iframe>
           </div>
 
-          <h3 class="font-cormorant-caps text-sm text-[#44372C] mb-0.5">SES LOUNGE EVENTS</h3>
-          <p class="font-cormorant text-[13px] text-[#6E5E50] italic leading-tight mb-2.5">
-            Bilim Kültür ve Sanat Parkı İçi, Sazova, Ulusal Egemenlik Blv. D:211/1, 26150 Tepebaşı/Eskişehir
-          </p>
-
           <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="gold-action-btn">
-            HARİTADA AÇ &amp; YOL TARİFİ →
+            KONUMA GİT &amp; YOL TARİFİ →
           </a>
         </div>
       </section>
@@ -535,12 +532,12 @@
 
           <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-1.5 text-left w-full font-sans-sub text-[7.5px]">
             <div>
-              <label class="block uppercase tracking-wider text-[#6E5E50] mb-0.5 font-medium">Adınız Soyadınız</label>
+              <label class="block uppercase tracking-wider text-[#6E5E50] mb-0.5 font-medium font-sans-sub">Adınız Soyadınız</label>
               <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#F0E7D8] border border-[#C5A880]/45 rounded-lg text-[10.5px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
             </div>
 
             <div>
-              <label class="block uppercase tracking-wider text-[#6E5E50] mb-0.5 font-medium">Katılım Durumu</label>
+              <label class="block uppercase tracking-wider text-[#6E5E50] mb-0.5 font-medium font-sans-sub">Katılım Durumu</label>
               <select class="w-full p-1.5 bg-[#F0E7D8] border border-[#C5A880]/45 rounded-lg text-[10.5px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
@@ -549,7 +546,7 @@
             </div>
 
             <div>
-              <label class="block uppercase tracking-wider text-[#6E5E50] mb-0.5 font-medium">Özel Not / Diyet Tercihi</label>
+              <label class="block uppercase tracking-wider text-[#6E5E50] mb-0.5 font-medium font-sans-sub">Özel Not / Diyet Tercihi</label>
               <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#F0E7D8] border border-[#C5A880]/45 rounded-lg text-[10.5px] text-[#44372C] focus:outline-none focus:border-[#8E7047]"></textarea>
             </div>
 
@@ -675,3 +672,4 @@
 
 </body>
 </html>
+
