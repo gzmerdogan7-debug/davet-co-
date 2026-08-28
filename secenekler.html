@@ -6,7 +6,7 @@
 <title>İpek & Kaan — Tasarım Seçenekleri</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&family=Parisienne&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@1,500;1,600&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Playfair+Display:ital,wght@1,500;1,600&family=Great+Vibes&family=Alex+Brush&family=Petit+Formal+Script&family=Tangerine:wght@500;700&family=Montserrat:wght@400;500;600&family=Jost:wght@400;500;600&family=Josefin+Sans:wght@400;500;600&family=Quicksand:wght@400;500;600&family=EB+Garamond:ital@1&family=Lora:ital@1&family=Crimson+Text:ital@1&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #44372C;
@@ -24,82 +24,81 @@
     padding: 40px 18px 80px;
   }
   .sayfa { max-width: 480px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 30px; }
+  header { text-align: center; margin-bottom: 26px; }
   .ust-etiket {
     font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
     color: var(--gold-deep); font-weight: 600; margin: 0 0 8px;
   }
   h1 {
     font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
-    font-size: 21px; margin: 0; color: var(--ink);
+    font-size: 20px; margin: 0; color: var(--ink);
   }
   h2 {
     font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 0.15em;
     text-transform: uppercase; font-weight: 600; color: var(--gold-deep);
-    margin: 36px 0 14px; text-align: center;
+    margin: 34px 0 12px; text-align: center;
   }
+  .h2-alt { font-size: 10px; letter-spacing: 0.05em; text-transform: none; color: var(--muted); font-weight: 400; margin: -8px 0 14px; text-align: center; }
 
   #onizleme {
     border: 1px solid rgba(197,168,128,0.5);
     border-radius: 20px;
-    padding: 40px 22px;
+    padding: 34px 24px;
     text-align: center;
-    min-height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: background-color 0.35s ease;
     background-color: #E9E0CE;
+    position: sticky;
+    top: 12px;
+    z-index: 5;
   }
-  #ornekYazi {
-    font-size: clamp(34px, 10vw, 50px);
-    line-height: 1.2;
-    margin: 0;
+  #onizleme .cicek { font-size: 12px; color: var(--gold); display: block; margin-bottom: 6px; }
+  #ornekBaslik {
+    font-size: clamp(30px, 9vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 10px;
     color: var(--ink);
+    transition: font-family 0.15s ease;
+  }
+  .cizgi { width: 32px; height: 0.5px; background: var(--gold); margin: 10px auto; }
+  #ornekEtiket {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin: 0 0 8px;
+    transition: font-family 0.15s ease;
+  }
+  #ornekGovde {
+    font-size: 13px; font-style: italic; color: var(--muted); margin: 0;
     transition: font-family 0.15s ease;
   }
 
   .secim-alani {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 9px;
   }
-  .font-btn {
+  .opsiyon-btn {
     background: rgba(255,253,250,0.55);
     border: 1.5px solid rgba(197,168,128,0.4);
     border-radius: 12px;
-    padding: 14px 10px;
+    padding: 13px 8px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .font-btn:hover { border-color: var(--gold-deep); background: rgba(255,253,250,0.85); }
-  .font-btn.secili { border-color: var(--gold-deep); border-width: 2px; background: rgba(255,253,250,0.95); box-shadow: 0 6px 16px -8px rgba(68,55,44,0.3); }
-  .font-btn .ornek-mini { font-size: 22px; margin-bottom: 6px; color: var(--ink); line-height: 1; }
-  .font-btn .ad { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
-  .font-btn.secili .ad { color: var(--gold-deep); }
+  .opsiyon-btn:hover { border-color: var(--gold-deep); background: rgba(255,253,250,0.85); }
+  .opsiyon-btn.secili { border-color: var(--gold-deep); border-width: 2px; background: rgba(255,253,250,0.95); box-shadow: 0 6px 16px -8px rgba(68,55,44,0.3); }
+  .opsiyon-btn .ornek-mini { font-size: 20px; margin-bottom: 6px; color: var(--ink); line-height: 1; }
+  .opsiyon-btn .ad { font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
+  .opsiyon-btn.secili .ad { color: var(--gold-deep); }
 
   .renk-alani {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 9px;
   }
-  .renk-btn {
-    border: 1.5px solid rgba(197,168,128,0.4);
-    border-radius: 12px;
-    padding: 12px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .renk-btn:hover { border-color: var(--gold-deep); }
-  .renk-btn.secili { border-color: var(--gold-deep); border-width: 2px; box-shadow: 0 6px 16px -8px rgba(68,55,44,0.3); }
   .renk-yuvarlak {
-    width: 30px; height: 30px; border-radius: 50%;
-    margin: 0 auto 8px; border: 1px solid rgba(0,0,0,0.1);
+    width: 28px; height: 28px; border-radius: 50%;
+    margin: 0 auto 7px; border: 1px solid rgba(0,0,0,0.1);
   }
-  .renk-btn .ad { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
-  .renk-btn.secili .ad { color: var(--gold-deep); }
 
   .not { text-align: center; font-size: 12px; color: var(--muted); margin-top: 30px; line-height: 1.6; }
 </style>
@@ -108,88 +107,171 @@
 <div class="sayfa">
   <header>
     <p class="ust-etiket">Tasarım Seçenekleri</p>
-    <h1>Yazı tipini ve zemin rengini birlikte dene</h1>
+    <h1>Her yazı ve rengi birlikte dene</h1>
   </header>
 
   <div id="onizleme">
-    <p id="ornekYazi" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;">İpek &amp; Kaan</p>
+    <span class="cicek">❦</span>
+    <p id="ornekBaslik" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;">İpek &amp; Kaan</p>
+    <div class="cizgi"></div>
+    <p id="ornekEtiket" style="font-family: 'Montserrat', sans-serif;">AİLELERİMİZLE BİRLİKTE SİZİ DAVET EDİYORUZ</p>
+    <p id="ornekGovde" style="font-family: 'Cormorant Garamond', serif;">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
   </div>
 
-  <h2>Yazı Tipi</h2>
-  <div class="secim-alani">
-    <div class="font-btn secili" data-font="'Cormorant Garamond', serif" data-style="italic" data-weight="500">
+  <h2>Başlık Fontu</h2>
+  <p class="h2-alt">İsimler için (İpek &amp; Kaan)</p>
+  <div class="secim-alani" id="baslikAlani">
+    <div class="opsiyon-btn secili" data-font="'Cormorant Garamond', serif" data-style="italic" data-weight="500">
       <div class="ornek-mini" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;">Aa</div>
       <div class="ad">Cormorant İtalik</div>
     </div>
-    <div class="font-btn" data-font="'WindSong', cursive" data-style="normal" data-weight="500">
+    <div class="opsiyon-btn" data-font="'WindSong', cursive" data-style="normal" data-weight="500">
       <div class="ornek-mini" style="font-family:'WindSong',cursive;">Aa</div>
       <div class="ad">WindSong</div>
     </div>
-    <div class="font-btn" data-font="'Parisienne', cursive" data-style="normal" data-weight="400">
+    <div class="opsiyon-btn" data-font="'Parisienne', cursive" data-style="normal" data-weight="400">
       <div class="ornek-mini" style="font-family:'Parisienne',cursive;">Aa</div>
       <div class="ad">Parisienne</div>
     </div>
-    <div class="font-btn" data-font="'Playfair Display', serif" data-style="italic" data-weight="600">
+    <div class="opsiyon-btn" data-font="'Playfair Display', serif" data-style="italic" data-weight="600">
       <div class="ornek-mini" style="font-family:'Playfair Display',serif; font-style:italic; font-weight:600;">Aa</div>
       <div class="ad">Playfair İtalik</div>
     </div>
-    <div class="font-btn" data-font="'Great Vibes', cursive" data-style="normal" data-weight="400">
+    <div class="opsiyon-btn" data-font="'Great Vibes', cursive" data-style="normal" data-weight="400">
       <div class="ornek-mini" style="font-family:'Great Vibes',cursive;">Aa</div>
       <div class="ad">Great Vibes</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Alex Brush', cursive" data-style="normal" data-weight="400">
+      <div class="ornek-mini" style="font-family:'Alex Brush',cursive;">Aa</div>
+      <div class="ad">Alex Brush</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Petit Formal Script', cursive" data-style="normal" data-weight="400">
+      <div class="ornek-mini" style="font-family:'Petit Formal Script',cursive;">Aa</div>
+      <div class="ad">Petit Formal</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Tangerine', cursive" data-style="normal" data-weight="700">
+      <div class="ornek-mini" style="font-family:'Tangerine',cursive; font-weight:700; font-size:28px;">Aa</div>
+      <div class="ad">Tangerine</div>
+    </div>
+  </div>
+
+  <h2>Etiket Fontu</h2>
+  <p class="h2-alt">Büyük harfli küçük yazılar için</p>
+  <div class="secim-alani" id="etiketAlani">
+    <div class="opsiyon-btn secili" data-font="'Montserrat', sans-serif">
+      <div class="ornek-mini" style="font-family:'Montserrat',sans-serif; font-size:15px; letter-spacing:0.1em;">AA</div>
+      <div class="ad">Montserrat</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Jost', sans-serif">
+      <div class="ornek-mini" style="font-family:'Jost',sans-serif; font-size:15px; letter-spacing:0.1em;">AA</div>
+      <div class="ad">Jost</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Josefin Sans', sans-serif">
+      <div class="ornek-mini" style="font-family:'Josefin Sans',sans-serif; font-size:15px; letter-spacing:0.1em;">AA</div>
+      <div class="ad">Josefin Sans</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Quicksand', sans-serif">
+      <div class="ornek-mini" style="font-family:'Quicksand',sans-serif; font-size:15px; letter-spacing:0.1em;">AA</div>
+      <div class="ad">Quicksand</div>
+    </div>
+  </div>
+
+  <h2>Gövde Fontu</h2>
+  <p class="h2-alt">İtalik açıklama/alıntı yazıları için</p>
+  <div class="secim-alani" id="govdeAlani">
+    <div class="opsiyon-btn secili" data-font="'Cormorant Garamond', serif">
+      <div class="ornek-mini" style="font-family:'Cormorant Garamond',serif; font-style:italic;">Aa</div>
+      <div class="ad">Cormorant</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'EB Garamond', serif">
+      <div class="ornek-mini" style="font-family:'EB Garamond',serif; font-style:italic;">Aa</div>
+      <div class="ad">EB Garamond</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Lora', serif">
+      <div class="ornek-mini" style="font-family:'Lora',serif; font-style:italic;">Aa</div>
+      <div class="ad">Lora</div>
+    </div>
+    <div class="opsiyon-btn" data-font="'Crimson Text', serif">
+      <div class="ornek-mini" style="font-family:'Crimson Text',serif; font-style:italic;">Aa</div>
+      <div class="ad">Crimson Text</div>
     </div>
   </div>
 
   <h2>Zemin Rengi</h2>
-  <div class="renk-alani">
-    <div class="renk-btn secili" data-renk="#E9E0CE">
+  <div class="renk-alani" id="renkAlani">
+    <div class="opsiyon-btn secili" data-renk="#E9E0CE">
       <div class="renk-yuvarlak" style="background:#E9E0CE;"></div>
       <div class="ad">Şu An</div>
     </div>
-    <div class="renk-btn" data-renk="#F5F0E4">
+    <div class="opsiyon-btn" data-renk="#F5F0E4">
       <div class="renk-yuvarlak" style="background:#F5F0E4;"></div>
       <div class="ad">Açık Fildişi</div>
     </div>
-    <div class="renk-btn" data-renk="#FAF7F0">
+    <div class="opsiyon-btn" data-renk="#FAF7F0">
       <div class="renk-yuvarlak" style="background:#FAF7F0;"></div>
       <div class="ad">Neredeyse Beyaz</div>
     </div>
-    <div class="renk-btn" data-renk="#C9BCA8">
+    <div class="opsiyon-btn" data-renk="#C9BCA8">
       <div class="renk-yuvarlak" style="background:#C9BCA8;"></div>
       <div class="ad">Koyu Bej</div>
     </div>
-    <div class="renk-btn" data-renk="#EFE3D0">
+    <div class="opsiyon-btn" data-renk="#EFE3D0">
       <div class="renk-yuvarlak" style="background:#EFE3D0;"></div>
       <div class="ad">Sıcak Krem</div>
     </div>
-    <div class="renk-btn" data-renk="#F0EDE5">
+    <div class="opsiyon-btn" data-renk="#F0EDE5">
       <div class="renk-yuvarlak" style="background:#F0EDE5;"></div>
       <div class="ad">Soğuk Gri-Bej</div>
     </div>
+    <div class="opsiyon-btn" data-renk="#EAD9C8">
+      <div class="renk-yuvarlak" style="background:#EAD9C8;"></div>
+      <div class="ad">Şeftali Bej</div>
+    </div>
+    <div class="opsiyon-btn" data-renk="#E3E1D6">
+      <div class="renk-yuvarlak" style="background:#E3E1D6;"></div>
+      <div class="ad">Yosun Gri</div>
+    </div>
+    <div class="opsiyon-btn" data-renk="#F2E9D8">
+      <div class="renk-yuvarlak" style="background:#F2E9D8;"></div>
+      <div class="ad">Vanilya</div>
+    </div>
   </div>
 
-  <p class="not">Beğendiğin yazı tipi + rengi bana söyle, davetiyeye onları uygulayayım.</p>
+  <p class="not">Beğendiğin başlık + etiket + gövde fontu ve rengi bana söyle, davetiyeye hepsini birden uygulayayım.</p>
 </div>
 
 <script>
-  const ornek = document.getElementById('ornekYazi');
   const onizleme = document.getElementById('onizleme');
+  const ornekBaslik = document.getElementById('ornekBaslik');
+  const ornekEtiket = document.getElementById('ornekEtiket');
+  const ornekGovde = document.getElementById('ornekGovde');
 
-  document.querySelectorAll('.font-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.font-btn').forEach(function (b) { b.classList.remove('secili'); });
-      btn.classList.add('secili');
-      ornek.style.fontFamily = btn.dataset.font;
-      ornek.style.fontStyle = btn.dataset.style;
-      ornek.style.fontWeight = btn.dataset.weight;
+  function baglaGrup(id, uygula) {
+    document.querySelectorAll('#' + id + ' .opsiyon-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('#' + id + ' .opsiyon-btn').forEach(function (b) { b.classList.remove('secili'); });
+        btn.classList.add('secili');
+        uygula(btn);
+      });
     });
+  }
+
+  baglaGrup('baslikAlani', function (btn) {
+    ornekBaslik.style.fontFamily = btn.dataset.font;
+    ornekBaslik.style.fontStyle = btn.dataset.style;
+    ornekBaslik.style.fontWeight = btn.dataset.weight;
   });
 
-  document.querySelectorAll('.renk-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.renk-btn').forEach(function (b) { b.classList.remove('secili'); });
-      btn.classList.add('secili');
-      onizleme.style.backgroundColor = btn.dataset.renk;
-    });
+  baglaGrup('etiketAlani', function (btn) {
+    ornekEtiket.style.fontFamily = btn.dataset.font;
+  });
+
+  baglaGrup('govdeAlani', function (btn) {
+    ornekGovde.style.fontFamily = btn.dataset.font;
+  });
+
+  baglaGrup('renkAlani', function (btn) {
+    onizleme.style.backgroundColor = btn.dataset.renk;
   });
 </script>
 </body>
