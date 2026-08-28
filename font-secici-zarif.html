@@ -1,525 +1,138 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Selin & Emir — Düğün Davetiyesi | DAVET & CO. Zarif</title>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Herr+Von+Muellerhoff&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --text-deep: #3E4430;
-      --text-muted: #6B6455;
-      --sage: #6B7A5E;
-      --sage-deep: #4A5240;
-      --terracotta: #8C7A4A;
-      --cream: #F6F1E4;
-    }
-
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    .text-center { text-align: center; }
-    .hidden { display: none; }
-
-    body {
-      font-family: 'Jost', sans-serif;
-      background-color: #2A2E22;
-      background-image: radial-gradient(circle at 50% 50%, #363B29 0%, #181B12 100%);
-      color: var(--text-deep);
-      margin: 0; padding: 0; min-height: 100vh;
-      display: flex; justify-content: center; align-items: center;
-      overflow: hidden;
-    }
-
-    .font-cormorant-baslik { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; }
-    .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-    .font-cormorant-caps { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.26em; }
-    .font-sans-sub { font-family: 'Jost', sans-serif; letter-spacing: 0.26em; }
-
-    .cinema-viewport {
-      width: 100%; max-width: 414px; height: 100vh; max-height: 896px;
-      position: relative; border-radius: 42px;
-      box-shadow: 0 45px 120px -20px rgba(0,0,0,0.98), 0 0 0 1px rgba(255,255,255,0.1);
-      overflow: hidden;
-      background-color: var(--cream);
-    }
-
-    @media (max-width: 640px) {
-      .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
-    }
-
-    /* Kenarsız Kart, Üst + Alt Süsleme (alttaki ters çevrilmiş) — tüm ekranlarda aynı sistem,
-       içerik ikisinin arasına doğal olarak sığar (yükseklik içeriğe göre esner) */
-    .arch-content-box {
-      width: 100%; max-width: 300px; padding: 140px 22px 128px; position: relative; z-index: 25;
-    }
-    .arch-content-box::before,
-    .arch-content-box::after {
-      content: "";
-      position: absolute; left: 50%;
-      width: 220px; height: 126px;
-      background-image: url('cerceve6.png');
-      background-size: 237px 316px;
-      background-position: -8px -95px;
-      background-repeat: no-repeat;
-      pointer-events: none;
-    }
-    .arch-content-box::before { top: 0; transform: translateX(-50%); }
-    .arch-content-box::after { bottom: 0; transform: translateX(-50%) scaleY(-1); }
-
-    #story-slider {
-      width: 100%; height: 100%;
-      overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none;
-      position: relative; z-index: 20;
-    }
-    #story-slider::-webkit-scrollbar { display: none; }
-
-    .story-screen {
-      width: 100%; height: 100%;
-      scroll-snap-align: start; scroll-snap-stop: always;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 16px 20px 78px 20px; position: relative;
-    }
-
-    /* Bulanık Doku Arka Planı — mühür fotoğrafının kendisi, tüm ekranların arkasında sabit */
-    .doku-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
-    .doku-bg {
-      position: absolute; inset: -50px;
-      background-image: url('muhur-zarif.jpg');
-      background-size: 175%; background-position: 30% 20%;
-      filter: blur(18px) saturate(0.9) brightness(1.05);
-      animation: kenburns 36s ease-in-out infinite;
-    }
-    /* Tüm sayfaya tek seferlik hafif krem aydınlatma — kutucuk gerekmeden okunabilirlik için */
-    .doku-wrap::after {
-      content: ""; position: absolute; inset: 0;
-      background: var(--cream); opacity: 0.42;
-    }
-    @keyframes kenburns {
-      0%   { transform: scale(1) translate(0, 0); }
-      50%  { transform: scale(1.06) translate(-1%, 1%); }
-      100% { transform: scale(1) translate(0, 0); }
-    }
-
-    /* Kart Giriş Animasyonu */
-    .kart-giris {
-      opacity: 0;
-      transform: translateY(24px) scale(0.97);
-      transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .kart-giris.gorundu { opacity: 1; transform: translateY(0) scale(1); }
-
-    /* İsim Bloğu */
-    .kapak-isim { display: flex; flex-direction: column; align-items: center; }
-    .kapak-isim span { color: var(--text-deep); line-height: 1.25; }
-    .isim-ilk, .isim-ikinci {
-      font-family: 'Cinzel', serif; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; font-size: 44px;
-    }
-    .ve-satir { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; font-size: 30px; color: var(--terracotta); margin: 4px 0; }
-
-    .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
-    }
-    .kapak-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.25s; }
-    .kapak-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.75s; }
-    .kapak-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 1.25s; }
-    .kapak-ekran.gorundu .kapak-tarih { opacity: 1; transform: none; transition-delay: 1.9s; }
-
-    .kapak-tarih {
-      display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
-      letter-spacing: 0.14em; font-size: 20px; color: var(--terracotta); margin: 26px auto 0;
-    }
-
-    .kapak-ekran .arch-content-box {
-      opacity: 0; transform: scale(0.88) translateY(22px);
-      transition: opacity 1.3s ease, transform 1.3s cubic-bezier(0.16,1,0.3,1);
-    }
-    .kapak-ekran.gorundu .arch-content-box { opacity: 1; transform: scale(1) translateY(0); }
-
-    /* Zarf Kapanışı */
-    .kapak-overlay {
-      position: absolute; inset: 0; z-index: 100; overflow: hidden;
-      transition: opacity 2.6s cubic-bezier(0.4,0,0.2,1) 0.5s;
-    }
-    .kapak-overlay.acik { opacity: 0; pointer-events: none; }
-    .kapak-overlay.acik .zarf { transform: scale(1.06); }
-    .zarf {
-      position: absolute; inset: 0;
-      background-image: url('muhur-zarif.jpg');
-      background-size: cover; background-position: center;
-      transition: transform 2.6s cubic-bezier(0.4,0,0.2,1) 0.5s;
-    }
-    .muhur-dokun {
-      position: absolute; left: 50%; top: 46%; width: 100px; height: 100px;
-      transform: translate(-50%,-50%); border-radius: 50%;
-      background: transparent; border: none; padding: 0; cursor: pointer; z-index: 15;
-      transition: opacity 0.6s ease;
-    }
-    .muhur-dokun::before {
-      content: ""; position: absolute; inset: 0; border-radius: 50%;
-      border: 1.5px solid rgba(233,226,204,0.85); animation: nabiz 2.2s ease-out infinite;
-    }
-    @keyframes nabiz {
-      0% { transform: scale(0.82); opacity: 0.9; }
-      70% { transform: scale(1.38); opacity: 0; }
-      100% { transform: scale(1.38); opacity: 0; }
-    }
-    .kapak-overlay.acik .muhur-dokun { opacity: 0; }
-
-    .line-icon {
-      width: 21px; height: 21px; stroke: var(--sage-deep); fill: none;
-      stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
-    }
-
-    .aksiyon-btn {
-      background: rgba(255, 253, 250, 0.85);
-      border: 1px solid rgba(140, 122, 74, 0.55);
-      border-radius: 999px; padding: 8px 19px; font-size: 8.5px;
-      letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-deep);
-      font-weight: 600; display: inline-block; transition: all 0.2s; text-decoration: none;
-    }
-    .aksiyon-btn:hover { background: var(--text-deep); color: #FCFAF7; }
-
-    /* Renk Noktaları — Dress Code */
-    .renk-noktasi {
-      width: 26px; height: 26px; border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.35);
-      display: inline-block;
-    }
-
-    /* Alt Yüzen Cam Kapsül Bar */
-    .floating-pill-bar {
-      position: absolute; bottom: 22px; left: 0; right: 0;
-      display: flex; justify-content: center; align-items: center; gap: 10px; z-index: 40;
-    }
-    .scroll-pill-btn {
-      background: rgba(255, 253, 250, 0.85); backdrop-filter: blur(12px);
-      border: 1px solid rgba(140, 122, 74, 0.4); border-radius: 999px; padding: 8px 18px;
-      display: flex; align-items: center; gap: 8px;
-      box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.12); cursor: pointer; transition: all 0.2s ease;
-    }
-    .scroll-pill-btn:active { transform: scale(0.96); }
-    .audio-pill-btn {
-      background: rgba(254, 252, 249, 0.94); backdrop-filter: blur(12px);
-      border: 1px solid rgba(140, 122, 74, 0.45); border-radius: 999px;
-      width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zarif — İsim Font Seçici</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Alex+Brush&family=Mrs+Saint+Delafield&family=Beau+Rivage&family=Rouge+Script&family=Herr+Von+Muellerhoff&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px 16px 80px;
+    background: #2A2E22;
+    font-family: -apple-system, sans-serif;
+  }
+  .baslik {
+    color: #E9E2CC; text-align: center; font-size: 13px; letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 24px; opacity: 0.8;
+  }
+  .kart {
+    background: #F6F1E4;
+    border: 1px solid rgba(62,68,48,0.3);
+    border-radius: 4px;
+    max-width: 340px;
+    margin: 0 auto 20px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .etiket {
+    font-family: -apple-system, sans-serif;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #8C7A4A; font-weight: 600; margin-bottom: 14px; display: block;
+  }
+  .isim-satir { display: flex; flex-direction: column; align-items: center; color: #3E4430; }
+  .ve { color: #8C7A4A; }
+  .boyut-etiketi {
+    font-family: -apple-system, sans-serif; font-size: 9px; color: #6B6455;
+    margin-top: 4px; margin-bottom: 2px;
+  }
+</style>
 </head>
 <body>
 
-  <audio id="bg-audio" loop preload="auto">
-    <source src="muzik.mp3" type="audio/mpeg">
-  </audio>
+  <div class="baslik">İsim Karakteri Seçimi — Selin &amp; Emir</div>
 
-  <div class="cinema-viewport">
-    <div class="doku-wrap"><div class="doku-bg"></div></div>
-
-    <div id="kapak" class="kapak-overlay">
-      <div class="zarf"></div>
-      <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
+  <div class="kart">
+    <span class="etiket">1 · PINYON SCRIPT (Sade'nin kendi fontu)</span>
+    <span class="boyut-etiketi">Büyük — 72px</span>
+    <div class="isim-satir" style="font-family:'Pinyon Script',cursive; line-height:1.15;">
+      <span style="font-size:72px;">Selin</span>
+      <span class="ve" style="font-size:32px;">&amp;</span>
+      <span style="font-size:72px;">Emir</span>
     </div>
-
-    <div id="story-slider">
-
-      <!-- 1. MODÜL: KAPAK -->
-      <section class="story-screen kapak-ekran">
-        <div class="arch-content-box text-center">
-          <div class="kapak-isim">
-            <span class="isim-ilk">Selin</span>
-            <span class="ve-satir">&amp;</span>
-            <span class="isim-ikinci">Emir</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. MODÜL: KARŞILAMA -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris" style="max-width:320px; margin:0 auto;">
-          <p class="font-cormorant" style="font-size:20px; font-style:italic; color:var(--text-deep); line-height:1.5; margin-bottom:20px;">
-            Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
-          </p>
-          <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 16px;"></div>
-          <span class="font-sans-sub" style="font-size:11px; color:var(--terracotta); font-weight:600; display:block; margin-bottom:12px;">AİLELERİMİZ</span>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center;">
-            <div>
-              <span class="font-sans-sub" style="font-size:12px; color:var(--text-deep); font-weight:600; display:block;">KAYA</span>
-              <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); text-transform:uppercase; display:block;">AİLESİ</span>
-            </div>
-            <div>
-              <span class="font-sans-sub" style="font-size:12px; color:var(--text-deep); font-weight:600; display:block;">ÖZDEMİR</span>
-              <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); text-transform:uppercase; display:block;">AİLESİ</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. MODÜL: TARİH & SAAT -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <svg class="w-5 h-5" style="margin:0 auto 6px; stroke:var(--terracotta); fill:none; stroke-width:1.2; width:21px; height:21px;" viewBox="0 0 24 24">
-            <path d="M12 2C12 2 13 8 7 10C1 12 2 18 2 18C2 18 8 17 10 11C12 5 18 4 18 4M12 2C12 2 16 7 22 9"/>
-          </svg>
-          <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600;">TARİH &amp; SAAT</span>
-
-          <div style="display:flex; align-items:baseline; justify-content:center; gap:14px; margin-top:18px; margin-bottom:16px;">
-            <span class="font-cormorant" style="font-size:84px; font-weight:400; color:var(--text-deep); line-height:0.85;">18</span>
-            <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px;">
-              <span class="font-sans-sub" style="font-size:13px; color:var(--terracotta); font-weight:600;">EKİM</span>
-              <span class="font-sans-sub" style="font-size:13px; color:var(--text-muted); font-weight:500;">2026</span>
-            </div>
-          </div>
-
-          <p class="font-sans-sub" style="font-size:11px; color:var(--terracotta); font-weight:600; margin-top:6px; margin-bottom:14px;">PAZAR · 17:30</p>
-
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20261018T143000Z/20261018T173000Z&details=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Ses+Lounge+Events,+Eskisehir" target="_blank" class="aksiyon-btn">
-            + GOOGLE TAKVİME EKLE
-          </a>
-        </div>
-      </section>
-
-      <!-- 4. MODÜL: MEKAN -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600; display:block; margin-bottom:16px;">KUTLAMA MEKANI</span>
-          <svg style="width:42px; height:42px; margin:0 auto 12px;" viewBox="0 0 24 24" fill="none" stroke="var(--terracotta)" stroke-width="1.1">
-            <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21z"/>
-            <circle cx="12" cy="9.5" r="2.6" fill="var(--terracotta)" stroke="none"/>
-          </svg>
-          <h3 class="font-cormorant-caps" style="font-size:19px; color:var(--text-deep); margin-bottom:16px;">SES LOUNGE EVENTS</h3>
-          <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="aksiyon-btn">
-            KONUMA GİT &amp; YOL TARİFİ →
-          </a>
-        </div>
-      </section>
-
-      <!-- 5. MODÜL: DRESS CODE -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600; display:block; margin-bottom:8px;">DRESS CODE</span>
-          <h3 class="font-cormorant" style="font-size:22px; font-style:italic; color:var(--terracotta); margin-bottom:16px;">Doğanın Tonları</h3>
-          <p class="font-cormorant" style="font-size:16px; color:var(--text-deep); line-height:1.6; max-width:250px; margin:0 auto 20px;">
-            Kutlamamızın atmosferine eşlik etmeniz için zarif ve rahat kıyafetler öneriyoruz. Beyaz ve krem tonlarından kaçınmanızı, toprağın ve yeşilin doğal tonlarını tercih etmenizi rica ederiz.
-          </p>
-          <div style="display:flex; justify-content:center; gap:12px;">
-            <span class="renk-noktasi" style="background:#8C9A78;"></span>
-            <span class="renk-noktasi" style="background:#4A5240;"></span>
-            <span class="renk-noktasi" style="background:#8C7A4A;"></span>
-            <span class="renk-noktasi" style="background:#D8CBA8;"></span>
-            <span class="renk-noktasi" style="background:#6B6455;"></span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6. MODÜL: YEMEK MENÜSÜ -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600; display:block; margin-bottom:20px;">GÜNÜN MENÜSÜ</span>
-          <div style="display:flex; flex-direction:column; gap:18px; max-width:260px; margin:0 auto;">
-            <div>
-              <span class="font-sans-sub" style="font-size:9.5px; color:var(--terracotta); font-weight:600;">BAŞLANGIÇ</span>
-              <h5 class="font-cormorant" style="font-size:19px; font-style:italic; color:var(--text-deep); margin-top:4px;">Akdeniz Mezze Tabağı</h5>
-            </div>
-            <div style="width:100%; height:0.5px; background:rgba(140,122,74,0.3);"></div>
-            <div>
-              <span class="font-sans-sub" style="font-size:9.5px; color:var(--terracotta); font-weight:600;">ANA YEMEK</span>
-              <h5 class="font-cormorant" style="font-size:19px; font-style:italic; color:var(--text-deep); margin-top:4px;">Kekik Aromalı Kuzu Pirzola</h5>
-            </div>
-            <div style="width:100%; height:0.5px; background:rgba(140,122,74,0.3);"></div>
-            <div>
-              <span class="font-sans-sub" style="font-size:9.5px; color:var(--terracotta); font-weight:600;">TATLI</span>
-              <h5 class="font-cormorant" style="font-size:19px; font-style:italic; color:var(--text-deep); margin-top:4px;">Portakallı Zeytinyağlı Kek</h5>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7. MODÜL: PROGRAM -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600; display:block; margin-bottom:18px;">GÜNÜN PROGRAMI</span>
-          <div style="display:flex; flex-direction:column; text-align:center; max-width:245px; margin:0 auto;">
-            <div style="display:flex; flex-direction:column; align-items:center; gap:5px; padding:14px 0; border-bottom:1px solid rgba(62,68,48,0.18);">
-              <svg class="line-icon" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
-              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">17:30</span>
-              <h5 class="font-cormorant" style="font-size:16px; color:var(--text-deep); font-weight:500; line-height:1.1;">Nikah Töreni</h5>
-            </div>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:5px; padding:14px 0; border-bottom:1px solid rgba(62,68,48,0.18);">
-              <svg class="line-icon" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/></svg>
-              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">18:30</span>
-              <h5 class="font-cormorant" style="font-size:16px; color:var(--text-deep); font-weight:500; line-height:1.1;">Kokteyl Saati</h5>
-            </div>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:5px; padding:14px 0; border-bottom:1px solid rgba(62,68,48,0.18);">
-              <svg class="line-icon" viewBox="0 0 24 24"><path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/></svg>
-              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">19:30</span>
-              <h5 class="font-cormorant" style="font-size:16px; color:var(--text-deep); font-weight:500; line-height:1.1;">Akşam Yemeği</h5>
-            </div>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:5px; padding:14px 0;">
-              <svg class="line-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
-              <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600;">22:00</span>
-              <h5 class="font-cormorant" style="font-size:16px; color:var(--text-deep); font-weight:500; line-height:1.1;">Dans &amp; Kutlama</h5>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 8. MODÜL: GERİ SAYIM -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
-          <div style="width:32px; height:0.5px; background:var(--terracotta); margin:16px auto;"></div>
-          <div style="display:grid; grid-template-columns:repeat(4,1fr); margin:16px 0;">
-            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
-              <span id="cd-days" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
-              <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">GÜN</span>
-            </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
-              <span id="cd-hours" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
-              <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">SAAT</span>
-            </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
-              <span id="cd-mins" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
-              <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">DAKİKA</span>
-            </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
-              <span id="cd-secs" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
-              <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">SANİYE</span>
-            </div>
-          </div>
-          <p class="font-cormorant" style="font-size:18px; font-style:italic; color:var(--text-muted);">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
-        </div>
-      </section>
-
-      <!-- 9. MODÜL: RSVP -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); display:block; margin-bottom:8px;">Bize Katılın!</span>
-          <p class="font-cormorant" style="font-size:17px; font-style:italic; color:var(--text-muted); margin-bottom:16px;">Lütfen 15 Eylül'e kadar bildiriniz.</p>
-
-          <div id="rsvp-ok" class="hidden" style="padding:14px 0; text-align:center;">
-            <span class="font-cormorant-baslik" style="font-size:52px; color:var(--terracotta); display:block; margin-bottom:8px;">Teşekkürler</span>
-            <h4 class="font-cormorant-caps" style="font-size:14px; color:var(--text-deep);">Yanıtınız Alındı</h4>
-          </div>
-
-          <form id="rsvp-form" onsubmit="submitRSVP(event)" style="text-align:center; width:100%;">
-            <div style="margin-bottom:18px;">
-              <label class="font-sans-sub" style="display:block; text-align:center; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
-            </div>
-            <div style="margin-bottom:18px;">
-              <label class="font-sans-sub" style="display:block; text-align:center; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Katılım Durumu</label>
-              <select style="width:100%; text-align:center; text-align-last:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
-                <option value="1">1 Kişi Katılacağım</option>
-                <option value="2">2 Kişi Katılacağız</option>
-                <option value="3">3 Kişi Katılacağız</option>
-                <option value="4">4 Kişi Katılacağız</option>
-                <option value="0">Maalesef Katılamayacağım</option>
-              </select>
-            </div>
-            <div style="margin-bottom:20px;">
-              <label class="font-sans-sub" style="display:block; text-align:center; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Özel Not / Diyet Tercihi</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif; resize:none;"></textarea>
-            </div>
-            <button type="submit" style="width:100%; padding:11px 0; background:transparent; border:1px solid var(--text-deep); color:var(--text-deep); text-transform:uppercase; font-weight:600; border-radius:999px; letter-spacing:0.24em; font-size:11px; font-family:'Jost',sans-serif; cursor:pointer;">
-              GÖNDER
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <!-- 10. MODÜL: KAPANIŞ & TEŞEKKÜR -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <h3 class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
-          <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 18px;"></div>
-          <p class="font-cormorant" style="font-size:16px; font-style:italic; color:var(--text-muted); line-height:1.6; max-width:230px; margin:0 auto;">
-            "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
-          </p>
-        </div>
-        <div style="position:absolute; bottom:92px; left:0; right:0; text-align:center; z-index:25;">
-          <span class="font-cormorant-caps" style="display:block; font-size:18px; font-weight:700; letter-spacing:0.3em; color:var(--text-deep);">DAVET &amp; CO.</span>
-          <span class="font-sans-sub" style="display:block; font-size:9px; font-weight:700; letter-spacing:0.22em; color:var(--terracotta); text-transform:uppercase; margin-top:6px;">DİJİTAL TASARIM ATÖLYESİ</span>
-        </div>
-      </section>
-
+    <span class="boyut-etiketi">Orta — 56px</span>
+    <div class="isim-satir" style="font-family:'Pinyon Script',cursive; line-height:1.15;">
+      <span style="font-size:56px;">Selin</span>
+      <span class="ve" style="font-size:26px;">&amp;</span>
+      <span style="font-size:56px;">Emir</span>
     </div>
-
-    <div class="floating-pill-bar">
-      <button onclick="scrollToNextStory()" class="scroll-pill-btn">
-        <span class="font-sans-sub" style="font-size:10.5px; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-muted); font-weight:500;">Aşağı Kaydır ↓</span>
-      </button>
-      <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--text-deep)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 9v6h4l5 4V5L8 9H4z"/>
-          <path id="ses-dalga" d="M16.5 8a5.2 5.2 0 0 1 0 8" style="opacity:0; transition:opacity 0.3s;"/>
-        </svg>
-      </button>
-    </div>
-
   </div>
 
-  <script>
-    function scrollToNextStory() {
-      const container = document.getElementById('story-slider');
-      const nextScroll = container.scrollTop + container.clientHeight;
-      gsap.to(container, { scrollTop: nextScroll, duration: 0.85, ease: "power3.inOut" });
-    }
+  <div class="kart">
+    <span class="etiket">2 · ALEX BRUSH (ince fırça yazısı)</span>
+    <span class="boyut-etiketi">Büyük — 72px</span>
+    <div class="isim-satir" style="font-family:'Alex Brush',cursive; line-height:1.15;">
+      <span style="font-size:72px;">Selin</span>
+      <span class="ve" style="font-size:32px;">&amp;</span>
+      <span style="font-size:72px;">Emir</span>
+    </div>
+    <span class="boyut-etiketi">Orta — 56px</span>
+    <div class="isim-satir" style="font-family:'Alex Brush',cursive; line-height:1.15;">
+      <span style="font-size:56px;">Selin</span>
+      <span class="ve" style="font-size:26px;">&amp;</span>
+      <span style="font-size:56px;">Emir</span>
+    </div>
+  </div>
 
-    function toggleAudio() {
-      const audio = document.getElementById('bg-audio');
-      const dalga = document.getElementById('ses-dalga');
-      if (audio.paused) {
-        audio.play().then(() => { if (dalga) dalga.style.opacity = '1'; }).catch(() => {});
-      } else {
-        audio.pause();
-        if (dalga) dalga.style.opacity = '0';
-      }
-    }
+  <div class="kart">
+    <span class="etiket">3 · MRS SAINT DELAFIELD (akıcı, samimi)</span>
+    <span class="boyut-etiketi">Büyük — 60px</span>
+    <div class="isim-satir" style="font-family:'Mrs Saint Delafield',cursive; line-height:1.15;">
+      <span style="font-size:60px;">Selin</span>
+      <span class="ve" style="font-size:28px;">&amp;</span>
+      <span style="font-size:60px;">Emir</span>
+    </div>
+    <span class="boyut-etiketi">Orta — 46px</span>
+    <div class="isim-satir" style="font-family:'Mrs Saint Delafield',cursive; line-height:1.15;">
+      <span style="font-size:46px;">Selin</span>
+      <span class="ve" style="font-size:22px;">&amp;</span>
+      <span style="font-size:46px;">Emir</span>
+    </div>
+  </div>
 
-    function submitRSVP(e) {
-      e.preventDefault();
-      document.getElementById('rsvp-form').classList.add('hidden');
-      document.getElementById('rsvp-ok').classList.remove('hidden');
-    }
+  <div class="kart">
+    <span class="etiket">4 · BEAU RIVAGE (resmi, sivri uçlu)</span>
+    <span class="boyut-etiketi">Büyük — 64px</span>
+    <div class="isim-satir" style="font-family:'Beau Rivage',cursive; line-height:1.15;">
+      <span style="font-size:64px;">Selin</span>
+      <span class="ve" style="font-size:30px;">&amp;</span>
+      <span style="font-size:64px;">Emir</span>
+    </div>
+    <span class="boyut-etiketi">Orta — 50px</span>
+    <div class="isim-satir" style="font-family:'Beau Rivage',cursive; line-height:1.15;">
+      <span style="font-size:50px;">Selin</span>
+      <span class="ve" style="font-size:24px;">&amp;</span>
+      <span style="font-size:50px;">Emir</span>
+    </div>
+  </div>
 
-    const targetDate = new Date("2026-10-18T17:30:00").getTime();
-    setInterval(() => {
-      const diff = targetDate - new Date().getTime();
-      if (diff > 0) {
-        document.getElementById('cd-days').innerText = String(Math.floor(diff / 86400000)).padStart(2, '0');
-        document.getElementById('cd-hours').innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-        document.getElementById('cd-mins').innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-        document.getElementById('cd-secs').innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-      }
-    }, 1000);
+  <div class="kart">
+    <span class="etiket">5 · ROUGE SCRIPT (klasik davetiye kaligrafisi)</span>
+    <span class="boyut-etiketi">Büyük — 60px</span>
+    <div class="isim-satir" style="font-family:'Rouge Script',cursive; line-height:1.15;">
+      <span style="font-size:60px;">Selin</span>
+      <span class="ve" style="font-size:28px;">&amp;</span>
+      <span style="font-size:60px;">Emir</span>
+    </div>
+    <span class="boyut-etiketi">Orta — 46px</span>
+    <div class="isim-satir" style="font-family:'Rouge Script',cursive; line-height:1.15;">
+      <span style="font-size:46px;">Selin</span>
+      <span class="ve" style="font-size:22px;">&amp;</span>
+      <span style="font-size:46px;">Emir</span>
+    </div>
+  </div>
 
-    document.getElementById('acBtn').addEventListener('click', function () {
-      document.getElementById('kapak').classList.add('acik');
-      const kapakEkrani = document.querySelector('.kapak-ekran');
-      if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2700); }
-      const audio = document.getElementById('bg-audio');
-      const dalga = document.getElementById('ses-dalga');
-      audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
-      setTimeout(function () { document.getElementById('kapak').remove(); }, 3300);
-    }, { once: true });
-
-    const kartGozlemci = new IntersectionObserver(function (girisler) {
-      girisler.forEach(function (giris) {
-        if (giris.isIntersecting) giris.target.classList.add('gorundu');
-      });
-    }, { root: document.getElementById('story-slider'), threshold: 0.35 });
-
-    document.querySelectorAll('.story-screen:not(.kapak-ekran) .kart-giris').forEach(function (kart) {
-      kartGozlemci.observe(kart);
-    });
-  </script>
+  <div class="kart">
+    <span class="etiket">6 · HERR VON MUELLERHOFF (önceki denemem, referans için)</span>
+    <span class="boyut-etiketi">Büyük — 68px</span>
+    <div class="isim-satir" style="font-family:'Herr Von Muellerhoff',cursive; line-height:1.15;">
+      <span style="font-size:68px;">Selin</span>
+      <span class="ve" style="font-size:30px;">&amp;</span>
+      <span style="font-size:68px;">Emir</span>
+    </div>
+  </div>
 
 </body>
 </html>
