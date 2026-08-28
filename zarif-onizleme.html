@@ -17,7 +17,7 @@
       --text-muted: #6B6455;
       --sage: #6B7A5E;
       --sage-deep: #4A5240;
-      --terracotta: #B4693E;
+      --terracotta: #8C7A4A;
       --cream: #F6F1E4;
     }
 
@@ -50,7 +50,13 @@
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
 
-    .arch-content-box { width: 100%; max-width: 320px; padding: 28px 24px; position: relative; z-index: 25; }
+    .arch-content-box {
+      width: 100%; max-width: 320px; padding: 30px 24px; position: relative; z-index: 25;
+      background: rgba(246, 241, 228, 0.96);
+      border-radius: 20px;
+      box-shadow: 0 14px 40px -10px rgba(42, 46, 34, 0.25);
+      border: 1px solid rgba(74, 82, 64, 0.14);
+    }
 
     #story-slider {
       width: 100%; height: 100%;
@@ -154,7 +160,7 @@
     .cal-day { color: var(--text-muted); padding: 2px 0; }
     .cal-active {
       color: #FFF; background: var(--terracotta); border-radius: 50%; font-weight: 600;
-      box-shadow: 0 2px 5px rgba(180, 105, 62, 0.4);
+      box-shadow: 0 2px 5px rgba(140, 122, 74, 0.4);
     }
 
     .line-icon {
@@ -164,7 +170,7 @@
 
     .aksiyon-btn {
       background: rgba(255, 253, 250, 0.85);
-      border: 1px solid rgba(180, 105, 62, 0.55);
+      border: 1px solid rgba(140, 122, 74, 0.55);
       border-radius: 999px; padding: 8px 19px; font-size: 8.5px;
       letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-deep);
       font-weight: 600; display: inline-block; transition: all 0.2s; text-decoration: none;
@@ -185,14 +191,14 @@
     }
     .scroll-pill-btn {
       background: rgba(255, 253, 250, 0.85); backdrop-filter: blur(12px);
-      border: 1px solid rgba(180, 105, 62, 0.4); border-radius: 999px; padding: 8px 18px;
+      border: 1px solid rgba(140, 122, 74, 0.4); border-radius: 999px; padding: 8px 18px;
       display: flex; align-items: center; gap: 8px;
       box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.12); cursor: pointer; transition: all 0.2s ease;
     }
     .scroll-pill-btn:active { transform: scale(0.96); }
     .audio-pill-btn {
       background: rgba(254, 252, 249, 0.94); backdrop-filter: blur(12px);
-      border: 1px solid rgba(180, 105, 62, 0.45); border-radius: 999px;
+      border: 1px solid rgba(140, 122, 74, 0.45); border-radius: 999px;
       width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); cursor: pointer;
     }
@@ -302,7 +308,7 @@
           <div style="display:flex; justify-content:center; gap:12px;">
             <span class="renk-noktasi" style="background:#8C9A78;"></span>
             <span class="renk-noktasi" style="background:#4A5240;"></span>
-            <span class="renk-noktasi" style="background:#B4693E;"></span>
+            <span class="renk-noktasi" style="background:#8C7A4A;"></span>
             <span class="renk-noktasi" style="background:#D8CBA8;"></span>
             <span class="renk-noktasi" style="background:#6B6455;"></span>
           </div>
@@ -318,12 +324,12 @@
               <span class="font-sans-sub" style="font-size:9.5px; color:var(--terracotta); font-weight:600;">BAŞLANGIÇ</span>
               <h5 class="font-cormorant" style="font-size:19px; font-style:italic; color:var(--text-deep); margin-top:4px;">Akdeniz Mezze Tabağı</h5>
             </div>
-            <div style="width:100%; height:0.5px; background:rgba(180,105,62,0.3);"></div>
+            <div style="width:100%; height:0.5px; background:rgba(140,122,74,0.3);"></div>
             <div>
               <span class="font-sans-sub" style="font-size:9.5px; color:var(--terracotta); font-weight:600;">ANA YEMEK</span>
               <h5 class="font-cormorant" style="font-size:19px; font-style:italic; color:var(--text-deep); margin-top:4px;">Kekik Aromalı Kuzu Pirzola</h5>
             </div>
-            <div style="width:100%; height:0.5px; background:rgba(180,105,62,0.3);"></div>
+            <div style="width:100%; height:0.5px; background:rgba(140,122,74,0.3);"></div>
             <div>
               <span class="font-sans-sub" style="font-size:9.5px; color:var(--terracotta); font-weight:600;">TATLI</span>
               <h5 class="font-cormorant" style="font-size:19px; font-style:italic; color:var(--text-deep); margin-top:4px;">Portakallı Zeytinyağlı Kek</h5>
@@ -337,28 +343,28 @@
         <div class="arch-content-box text-center kart-giris">
           <span class="font-sans-sub" style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:600; display:block; margin-bottom:18px;">GÜNÜN PROGRAMI</span>
           <div style="display:flex; flex-direction:column; gap:11px; text-align:left; max-width:255px; margin:0 auto;">
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(180,105,62,0.22);">
+            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
               <svg class="line-icon" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
               <div>
                 <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">17:30</span>
                 <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Nikah Töreni</h5>
               </div>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(180,105,62,0.22);">
+            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/></svg>
               <div>
                 <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">18:30</span>
                 <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Kokteyl Saati</h5>
               </div>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(180,105,62,0.22);">
+            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/></svg>
               <div>
                 <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">19:30</span>
                 <h5 class="font-cormorant" style="font-size:15px; color:var(--text-deep); font-weight:500; line-height:1.1;">Akşam Yemeği</h5>
               </div>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(180,105,62,0.22);">
+            <div style="display:flex; align-items:center; gap:12px; padding:7px; background:rgba(246,241,228,0.7); border-radius:10px; border:1px solid rgba(140,122,74,0.22);">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
               <div>
                 <span class="font-sans-sub" style="font-size:10px; color:var(--terracotta); font-weight:600; display:block;">22:00</span>
@@ -375,19 +381,19 @@
           <span class="font-cormorant-baslik" style="font-size:56px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
           <div style="width:32px; height:0.5px; background:var(--terracotta); margin:16px auto;"></div>
           <div style="display:grid; grid-template-columns:repeat(4,1fr); margin:16px 0;">
-            <div style="padding:6px 0; border-left:1px solid rgba(180,105,62,0.3);">
+            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
               <span id="cd-days" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
               <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">GÜN</span>
             </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(180,105,62,0.3);">
+            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
               <span id="cd-hours" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
               <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">SAAT</span>
             </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(180,105,62,0.3);">
+            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
               <span id="cd-mins" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
               <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">DAKİKA</span>
             </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(180,105,62,0.3);">
+            <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
               <span id="cd-secs" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
               <span class="font-sans-sub" style="font-size:9px; color:var(--text-muted); font-weight:600;">SANİYE</span>
             </div>
@@ -410,11 +416,11 @@
           <form id="rsvp-form" onsubmit="submitRSVP(event)" style="text-align:left; width:100%;">
             <div style="margin-bottom:18px;">
               <label class="font-sans-sub" style="display:block; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(180,105,62,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
+              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
             </div>
             <div style="margin-bottom:18px;">
               <label class="font-sans-sub" style="display:block; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Katılım Durumu</label>
-              <select style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(180,105,62,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
+              <select style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif;">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
                 <option value="3">3 Kişi Katılacağız</option>
@@ -424,7 +430,7 @@
             </div>
             <div style="margin-bottom:20px;">
               <label class="font-sans-sub" style="display:block; text-transform:uppercase; font-size:9.5px; color:var(--text-muted); margin-bottom:6px; font-weight:500;">Özel Not / Diyet Tercihi</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(180,105,62,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif; resize:none;"></textarea>
+              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(140,122,74,0.5); font-size:15px; color:var(--text-deep); font-family:'Cormorant Garamond',serif; resize:none;"></textarea>
             </div>
             <button type="submit" style="width:100%; padding:11px 0; background:transparent; border:1px solid var(--text-deep); color:var(--text-deep); text-transform:uppercase; font-weight:600; border-radius:999px; letter-spacing:0.24em; font-size:11px; font-family:'Jost',sans-serif; cursor:pointer;">
               GÖNDER
