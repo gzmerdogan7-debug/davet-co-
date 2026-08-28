@@ -60,7 +60,7 @@
       border-radius: 42px;
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      background-color: #F3EEE4;
+      background-color: #C9BCA8;
       background-image:
         repeating-linear-gradient(45deg, rgba(68,55,44,0.035) 0px, rgba(68,55,44,0.035) 1px, transparent 1px, transparent 4px),
         repeating-linear-gradient(-45deg, rgba(68,55,44,0.035) 0px, rgba(68,55,44,0.035) 1px, transparent 1px, transparent 4px);
@@ -281,11 +281,28 @@
 .kapak-overlay.acik .zarf-sol { transform: rotateY(95deg); }
 .kapak-overlay.acik .zarf-sag { transform: rotateY(-95deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
-.kapak-icerik {
-  position: absolute; left: 0; right: 0; bottom: 15%; z-index: 10;
-  text-align: center; transition: opacity 0.4s ease;
+.muhur-dokun {
+  position: absolute; left: 50%; top: 45%;
+  width: 92px; height: 92px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: transparent; border: none; padding: 0; cursor: pointer;
+  z-index: 15;
+  transition: opacity 0.4s ease;
 }
-.kapak-overlay.acik .kapak-icerik { opacity: 0; }
+.muhur-dokun::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(197, 168, 128, 0.85);
+  animation: nabiz 2.2s ease-out infinite;
+}
+@keyframes nabiz {
+  0% { transform: scale(0.82); opacity: 0.9; }
+  70% { transform: scale(1.38); opacity: 0; }
+  100% { transform: scale(1.38); opacity: 0; }
+}
+.kapak-overlay.acik .muhur-dokun { opacity: 0; }
 
   </style>
 </head>
@@ -303,9 +320,7 @@
   <div class="zarf zarf-alt"></div>
   <div class="zarf zarf-sol"></div>
   <div class="zarf zarf-sag"></div>
-  <div class="kapak-icerik">
-    <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
-  </div>
+  <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
 </div>
 
     <div class="cerceve-cicek cerceve-sol-ust"></div>
@@ -691,3 +706,4 @@
 
 </body>
 </html>
+
