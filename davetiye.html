@@ -295,7 +295,7 @@
     }
 .kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
-  overflow: hidden; transition: opacity 1.3s ease 3.4s;
+  overflow: hidden; transition: opacity 1.3s ease 2.8s;
   perspective: 1500px;
 }
 .zarf {
@@ -306,30 +306,16 @@
   filter: contrast(1.08) saturate(1.04) brightness(1.02);
   backface-visibility: hidden;
 }
+.zarf-govde {
+  z-index: 1;
+}
 .zarf-ust {
+  z-index: 2;
   clip-path: polygon(0 0, 100% 0, 50% 50%);
   transform-origin: 50% 0%;
-  transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1) 0.8s;
+  transition: transform 1.9s cubic-bezier(0.65, 0, 0.35, 1) 0.7s;
 }
-.zarf-sol {
-  clip-path: polygon(0 0, 0 100%, 50% 50%);
-  transform-origin: 0% 50%;
-  transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1) 1.1s;
-}
-.zarf-sag {
-  clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-  transform-origin: 100% 50%;
-  transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1) 1.1s;
-}
-.zarf-alt {
-  clip-path: polygon(0 100%, 100% 100%, 50% 50%);
-  transform-origin: 50% 100%;
-  transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1) 1.4s;
-}
-.kapak-overlay.acik .zarf-ust { transform: rotateX(-165deg); }
-.kapak-overlay.acik .zarf-sol { transform: rotateY(165deg); }
-.kapak-overlay.acik .zarf-sag { transform: rotateY(-165deg); }
-.kapak-overlay.acik .zarf-alt { transform: rotateX(165deg); }
+.kapak-overlay.acik .zarf-ust { transform: rotateX(-172deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
 .muhur-dokun {
   position: absolute; left: 50%; top: 46.5%;
@@ -367,10 +353,8 @@
   <div class="cinema-viewport">
 <div class="sayfa-dokusu"></div>
 <div id="kapak" class="kapak-overlay">
+  <div class="zarf zarf-govde"></div>
   <div class="zarf zarf-ust"></div>
-  <div class="zarf zarf-alt"></div>
-  <div class="zarf zarf-sol"></div>
-  <div class="zarf zarf-sag"></div>
   <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
 </div>
 
@@ -690,13 +674,13 @@
   document.getElementById('kapak').classList.add('acik');
 
   const kapakEkrani = document.querySelector('.kapak-ekran');
-  if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 3400); }
+  if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2800); }
 
   const audio = document.getElementById('bg-audio');
   const icon = document.getElementById('audio-icon');
   audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
 
-  setTimeout(function () { document.getElementById('kapak').remove(); }, 4900);
+  setTimeout(function () { document.getElementById('kapak').remove(); }, 4300);
 }, { once: true });
 
     /* Kaydırınca Kartların Belirmesi */
