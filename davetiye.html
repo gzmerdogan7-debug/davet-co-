@@ -145,17 +145,30 @@
       transform: scale(1) translateY(0);
     }
 
-    /* İlk Kartta Sıralı Beliriş: İsim → Davetlisiniz → Aile */
-    .kapak-ekran h1,
-    .kapak-ekran .selam-satiri,
-    .kapak-ekran .aile-blok {
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Kapak: İsim Satır Satır Sıralı Belirsin — İpek → & → Kaan */
+    .kapak-isim {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .kapak-ekran.gorundu h1 { opacity: 1; transform: none; transition-delay: 0.15s; }
-    .kapak-ekran.gorundu .selam-satiri { opacity: 1; transform: none; transition-delay: 0.7s; }
-    .kapak-ekran.gorundu .aile-blok { opacity: 1; transform: none; transition-delay: 1.25s; }
+    .kapak-isim span {
+      font-family: 'Alex Brush', cursive;
+      color: #44372C;
+      line-height: 1.05;
+    }
+    .isim-ilk, .isim-ikinci { font-size: 74px; }
+    .ve-satir { font-size: 38px; color: #8E7047; margin: 2px 0; }
+
+    .kapak-ekran .isim-ilk,
+    .kapak-ekran .ve-satir,
+    .kapak-ekran .isim-ikinci {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .kapak-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.25s; }
+    .kapak-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.75s; }
+    .kapak-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 1.25s; }
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
     .arch-content-box {
@@ -365,26 +378,31 @@
     <div class="cerceve-cicek cerceve-sol-alt"></div>
     <div class="cerceve-cicek cerceve-sag-alt"></div>
 
-    <!-- ================= 9 SİNEMATİK STORY SAHNESİ ================= -->
+    <!-- ================= 10 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
 
-      <!-- ================= 1. MODÜL: KAPAK ================= -->
+      <!-- ================= 1. MODÜL: KAPAK (İSİM) ================= -->
       <section class="story-screen kapak-ekran">
         <div class="arch-content-box text-center">
-          <span class="text-xs text-[#C5A880] block mb-2">❦</span>
+          <div class="kapak-isim">
+            <span class="isim-ilk">İpek</span>
+            <span class="ve-satir">&amp;</span>
+            <span class="isim-ikinci">Kaan</span>
+          </div>
+        </div>
+      </section>
 
-          <h1 class="font-cormorant-baslik text-[61px] text-[#44372C] leading-tight my-1.5">
-            İpek &amp; Kaan
-          </h1>
+      <!-- ================= 2. MODÜL: KARŞILAMA ================= -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="text-xs text-[#C5A880] block mb-3">❦</span>
 
-          <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
-
-          <p class="selam-satiri font-sans-sub text-[11px] uppercase text-[#6E5E50] leading-relaxed mb-4 font-medium">
-            DAVETLİSİNİZ
+          <p class="font-cormorant text-[19px] text-[#44372C] italic leading-relaxed mb-5">
+            Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde buluşmak dileğiyle.
           </p>
 
           <!-- Aile İsimleri -->
-          <div class="aile-blok grid grid-cols-2 gap-2.5 text-center pt-3 border-t border-[#C5A880]/30">
+          <div class="grid grid-cols-2 gap-2.5 text-center pt-3 border-t border-[#C5A880]/30">
             <div>
               <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">ERDOĞAN</span>
               <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
@@ -397,7 +415,7 @@
         </div>
       </section>
 
-      <!-- ================= 2. MODÜL: TARİH ================= -->
+      <!-- ================= 3. MODÜL: TARİH ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <svg class="w-5 h-5 mx-auto stroke-[#C5A880] fill-none stroke-[1.2] mb-1.5" viewBox="0 0 24 24">
@@ -450,6 +468,8 @@
             <span class="cal-day">27</span>
           </div>
 
+          <p class="font-cormorant text-[17px] text-[#44372C] italic mt-2 mb-1">12 Eylül 2026, Cumartesi</p>
+
           <p class="font-sans-sub text-[12px] tracking-[0.25em] text-[#44372C] font-semibold my-2">CUMARTESİ • 18:30</p>
 
           <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%C4%B0pek+%26+Kaan+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20260912T153000Z/20260912T203000Z&details=%C4%B0pek+%26+Kaan+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Sait+Halim+Pasa+Yalisi,+Istanbul" target="_blank" class="gold-action-btn mt-1.5">
@@ -458,7 +478,7 @@
         </div>
       </section>
 
-      <!-- ================= 3. MODÜL: MEKAN ================= -->
+      <!-- ================= 4. MODÜL: MEKAN ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">KUTLAMA MEKANI</span>
@@ -476,7 +496,7 @@
         </div>
       </section>
 
-      <!-- ================= 4. MODÜL: GERİ SAYIM ================= -->
+      <!-- ================= 5. MODÜL: GERİ SAYIM ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-cormorant-baslik text-5xl text-[#44372C] block mb-1.5">Buluşmaya Kalan</span>
@@ -505,7 +525,7 @@
         </div>
       </section>
 
-      <!-- ================= 5. MODÜL: PROGRAM ================= -->
+      <!-- ================= 6. MODÜL: PROGRAM ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
@@ -546,7 +566,7 @@
         </div>
       </section>
 
-      <!-- ================= 8. MODÜL: LCV FORMU ================= -->
+      <!-- ================= 9. MODÜL: LCV FORMU ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-cormorant-baslik text-5xl text-[#44372C] block mb-1.5">Bize Katılın!</span>
@@ -584,7 +604,7 @@
         </div>
       </section>
 
-      <!-- ================= 9. MODÜL: KAPANIŞ & TEŞEKKÜR ================= -->
+      <!-- ================= 10. MODÜL: KAPANIŞ & TEŞEKKÜR ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="text-xs text-[#C5A880] block mb-2">❦</span>
@@ -701,5 +721,3 @@
 
 </body>
 </html>
-
-  
