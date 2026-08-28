@@ -52,37 +52,19 @@
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
 
-    /* İnce Çift Çizgi Çerçeve — uzun içerikli ekranlarda (form, liste vb), gölgesiz */
+    /* Kenarsız Kart, Üstte Geniş Süsleme Şeridi — tüm ekranlarda (kapak dahil) aynı sistem */
     .arch-content-box {
-      width: 100%; max-width: 300px; padding: 38px 22px; position: relative; z-index: 25;
-      border: 1px solid rgba(62, 68, 48, 0.55);
-      border-radius: 2px;
+      width: 100%; max-width: 300px; padding: 140px 22px 30px; position: relative; z-index: 25;
     }
     .arch-content-box::before {
-      content: ""; position: absolute; inset: 7px;
-      border: 1px solid rgba(62, 68, 48, 0.28);
-      pointer-events: none;
-    }
-
-    /* Gül Oval Çerçeve — SADECE kapak ekranında, kendi gerçek oranıyla (gerilmeden) */
-    .kapak-ekran .arch-content-box {
-      border: none;
-      padding: 0;
-      width: 84%;
-      max-width: 300px;
-      aspect-ratio: 0.75;
-      background-image: url('cerceve5.png');
-      background-size: 100% 100%;
+      content: "";
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 220px; height: 126px;
+      background-image: url('cerceve6.png');
+      background-size: 237px 316px;
+      background-position: -8px -95px;
       background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .kapak-ekran .arch-content-box::before { display: none; }
-    .kapak-ic-alan {
-      position: absolute;
-      left: 29%; right: 30%; top: 33%; bottom: 34%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      pointer-events: none;
     }
 
     #story-slider {
@@ -130,8 +112,8 @@
     /* İsim Bloğu */
     .kapak-isim { display: flex; flex-direction: column; align-items: center; }
     .kapak-isim span { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; color: var(--text-deep); line-height: 1.25; }
-    .isim-ilk, .isim-ikinci { font-size: 32px; }
-    .ve-satir { font-size: 15px; color: var(--terracotta); margin: 0; }
+    .isim-ilk, .isim-ikinci { font-size: 68px; }
+    .ve-satir { font-size: 30px; color: var(--terracotta); margin: 0; }
 
     .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
       opacity: 0; transform: translateY(14px);
@@ -144,7 +126,7 @@
 
     .kapak-tarih {
       display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
-      letter-spacing: 0.08em; font-size: 10px; color: var(--terracotta); margin: 5px auto 0;
+      letter-spacing: 0.14em; font-size: 20px; color: var(--terracotta); margin: 26px auto 0;
     }
 
     .kapak-ekran .arch-content-box {
@@ -197,9 +179,6 @@
     }
     .aksiyon-btn:hover { background: var(--text-deep); color: #FCFAF7; }
 
-    /* Süslü Ayraç — cerceve6.png'nin gül/sedef motifi, başlıkların altında ince çizgi yerine */
-    .suslu-ayrac { width: 130px; display: block; margin: 4px auto 10px; opacity: 0.9; }
-
     /* Renk Noktaları — Dress Code */
     .renk-noktasi {
       width: 26px; height: 26px; border-radius: 50%;
@@ -246,14 +225,12 @@
       <!-- 1. MODÜL: KAPAK -->
       <section class="story-screen kapak-ekran">
         <div class="arch-content-box text-center">
-          <div class="kapak-ic-alan">
-            <div class="kapak-isim">
-              <span class="isim-ilk">Selin</span>
-              <span class="ve-satir">&amp;</span>
-              <span class="isim-ikinci">Emir</span>
-            </div>
-            <span class="kapak-tarih">18.10.2026</span>
+          <div class="kapak-isim">
+            <span class="isim-ilk">Selin</span>
+            <span class="ve-satir">&amp;</span>
+            <span class="isim-ikinci">Emir</span>
           </div>
+          <span class="kapak-tarih">18.10.2026</span>
         </div>
       </section>
 
@@ -264,7 +241,7 @@
           <p class="font-cormorant" style="font-size:20px; font-style:italic; color:var(--text-deep); line-height:1.5; margin-bottom:20px;">
             Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
           </p>
-          <img src="cerceve6.png" class="suslu-ayrac" alt="">
+          <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 16px;"></div>
           <span class="font-sans-sub" style="font-size:11px; color:var(--terracotta); font-weight:600; display:block; margin-bottom:12px;">AİLELERİMİZ</span>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center;">
             <div>
@@ -392,7 +369,7 @@
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
-          <img src="cerceve6.png" class="suslu-ayrac" alt="" style="margin-top:4px; margin-bottom:16px;">
+          <div style="width:32px; height:0.5px; background:var(--terracotta); margin:16px auto;"></div>
           <div style="display:grid; grid-template-columns:repeat(4,1fr); margin:16px 0;">
             <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
               <span id="cd-days" class="font-cormorant" style="font-size:34px; color:var(--text-deep); display:block; line-height:1;">00</span>
@@ -457,7 +434,7 @@
         <div class="arch-content-box text-center kart-giris">
           <span style="font-size:12px; color:var(--terracotta); display:block; margin-bottom:10px;">❦</span>
           <h3 class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
-          <img src="cerceve6.png" class="suslu-ayrac" alt="" style="margin-top:4px; margin-bottom:18px;">
+          <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 18px;"></div>
           <p class="font-cormorant" style="font-size:16px; font-style:italic; color:var(--text-muted); line-height:1.6; max-width:230px; margin:0 auto;">
             "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
           </p>
