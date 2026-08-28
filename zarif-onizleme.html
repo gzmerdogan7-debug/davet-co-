@@ -52,27 +52,14 @@
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
 
-    /* İnce Çift Çizgi Çerçeve — davetiye kartı hissi, içi tamamen şeffaf, gölgesiz */
+    /* Altın Oval Süslü Çerçeve — gerçek görsel, kartın boyutuna göre gerilerek oturuyor */
     .arch-content-box {
       width: 100%; max-width: 300px; padding: 38px 22px; position: relative; z-index: 25;
-      border: 1px solid rgba(62, 68, 48, 0.55);
-      border-radius: 2px;
+      background-image: url('cerceveson.jpg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-    .arch-content-box::before {
-      content: ""; position: absolute; inset: 7px;
-      border: 1px solid rgba(62, 68, 48, 0.28);
-      pointer-events: none;
-    }
-    /* Köşe Dal Süslemeleri — mühürdeki dal deseniyle aynı dil, JS ile her karta otomatik ekleniyor */
-    .corner-sprig {
-      position: absolute; width: 30px; height: 30px;
-      stroke: var(--sage-deep); fill: none; stroke-width: 1.1; stroke-linecap: round;
-      opacity: 0.8; pointer-events: none;
-    }
-    .corner-sprig.tl { top: -3px; left: -3px; }
-    .corner-sprig.tr { top: -3px; right: -3px; transform: scaleX(-1); }
-    .corner-sprig.bl { bottom: -3px; left: -3px; transform: scaleY(-1); }
-    .corner-sprig.br { bottom: -3px; right: -3px; transform: scale(-1,-1); }
 
     #story-slider {
       width: 100%; height: 100%;
@@ -529,18 +516,6 @@
 
     document.querySelectorAll('.story-screen:not(.kapak-ekran) .kart-giris').forEach(function (kart) {
       kartGozlemci.observe(kart);
-    });
-
-    // Her çerçevenin 4 köşesine mühür dal deseniyle uyumlu ince sprig süslemesi ekle
-    var sprigPaths = '<path d="M2 2 C 10 4, 14 10, 16 18"/><path d="M6 6 C 4 9, 6 12, 3 13"/><path d="M11 11 C 14 9, 17 11, 19 8"/><circle cx="3" cy="13" r="1.3"/><circle cx="19" cy="8" r="1.3"/>';
-    document.querySelectorAll('.arch-content-box').forEach(function (box) {
-      ['tl', 'tr', 'bl', 'br'].forEach(function (pos) {
-        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('class', 'corner-sprig ' + pos);
-        svg.setAttribute('viewBox', '0 0 40 40');
-        svg.innerHTML = sprigPaths;
-        box.appendChild(svg);
-      });
     });
   </script>
 
