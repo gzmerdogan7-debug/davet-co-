@@ -1,531 +1,193 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İpek & Kaan — Canlı Önizleme</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=WindSong:wght@400;500&family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@1,500;1,600&family=Great+Vibes&family=Petit+Formal+Script&family=Tangerine:wght@500;700&family=Jost:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #44372C;
-    --muted: #6E5E50;
-    --gold: #C5A880;
-    --gold-deep: #8E7047;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: #EFE9DC;
-    color: var(--ink);
-    font-family: 'Montserrat', sans-serif;
-    min-height: 100vh;
-    padding: 32px 16px 80px;
-  }
-  .sayfa { max-width: 940px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 20px; }
-  .ust-etiket {
-    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold-deep); font-weight: 600; margin: 0 0 8px;
-  }
-  h1.sayfa-baslik {
-    font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
-    font-size: clamp(19px, 4vw, 24px); margin: 0; color: var(--ink);
-  }
-  .aciklama { font-size: 12.5px; color: var(--muted); max-width: 52ch; margin: 12px auto 0; line-height: 1.6; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Selin & Emir — Düğün Davetiyesi | DAVET & CO. Zarif</title>
 
-  .mod-secici {
-    display: flex; justify-content: center; gap: 8px; margin: 20px auto 0; max-width: 420px;
-  }
-  .mod-btn {
-    flex: 1; padding: 10px 8px; border-radius: 10px; text-align: center; cursor: pointer;
-    background: rgba(255,253,250,0.6); border: 1.5px solid rgba(197,168,128,0.4);
-    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--muted);
-    transition: all 0.2s ease;
-  }
-  .mod-btn.aktif { border-color: var(--gold-deep); border-width: 2px; color: var(--gold-deep); background: rgba(255,253,250,0.95); }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  .govde {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 34px;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: 28px;
-  }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 
-  /* ------- TELEFON MOCKUP: GERÇEK KAPAK ------- */
-  .telefon-sarici { position: sticky; top: 20px; }
-  .telefon {
-    width: 320px;
-    height: 610px;
-    border-radius: 34px;
-    box-shadow: 0 35px 80px -25px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.15);
-    position: relative;
-    overflow: hidden;
-    background-color: #F2ECE1;
-    background-image:
-      repeating-linear-gradient(90deg, rgba(68,55,44,0.05) 0px, rgba(68,55,44,0.05) 1px, transparent 1px, transparent 2.5px),
-      repeating-linear-gradient(0deg, rgba(68,55,44,0.045) 0px, rgba(68,55,44,0.045) 1px, transparent 1px, transparent 2.5px);
-    transition: background-color 0.3s ease;
-    padding: 46px 26px 0;
-  }
-  .kose-cicek {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    z-index: 2;
-    pointer-events: none;
-    background-image: url('kapi.png');
-    background-size: 480% 480%;
-    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0) 72%);
-    mask-image: radial-gradient(circle, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0) 72%);
-  }
-  .kose-sol-ust { top: -20px; left: -20px; background-position: 0% 0%; }
-  .kose-sag-ust { top: -20px; right: -20px; background-position: 100% 0%; }
-  .kose-sol-alt { bottom: -20px; left: -20px; background-position: 0% 100%; }
-  .kose-sag-alt { bottom: -20px; right: -20px; background-position: 100% 100%; }
+  <style>
+    :root {
+      --text-deep: #3E4430;
+      --text-muted: #6B6455;
+      --sage: #6B7A5E;
+      --sage-deep: #4A5240;
+      --terracotta: #B4693E;
+      --cream: #F6F1E4;
+    }
 
-  .kart-icerik { position: relative; z-index: 5; text-align: center; width: 100%; }
-  .cicek-sembol { font-size: 12px; color: var(--gold); display: block; margin-bottom: 8px; }
-  #pv-baslik {
-    font-family: 'Alex Brush', cursive;
-    font-weight: 400;
-    font-size: 61px;
-    line-height: 1.15;
-    margin: 6px 0;
-    color: var(--ink);
-    transition: font-family 0.15s ease, font-size 0.1s ease;
-  }
-  .cizgi { width: 32px; height: 0.5px; background: var(--gold); margin: 16px auto; }
-  #pv-etiket {
-    font-family: 'Jost', sans-serif;
-    letter-spacing: 0.28em;
-    font-size: 9.5px; text-transform: uppercase;
-    color: var(--muted); font-weight: 500; margin: 0 0 16px;
-  }
-  #pv-aile {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    text-align: center; padding-top: 12px;
-    border-top: 1px solid rgba(197,168,128,0.3);
-  }
-  #pv-aile span { display: block; font-family: 'Jost', sans-serif; letter-spacing: 0.2em; }
-  .aile-adi { font-size: 9.5px; color: var(--ink); font-weight: 600; }
-  .aile-etiket { font-size: 7.5px; color: var(--muted); text-transform: uppercase; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-  /* Mumlar — ekranın tabanından yükselen, zemine yedirilmiş bant */
-  #pv-mum {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 46%;
-    z-index: 4;
-  }
-  #pv-mum img {
-    width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block;
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
-  }
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: #2A2E22;
+      background-image: radial-gradient(circle at 50% 50%, #363B29 0%, #181B12 100%);
+      color: var(--text-deep);
+      margin: 0; padding: 0; min-height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      overflow: hidden;
+    }
 
-  /* Sürükle Modu Görsel İpucu */
-  .surukle-modu .surukle {
-    outline: 1.5px dashed rgba(142,112,71,0.55);
-    outline-offset: 4px;
-    cursor: grab;
-    border-radius: 6px;
-  }
-  .surukle-modu .surukle:active { cursor: grabbing; }
-  .surukle-modu .surukle.tasiniyor { outline-color: var(--gold-deep); }
+    .cinema-viewport {
+      width: 100%; max-width: 414px; height: 100vh; max-height: 896px;
+      position: relative; border-radius: 42px;
+      box-shadow: 0 45px 120px -20px rgba(0,0,0,0.98), 0 0 0 1px rgba(255,255,255,0.1);
+      overflow: hidden;
+      background-color: var(--cream);
+    }
 
-  /* ------- KONTROL PANELİ ------- */
-  .panel { flex: 1; min-width: 280px; max-width: 420px; }
-  h2 {
-    font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 0.15em;
-    text-transform: uppercase; font-weight: 600; color: var(--gold-deep);
-    margin: 0 0 12px;
-  }
-  .blok { margin-bottom: 28px; }
-  .blok.gizli { display: none; }
+    @media (max-width: 640px) {
+      .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
+    }
 
-  .renk-alani { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .renk-btn {
-    background: rgba(255,253,250,0.6);
-    border: 1.5px solid rgba(197,168,128,0.4);
-    border-radius: 12px;
-    padding: 10px 6px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .renk-btn:hover { border-color: var(--gold-deep); }
-  .renk-btn.secili { border-color: var(--gold-deep); border-width: 2px; box-shadow: 0 6px 16px -8px rgba(68,55,44,0.3); }
-  .renk-yuvarlak { width: 26px; height: 26px; border-radius: 50%; margin: 0 auto 6px; border: 1px solid rgba(0,0,0,0.12); }
-  .renk-btn .ad { font-size: 8.5px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
-  .renk-btn.secili .ad { color: var(--gold-deep); }
+    .arch-content-box { width: 100%; max-width: 320px; padding: 28px 24px; position: relative; z-index: 25; }
 
-  .ozel-renk-satiri {
-    display: flex; align-items: center; gap: 10px;
-    margin-top: 12px; padding: 10px 12px;
-    background: rgba(255,253,250,0.5);
-    border: 1.5px dashed rgba(197,168,128,0.5);
-    border-radius: 12px;
-  }
-  .ozel-renk-satiri input[type="color"] { width: 40px; height: 40px; border: none; border-radius: 8px; cursor: pointer; background: none; }
-  .ozel-renk-satiri span { font-size: 11px; color: var(--muted); }
+    #story-slider {
+      width: 100%; height: 100%;
+      overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none;
+      position: relative; z-index: 20;
+    }
+    #story-slider::-webkit-scrollbar { display: none; }
 
-  .font-alani { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .font-btn {
-    background: rgba(255,253,250,0.6);
-    border: 1.5px solid rgba(197,168,128,0.4);
-    border-radius: 12px;
-    padding: 12px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .font-btn:hover { border-color: var(--gold-deep); }
-  .font-btn.secili { border-color: var(--gold-deep); border-width: 2px; box-shadow: 0 6px 16px -8px rgba(68,55,44,0.3); }
-  .font-btn .ornek-mini { font-size: 20px; margin-bottom: 4px; color: var(--ink); line-height: 1; }
-  .font-btn .ad { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
-  .font-btn.secili .ad { color: var(--gold-deep); }
+    .story-screen {
+      width: 100%; height: 100%;
+      scroll-snap-align: start; scroll-snap-stop: always;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 16px 20px 78px 20px; position: relative;
+    }
 
-  .slider-satiri { display: flex; align-items: center; gap: 12px; }
-  .slider-satiri input[type="range"] { flex: 1; }
-  .slider-deger { font-size: 12px; font-weight: 600; color: var(--gold-deep); min-width: 44px; text-align: right; }
+    /* Hareketli Çiçek/Mum Arka Planı — kapak sonrası ilk ekranda, yavaş sinematik yakınlaşma */
+    .floral-bg-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+    .floral-bg {
+      position: absolute; inset: -24px;
+      background-image: url('arka-plan-zarif.jpg');
+      background-size: cover; background-position: center;
+      animation: kenburns 28s ease-in-out infinite;
+    }
+    @keyframes kenburns {
+      0%   { transform: scale(1.05) translate(0, 0); }
+      50%  { transform: scale(1.13) translate(-1.5%, -1%); }
+      100% { transform: scale(1.05) translate(0, 0); }
+    }
 
-  .surukle-yardim {
-    font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0 0 16px;
-    background: rgba(255,253,250,0.5); border: 1.5px dashed rgba(197,168,128,0.5);
-    border-radius: 12px; padding: 12px 14px;
-  }
-  .sifirla-btn {
-    display: inline-block; margin-top: 4px; padding: 8px 16px; border-radius: 999px;
-    background: var(--ink); color: #FCFAF7; font-size: 11px; letter-spacing: 0.15em;
-    text-transform: uppercase; font-weight: 600; cursor: pointer; border: none;
-  }
+    /* Süslü Çerçeve Kutusu — bilgi ekranlarında metin bu çerçevenin içine oturur */
+    .cerceve-kutu { position: relative; width: 100%; max-width: 260px; margin: 0 auto; z-index: 25; }
+    .cerceve-kutu img { width: 100%; display: block; }
+    .cerceve-icerik {
+      position: absolute; top: 25%; left: 18%; right: 18%; bottom: 25%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    }
 
-  .okuma-paneli {
-    margin-top: 8px;
-    background: rgba(255,253,250,0.7);
-    border: 1px solid rgba(197,168,128,0.4);
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-size: 12px;
-    line-height: 1.85;
-    color: var(--ink);
-  }
-  .okuma-paneli b { color: var(--gold-deep); }
+    /* İsim Bloğu */
+    .kapak-isim { display: flex; flex-direction: column; align-items: center; }
+    .kapak-isim span { font-family: 'Pinyon Script', cursive; color: var(--text-deep); line-height: 1.2; }
+    .isim-ilk, .isim-ikinci { font-size: 76px; }
+    .ve-satir { font-size: 34px; color: var(--terracotta); margin: -4px 0; }
 
-  .not { text-align: center; font-size: 12px; color: var(--muted); margin-top: 40px; line-height: 1.7; max-width: 60ch; margin-left: auto; margin-right: auto; }
-</style>
+    .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+    }
+    .kapak-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.25s; }
+    .kapak-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.75s; }
+    .kapak-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 1.25s; }
+    .kapak-ekran.gorundu .kapak-tarih { opacity: 1; transform: none; transition-delay: 1.9s; }
+
+    .kapak-tarih {
+      display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
+      letter-spacing: 0.16em; font-size: 27px; color: var(--terracotta); margin: 92px auto 0;
+    }
+
+    .kapak-ekran .arch-content-box {
+      opacity: 0; transform: scale(0.88) translateY(22px);
+      transition: opacity 1.3s ease, transform 1.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .kapak-ekran.gorundu .arch-content-box { opacity: 1; transform: scale(1) translateY(0); }
+
+    /* Zarf Kapanışı — Sade ile aynı çalışan opacity-fade tekniği, gerçek mühür fotoğrafı */
+    .kapak-overlay {
+      position: absolute; inset: 0; z-index: 100; overflow: hidden;
+      transition: opacity 2.6s cubic-bezier(0.4,0,0.2,1) 0.5s;
+    }
+    .kapak-overlay.acik { opacity: 0; pointer-events: none; }
+    .kapak-overlay.acik .zarf {
+      transform: scale(1.06);
+    }
+    .zarf {
+      position: absolute; inset: 0;
+      background-image: url('muhur-zarif.jpg');
+      background-size: cover; background-position: center;
+      transition: transform 2.6s cubic-bezier(0.4,0,0.2,1) 0.5s;
+    }
+
+    .muhur-dokun {
+      position: absolute; left: 50%; top: 46%; width: 100px; height: 100px;
+      transform: translate(-50%,-50%); border-radius: 50%;
+      background: transparent; border: none; padding: 0; cursor: pointer; z-index: 15;
+      transition: opacity 0.6s ease;
+    }
+    .muhur-dokun::before {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      border: 1.5px solid rgba(233,226,204,0.75); animation: nabiz 2.2s ease-out infinite;
+    }
+    @keyframes nabiz {
+      0% { transform: scale(0.82); opacity: 0.9; }
+      70% { transform: scale(1.38); opacity: 0; }
+      100% { transform: scale(1.38); opacity: 0; }
+    }
+    .kapak-overlay.acik .muhur-dokun { opacity: 0; }
+  </style>
 </head>
 <body>
-<div class="sayfa">
-  <header>
-    <p class="ust-etiket">Canlı Önizleme</p>
-    <h1 class="sayfa-baslik">Gerçek kapağın üzerinde dene, en son sen karar ver</h1>
-    <p class="aciklama">Soldaki telefon, davetiyenin gerçek kapak ekranı. "Renk & Font" modunda seçenekleri dene; "Sürükle" modunda yazıları ve mumları parmağınla/fareyle istediğin yere taşı.</p>
-  </header>
 
-  <div class="mod-secici">
-    <div class="mod-btn aktif" data-mod="secim">Renk &amp; Font</div>
-    <div class="mod-btn" data-mod="surukle">Sürükle &amp; Taşı</div>
-  </div>
+  <div class="cinema-viewport">
 
-  <div class="govde">
-    <div class="telefon-sarici">
-      <div class="telefon" id="telefon">
-        <div class="kose-cicek kose-sol-ust"></div>
-        <div class="kose-cicek kose-sag-ust"></div>
-        <div class="kose-cicek kose-sol-alt"></div>
-        <div class="kose-cicek kose-sag-alt"></div>
-
-        <div class="kart-icerik">
-          <span class="cicek-sembol">❦</span>
-          <p id="pv-baslik" class="surukle" data-ad="İsim Yazısı">İpek &amp; Kaan</p>
-          <div class="cizgi"></div>
-          <p id="pv-etiket" class="surukle" data-ad="Davetlisiniz Etiketi">DAVETLİSİNİZ</p>
-
-          <div id="pv-aile" class="surukle" data-ad="Aile İsimleri">
-            <div>
-              <span class="aile-adi">ERDOĞAN</span>
-              <span class="aile-etiket">AİLESİ</span>
-            </div>
-            <div>
-              <span class="aile-adi">İNCE</span>
-              <span class="aile-etiket">AİLESİ</span>
-            </div>
-          </div>
-        </div>
-
-        <div id="pv-mum" class="surukle" data-ad="Mum Bandı">
-          <img src="mumlar.png" alt="">
-        </div>
-      </div>
+    <div id="kapak" class="kapak-overlay">
+      <div class="zarf"></div>
+      <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
     </div>
 
-    <div class="panel">
-
-      <!-- ============ MOD 1: RENK & FONT ============ -->
-      <div id="panelSecim">
-        <div class="blok">
-          <h2>Zemin Rengi</h2>
-          <div class="renk-alani" id="renkAlani">
-            <div class="renk-btn secili" data-renk="#F2ECE1">
-              <div class="renk-yuvarlak" style="background:#F2ECE1;"></div>
-              <div class="ad">Şu An</div>
-            </div>
-            <div class="renk-btn" data-renk="#FAF8F4">
-              <div class="renk-yuvarlak" style="background:#FAF8F4;"></div>
-              <div class="ad">Neredeyse Beyaz</div>
-            </div>
-            <div class="renk-btn" data-renk="#F5F1ED">
-              <div class="renk-yuvarlak" style="background:#F5F1ED;"></div>
-              <div class="ad">Aydınlık Fildişi</div>
-            </div>
-            <div class="renk-btn" data-renk="#EDE4D6">
-              <div class="renk-yuvarlak" style="background:#EDE4D6;"></div>
-              <div class="ad">Sıcak Fildişi</div>
-            </div>
-            <div class="renk-btn" data-renk="#E6DACB">
-              <div class="renk-yuvarlak" style="background:#E6DACB;"></div>
-              <div class="ad">Şampanya</div>
-            </div>
-            <div class="renk-btn" data-renk="#DDCEB9">
-              <div class="renk-yuvarlak" style="background:#DDCEB9;"></div>
-              <div class="ad">Kum Bej</div>
-            </div>
-            <div class="renk-btn" data-renk="#D3C0A6">
-              <div class="renk-yuvarlak" style="background:#D3C0A6;"></div>
-              <div class="ad">Toprak Bej</div>
-            </div>
-            <div class="renk-btn" data-renk="#C9BCA8">
-              <div class="renk-yuvarlak" style="background:#C9BCA8;"></div>
-              <div class="ad">Koyu Taş</div>
-            </div>
+    <div id="story-slider">
+      <section class="story-screen kapak-ekran">
+        <div class="floral-bg-wrap"><div class="floral-bg"></div></div>
+        <div class="arch-content-box text-center">
+          <div class="kapak-isim">
+            <span class="isim-ilk">Selin</span>
+            <span class="ve-satir">&amp;</span>
+            <span class="isim-ikinci">Emir</span>
           </div>
+          <span class="kapak-tarih">18.10.2026</span>
+        </div>
+      </section>
 
-          <div class="ozel-renk-satiri">
-            <input type="color" id="ozelRenk" value="#F2ECE1">
-            <span>Ya da tam istediğin tonu seç — hiçbiri olmazsa buradan kendin karıştır.</span>
+      <!-- İkinci ekran: sadece çerçeve grafiğini denemek için örnek -->
+      <section class="story-screen">
+        <div class="cerceve-kutu">
+          <img src="cerceve-1.png" alt="">
+          <div class="cerceve-icerik">
+            <span style="font-family:'Jost',sans-serif; font-size:10px; letter-spacing:0.25em; color:var(--text-muted); font-weight:600;">TARİH &amp; SAAT</span>
+            <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; color:var(--terracotta); margin-top:12px;">18 Ekim 2026, Pazar</span>
           </div>
         </div>
-
-        <div class="blok">
-          <h2>Başlık Fontu</h2>
-          <div class="font-alani" id="baslikAlani">
-            <div class="font-btn secili" data-font="'Alex Brush', cursive" data-style="normal" data-weight="400">
-              <div class="ornek-mini" style="font-family:'Alex Brush',cursive;">Aa</div>
-              <div class="ad">Alex Brush (Şu An)</div>
-            </div>
-            <div class="font-btn" data-font="'Cormorant Garamond', serif" data-style="italic" data-weight="500">
-              <div class="ornek-mini" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;">Aa</div>
-              <div class="ad">Cormorant İtalik</div>
-            </div>
-            <div class="font-btn" data-font="'WindSong', cursive" data-style="normal" data-weight="500">
-              <div class="ornek-mini" style="font-family:'WindSong',cursive;">Aa</div>
-              <div class="ad">WindSong</div>
-            </div>
-            <div class="font-btn" data-font="'Parisienne', cursive" data-style="normal" data-weight="400">
-              <div class="ornek-mini" style="font-family:'Parisienne',cursive;">Aa</div>
-              <div class="ad">Parisienne</div>
-            </div>
-            <div class="font-btn" data-font="'Great Vibes', cursive" data-style="normal" data-weight="400">
-              <div class="ornek-mini" style="font-family:'Great Vibes',cursive;">Aa</div>
-              <div class="ad">Great Vibes</div>
-            </div>
-            <div class="font-btn" data-font="'Petit Formal Script', cursive" data-style="normal" data-weight="400">
-              <div class="ornek-mini" style="font-family:'Petit Formal Script',cursive;">Aa</div>
-              <div class="ad">Petit Formal</div>
-            </div>
-            <div class="font-btn" data-font="'Tangerine', cursive" data-style="normal" data-weight="700">
-              <div class="ornek-mini" style="font-family:'Tangerine',cursive; font-weight:700; font-size:26px;">Aa</div>
-              <div class="ad">Tangerine</div>
-            </div>
-            <div class="font-btn" data-font="'Playfair Display', serif" data-style="italic" data-weight="600">
-              <div class="ornek-mini" style="font-family:'Playfair Display',serif; font-style:italic; font-weight:600;">Aa</div>
-              <div class="ad">Playfair İtalik</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="blok">
-          <h2>Başlık Büyüklüğü</h2>
-          <div class="slider-satiri">
-            <input type="range" id="boyutSlider" min="34" max="80" value="61">
-            <span class="slider-deger" id="boyutDeger">61px</span>
-          </div>
-        </div>
-
-        <div class="blok">
-          <h2>Şu An Seçili Olanlar</h2>
-          <div class="okuma-paneli" id="okumaPaneli">
-            Zemin: <b>#F2ECE1</b><br>
-            Başlık Fontu: <b>Alex Brush</b><br>
-            Başlık Büyüklüğü: <b>61px</b>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ MOD 2: SÜRÜKLE & TAŞI ============ -->
-      <div id="panelSurukle" class="blok gizli">
-        <div class="surukle-yardim">
-          Soldaki telefonda kesikli çizgiyle çevrili yazıları ve mum bandını doğrudan
-          fareyle (veya parmağınla) tut, istediğin yere sürükle. Her öğenin ne kadar
-          kaydığı aşağıda cm yerine <b>piksel (px)</b> olarak yazılır — beğendiğinde
-          bu sayıları bana söyle, gerçek davetiyeye ben işlerim.
-        </div>
-        <button class="sifirla-btn" id="sifirlaBtn">Tüm Konumları Sıfırla</button>
-        <div class="okuma-paneli" id="konumPaneli" style="margin-top:16px;">
-          Henüz kimse taşınmadı.
-        </div>
-      </div>
-
+      </section>
     </div>
+
   </div>
 
-  <p class="not">Beğendiğin kombinasyonu bulduğunda ilgili kutudaki bilgileri bana söyle veya ekran görüntüsü at — davetiyenin tamamına ben işleyeyim.</p>
-</div>
+  <script>
+    document.getElementById('acBtn').addEventListener('click', function () {
+      document.getElementById('kapak').classList.add('acik');
+      const kapakEkrani = document.querySelector('.kapak-ekran');
+      if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2700); }
+      setTimeout(function () { document.getElementById('kapak').remove(); }, 3300);
+    }, { once: true });
+  </script>
 
-<script>
-  const telefon = document.getElementById('telefon');
-  const pvBaslik = document.getElementById('pv-baslik');
-  const okumaPaneli = document.getElementById('okumaPaneli');
-  const ozelRenk = document.getElementById('ozelRenk');
-  const boyutSlider = document.getElementById('boyutSlider');
-  const boyutDeger = document.getElementById('boyutDeger');
-
-  let mevcutRenk = '#F2ECE1';
-  let mevcutFont = 'Alex Brush';
-
-  function panelGuncelle() {
-    okumaPaneli.innerHTML =
-      'Zemin: <b>' + mevcutRenk + '</b><br>' +
-      'Başlık Fontu: <b>' + mevcutFont + '</b><br>' +
-      'Başlık Büyüklüğü: <b>' + boyutSlider.value + 'px</b>';
-  }
-
-  document.querySelectorAll('#renkAlani .renk-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('#renkAlani .renk-btn').forEach(function (b) { b.classList.remove('secili'); });
-      btn.classList.add('secili');
-      mevcutRenk = btn.dataset.renk;
-      telefon.style.backgroundColor = mevcutRenk;
-      ozelRenk.value = mevcutRenk;
-      panelGuncelle();
-    });
-  });
-
-  ozelRenk.addEventListener('input', function () {
-    document.querySelectorAll('#renkAlani .renk-btn').forEach(function (b) { b.classList.remove('secili'); });
-    mevcutRenk = ozelRenk.value.toUpperCase();
-    telefon.style.backgroundColor = mevcutRenk;
-    panelGuncelle();
-  });
-
-  document.querySelectorAll('#baslikAlani .font-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('#baslikAlani .font-btn').forEach(function (b) { b.classList.remove('secili'); });
-      btn.classList.add('secili');
-      pvBaslik.style.fontFamily = btn.dataset.font;
-      pvBaslik.style.fontStyle = btn.dataset.style;
-      pvBaslik.style.fontWeight = btn.dataset.weight;
-      mevcutFont = btn.querySelector('.ad').textContent;
-      panelGuncelle();
-    });
-  });
-
-  boyutSlider.addEventListener('input', function () {
-    pvBaslik.style.fontSize = boyutSlider.value + 'px';
-    boyutDeger.textContent = boyutSlider.value + 'px';
-    panelGuncelle();
-  });
-
-  /* ============ MOD GEÇİŞİ ============ */
-  const modBtnlar = document.querySelectorAll('.mod-btn');
-  const panelSecim = document.getElementById('panelSecim');
-  const panelSurukle = document.getElementById('panelSurukle');
-
-  modBtnlar.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      modBtnlar.forEach(function (b) { b.classList.remove('aktif'); });
-      btn.classList.add('aktif');
-      const mod = btn.dataset.mod;
-      if (mod === 'surukle') {
-        panelSecim.classList.add('gizli');
-        panelSurukle.classList.remove('gizli');
-        telefon.classList.add('surukle-modu');
-      } else {
-        panelSecim.classList.remove('gizli');
-        panelSurukle.classList.add('gizli');
-        telefon.classList.remove('surukle-modu');
-      }
-    });
-  });
-
-  /* ============ SÜRÜKLE & TAŞI ============ */
-  const konumlar = {};
-  const konumPaneli = document.getElementById('konumPaneli');
-
-  function konumPaneliGuncelle() {
-    const anahtarlar = Object.keys(konumlar);
-    if (anahtarlar.length === 0) {
-      konumPaneli.innerHTML = 'Henüz kimse taşınmadı.';
-      return;
-    }
-    konumPaneli.innerHTML = anahtarlar.map(function (ad) {
-      const k = konumlar[ad];
-      return ad + ': <b>sağa ' + k.dx + 'px, aşağı ' + k.dy + 'px</b>';
-    }).join('<br>');
-  }
-
-  document.querySelectorAll('.surukle').forEach(function (el) {
-    let basliyorX = 0, basliyorY = 0, gecerliDx = 0, gecerliDy = 0, tasiniyor = false;
-    const ad = el.dataset.ad;
-    konumlar[ad] = { dx: 0, dy: 0 };
-
-    function baslat(clientX, clientY) {
-      if (!telefon.classList.contains('surukle-modu')) return;
-      tasiniyor = true;
-      el.classList.add('tasiniyor');
-      basliyorX = clientX - gecerliDx;
-      basliyorY = clientY - gecerliDy;
-    }
-    function hareket(clientX, clientY) {
-      if (!tasiniyor) return;
-      gecerliDx = Math.round(clientX - basliyorX);
-      gecerliDy = Math.round(clientY - basliyorY);
-      el.style.transform = 'translate(' + gecerliDx + 'px, ' + gecerliDy + 'px)';
-      konumlar[ad] = { dx: gecerliDx, dy: gecerliDy };
-      konumPaneliGuncelle();
-    }
-    function birak() {
-      tasiniyor = false;
-      el.classList.remove('tasiniyor');
-    }
-
-    el.addEventListener('mousedown', function (e) { e.preventDefault(); baslat(e.clientX, e.clientY); });
-    window.addEventListener('mousemove', function (e) { hareket(e.clientX, e.clientY); });
-    window.addEventListener('mouseup', birak);
-
-    el.addEventListener('touchstart', function (e) {
-      const t = e.touches[0];
-      baslat(t.clientX, t.clientY);
-    }, { passive: true });
-    el.addEventListener('touchmove', function (e) {
-      const t = e.touches[0];
-      hareket(t.clientX, t.clientY);
-    }, { passive: true });
-    el.addEventListener('touchend', birak);
-  });
-
-  document.getElementById('sifirlaBtn').addEventListener('click', function () {
-    document.querySelectorAll('.surukle').forEach(function (el) {
-      el.style.transform = 'none';
-      konumlar[el.dataset.ad] = { dx: 0, dy: 0 };
-    });
-    konumPaneliGuncelle();
-  });
-</script>
 </body>
 </html>
