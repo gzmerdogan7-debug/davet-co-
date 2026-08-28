@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Herr+Von+Muellerhoff&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -35,7 +35,7 @@
       overflow: hidden;
     }
 
-    .font-cormorant-baslik { font-family: 'Parisienne', cursive; font-weight: 400; }
+    .font-cormorant-baslik { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; }
     .font-cormorant { font-family: 'Cormorant Garamond', serif; }
     .font-cormorant-caps { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.26em; }
     .font-sans-sub { font-family: 'Jost', sans-serif; letter-spacing: 0.26em; }
@@ -63,6 +63,16 @@
       border: 1px solid rgba(62, 68, 48, 0.28);
       pointer-events: none;
     }
+    /* Köşe Dal Süslemeleri — mühürdeki dal deseniyle aynı dil, JS ile her karta otomatik ekleniyor */
+    .corner-sprig {
+      position: absolute; width: 30px; height: 30px;
+      stroke: var(--sage-deep); fill: none; stroke-width: 1.1; stroke-linecap: round;
+      opacity: 0.8; pointer-events: none;
+    }
+    .corner-sprig.tl { top: -3px; left: -3px; }
+    .corner-sprig.tr { top: -3px; right: -3px; transform: scaleX(-1); }
+    .corner-sprig.bl { bottom: -3px; left: -3px; transform: scaleY(-1); }
+    .corner-sprig.br { bottom: -3px; right: -3px; transform: scale(-1,-1); }
 
     #story-slider {
       width: 100%; height: 100%;
@@ -108,9 +118,17 @@
 
     /* İsim Bloğu */
     .kapak-isim { display: flex; flex-direction: column; align-items: center; }
-    .kapak-isim span { font-family: 'Parisienne', cursive; font-weight: 400; color: var(--text-deep); line-height: 1.2; }
-    .isim-ilk, .isim-ikinci { font-size: 76px; }
-    .ve-satir { font-size: 34px; color: var(--terracotta); margin: -2px 0; }
+    .kapak-isim span { font-family: 'Herr Von Muellerhoff', cursive; font-weight: 400; color: var(--text-deep); line-height: 1.25; }
+    .isim-ilk, .isim-ikinci { font-size: 86px; }
+    .ve-satir { font-size: 38px; color: var(--terracotta); margin: 0; }
+
+    /* Monogram — kapak ekranında isimlerin üstünde */
+    .monogram {
+      width: 54px; height: 54px; border-radius: 50%;
+      border: 1px solid var(--terracotta);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
 
     .kapak-ekran .isim-ilk, .kapak-ekran .ve-satir, .kapak-ekran .isim-ikinci, .kapak-ekran .kapak-tarih {
       opacity: 0; transform: translateY(14px);
@@ -222,6 +240,9 @@
       <!-- 1. MODÜL: KAPAK -->
       <section class="story-screen kapak-ekran">
         <div class="arch-content-box text-center">
+          <div class="monogram">
+            <span class="font-sans-sub" style="font-size:11px; letter-spacing:0.15em; color:var(--terracotta); font-weight:600;">S&nbsp;•&nbsp;E</span>
+          </div>
           <div class="kapak-isim">
             <span class="isim-ilk">Selin</span>
             <span class="ve-satir">&amp;</span>
@@ -365,7 +386,7 @@
       <!-- 8. MODÜL: GERİ SAYIM -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik" style="font-size:46px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
+          <span class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
           <div style="width:32px; height:0.5px; background:var(--terracotta); margin:16px auto;"></div>
           <div style="display:grid; grid-template-columns:repeat(4,1fr); margin:16px 0;">
             <div style="padding:6px 0; border-left:1px solid rgba(140,122,74,0.3);">
@@ -392,11 +413,11 @@
       <!-- 9. MODÜL: RSVP -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik" style="font-size:46px; color:var(--text-deep); display:block; margin-bottom:8px;">Bize Katılın!</span>
+          <span class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); display:block; margin-bottom:8px;">Bize Katılın!</span>
           <p class="font-cormorant" style="font-size:17px; font-style:italic; color:var(--text-muted); margin-bottom:16px;">Lütfen 15 Eylül'e kadar bildiriniz.</p>
 
           <div id="rsvp-ok" class="hidden" style="padding:14px 0; text-align:center;">
-            <span class="font-cormorant-baslik" style="font-size:46px; color:var(--terracotta); display:block; margin-bottom:8px;">Teşekkürler</span>
+            <span class="font-cormorant-baslik" style="font-size:52px; color:var(--terracotta); display:block; margin-bottom:8px;">Teşekkürler</span>
             <h4 class="font-cormorant-caps" style="font-size:14px; color:var(--text-deep);">Yanıtınız Alındı</h4>
           </div>
 
@@ -430,7 +451,7 @@
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span style="font-size:12px; color:var(--terracotta); display:block; margin-bottom:10px;">❦</span>
-          <h3 class="font-cormorant-baslik" style="font-size:46px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
+          <h3 class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
           <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 18px;"></div>
           <p class="font-cormorant" style="font-size:16px; font-style:italic; color:var(--text-muted); line-height:1.6; max-width:230px; margin:0 auto;">
             "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
@@ -508,6 +529,18 @@
 
     document.querySelectorAll('.story-screen:not(.kapak-ekran) .kart-giris').forEach(function (kart) {
       kartGozlemci.observe(kart);
+    });
+
+    // Her çerçevenin 4 köşesine mühür dal deseniyle uyumlu ince sprig süslemesi ekle
+    var sprigPaths = '<path d="M2 2 C 10 4, 14 10, 16 18"/><path d="M6 6 C 4 9, 6 12, 3 13"/><path d="M11 11 C 14 9, 17 11, 19 8"/><circle cx="3" cy="13" r="1.3"/><circle cx="19" cy="8" r="1.3"/>';
+    document.querySelectorAll('.arch-content-box').forEach(function (box) {
+      ['tl', 'tr', 'bl', 'br'].forEach(function (pos) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'corner-sprig ' + pos);
+        svg.setAttribute('viewBox', '0 0 40 40');
+        svg.innerHTML = sprigPaths;
+        box.appendChild(svg);
+      });
     });
   </script>
 
