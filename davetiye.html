@@ -57,7 +57,7 @@
       border-radius: 42px;
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      background-color: #F5F1ED;
+      background-color: #F2ECE1;
       background-image:
         repeating-linear-gradient(90deg, rgba(68,55,44,0.05) 0px, rgba(68,55,44,0.05) 1px, transparent 1px, transparent 2.5px),
         repeating-linear-gradient(0deg, rgba(68,55,44,0.045) 0px, rgba(68,55,44,0.045) 1px, transparent 1px, transparent 2.5px),
@@ -131,37 +131,45 @@
       transform: translateY(0) scale(1);
     }
 
+    /* Kapak Ekranı: İçerik Üstte, Mumlar Ekranın Altından Yükseliyor */
+    .kapak-ekran {
+      justify-content: flex-start;
+      padding-top: 58px;
+    }
+
     /* İlk Kartta Sıralı Beliriş: İsim → Davetlisiniz → Aile → Mumlar */
-    .ilk-kart h1,
-    .ilk-kart .selam-satiri,
-    .ilk-kart .aile-blok,
-    .ilk-kart .mum-gorsel {
+    .kapak-ekran h1,
+    .kapak-ekran .selam-satiri,
+    .kapak-ekran .aile-blok,
+    .kapak-ekran .mum-alt-bant {
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .ilk-kart.gorundu h1 { opacity: 1; transform: none; transition-delay: 0.15s; }
-    .ilk-kart.gorundu .selam-satiri { opacity: 1; transform: none; transition-delay: 0.7s; }
-    .ilk-kart.gorundu .aile-blok { opacity: 1; transform: none; transition-delay: 1.25s; }
-    .ilk-kart.gorundu .mum-gorsel { opacity: 1; transform: none; transition-delay: 1.8s; }
+    .kapak-ekran.gorundu h1 { opacity: 1; transform: none; transition-delay: 0.15s; }
+    .kapak-ekran.gorundu .selam-satiri { opacity: 1; transform: none; transition-delay: 0.7s; }
+    .kapak-ekran.gorundu .aile-blok { opacity: 1; transform: none; transition-delay: 1.25s; }
+    .kapak-ekran.gorundu .mum-alt-bant { opacity: 1; transform: none; transition-delay: 1.7s; }
 
-    /* Kapaktaki Mum Görseli */
-    .    /* Kapaktaki Mum Görseli — Kenarları Zemine Yedirilmiş */
-    .mum-gorsel {
-      width: 220px;
-      height: 220px;
-      margin: 8px auto 0;
+    /* Mumlar — Ekranın Tabanından Yükselen, Zemine Yedirilmiş Bant */
+    .mum-alt-bant {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 46%;
+      z-index: 4;
+      pointer-events: none;
     }
-    .mum-gorsel img {
+    .mum-alt-bant img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 30%;
+      object-position: center 22%;
       display: block;
-      -webkit-mask-image: radial-gradient(ellipse 62% 62% at center, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0) 100%);
-      mask-image: radial-gradient(ellipse 62% 62% at center, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
     }
-
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
     .arch-content-box {
@@ -385,11 +393,11 @@
     <div id="story-slider" class="story-scroll-container">
 
       <!-- ================= 1. MODÜL: KAPAK ================= -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris ilk-kart">
+      <section class="story-screen kapak-ekran">
+        <div class="arch-content-box text-center kart-giris">
           <span class="text-xs text-[#C5A880] block mb-2">❦</span>
 
-          <h1 class="font-cormorant-baslik text-5xl sm:text-6xl text-[#44372C] leading-tight my-1.5">
+          <h1 class="font-cormorant-baslik text-[61px] text-[#44372C] leading-tight my-1.5">
             İpek &amp; Kaan
           </h1>
 
@@ -410,10 +418,10 @@
               <span class="font-sans-sub text-[7.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
             </div>
           </div>
+        </div>
 
-          <div class="mum-gorsel">
-            <img src="mumlar.png" alt="">
-          </div>
+        <div class="mum-alt-bant">
+          <img src="mumlar.png" alt="">
         </div>
       </section>
 
@@ -694,8 +702,8 @@
     document.getElementById('acBtn').addEventListener('click', function () {
   document.getElementById('kapak').classList.add('acik');
 
-  const ilkKart = document.querySelector('.ilk-kart');
-  if (ilkKart) { setTimeout(function () { ilkKart.classList.add('gorundu'); }, 2600); }
+  const kapakEkrani = document.querySelector('.kapak-ekran');
+  if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2600); }
 
   const audio = document.getElementById('bg-audio');
   const icon = document.getElementById('audio-icon');
@@ -713,7 +721,7 @@
       });
     }, { root: document.getElementById('story-slider'), threshold: 0.35 });
 
-    document.querySelectorAll('.kart-giris:not(.ilk-kart)').forEach(function (kart) {
+    document.querySelectorAll('.story-screen:not(.kapak-ekran) .kart-giris').forEach(function (kart) {
       kartGozlemci.observe(kart);
     });
 
