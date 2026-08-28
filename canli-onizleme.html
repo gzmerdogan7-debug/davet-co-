@@ -23,8 +23,8 @@
     min-height: 100vh;
     padding: 32px 16px 80px;
   }
-  .sayfa { max-width: 900px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 26px; }
+  .sayfa { max-width: 940px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 20px; }
   .ust-etiket {
     font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
     color: var(--gold-deep); font-weight: 600; margin: 0 0 8px;
@@ -33,7 +33,18 @@
     font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
     font-size: clamp(19px, 4vw, 24px); margin: 0; color: var(--ink);
   }
-  .aciklama { font-size: 12.5px; color: var(--muted); max-width: 48ch; margin: 12px auto 0; line-height: 1.6; }
+  .aciklama { font-size: 12.5px; color: var(--muted); max-width: 52ch; margin: 12px auto 0; line-height: 1.6; }
+
+  .mod-secici {
+    display: flex; justify-content: center; gap: 8px; margin: 20px auto 0; max-width: 420px;
+  }
+  .mod-btn {
+    flex: 1; padding: 10px 8px; border-radius: 10px; text-align: center; cursor: pointer;
+    background: rgba(255,253,250,0.6); border: 1.5px solid rgba(197,168,128,0.4);
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--muted);
+    transition: all 0.2s ease;
+  }
+  .mod-btn.aktif { border-color: var(--gold-deep); border-width: 2px; color: var(--gold-deep); background: rgba(255,253,250,0.95); }
 
   .govde {
     display: flex;
@@ -41,28 +52,24 @@
     gap: 34px;
     justify-content: center;
     align-items: flex-start;
-    margin-top: 30px;
+    margin-top: 28px;
   }
 
   /* ------- TELEFON MOCKUP: GERÇEK KAPAK ------- */
   .telefon-sarici { position: sticky; top: 20px; }
   .telefon {
     width: 320px;
-    min-height: 580px;
+    height: 610px;
     border-radius: 34px;
     box-shadow: 0 35px 80px -25px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.15);
     position: relative;
     overflow: hidden;
-    background-color: #F5F1ED;
+    background-color: #F2ECE1;
     background-image:
       repeating-linear-gradient(90deg, rgba(68,55,44,0.05) 0px, rgba(68,55,44,0.05) 1px, transparent 1px, transparent 2.5px),
       repeating-linear-gradient(0deg, rgba(68,55,44,0.045) 0px, rgba(68,55,44,0.045) 1px, transparent 1px, transparent 2.5px);
     transition: background-color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 26px;
+    padding: 46px 26px 0;
   }
   .kose-cicek {
     position: absolute;
@@ -85,7 +92,7 @@
   #pv-baslik {
     font-family: 'Alex Brush', cursive;
     font-weight: 400;
-    font-size: 52px;
+    font-size: 61px;
     line-height: 1.15;
     margin: 6px 0;
     color: var(--ink);
@@ -98,21 +105,37 @@
     font-size: 9.5px; text-transform: uppercase;
     color: var(--muted); font-weight: 500; margin: 0 0 16px;
   }
-  .aile-satiri {
+  #pv-aile {
     display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
     text-align: center; padding-top: 12px;
     border-top: 1px solid rgba(197,168,128,0.3);
   }
-  .aile-satiri span { display: block; font-family: 'Jost', sans-serif; letter-spacing: 0.2em; }
+  #pv-aile span { display: block; font-family: 'Jost', sans-serif; letter-spacing: 0.2em; }
   .aile-adi { font-size: 9.5px; color: var(--ink); font-weight: 600; }
   .aile-etiket { font-size: 7.5px; color: var(--muted); text-transform: uppercase; }
 
-  .mum-gorsel { width: 190px; height: 190px; margin: 16px auto 0; }
-  .mum-gorsel img {
-    width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block;
-    -webkit-mask-image: radial-gradient(ellipse 62% 62% at center, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0) 100%);
-    mask-image: radial-gradient(ellipse 62% 62% at center, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0) 100%);
+  /* Mumlar — ekranın tabanından yükselen, zemine yedirilmiş bant */
+  #pv-mum {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 46%;
+    z-index: 4;
   }
+  #pv-mum img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block;
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 96%);
+  }
+
+  /* Sürükle Modu Görsel İpucu */
+  .surukle-modu .surukle {
+    outline: 1.5px dashed rgba(142,112,71,0.55);
+    outline-offset: 4px;
+    cursor: grab;
+    border-radius: 6px;
+  }
+  .surukle-modu .surukle:active { cursor: grabbing; }
+  .surukle-modu .surukle.tasiniyor { outline-color: var(--gold-deep); }
 
   /* ------- KONTROL PANELİ ------- */
   .panel { flex: 1; min-width: 280px; max-width: 420px; }
@@ -121,7 +144,8 @@
     text-transform: uppercase; font-weight: 600; color: var(--gold-deep);
     margin: 0 0 12px;
   }
-  .blok { margin-bottom: 30px; }
+  .blok { margin-bottom: 28px; }
+  .blok.gizli { display: none; }
 
   .renk-alani { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .renk-btn {
@@ -169,6 +193,17 @@
   .slider-satiri input[type="range"] { flex: 1; }
   .slider-deger { font-size: 12px; font-weight: 600; color: var(--gold-deep); min-width: 44px; text-align: right; }
 
+  .surukle-yardim {
+    font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0 0 16px;
+    background: rgba(255,253,250,0.5); border: 1.5px dashed rgba(197,168,128,0.5);
+    border-radius: 12px; padding: 12px 14px;
+  }
+  .sifirla-btn {
+    display: inline-block; margin-top: 4px; padding: 8px 16px; border-radius: 999px;
+    background: var(--ink); color: #FCFAF7; font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 600; cursor: pointer; border: none;
+  }
+
   .okuma-paneli {
     margin-top: 8px;
     background: rgba(255,253,250,0.7);
@@ -176,7 +211,7 @@
     border-radius: 12px;
     padding: 14px 16px;
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 1.85;
     color: var(--ink);
   }
   .okuma-paneli b { color: var(--gold-deep); }
@@ -189,8 +224,13 @@
   <header>
     <p class="ust-etiket">Canlı Önizleme</p>
     <h1 class="sayfa-baslik">Gerçek kapağın üzerinde dene, en son sen karar ver</h1>
-    <p class="aciklama">Soldaki telefon, davetiyenin gerçek kapak ekranı — köşe çiçekleri ve mum görseliyle birlikte. Sağdaki ayarlarla oynadıkça anında değişiyor.</p>
+    <p class="aciklama">Soldaki telefon, davetiyenin gerçek kapak ekranı. "Renk & Font" modunda seçenekleri dene; "Sürükle" modunda yazıları ve mumları parmağınla/fareyle istediğin yere taşı.</p>
   </header>
+
+  <div class="mod-secici">
+    <div class="mod-btn aktif" data-mod="secim">Renk &amp; Font</div>
+    <div class="mod-btn" data-mod="surukle">Sürükle &amp; Taşı</div>
+  </div>
 
   <div class="govde">
     <div class="telefon-sarici">
@@ -202,11 +242,11 @@
 
         <div class="kart-icerik">
           <span class="cicek-sembol">❦</span>
-          <p id="pv-baslik">İpek &amp; Kaan</p>
+          <p id="pv-baslik" class="surukle" data-ad="İsim Yazısı">İpek &amp; Kaan</p>
           <div class="cizgi"></div>
-          <p id="pv-etiket">DAVETLİSİNİZ</p>
+          <p id="pv-etiket" class="surukle" data-ad="Davetlisiniz Etiketi">DAVETLİSİNİZ</p>
 
-          <div class="aile-satiri">
+          <div id="pv-aile" class="surukle" data-ad="Aile İsimleri">
             <div>
               <span class="aile-adi">ERDOĞAN</span>
               <span class="aile-etiket">AİLESİ</span>
@@ -216,118 +256,135 @@
               <span class="aile-etiket">AİLESİ</span>
             </div>
           </div>
+        </div>
 
-          <div class="mum-gorsel">
-            <img src="mumlar.png" alt="">
-          </div>
+        <div id="pv-mum" class="surukle" data-ad="Mum Bandı">
+          <img src="mumlar.png" alt="">
         </div>
       </div>
     </div>
 
     <div class="panel">
 
-      <div class="blok">
-        <h2>Zemin Rengi</h2>
-        <div class="renk-alani" id="renkAlani">
-          <div class="renk-btn secili" data-renk="#F5F1ED">
-            <div class="renk-yuvarlak" style="background:#F5F1ED;"></div>
-            <div class="ad">Şu An</div>
+      <!-- ============ MOD 1: RENK & FONT ============ -->
+      <div id="panelSecim">
+        <div class="blok">
+          <h2>Zemin Rengi</h2>
+          <div class="renk-alani" id="renkAlani">
+            <div class="renk-btn secili" data-renk="#F2ECE1">
+              <div class="renk-yuvarlak" style="background:#F2ECE1;"></div>
+              <div class="ad">Şu An</div>
+            </div>
+            <div class="renk-btn" data-renk="#FAF8F4">
+              <div class="renk-yuvarlak" style="background:#FAF8F4;"></div>
+              <div class="ad">Neredeyse Beyaz</div>
+            </div>
+            <div class="renk-btn" data-renk="#F5F1ED">
+              <div class="renk-yuvarlak" style="background:#F5F1ED;"></div>
+              <div class="ad">Aydınlık Fildişi</div>
+            </div>
+            <div class="renk-btn" data-renk="#EDE4D6">
+              <div class="renk-yuvarlak" style="background:#EDE4D6;"></div>
+              <div class="ad">Sıcak Fildişi</div>
+            </div>
+            <div class="renk-btn" data-renk="#E6DACB">
+              <div class="renk-yuvarlak" style="background:#E6DACB;"></div>
+              <div class="ad">Şampanya</div>
+            </div>
+            <div class="renk-btn" data-renk="#DDCEB9">
+              <div class="renk-yuvarlak" style="background:#DDCEB9;"></div>
+              <div class="ad">Kum Bej</div>
+            </div>
+            <div class="renk-btn" data-renk="#D3C0A6">
+              <div class="renk-yuvarlak" style="background:#D3C0A6;"></div>
+              <div class="ad">Toprak Bej</div>
+            </div>
+            <div class="renk-btn" data-renk="#C9BCA8">
+              <div class="renk-yuvarlak" style="background:#C9BCA8;"></div>
+              <div class="ad">Koyu Taş</div>
+            </div>
           </div>
-          <div class="renk-btn" data-renk="#FAF8F4">
-            <div class="renk-yuvarlak" style="background:#FAF8F4;"></div>
-            <div class="ad">Neredeyse Beyaz</div>
-          </div>
-          <div class="renk-btn" data-renk="#F2ECE1">
-            <div class="renk-yuvarlak" style="background:#F2ECE1;"></div>
-            <div class="ad">Yumuşak Krem</div>
-          </div>
-          <div class="renk-btn" data-renk="#EDE4D6">
-            <div class="renk-yuvarlak" style="background:#EDE4D6;"></div>
-            <div class="ad">Sıcak Fildişi</div>
-          </div>
-          <div class="renk-btn" data-renk="#E6DACB">
-            <div class="renk-yuvarlak" style="background:#E6DACB;"></div>
-            <div class="ad">Şampanya</div>
-          </div>
-          <div class="renk-btn" data-renk="#DDCEB9">
-            <div class="renk-yuvarlak" style="background:#DDCEB9;"></div>
-            <div class="ad">Kum Bej</div>
-          </div>
-          <div class="renk-btn" data-renk="#D3C0A6">
-            <div class="renk-yuvarlak" style="background:#D3C0A6;"></div>
-            <div class="ad">Toprak Bej</div>
-          </div>
-          <div class="renk-btn" data-renk="#C9BCA8">
-            <div class="renk-yuvarlak" style="background:#C9BCA8;"></div>
-            <div class="ad">Koyu Taş</div>
+
+          <div class="ozel-renk-satiri">
+            <input type="color" id="ozelRenk" value="#F2ECE1">
+            <span>Ya da tam istediğin tonu seç — hiçbiri olmazsa buradan kendin karıştır.</span>
           </div>
         </div>
 
-        <div class="ozel-renk-satiri">
-          <input type="color" id="ozelRenk" value="#F5F1ED">
-          <span>Ya da tam istediğin tonu seç — hiçbiri olmazsa buradan kendin karıştır.</span>
+        <div class="blok">
+          <h2>Başlık Fontu</h2>
+          <div class="font-alani" id="baslikAlani">
+            <div class="font-btn secili" data-font="'Alex Brush', cursive" data-style="normal" data-weight="400">
+              <div class="ornek-mini" style="font-family:'Alex Brush',cursive;">Aa</div>
+              <div class="ad">Alex Brush (Şu An)</div>
+            </div>
+            <div class="font-btn" data-font="'Cormorant Garamond', serif" data-style="italic" data-weight="500">
+              <div class="ornek-mini" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;">Aa</div>
+              <div class="ad">Cormorant İtalik</div>
+            </div>
+            <div class="font-btn" data-font="'WindSong', cursive" data-style="normal" data-weight="500">
+              <div class="ornek-mini" style="font-family:'WindSong',cursive;">Aa</div>
+              <div class="ad">WindSong</div>
+            </div>
+            <div class="font-btn" data-font="'Parisienne', cursive" data-style="normal" data-weight="400">
+              <div class="ornek-mini" style="font-family:'Parisienne',cursive;">Aa</div>
+              <div class="ad">Parisienne</div>
+            </div>
+            <div class="font-btn" data-font="'Great Vibes', cursive" data-style="normal" data-weight="400">
+              <div class="ornek-mini" style="font-family:'Great Vibes',cursive;">Aa</div>
+              <div class="ad">Great Vibes</div>
+            </div>
+            <div class="font-btn" data-font="'Petit Formal Script', cursive" data-style="normal" data-weight="400">
+              <div class="ornek-mini" style="font-family:'Petit Formal Script',cursive;">Aa</div>
+              <div class="ad">Petit Formal</div>
+            </div>
+            <div class="font-btn" data-font="'Tangerine', cursive" data-style="normal" data-weight="700">
+              <div class="ornek-mini" style="font-family:'Tangerine',cursive; font-weight:700; font-size:26px;">Aa</div>
+              <div class="ad">Tangerine</div>
+            </div>
+            <div class="font-btn" data-font="'Playfair Display', serif" data-style="italic" data-weight="600">
+              <div class="ornek-mini" style="font-family:'Playfair Display',serif; font-style:italic; font-weight:600;">Aa</div>
+              <div class="ad">Playfair İtalik</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="blok">
+          <h2>Başlık Büyüklüğü</h2>
+          <div class="slider-satiri">
+            <input type="range" id="boyutSlider" min="34" max="80" value="61">
+            <span class="slider-deger" id="boyutDeger">61px</span>
+          </div>
+        </div>
+
+        <div class="blok">
+          <h2>Şu An Seçili Olanlar</h2>
+          <div class="okuma-paneli" id="okumaPaneli">
+            Zemin: <b>#F2ECE1</b><br>
+            Başlık Fontu: <b>Alex Brush</b><br>
+            Başlık Büyüklüğü: <b>61px</b>
+          </div>
         </div>
       </div>
 
-      <div class="blok">
-        <h2>Başlık Fontu</h2>
-        <div class="font-alani" id="baslikAlani">
-          <div class="font-btn secili" data-font="'Alex Brush', cursive" data-style="normal" data-weight="400">
-            <div class="ornek-mini" style="font-family:'Alex Brush',cursive;">Aa</div>
-            <div class="ad">Alex Brush (Şu An)</div>
-          </div>
-          <div class="font-btn" data-font="'Cormorant Garamond', serif" data-style="italic" data-weight="500">
-            <div class="ornek-mini" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;">Aa</div>
-            <div class="ad">Cormorant İtalik</div>
-          </div>
-          <div class="font-btn" data-font="'WindSong', cursive" data-style="normal" data-weight="500">
-            <div class="ornek-mini" style="font-family:'WindSong',cursive;">Aa</div>
-            <div class="ad">WindSong</div>
-          </div>
-          <div class="font-btn" data-font="'Parisienne', cursive" data-style="normal" data-weight="400">
-            <div class="ornek-mini" style="font-family:'Parisienne',cursive;">Aa</div>
-            <div class="ad">Parisienne</div>
-          </div>
-          <div class="font-btn" data-font="'Great Vibes', cursive" data-style="normal" data-weight="400">
-            <div class="ornek-mini" style="font-family:'Great Vibes',cursive;">Aa</div>
-            <div class="ad">Great Vibes</div>
-          </div>
-          <div class="font-btn" data-font="'Petit Formal Script', cursive" data-style="normal" data-weight="400">
-            <div class="ornek-mini" style="font-family:'Petit Formal Script',cursive;">Aa</div>
-            <div class="ad">Petit Formal</div>
-          </div>
-          <div class="font-btn" data-font="'Tangerine', cursive" data-style="normal" data-weight="700">
-            <div class="ornek-mini" style="font-family:'Tangerine',cursive; font-weight:700; font-size:26px;">Aa</div>
-            <div class="ad">Tangerine</div>
-          </div>
-          <div class="font-btn" data-font="'Playfair Display', serif" data-style="italic" data-weight="600">
-            <div class="ornek-mini" style="font-family:'Playfair Display',serif; font-style:italic; font-weight:600;">Aa</div>
-            <div class="ad">Playfair İtalik</div>
-          </div>
+      <!-- ============ MOD 2: SÜRÜKLE & TAŞI ============ -->
+      <div id="panelSurukle" class="blok gizli">
+        <div class="surukle-yardim">
+          Soldaki telefonda kesikli çizgiyle çevrili yazıları ve mum bandını doğrudan
+          fareyle (veya parmağınla) tut, istediğin yere sürükle. Her öğenin ne kadar
+          kaydığı aşağıda cm yerine <b>piksel (px)</b> olarak yazılır — beğendiğinde
+          bu sayıları bana söyle, gerçek davetiyeye ben işlerim.
         </div>
-      </div>
-
-      <div class="blok">
-        <h2>Başlık Büyüklüğü</h2>
-        <div class="slider-satiri">
-          <input type="range" id="boyutSlider" min="34" max="76" value="52">
-          <span class="slider-deger" id="boyutDeger">52px</span>
-        </div>
-      </div>
-
-      <div class="blok">
-        <h2>Şu An Seçili Olanlar</h2>
-        <div class="okuma-paneli" id="okumaPaneli">
-          Zemin: <b>#F5F1ED</b><br>
-          Başlık Fontu: <b>Alex Brush</b><br>
-          Başlık Büyüklüğü: <b>52px</b>
+        <button class="sifirla-btn" id="sifirlaBtn">Tüm Konumları Sıfırla</button>
+        <div class="okuma-paneli" id="konumPaneli" style="margin-top:16px;">
+          Henüz kimse taşınmadı.
         </div>
       </div>
 
     </div>
   </div>
 
-  <p class="not">Beğendiğin kombinasyonu bulduğunda bu kutudaki 3 satırı (zemin, font, büyüklük) bana söyle veya ekran görüntüsü at — davetiyenin tamamına ben işleyeyim.</p>
+  <p class="not">Beğendiğin kombinasyonu bulduğunda ilgili kutudaki bilgileri bana söyle veya ekran görüntüsü at — davetiyenin tamamına ben işleyeyim.</p>
 </div>
 
 <script>
@@ -338,8 +395,7 @@
   const boyutSlider = document.getElementById('boyutSlider');
   const boyutDeger = document.getElementById('boyutDeger');
 
-  let mevcutRenk = '#F5F1ED';
-  let mevcutRenkAdi = 'Şu An';
+  let mevcutRenk = '#F2ECE1';
   let mevcutFont = 'Alex Brush';
 
   function panelGuncelle() {
@@ -354,7 +410,6 @@
       document.querySelectorAll('#renkAlani .renk-btn').forEach(function (b) { b.classList.remove('secili'); });
       btn.classList.add('secili');
       mevcutRenk = btn.dataset.renk;
-      mevcutRenkAdi = btn.querySelector('.ad').textContent;
       telefon.style.backgroundColor = mevcutRenk;
       ozelRenk.value = mevcutRenk;
       panelGuncelle();
@@ -384,6 +439,92 @@
     pvBaslik.style.fontSize = boyutSlider.value + 'px';
     boyutDeger.textContent = boyutSlider.value + 'px';
     panelGuncelle();
+  });
+
+  /* ============ MOD GEÇİŞİ ============ */
+  const modBtnlar = document.querySelectorAll('.mod-btn');
+  const panelSecim = document.getElementById('panelSecim');
+  const panelSurukle = document.getElementById('panelSurukle');
+
+  modBtnlar.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      modBtnlar.forEach(function (b) { b.classList.remove('aktif'); });
+      btn.classList.add('aktif');
+      const mod = btn.dataset.mod;
+      if (mod === 'surukle') {
+        panelSecim.classList.add('gizli');
+        panelSurukle.classList.remove('gizli');
+        telefon.classList.add('surukle-modu');
+      } else {
+        panelSecim.classList.remove('gizli');
+        panelSurukle.classList.add('gizli');
+        telefon.classList.remove('surukle-modu');
+      }
+    });
+  });
+
+  /* ============ SÜRÜKLE & TAŞI ============ */
+  const konumlar = {};
+  const konumPaneli = document.getElementById('konumPaneli');
+
+  function konumPaneliGuncelle() {
+    const anahtarlar = Object.keys(konumlar);
+    if (anahtarlar.length === 0) {
+      konumPaneli.innerHTML = 'Henüz kimse taşınmadı.';
+      return;
+    }
+    konumPaneli.innerHTML = anahtarlar.map(function (ad) {
+      const k = konumlar[ad];
+      return ad + ': <b>sağa ' + k.dx + 'px, aşağı ' + k.dy + 'px</b>';
+    }).join('<br>');
+  }
+
+  document.querySelectorAll('.surukle').forEach(function (el) {
+    let basliyorX = 0, basliyorY = 0, gecerliDx = 0, gecerliDy = 0, tasiniyor = false;
+    const ad = el.dataset.ad;
+    konumlar[ad] = { dx: 0, dy: 0 };
+
+    function baslat(clientX, clientY) {
+      if (!telefon.classList.contains('surukle-modu')) return;
+      tasiniyor = true;
+      el.classList.add('tasiniyor');
+      basliyorX = clientX - gecerliDx;
+      basliyorY = clientY - gecerliDy;
+    }
+    function hareket(clientX, clientY) {
+      if (!tasiniyor) return;
+      gecerliDx = Math.round(clientX - basliyorX);
+      gecerliDy = Math.round(clientY - basliyorY);
+      el.style.transform = 'translate(' + gecerliDx + 'px, ' + gecerliDy + 'px)';
+      konumlar[ad] = { dx: gecerliDx, dy: gecerliDy };
+      konumPaneliGuncelle();
+    }
+    function birak() {
+      tasiniyor = false;
+      el.classList.remove('tasiniyor');
+    }
+
+    el.addEventListener('mousedown', function (e) { e.preventDefault(); baslat(e.clientX, e.clientY); });
+    window.addEventListener('mousemove', function (e) { hareket(e.clientX, e.clientY); });
+    window.addEventListener('mouseup', birak);
+
+    el.addEventListener('touchstart', function (e) {
+      const t = e.touches[0];
+      baslat(t.clientX, t.clientY);
+    }, { passive: true });
+    el.addEventListener('touchmove', function (e) {
+      const t = e.touches[0];
+      hareket(t.clientX, t.clientY);
+    }, { passive: true });
+    el.addEventListener('touchend', birak);
+  });
+
+  document.getElementById('sifirlaBtn').addEventListener('click', function () {
+    document.querySelectorAll('.surukle').forEach(function (el) {
+      el.style.transform = 'none';
+      konumlar[el.dataset.ad] = { dx: 0, dy: 0 };
+    });
+    konumPaneliGuncelle();
   });
 </script>
 </body>
