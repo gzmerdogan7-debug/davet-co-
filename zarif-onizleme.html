@@ -62,25 +62,18 @@
       padding: 16px 20px 78px 20px; position: relative;
     }
 
-    /* Tek Görsel, Tek Bütün: zarfın kendisi (mühür fotoğrafı) yumuşatılmış haliyle
-       tüm ekranların arkasında sürekli devam ediyor — ayrı bir görsel yok, renk uyumu
-       otomatik garanti çünkü kaynak aynı fotoğraf. Yavaş, sürekli bir nefes alma hareketi var. */
+    /* Botanik Çizim Arka Planı — satın alınan illüstrasyon, tüm ekranların arkasında
+       sabit, yavaş sinematik yakınlaşmayla. Mühür fotoğrafı sadece zarf açılışında kalıyor. */
     .floral-bg-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
     .floral-bg {
-      position: absolute; inset: -60px;
-      background-image: url('muhur-zarif.jpg');
-      background-size: 150%; background-position: center;
-      filter: blur(30px) brightness(1.14) saturate(0.85);
+      position: absolute; inset: -20px;
+      background-image: url('arka-plan-cizim.jpg');
+      background-size: cover; background-position: center;
       animation: kenburns 34s ease-in-out infinite;
-    }
-    .floral-bg-wrap::after {
-      content: ""; position: absolute; inset: 0;
-      background: var(--cream);
-      opacity: 0.22;
     }
     @keyframes kenburns {
       0%   { transform: scale(1) translate(0, 0); }
-      50%  { transform: scale(1.07) translate(-1.5%, 1%); }
+      50%  { transform: scale(1.06) translate(-1%, 0.5%); }
       100% { transform: scale(1) translate(0, 0); }
     }
 
@@ -188,4 +181,3 @@
 
 </body>
 </html>
-
