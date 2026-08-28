@@ -61,6 +61,9 @@
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
       background-color: #F3EEE4;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(68,55,44,0.035) 0px, rgba(68,55,44,0.035) 1px, transparent 1px, transparent 4px),
+        repeating-linear-gradient(-45deg, rgba(68,55,44,0.035) 0px, rgba(68,55,44,0.035) 1px, transparent 1px, transparent 4px);
     }
 
     @media (max-width: 640px) {
@@ -257,8 +260,8 @@
     }
 .kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
-  overflow: hidden; transition: opacity 0.9s ease 0.8s;
-  perspective: 1600px;
+  overflow: hidden; transition: opacity 1.4s ease 1.6s;
+  perspective: 2000px;
 }
 .zarf {
   position: absolute; inset: 0;
@@ -266,11 +269,17 @@
   background-size: cover;
   background-position: center;
   filter: contrast(1.08) saturate(1.04) brightness(1.02);
-  transform-origin: top center;
   backface-visibility: hidden;
-  transition: transform 1.7s cubic-bezier(0.5, 0, 0.2, 1);
+  transition: transform 2.3s cubic-bezier(0.6, 0, 0.25, 1);
 }
-.kapak-overlay.acik .zarf { transform: rotateX(-115deg); }
+.zarf-ust { clip-path: polygon(0 0, 100% 0, 50% 50%); transform-origin: 50% 0%; }
+.zarf-alt { clip-path: polygon(0 100%, 100% 100%, 50% 50%); transform-origin: 50% 100%; }
+.zarf-sol { clip-path: polygon(0 0, 0 100%, 50% 50%); transform-origin: 0% 50%; }
+.zarf-sag { clip-path: polygon(100% 0, 100% 100%, 50% 50%); transform-origin: 100% 50%; }
+.kapak-overlay.acik .zarf-ust { transform: rotateX(-95deg); }
+.kapak-overlay.acik .zarf-alt { transform: rotateX(95deg); }
+.kapak-overlay.acik .zarf-sol { transform: rotateY(95deg); }
+.kapak-overlay.acik .zarf-sag { transform: rotateY(-95deg); }
 .kapak-overlay.acik { opacity: 0; pointer-events: none; }
 .kapak-icerik {
   position: absolute; left: 0; right: 0; bottom: 15%; z-index: 10;
@@ -290,7 +299,10 @@
   <!-- ================= CINEMA VIEWPORT (CANLI VİDEO MOTORU) ================= -->
   <div class="cinema-viewport">
 <div id="kapak" class="kapak-overlay">
-  <div class="zarf"></div>
+  <div class="zarf zarf-ust"></div>
+  <div class="zarf zarf-alt"></div>
+  <div class="zarf zarf-sol"></div>
+  <div class="zarf zarf-sag"></div>
   <div class="kapak-icerik">
     <button id="acBtn" class="gold-action-btn" style="cursor:pointer;">DAVETİYEYİ AÇ</button>
   </div>
@@ -653,13 +665,13 @@
   document.getElementById('kapak').classList.add('acik');
 
   const ilkKart = document.querySelector('.ilk-kart');
-  if (ilkKart) { setTimeout(function () { ilkKart.classList.add('gorundu'); }, 250); }
+  if (ilkKart) { setTimeout(function () { ilkKart.classList.add('gorundu'); }, 1500); }
 
   const audio = document.getElementById('bg-audio');
   const icon = document.getElementById('audio-icon');
   audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
 
-  setTimeout(function () { document.getElementById('kapak').remove(); }, 1750);
+  setTimeout(function () { document.getElementById('kapak').remove(); }, 3100);
 }, { once: true });
 
     /* Kaydırınca Kartların Belirmesi */
