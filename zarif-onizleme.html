@@ -52,13 +52,15 @@
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
 
-    /* Kenarsız Kart, Üstte Geniş Süsleme Şeridi — tüm ekranlarda (kapak dahil) aynı sistem */
+    /* Kenarsız Kart, Üst + Alt Süsleme (alttaki ters çevrilmiş) — tüm ekranlarda aynı sistem,
+       içerik ikisinin arasına doğal olarak sığar (yükseklik içeriğe göre esner) */
     .arch-content-box {
-      width: 100%; max-width: 300px; padding: 140px 22px 30px; position: relative; z-index: 25;
+      width: 100%; max-width: 300px; padding: 140px 22px 128px; position: relative; z-index: 25;
     }
-    .arch-content-box::before {
+    .arch-content-box::before,
+    .arch-content-box::after {
       content: "";
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      position: absolute; left: 50%;
       width: 220px; height: 126px;
       background-image: url('cerceve6.png');
       background-size: 237px 316px;
@@ -66,6 +68,8 @@
       background-repeat: no-repeat;
       pointer-events: none;
     }
+    .arch-content-box::before { top: 0; transform: translateX(-50%); }
+    .arch-content-box::after { bottom: 0; transform: translateX(-50%) scaleY(-1); }
 
     #story-slider {
       width: 100%; height: 100%;
@@ -237,7 +241,6 @@
       <!-- 2. MODÜL: KARŞILAMA -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris" style="max-width:320px; margin:0 auto;">
-          <span class="text-xs" style="color:var(--terracotta); display:block; margin-bottom:12px;">❦</span>
           <p class="font-cormorant" style="font-size:20px; font-style:italic; color:var(--text-deep); line-height:1.5; margin-bottom:20px;">
             Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
           </p>
@@ -432,7 +435,6 @@
       <!-- 10. MODÜL: KAPANIŞ & TEŞEKKÜR -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span style="font-size:12px; color:var(--terracotta); display:block; margin-bottom:10px;">❦</span>
           <h3 class="font-cormorant-baslik" style="font-size:52px; color:var(--text-deep); margin:0 0 14px; line-height:1;">Teşekkür Ederiz</h3>
           <div style="width:32px; height:0.5px; background:var(--terracotta); margin:0 auto 18px;"></div>
           <p class="font-cormorant" style="font-size:16px; font-style:italic; color:var(--text-muted); line-height:1.6; max-width:230px; margin:0 auto;">
@@ -452,7 +454,10 @@
         <span class="font-sans-sub" style="font-size:10.5px; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-muted); font-weight:500;">Aşağı Kaydır ↓</span>
       </button>
       <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
-        <span id="audio-icon" style="font-size:14px;">🎧</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--text-deep)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+          <path id="ses-dalga" d="M16.5 8a5.2 5.2 0 0 1 0 8" style="opacity:0; transition:opacity 0.3s;"/>
+        </svg>
       </button>
     </div>
 
@@ -467,12 +472,12 @@
 
     function toggleAudio() {
       const audio = document.getElementById('bg-audio');
-      const icon = document.getElementById('audio-icon');
+      const dalga = document.getElementById('ses-dalga');
       if (audio.paused) {
-        audio.play().then(() => { icon.innerText = '🎵'; }).catch(() => {});
+        audio.play().then(() => { if (dalga) dalga.style.opacity = '1'; }).catch(() => {});
       } else {
         audio.pause();
-        icon.innerText = '🔇';
+        if (dalga) dalga.style.opacity = '0';
       }
     }
 
@@ -498,8 +503,8 @@
       const kapakEkrani = document.querySelector('.kapak-ekran');
       if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2700); }
       const audio = document.getElementById('bg-audio');
-      const icon = document.getElementById('audio-icon');
-      audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
+      const dalga = document.getElementById('ses-dalga');
+      audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
       setTimeout(function () { document.getElementById('kapak').remove(); }, 3300);
     }, { once: true });
 
