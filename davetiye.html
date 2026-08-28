@@ -307,7 +307,7 @@
 .kapak-overlay {
   position: absolute; inset: 0; z-index: 100;
   overflow: hidden;
-  perspective: 1500px;
+  transition: opacity 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
 }
 .zarf {
   position: absolute; inset: 0;
@@ -315,37 +315,10 @@
   background-size: cover;
   background-position: center;
   filter: contrast(1.08) saturate(1.04) brightness(1.02);
-  backface-visibility: hidden;
+  transition: transform 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
 }
-.zarf-ust {
-  z-index: 4;
-  clip-path: polygon(0 0, 100% 0, 50% 50%);
-  transform-origin: 50% 0%;
-  transition: transform 1.4s cubic-bezier(0.83, 0, 0.17, 1) 0.5s, opacity 1.4s ease 0.5s;
-}
-.zarf-alt {
-  z-index: 3;
-  clip-path: polygon(0 100%, 100% 100%, 50% 50%);
-  transform-origin: 50% 100%;
-  transition: transform 1.4s cubic-bezier(0.83, 0, 0.17, 1) 2.05s, opacity 1.4s ease 2.05s;
-}
-.zarf-sol {
-  z-index: 2;
-  clip-path: polygon(0 0, 0 100%, 50% 50%);
-  transform-origin: 0% 50%;
-  transition: transform 1.4s cubic-bezier(0.83, 0, 0.17, 1) 3.6s, opacity 1.4s ease 3.6s;
-}
-.zarf-sag {
-  z-index: 2;
-  clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-  transform-origin: 100% 50%;
-  transition: transform 1.4s cubic-bezier(0.83, 0, 0.17, 1) 5.15s, opacity 1.4s ease 5.15s;
-}
-.kapak-overlay.acik .zarf-ust { transform: rotateX(-160deg); opacity: 0; }
-.kapak-overlay.acik .zarf-alt { transform: rotateX(160deg); opacity: 0; }
-.kapak-overlay.acik .zarf-sol { transform: rotateY(160deg); opacity: 0; }
-.kapak-overlay.acik .zarf-sag { transform: rotateY(-160deg); opacity: 0; }
-.kapak-overlay.acik { pointer-events: none; }
+.kapak-overlay.acik { opacity: 0; pointer-events: none; }
+.kapak-overlay.acik .zarf { transform: scale(1.06); }
 .muhur-dokun {
   position: absolute; left: 50%; top: 46.5%;
   width: 92px; height: 92px;
@@ -382,10 +355,7 @@
   <div class="cinema-viewport">
 <div class="sayfa-dokusu"></div>
 <div id="kapak" class="kapak-overlay">
-  <div class="zarf zarf-ust"></div>
-  <div class="zarf zarf-alt"></div>
-  <div class="zarf zarf-sol"></div>
-  <div class="zarf zarf-sag"></div>
+  <div class="zarf"></div>
   <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
 </div>
 
@@ -705,13 +675,13 @@
   document.getElementById('kapak').classList.add('acik');
 
   const kapakEkrani = document.querySelector('.kapak-ekran');
-  if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 5150); }
+  if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2700); }
 
   const audio = document.getElementById('bg-audio');
   const icon = document.getElementById('audio-icon');
   audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
 
-  setTimeout(function () { document.getElementById('kapak').remove(); }, 6850);
+  setTimeout(function () { document.getElementById('kapak').remove(); }, 3300);
 }, { once: true });
 
     /* Kaydırınca Kartların Belirmesi */
@@ -731,3 +701,5 @@
 
 </body>
 </html>
+
+  
