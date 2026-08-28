@@ -160,6 +160,9 @@
     .ve-satir { font-size: 46px; color: #8E7047; margin: 4px 0; }
 
 
+        .isim-ilk, .isim-ikinci { font-size: 76px; }
+    .ve-satir { font-size: 38px; color: #8E7047; margin: 2px 0; }
+
     .kapak-ekran .isim-ilk,
     .kapak-ekran .ve-satir,
     .kapak-ekran .isim-ikinci {
@@ -170,6 +173,37 @@
     .kapak-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.25s; }
     .kapak-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.75s; }
     .kapak-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 1.25s; }
+
+    /* Kapak: İsim Bittikten Sonra Tarih Daktilo Gibi Yazılsın */
+    .kapak-tarih-kutu {
+      width: 230px;
+      margin: 22px auto 0;
+      overflow: hidden;
+    }
+    .kapak-tarih {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.22em;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8E7047;
+      white-space: nowrap;
+      width: 0;
+      border-right: 1.5px solid rgba(142, 112, 71, 0.7);
+      opacity: 0;
+    }
+    .kapak-ekran.gorundu .kapak-tarih {
+      opacity: 1;
+      animation: kt-daktilo 1.3s steps(22, end) 2.3s forwards,
+                 kt-imlec 0.7s step-end 2.3s 5;
+    }
+    @keyframes kt-daktilo {
+      from { width: 0; }
+      to { width: 215px; }
+    }
+    @keyframes kt-imlec {
+      50% { border-color: transparent; }
+    }
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
     .arch-content-box {
@@ -385,20 +419,21 @@
 
       <!-- ================= 1. MODÜL: KAPAK (İSİM) ================= -->
       <section class="story-screen kapak-ekran">
-        <div class="arch-content-box text-center">
-          <div class="kapak-isim">
+                  <div class="kapak-isim">
             <span class="isim-ilk">İpek</span>
             <span class="ve-satir">&amp;</span>
             <span class="isim-ikinci">Kaan</span>
+          </div>
+
+          <div class="kapak-tarih-kutu">
+            <span class="kapak-tarih">12 EYLÜL 2026, CUMARTESİ</span>
           </div>
         </div>
       </section>
 
       <!-- ================= 2. MODÜL: KARŞILAMA ================= -->
       <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <p class="font-sans-sub text-[11px] tracking-[0.25em] text-[#8E7047] font-semibold mb-3">12 EYLÜL 2026, CUMARTESİ</p>
-
+                <div class="arch-content-box text-center kart-giris">
           <span class="text-xs text-[#C5A880] block mb-3">❦</span>
 
           <p class="font-cormorant text-[19px] text-[#44372C] italic leading-relaxed mb-5">
@@ -407,8 +442,11 @@
 
           <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto mb-4"></div>
 
+          <span class="font-sans-sub text-[10px] tracking-[0.25em] text-[#8E7047] font-semibold block mb-3">AİLELERİMİZ</span>
+
           <!-- Aile İsimleri -->
           <div class="grid grid-cols-2 gap-2.5 text-center">
+
             <div>
               <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">ERDOĞAN</span>
               <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
