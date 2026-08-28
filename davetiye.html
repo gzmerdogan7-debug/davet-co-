@@ -57,7 +57,7 @@
       border-radius: 42px;
       box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      background-color: #CABBA8;
+      background-color: #F5F1ED;
       background-image:
         repeating-linear-gradient(90deg, rgba(68,55,44,0.05) 0px, rgba(68,55,44,0.05) 1px, transparent 1px, transparent 2.5px),
         repeating-linear-gradient(0deg, rgba(68,55,44,0.045) 0px, rgba(68,55,44,0.045) 1px, transparent 1px, transparent 2.5px),
@@ -131,10 +131,11 @@
       transform: translateY(0) scale(1);
     }
 
-    /* İlk Kartta Sıralı Beliriş: İsim → Davetlisiniz → Aile */
+    /* İlk Kartta Sıralı Beliriş: İsim → Davetlisiniz → Aile → Mumlar */
     .ilk-kart h1,
     .ilk-kart .selam-satiri,
-    .ilk-kart .aile-blok {
+    .ilk-kart .aile-blok,
+    .ilk-kart .mum-gorsel {
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
@@ -142,11 +143,29 @@
     .ilk-kart.gorundu h1 { opacity: 1; transform: none; transition-delay: 0.15s; }
     .ilk-kart.gorundu .selam-satiri { opacity: 1; transform: none; transition-delay: 0.7s; }
     .ilk-kart.gorundu .aile-blok { opacity: 1; transform: none; transition-delay: 1.25s; }
+    .ilk-kart.gorundu .mum-gorsel { opacity: 1; transform: none; transition-delay: 1.8s; }
+
+    /* Kapaktaki Mum Görseli */
+    .mum-gorsel {
+      width: 148px;
+      height: 168px;
+      margin: 16px auto 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px -18px rgba(68, 55, 44, 0.45);
+    }
+    .mum-gorsel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+      display: block;
+    }
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
     .arch-content-box {
       width: 100%;
-      max-width: 290px;
+      max-width: 320px;
       padding: 28px 24px;
       position: relative;
       z-index: 25;
@@ -369,7 +388,7 @@
         <div class="arch-content-box text-center kart-giris ilk-kart">
           <span class="text-xs text-[#C5A880] block mb-2">❦</span>
 
-          <h1 class="font-cormorant-baslik text-4xl sm:text-5xl text-[#44372C] leading-tight my-1.5">
+          <h1 class="font-cormorant-baslik text-5xl sm:text-6xl text-[#44372C] leading-tight my-1.5">
             İpek &amp; Kaan
           </h1>
 
@@ -389,6 +408,10 @@
               <span class="font-sans-sub text-[9.5px] text-[#44372C] block font-semibold">İNCE</span>
               <span class="font-sans-sub text-[7.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
             </div>
+          </div>
+
+          <div class="mum-gorsel">
+            <img src="mumlar.png" alt="">
           </div>
         </div>
       </section>
@@ -507,7 +530,7 @@
           <span class="font-sans-sub text-[9.5px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
           
           <div class="space-y-2.5 text-left max-w-[250px] mx-auto">
-            <div class="flex items-center gap-3 p-1.5 bg-[#E4DED5]/80 rounded-lg border border-[#C5A880]/30">
+            <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
               <div>
                 <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">18:30</span>
@@ -515,7 +538,7 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-3 p-1.5 bg-[#E4DED5]/80 rounded-lg border border-[#C5A880]/30">
+            <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M6 2l6 9 6-9H6z"/></svg>
               <div>
                 <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">19:30</span>
@@ -523,7 +546,7 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-3 p-1.5 bg-[#E4DED5]/80 rounded-lg border border-[#C5A880]/30">
+            <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M4 18h16M4 18a8 8 0 0 1 16 0M12 6V4"/></svg>
               <div>
                 <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">20:30</span>
@@ -531,7 +554,7 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-3 p-1.5 bg-[#E4DED5]/80 rounded-lg border border-[#C5A880]/30">
+            <div class="flex items-center gap-3 p-1.5 bg-[#E9E0D8]/85 rounded-lg border border-[#C5A880]/30">
               <svg class="line-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
               <div>
                 <span class="font-sans-sub text-[8.5px] text-[#8E7047] font-semibold block">23:00</span>
@@ -556,12 +579,12 @@
           <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-2 text-left w-full font-sans-sub text-[8.5px]">
             <div>
               <label class="block uppercase tracking-wider text-[#6E5E50] mb-1.5 font-medium font-sans-sub">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#DCD4C9] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
+              <input type="text" required placeholder="Örn: Aslı Güneş" class="w-full p-1.5 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
             </div>
 
             <div>
               <label class="block uppercase tracking-wider text-[#6E5E50] mb-1.5 font-medium font-sans-sub">Katılım Durumu</label>
-              <select class="w-full p-1.5 bg-[#DCD4C9] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
+              <select class="w-full p-1.5 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
                 <option value="0">Maalesef Katılamayacağım</option>
@@ -570,7 +593,7 @@
 
             <div>
               <label class="block uppercase tracking-wider text-[#6E5E50] mb-1.5 font-medium font-sans-sub">Özel Not / Diyet Tercihi</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#DCD4C9] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]"></textarea>
+              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." class="w-full p-1 bg-[#E3D9CF] border border-[#C5A880]/45 rounded-lg text-[12px] text-[#44372C] focus:outline-none focus:border-[#8E7047]"></textarea>
             </div>
 
             <button type="submit" class="w-full py-2.5 bg-[#44372C] text-[#FCFAF7] uppercase font-semibold rounded-lg hover:bg-[#2F261E] transition-all tracking-[0.25em] shadow-sm mt-1.5">
