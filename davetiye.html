@@ -177,11 +177,11 @@
       display: block;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      font-size: 27px;
       color: #8E7047;
-      margin: 48px auto 0;
+      margin: 92px auto 0;
     }
 
     /* Kartın Kendisi — Çerçevesiz, İçerik Doğrudan Zemin Üzerinde */
@@ -443,7 +443,7 @@
           </svg>
 
           <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold">TARİH &amp; SAAT</span>
-          <p class="font-sans-sub text-[10px] tracking-[0.2em] text-[#8E7047] font-semibold mt-1 mb-3">EYLÜL 2026</p>
+          <p class="font-sans-sub text-[10px] tracking-[0.2em] text-[#8E7047] font-semibold mt-4 mb-3">EYLÜL 2026</p>
 
           <!-- Mini Ay Takvimi -->
           <div class="calendar-grid">
@@ -514,36 +514,7 @@
         </div>
       </section>
 
-      <!-- ================= 5. MODÜL: GERİ SAYIM ================= -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-cormorant-baslik text-5xl text-[#44372C] block mb-1.5">Buluşmaya Kalan</span>
-          <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
-
-          <div class="grid grid-cols-4 my-4">
-            <div class="py-1.5 border-l border-[#C5A880]/35 first:border-l-0">
-              <span id="cd-days" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">GÜN</span>
-            </div>
-            <div class="py-1.5 border-l border-[#C5A880]/35">
-              <span id="cd-hours" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SAAT</span>
-            </div>
-            <div class="py-1.5 border-l border-[#C5A880]/35">
-              <span id="cd-mins" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">DAKİKA</span>
-            </div>
-            <div class="py-1.5 border-l border-[#C5A880]/35">
-              <span id="cd-secs" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
-              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SANİYE</span>
-            </div>
-          </div>
-
-          <p class="font-cormorant text-[17px] text-[#6E5E50] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
-        </div>
-      </section>
-
-      <!-- ================= 6. MODÜL: PROGRAM ================= -->
+      <!-- ================= 5. MODÜL: PROGRAM ================= -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-sans-sub text-[11px] uppercase text-[#6E5E50] tracking-[0.25em] font-semibold block mb-4">GÜNÜN PROGRAMI</span>
@@ -581,6 +552,35 @@
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. MODÜL: GERİ SAYIM ================= -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="font-cormorant-baslik text-5xl text-[#44372C] block mb-1.5">Buluşmaya Kalan</span>
+          <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
+
+          <div class="grid grid-cols-4 my-4">
+            <div class="py-1.5 border-l border-[#C5A880]/35 first:border-l-0">
+              <span id="cd-days" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">GÜN</span>
+            </div>
+            <div class="py-1.5 border-l border-[#C5A880]/35">
+              <span id="cd-hours" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SAAT</span>
+            </div>
+            <div class="py-1.5 border-l border-[#C5A880]/35">
+              <span id="cd-mins" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">DAKİKA</span>
+            </div>
+            <div class="py-1.5 border-l border-[#C5A880]/35">
+              <span id="cd-secs" class="font-cormorant text-3xl text-[#44372C] block leading-none font-normal">00</span>
+              <span class="font-sans-sub text-[8.5px] tracking-[0.25em] text-[#6E5E50] font-semibold">SANİYE</span>
+            </div>
+          </div>
+
+          <p class="font-cormorant text-[17px] text-[#6E5E50] italic">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
         </div>
       </section>
 
