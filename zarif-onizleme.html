@@ -147,20 +147,20 @@
     /* Güvercin Sekanslı Geçiş — cinema-viewport'a sabit, isimler sayfasının kendi
        scroll akışından bağımsız, JS ile sınıf değiştirerek üç aşamalı hareket */
     .guvercin-gecis {
-      position: absolute; width: 155px; z-index: 30; pointer-events: none;
+      position: absolute; width: 300px; z-index: 30; pointer-events: none;
       top: 42%; left: 50%;
-      transform: translate(-260%, -50%) rotate(-8deg);
+      transform: translate(-160%, -50%) rotate(-8deg);
       opacity: 0;
-      transition: transform 0.9s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
+      transition: all 2.8s ease-in-out;
     }
     .guvercin-gecis.iceri-giriyor {
       transform: translate(-50%, -50%) rotate(0deg);
       opacity: 1;
     }
     .guvercin-gecis.disari-cikiyor {
-      transform: translate(160%, -230%) rotate(20deg);
+      transform: translate(110%, -170%) rotate(20deg);
       opacity: 0;
-      transition: transform 0.9s cubic-bezier(0.4,0,0.65,1), opacity 0.7s ease 0.25s;
+      transition: all 2.8s ease-in-out;
     }
 
     /* Küçük dal ayracı */
@@ -555,24 +555,35 @@
       gecisBasladi = true;
       slider.style.overflowY = 'hidden';
 
-      // Adım 1: güvercin sol kenardan içeri süzülür
+      // Adım 1: güvercin sol kenardan içeri süzülür (2.8sn, yavaş ve hissedilir)
       guvercinGecis.classList.add('iceri-giriyor');
 
-      // Adım 2 (0.9sn sonra): güvercin isimlerin hizasına gelir, isimler yukarı eriyerek kaybolur,
-      // güvercin sağ üst köşeye doğru çıkışa geçer
+      // Adım 2 (2.8sn sonra): güvercin isimlerin hizasına gelir, isimler yukarı eriyerek kaybolur,
+      // güvercin sağ üst köşeye doğru çıkışa geçer (bu da 2.8sn sürer)
       setTimeout(function () {
         if (isimBlok) isimBlok.classList.add('yukari-eriyor');
         guvercinGecis.classList.remove('iceri-giriyor');
         guvercinGecis.classList.add('disari-cikiyor');
-      }, 900);
+      }, 2800);
 
       // Adım 3 (güvercin tamamen çıktıktan sonra): 3. sayfaya akıcı geçiş
       setTimeout(function () {
         const hedef = isimlerEkran.offsetTop + slider.clientHeight;
         slider.style.overflowY = 'scroll';
         gsap.to(slider, { scrollTop: hedef, duration: 0.9, ease: 'power3.inOut' });
-      }, 1800);
+      }, 5600);
     }
+
+    // Kullanıcı sekans tamamlandıktan sonra tekrar yukarı kaydırıp isimler sayfasına
+    // dönerse, güvercin ve isimler orijinal görünürlüğüne/konumuna sıfırlanır ve
+    // sekans bir dahaki ileri kaydırmada tekrar oynatılabilir hale gelir.
+    slider.addEventListener('scroll', function () {
+      if (gecisBasladi && isimlerEkranAktifMi()) {
+        gecisBasladi = false;
+        guvercinGecis.classList.remove('iceri-giriyor', 'disari-cikiyor');
+        if (isimBlok) isimBlok.classList.remove('yukari-eriyor');
+      }
+    }, { passive: true });
 
     function gecisTetikle() {
       if (gecisBasladi || !isimlerEkranAktifMi()) return;
@@ -624,3 +635,4 @@
 
 </body>
 </html>
+
