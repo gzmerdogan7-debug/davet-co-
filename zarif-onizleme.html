@@ -8,6 +8,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap');
+
     @font-face {
       font-family: 'PinyonScript';
       src: url('pinyon.ttf') format('truetype');
@@ -62,29 +64,19 @@
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
 
-    /* KATMAN 1: Zemin — keten dokusu */
+    /* KATMAN 1: Zemin — keten dokusu (korunuyor) */
     .zemin-katman {
       position: absolute; inset: 0; z-index: 1;
       background-image: url('keten-doku.png');
       background-size: cover; background-repeat: no-repeat; background-position: center;
     }
 
-    /* KATMAN 2: Zeytin dalı çerçeve — üst ve alt sabit bantlar (tüm sayfalarda ortak,
-       kayan içeriğin üzerinde kalması için yüksek z-index'te). Görsel dar/uzun bir
-       dosya olduğu için tek parça basılınca küçük bir kutuya büzülüyordu — bunun yerine
-       motifi yatayda tekrarlayıp (repeat-x) baştan başa uzanan gerçek bir banner yapıyoruz,
-       en-boy oranı böylece bozulmuyor. */
+    /* KATMAN 2: Zeytin dalı çerçeve — üst ve alt sabit bantlar (korunuyor) */
     .cerceve-ust-bant, .cerceve-alt-bant {
       position: absolute; left: 0; right: 0; z-index: 24; pointer-events: none;
       height: 80px; overflow: hidden;
       background-image: url('yaprak-cerceve.png');
       background-repeat: repeat-x;
-      /* Görsel 941x1672px — dikey/uzun bir dosya, yatay banner değil. Bu yüzden
-         tamamını 80px'e sıkıştırmak yerine, dosyayı büyük ölçekte tutup sadece en
-         üst / en alt kesitini bir "pencere" gibi gösteriyoruz (background-size ile
-         büyütüp overflow:hidden ile kırpıyoruz). Bu bir tahmin — görselin gerçek
-         süsleme bandının tam olarak nerede olduğunu göremiyorum, ekran görüntüsü
-         gelince ince ayar gerekebilir. */
       background-size: auto 420px;
     }
     .cerceve-ust-bant { top: 0; background-position: top left; }
@@ -108,7 +100,7 @@
       padding: 16px 20px 78px 20px; position: relative;
     }
 
-    /* Kart Giriş Animasyonu */
+    /* Kart Giriş Animasyonu (genel, çoğu sahnede kullanılır) */
     .kart-giris {
       opacity: 0;
       transform: translateY(24px) scale(0.97);
@@ -116,7 +108,16 @@
     }
     .kart-giris.gorundu { opacity: 1; transform: translateY(0) scale(1); }
 
-    /* İsim Bloğu */
+    /* SAYFA 3: Davet metni — aşağıdan kaymadan, merkezden dışarı sadece
+       opaklık + hafif ölçek ile beliriyor (kart-giris'in varsayılan translateY'sini
+       bu sahne için eziyoruz) */
+    .fade-merkez { transform: scale(0.96); }
+    .fade-merkez.gorundu { transform: scale(1); }
+
+    /* SAYFA 7 (Kapanış): en yavaş, en asil geçiş — film jeneriği hissi */
+    .kapanis-sahne.kart-giris { transition: opacity 1.5s ease-out, transform 1.5s ease-out; }
+
+    /* İsim Bloğu (Sayfa 2) */
     .isimler-wrapper { display: flex; flex-direction: column; align-items: center; }
 
     .isim-gizem, .isim-yigitcan {
@@ -132,9 +133,9 @@
     }
 
     /* Sinematik sekans: önce güvercin (0-0.8sn) sabitlenir, 0.4sn sonra (1.4sn'den
-       itibaren) isimler alttan yukarı, blur çözülerek, hafif kademeli sırayla gelir */
+       itibaren) isimler alttan yukarı, blur çözülerek gelir */
     .isimler-ekran .isim-gizem, .isimler-ekran .ve-isareti, .isimler-ekran .isim-yigitcan {
-      opacity: 0; transform: translateY(25px); filter: blur(7px);
+      opacity: 0; transform: translateY(25px); filter: blur(5px);
       transition: opacity 1s ease, transform 1s cubic-bezier(0.22,1,0.36,1), filter 1s ease;
     }
     .isimler-ekran.gorundu .isim-gizem { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 1.4s; }
@@ -147,29 +148,54 @@
     }
     .isimler-ekran.gorundu .arch-content-box { opacity: 1; transform: scale(1) translateY(0); }
 
-    /* Güvercin Amblemi — sekansın ilk adımı: yumuşak fade-in + hafif ölçeklenme (0.8sn) */
+    /* Güvercin Amblemi — doğal dolgunluğunu koruyan büyük boyut, sekansın ilk adımı */
     .guvercin-amblem {
-      width: 140px;
+      width: 180px;
       height: auto;
       display: block;
       margin: 0 auto 20px auto;
-      opacity: 0; transform: scale(0.82);
+      opacity: 0; transform: scale(0.95);
       transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
       transition-delay: 0.15s;
     }
     .isimler-ekran.gorundu .guvercin-amblem { opacity: 1; transform: scale(1); }
 
-    /* Küçük dal ayracı — davet metni ile aile isimleri arasında (ve benzer yerlerde).
-       Görsel açık renkli/soluk çıktığı için keten zeminde neredeyse görünmüyordu;
-       brightness/contrast filtreleriyle koyulaştırılıp belirginleştirildi. */
+    /* Küçük dal ayracı — koyulaştırma filtresiyle keten zeminde belirgin */
     .detay-dal {
       width: 65px !important;
       height: auto !important;
       display: block !important;
       margin: 25px auto !important;
       opacity: 1 !important;
-      filter: brightness(0.4) contrast(1.4) !important;
+      filter: brightness(0.35) contrast(1.5) !important;
     }
+
+    /* SAYFA 4: Düğün Menüsü — başlıklar soldan, detaylar sağdan, eşzamanlı zıt süzülme */
+    .menu-satiri {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 11px 0; border-bottom: 1px solid rgba(58,69,53,0.18);
+      gap: 14px;
+    }
+    .menu-satiri:last-child { border-bottom: none; }
+    .menu-baslik {
+      font-family: 'CinzelFont', serif; font-size: 10px; letter-spacing: 0.12em;
+      color: var(--zeytin-soft); text-transform: uppercase; white-space: nowrap;
+      opacity: 0; transform: translateX(-22px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .menu-detay {
+      font-family: 'CormorantFont', serif; font-style: italic; font-size: 15px;
+      color: var(--zeytin); text-align: right;
+      opacity: 0; transform: translateX(22px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .kart-giris.gorundu .menu-baslik, .kart-giris.gorundu .menu-detay { opacity: 1; transform: translateX(0); }
+    .kart-giris.gorundu .menu-satiri:nth-child(2) .menu-baslik,
+    .kart-giris.gorundu .menu-satiri:nth-child(2) .menu-detay { transition-delay: 0.12s; }
+    .kart-giris.gorundu .menu-satiri:nth-child(3) .menu-baslik,
+    .kart-giris.gorundu .menu-satiri:nth-child(3) .menu-detay { transition-delay: 0.24s; }
+    .kart-giris.gorundu .menu-satiri:nth-child(4) .menu-baslik,
+    .kart-giris.gorundu .menu-satiri:nth-child(4) .menu-detay { transition-delay: 0.36s; }
 
     /* SAYFA 1: Zarf & Video Açılışı */
     .kapak-overlay {
@@ -177,9 +203,9 @@
     }
     .acilis-video {
       position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .acilis-video.soluyor { opacity: 0; }
+    .acilis-video.soluyor { opacity: 0; transform: scale(1.06); }
 
     .muhur-dokun {
       position: absolute; left: 50%; top: 50%; width: 100px; height: 100px;
@@ -205,8 +231,8 @@
     .aksiyon-btn {
       background: rgba(245, 242, 235, 0.85);
       border: 1px solid rgba(58, 69, 53, 0.55);
-      border-radius: 999px; padding: 8px 19px; font-size: 8.5px;
-      letter-spacing: 0.22em; text-transform: uppercase; color: var(--zeytin);
+      border-radius: 999px; padding: 8px 16px; font-size: 8px;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--zeytin);
       font-family: 'CinzelFont', serif; font-weight: 600; display: inline-block; transition: all 0.2s; text-decoration: none;
     }
     .aksiyon-btn:hover { background: var(--zeytin); color: var(--keten); }
@@ -227,6 +253,53 @@
       100% { box-shadow: 0 0 0 0 rgba(58,69,53,0); }
     }
 
+    /* SAYFA 6: Sayaç — Vogue editoryal tipografi */
+    .baslik-sayac {
+      font-family: 'Bodoni Moda', serif !important;
+      font-size: 1.15rem !important;
+      font-weight: 400 !important;
+      letter-spacing: 4px !important;
+      text-transform: uppercase !important;
+      color: #2b352b !important;
+      display: block;
+      opacity: 0; transform: translateY(-16px);
+      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+    }
+    .kart-giris.gorundu .baslik-sayac { opacity: 1; transform: translateY(0); }
+
+    .sayac-rakam {
+      font-family: 'Bodoni Moda', serif !important;
+      font-size: 2.2rem !important;
+      font-weight: 400 !important;
+      color: #1a1a1a !important;
+      display: block; line-height: 1;
+      opacity: 0;
+    }
+    .kart-giris.gorundu .sayac-rakam {
+      animation: sayac-yaylan 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    .kart-giris.gorundu .sayac-grid > div:nth-child(1) .sayac-rakam { animation-delay: 0.1s; }
+    .kart-giris.gorundu .sayac-grid > div:nth-child(2) .sayac-rakam { animation-delay: 0.22s; }
+    .kart-giris.gorundu .sayac-grid > div:nth-child(3) .sayac-rakam { animation-delay: 0.34s; }
+    .kart-giris.gorundu .sayac-grid > div:nth-child(4) .sayac-rakam { animation-delay: 0.46s; }
+    @keyframes sayac-yaylan {
+      0% { opacity: 0; transform: translateY(10px) scale(0.82); }
+      60% { opacity: 1; transform: translateY(-3px) scale(1.06); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .sayac-etiket {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: 0.6rem !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      opacity: 0.7 !important;
+      color: var(--zeytin-soft);
+    }
+
+    .sayac-grid { display: grid; grid-template-columns: repeat(4,1fr); margin: 16px 0; }
+    .sayac-grid > div { padding: 6px 0; border-left: 1px solid rgba(58,69,53,0.3); }
+
     /* Düğün Akışı — Zaman Çizelgesi */
     .program-zaman-cizgisi { position: relative; max-width: 230px; margin: 0 auto; }
     .program-zaman-cizgisi::before {
@@ -244,6 +317,45 @@
     .kart-giris.gorundu .zaman-satiri { opacity: 1; transform: none; }
     .kart-giris.gorundu .zaman-satiri:nth-child(2) { transition-delay: 0.18s; }
     .kart-giris.gorundu .zaman-satiri:nth-child(3) { transition-delay: 0.36s; }
+
+    /* SAYFA 9: RSVP / Katılım Bildirimi — lüks & interaktif */
+    .baslik-editoryal-genis {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--zeytin);
+      display: block;
+    }
+    .katilim-secim { display: flex; gap: 10px; justify-content: center; margin: 18px 0; }
+    .katilim-chip {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(58,69,53,0.4);
+      background: transparent; color: var(--zeytin-soft); cursor: pointer; transition: all 0.25s ease;
+    }
+    .katilim-chip.aktif { background: var(--zeytin); color: var(--keten); border-color: var(--zeytin); }
+    .rsvp-aksiyonlar { display: flex; gap: 8px; justify-content: center; margin: 18px 0; flex-wrap: wrap; }
+    .onay-btn {
+      width: 100%; padding: 13px 0; background: var(--zeytin); color: var(--keten);
+      border: none; border-radius: 999px; font-family: 'CinzelFont', serif; font-weight: 600;
+      letter-spacing: 0.24em; font-size: 11px; text-transform: uppercase; cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .onay-btn:active { transform: scale(0.92); }
+
+    /* SAYFA 10: Teşekkür & Marka Kapanışı */
+    .tesekkur-baslik {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 4rem;
+      color: var(--zeytin);
+      display: block;
+      margin: 0 0 14px;
+      line-height: 1;
+    }
+    .marka-imza {
+      position: absolute; bottom: 92px; left: 0; right: 0; text-align: center; z-index: 25;
+    }
 
     /* Alt Yüzen Cam Kapsül Bar */
     .floating-pill-bar {
@@ -299,7 +411,7 @@
 
       <!-- SAYFA 3: DAVET METNİ -->
       <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris" style="max-width:320px; margin:0 auto;">
+        <div class="arch-content-box text-center kart-giris fade-merkez" style="max-width:320px; margin:0 auto;">
           <p class="font-govde" style="font-size:20px; font-style:italic; color:var(--zeytin); line-height:1.5; margin-bottom:6px;">
             Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
           </p>
@@ -318,7 +430,32 @@
         </div>
       </section>
 
-      <!-- SAYFA 4: TARİH & CANLI TAKVİM -->
+      <!-- SAYFA 4: DÜĞÜN MENÜSÜ (YENİ) -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN MENÜSÜ</span>
+          <div style="max-width:260px; margin:0 auto;">
+            <div class="menu-satiri">
+              <span class="menu-baslik">BAŞLANGIÇ</span>
+              <span class="menu-detay">Akdeniz Mezze Tabağı</span>
+            </div>
+            <div class="menu-satiri">
+              <span class="menu-baslik">ANA YEMEK</span>
+              <span class="menu-detay">Kekik Aromalı Kuzu Pirzola</span>
+            </div>
+            <div class="menu-satiri">
+              <span class="menu-baslik">TATLI</span>
+              <span class="menu-detay">Portakallı Zeytinyağlı Kek</span>
+            </div>
+            <div class="menu-satiri">
+              <span class="menu-baslik">İÇECEK</span>
+              <span class="menu-detay">Seçili Şarap &amp; Taze Meyve Suları</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAYFA 5: TARİH & CANLI TAKVİM -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600;">TARİH &amp; SAAT</span>
@@ -332,34 +469,34 @@
         </div>
       </section>
 
-      <!-- SAYFA 5: BULUŞMAYA KALAN -->
+      <!-- SAYFA 6: BULUŞMAYA KALAN (SAYAÇ — Vogue Editoryal) -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-govde-italik-buyuk" style="font-size:44px; color:var(--zeytin); display:block; margin-bottom:8px;">Buluşmaya Kalan</span>
-          <div style="display:grid; grid-template-columns:repeat(4,1fr); margin:16px 0;">
-            <div style="padding:6px 0; border-left:1px solid rgba(58,69,53,0.3);">
-              <span id="cd-days" class="font-govde" style="font-size:34px; color:var(--zeytin); display:block; line-height:1;">00</span>
-              <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); font-weight:600;">GÜN</span>
+          <span class="baslik-sayac">Buluşmaya Kalan</span>
+          <div class="sayac-grid">
+            <div>
+              <span id="cd-days" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">GÜN</span>
             </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(58,69,53,0.3);">
-              <span id="cd-hours" class="font-govde" style="font-size:34px; color:var(--zeytin); display:block; line-height:1;">00</span>
-              <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); font-weight:600;">SAAT</span>
+            <div>
+              <span id="cd-hours" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">SAAT</span>
             </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(58,69,53,0.3);">
-              <span id="cd-mins" class="font-govde" style="font-size:34px; color:var(--zeytin); display:block; line-height:1;">00</span>
-              <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); font-weight:600;">DAKİKA</span>
+            <div>
+              <span id="cd-mins" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">DAKİKA</span>
             </div>
-            <div style="padding:6px 0; border-left:1px solid rgba(58,69,53,0.3);">
-              <span id="cd-secs" class="font-govde" style="font-size:34px; color:var(--zeytin); display:block; line-height:1;">00</span>
-              <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); font-weight:600;">SANİYE</span>
+            <div>
+              <span id="cd-secs" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">SANİYE</span>
             </div>
           </div>
-          <img src="yaprak-dal-kucuk.png" class="detay-dal" alt="">
+          <img src="yaprak-dal-kucuk.png" class="detay-dal" alt="Zeytin Dalı">
           <p class="font-govde" style="font-size:18px; font-style:italic; color:var(--zeytin-soft);">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
         </div>
       </section>
 
-      <!-- SAYFA 6: KUTLAMA MEKANI -->
+      <!-- SAYFA 7: KUTLAMA MEKANI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:16px;">KUTLAMA MEKANI</span>
@@ -374,7 +511,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 7: DÜĞÜN AKIŞI -->
+      <!-- SAYFA 8: DÜĞÜN AKIŞI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN AKIŞI</span>
@@ -404,11 +541,11 @@
         </div>
       </section>
 
-      <!-- SAYFA 8: LCV / BİZE KATILIN -->
+      <!-- SAYFA 9: KATILIM BİLDİRİMİ (RSVP — Lüks & İnteraktif) -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-govde-italik-buyuk" style="font-size:44px; color:var(--zeytin); display:block; margin-bottom:8px;">Bize Katılın!</span>
-          <p class="font-govde" style="font-size:17px; font-style:italic; color:var(--zeytin-soft); margin-bottom:16px;">Lütfen 12 Eylül'e kadar bildiriniz.</p>
+          <span class="baslik-editoryal-genis">Katılım Bildirimi</span>
+          <p class="font-govde" style="font-size:15px; font-style:italic; color:var(--zeytin-soft); margin:10px 0 4px;">Lütfen 12 Eylül'e kadar bildiriniz.</p>
 
           <div id="rsvp-ok" class="hidden" style="padding:14px 0; text-align:center;">
             <span class="font-govde-italik-buyuk" style="font-size:44px; color:var(--zeytin); display:block; margin-bottom:8px;">Teşekkürler</span>
@@ -416,28 +553,42 @@
           </div>
 
           <form id="rsvp-form" onsubmit="submitRSVP(event)" style="text-align:center; width:100%;">
+            <div class="katilim-secim">
+              <button type="button" class="katilim-chip aktif" onclick="katilimSec(this,'evet')">Katılıyorum</button>
+              <button type="button" class="katilim-chip" onclick="katilimSec(this,'hayir')">Katılamıyorum</button>
+            </div>
+            <input type="hidden" id="katilim-durumu" value="evet">
+
             <div style="margin-bottom:18px;">
               <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Adınız Soyadınız</label>
               <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif;">
             </div>
             <div style="margin-bottom:18px;">
-              <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Kişi Sayısı</label>
-              <select style="width:100%; text-align:center; text-align-last:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif;">
-                <option value="1">1 Kişi Katılacağım</option>
-                <option value="2">2 Kişi Katılacağız</option>
-                <option value="3">3 Kişi Katılacağız</option>
-                <option value="4">4 Kişi Katılacağız</option>
-                <option value="0">Maalesef Katılamayacağım</option>
-              </select>
+              <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Çiftimize Notunuz veya Şarkı Öneriniz</label>
+              <textarea rows="1" placeholder="Notunuzu buraya yazın..." style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif; resize:none;"></textarea>
             </div>
-            <div style="margin-bottom:20px;">
-              <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Özel Not</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif; resize:none;"></textarea>
+
+            <div class="rsvp-aksiyonlar">
+              <a id="ics-link" href="#" download="gizem-yigitcan-dugun.ics" class="aksiyon-btn">TAKVİME EKLE (.ics)</a>
+              <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="aksiyon-btn">KONUM / HARİTADA GÖR</a>
             </div>
-            <button type="submit" style="width:100%; padding:11px 0; background:transparent; border:1px solid var(--zeytin); color:var(--zeytin); text-transform:uppercase; font-weight:600; border-radius:999px; letter-spacing:0.24em; font-size:11px; font-family:'CinzelFont',serif; cursor:pointer;">
-              GÖNDER
-            </button>
+
+            <button type="submit" class="onay-btn">KATILIMI ONAYLA</button>
           </form>
+        </div>
+      </section>
+
+      <!-- SAYFA 10: TEŞEKKÜR & MARKA KAPANIŞI (YENİ) -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris kapanis-sahne">
+          <span class="tesekkur-baslik">Teşekkür Ederiz</span>
+          <p class="font-govde" style="font-size:16px; font-style:italic; color:var(--zeytin-soft); line-height:1.6; max-width:230px; margin:0 auto;">
+            "Varlığınız ve sevginiz, hayatımızın bu en özel gününde bizim için en büyük hediyedir."
+          </p>
+        </div>
+        <div class="marka-imza">
+          <span class="font-govde-caps" style="display:block; font-size:18px; font-weight:700; letter-spacing:0.3em; color:var(--zeytin);">DAVET &amp; CO.</span>
+          <span class="font-baslik-etiket" style="display:block; font-size:9px; font-weight:700; color:var(--zeytin-soft); text-transform:uppercase; margin-top:6px;">DİJİTAL TASARIM ATÖLYESİ</span>
         </div>
       </section>
 
@@ -475,11 +626,34 @@
       }
     }
 
+    function katilimSec(btn, deger) {
+      document.querySelectorAll('.katilim-chip').forEach(function (c) { c.classList.remove('aktif'); });
+      btn.classList.add('aktif');
+      document.getElementById('katilim-durumu').value = deger;
+    }
+
     function submitRSVP(e) {
       e.preventDefault();
       document.getElementById('rsvp-form').classList.add('hidden');
       document.getElementById('rsvp-ok').classList.remove('hidden');
     }
+
+    // .ics dosyasını sayfa yüklenirken hazırlayıp "TAKVİME EKLE" linkine bağlıyoruz
+    (function icsOlustur() {
+      const icsIcerik = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+        'SUMMARY:Gizem & Yiğitcan Düğün Töreni',
+        'DTSTART:20260919T160000Z',
+        'DTEND:20260919T200000Z',
+        'LOCATION:Ses Lounge Events, Eskişehir',
+        'DESCRIPTION:Gizem & Yiğitcan düğününe davetlisiniz.',
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n');
+      const icsLink = document.getElementById('ics-link');
+      if (icsLink) {
+        icsLink.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsIcerik);
+      }
+    })();
 
     const targetDate = new Date("2026-09-19T19:00:00").getTime();
     setInterval(() => {
@@ -492,7 +666,7 @@
       }
     }, 1000);
 
-    /* ---------- SAYFA 1: Zarf & Mühür — video + erken çapraz geçiş ---------- */
+    /* ---------- SAYFA 1: Zarf & Mühür — video + erken çapraz geçiş (zoom ile) ---------- */
     const kapakEl = document.getElementById('kapak');
     const acilisVideo = document.getElementById('acilis-video');
     const isimlerEkran = document.querySelector('.isimler-ekran');
@@ -508,9 +682,6 @@
       }, 800);
     }
 
-    // Süreyi timeupdate ile tekrar tekrar kontrol etmek yerine (bazı mp4'lerde
-    // tarayıcı gerçek süreyi geç bildiriyor ve bu yüzden erken solma hiç tetiklenmiyordu),
-    // süre öğrenilir öğrenilmez TEK bir kesin zamanlayıcı kuruyoruz.
     function crossfadeZamanla() {
       if (crossfadeBasladi || crossfadeZamanlayici) return;
       const sure = acilisVideo.duration;
@@ -538,7 +709,7 @@
       kapakBitir();
     });
 
-    /* ---------- SAYFA 4: Eylül 2026 canlı takvimi ---------- */
+    /* ---------- Eylül 2026 canlı takvimi ---------- */
     (function takvimOlustur() {
       const kapsayici = document.getElementById('takvim-gunler');
       if (!kapsayici) return;
