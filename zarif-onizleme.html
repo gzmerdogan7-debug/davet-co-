@@ -119,10 +119,8 @@
     /* İsim Bloğu */
     .kapak-isim {
       display: flex; flex-direction: column; align-items: center; position: relative;
-      transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .kapak-isim span { color: var(--zeytin); line-height: 1.25; }
-    .kapak-isim.yukari-eriyor { opacity: 0; transform: translateY(-30px); }
 
     .isim-ilk, .isim-ikinci {
       font-family: 'PinyonScript', cursive; font-weight: 400; font-style: normal;
@@ -130,13 +128,14 @@
     }
     .ve-satir { font-family: 'PinyonScript', cursive; font-weight: 400; font-style: normal; font-size: 34px; color: var(--zeytin-soft); margin: -6px 0; }
 
+    /* İsimler aşağıdan yukarı, hafif blur çözülerek, sinematik bir fade-in-up ile gelir */
     .isimler-ekran .isim-ilk, .isimler-ekran .ve-satir, .isimler-ekran .isim-ikinci {
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+      opacity: 0; transform: translateY(26px); filter: blur(7px);
+      transition: opacity 1.1s ease, transform 1.1s cubic-bezier(0.22,1,0.36,1), filter 1.1s ease;
     }
-    .isimler-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.25s; }
-    .isimler-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.75s; }
-    .isimler-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 1.25s; }
+    .isimler-ekran.gorundu .isim-ilk { opacity: 1; transform: none; filter: blur(0); transition-delay: 0.25s; }
+    .isimler-ekran.gorundu .ve-satir { opacity: 1; transform: none; filter: blur(0); transition-delay: 0.75s; }
+    .isimler-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; filter: blur(0); transition-delay: 1.25s; }
 
     .isimler-ekran .arch-content-box {
       opacity: 0; transform: scale(0.88) translateY(22px);
@@ -144,24 +143,14 @@
     }
     .isimler-ekran.gorundu .arch-content-box { opacity: 1; transform: scale(1) translateY(0); }
 
-    /* Güvercin Sekanslı Geçiş — cinema-viewport'a sabit, isimler sayfasının kendi
-       scroll akışından bağımsız, JS ile sınıf değiştirerek üç aşamalı hareket */
-    .guvercin-gecis {
-      position: absolute; width: 300px; z-index: 30; pointer-events: none;
-      top: 42%; left: 50%;
-      transform: translate(-160%, -50%) rotate(-8deg);
-      opacity: 0;
-      transition: all 2.8s ease-in-out;
+    /* Güvercin Amblemi — artık uçmuyor, isimlerin tam üstünde sabit, şık bir mühür/amblem
+       gibi duruyor; isimlerle aynı fade-in ile birlikte belirir */
+    .guvercin-amblem {
+      display: block; width: 96px; height: auto; margin: 0 auto 8px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 1.1s ease, transform 1.1s cubic-bezier(0.22,1,0.36,1);
     }
-    .guvercin-gecis.iceri-giriyor {
-      transform: translate(-50%, -50%) rotate(0deg);
-      opacity: 1;
-    }
-    .guvercin-gecis.disari-cikiyor {
-      transform: translate(110%, -170%) rotate(20deg);
-      opacity: 0;
-      transition: all 2.8s ease-in-out;
-    }
+    .isimler-ekran.gorundu .guvercin-amblem { opacity: 1; transform: none; }
 
     /* Küçük dal ayracı */
     .dal-ayrac { width: 64px; height: auto; margin: 14px auto; display: block; opacity: 0.9; }
@@ -270,7 +259,6 @@
     <div class="zemin-katman"></div>
     <div class="cerceve-ust-bant"></div>
     <div class="cerceve-alt-bant"></div>
-    <img src="guvercin.png" class="guvercin-gecis" alt="">
 
     <!-- SAYFA 1: ZARF & MÜHÜR (AÇILIŞ VİDEOSU) -->
     <div id="kapak" class="kapak-overlay">
@@ -281,9 +269,10 @@
 
     <div id="story-slider">
 
-      <!-- SAYFA 2: İSİMLER -->
+      <!-- SAYFA 2: İSİMLER & GÜVERCİN AMBLEMİ -->
       <section class="story-screen isimler-ekran">
         <div class="arch-content-box text-center">
+          <img src="guvercin.png" class="guvercin-amblem" alt="">
           <div class="kapak-isim">
             <span class="isim-ilk">Gizem</span>
             <span class="ve-satir">&amp;</span>
@@ -292,10 +281,9 @@
         </div>
       </section>
 
-      <!-- SAYFA 3: BİRLİKTELİĞİMİZE DAVET -->
+      <!-- SAYFA 3: DAVET METNİ -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris" style="max-width:320px; margin:0 auto;">
-          <span class="font-baslik-etiket" style="font-size:11px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:14px;">BİRLİKTELİĞİMİZE DAVET</span>
           <p class="font-govde" style="font-size:20px; font-style:italic; color:var(--zeytin); line-height:1.5; margin-bottom:6px;">
             Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
           </p>
@@ -455,12 +443,6 @@
 
   <script>
     function scrollToNextStory() {
-      // "Aşağı Kaydır" butonu isimler sayfasındayken basılırsa, güvercin sekansını
-      // atlayıp direkt sonraki sayfaya zıplıyordu — artık önce sekansı tetikliyor.
-      if (typeof isimlerEkranAktifMi === 'function' && isimlerEkranAktifMi() && !gecisBasladi) {
-        baslatGecisSekansi();
-        return;
-      }
       const container = document.getElementById('story-slider');
       const nextScroll = container.scrollTop + container.clientHeight;
       gsap.to(container, { scrollTop: nextScroll, duration: 0.85, ease: "power3.inOut" });
@@ -540,60 +522,6 @@
       kapakBitir();
     });
 
-    /* ---------- SAYFA 2 → SAYFA 3: Sekanslı güvercin geçişi ---------- */
-    const slider = document.getElementById('story-slider');
-    const guvercinGecis = document.querySelector('.guvercin-gecis');
-    const isimBlok = document.querySelector('.isimler-ekran .kapak-isim');
-    let gecisBasladi = false;
-
-    function isimlerEkranAktifMi() {
-      return Math.abs(slider.scrollTop - isimlerEkran.offsetTop) < 4;
-    }
-
-    function baslatGecisSekansi() {
-      if (gecisBasladi) return;
-      gecisBasladi = true;
-      slider.style.overflowY = 'hidden';
-
-      // Adım 1: güvercin sol kenardan içeri süzülür (2.8sn, yavaş ve hissedilir)
-      guvercinGecis.classList.add('iceri-giriyor');
-
-      // Adım 2 (2.8sn sonra): güvercin isimlerin hizasına gelir, isimler yukarı eriyerek kaybolur,
-      // güvercin sağ üst köşeye doğru çıkışa geçer (bu da 2.8sn sürer)
-      setTimeout(function () {
-        if (isimBlok) isimBlok.classList.add('yukari-eriyor');
-        guvercinGecis.classList.remove('iceri-giriyor');
-        guvercinGecis.classList.add('disari-cikiyor');
-      }, 2800);
-
-      // Adım 3 (güvercin tamamen çıktıktan sonra): 3. sayfaya akıcı geçiş
-      setTimeout(function () {
-        const hedef = isimlerEkran.offsetTop + slider.clientHeight;
-        slider.style.overflowY = 'scroll';
-        gsap.to(slider, { scrollTop: hedef, duration: 0.9, ease: 'power3.inOut' });
-      }, 5600);
-    }
-
-    // Kullanıcı sekans tamamlandıktan sonra tekrar yukarı kaydırıp isimler sayfasına
-    // dönerse, güvercin ve isimler orijinal görünürlüğüne/konumuna sıfırlanır ve
-    // sekans bir dahaki ileri kaydırmada tekrar oynatılabilir hale gelir.
-    slider.addEventListener('scroll', function () {
-      if (gecisBasladi && isimlerEkranAktifMi()) {
-        gecisBasladi = false;
-        guvercinGecis.classList.remove('iceri-giriyor', 'disari-cikiyor');
-        if (isimBlok) isimBlok.classList.remove('yukari-eriyor');
-      }
-    }, { passive: true });
-
-    function gecisTetikle() {
-      if (gecisBasladi || !isimlerEkranAktifMi()) return;
-      baslatGecisSekansi();
-    }
-
-    isimlerEkran.addEventListener('wheel', gecisTetikle, { passive: true });
-    isimlerEkran.addEventListener('touchstart', gecisTetikle, { passive: true });
-    isimlerEkran.addEventListener('click', gecisTetikle);
-
     /* ---------- SAYFA 4: Eylül 2026 canlı takvimi ---------- */
     (function takvimOlustur() {
       const kapsayici = document.getElementById('takvim-gunler');
@@ -635,4 +563,3 @@
 
 </body>
 </html>
-
