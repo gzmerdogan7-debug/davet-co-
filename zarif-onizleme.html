@@ -76,10 +76,16 @@
        en-boy oranı böylece bozulmuyor. */
     .cerceve-ust-bant, .cerceve-alt-bant {
       position: absolute; left: 0; right: 0; z-index: 24; pointer-events: none;
-      height: 100px;
+      height: 80px; overflow: hidden;
       background-image: url('yaprak-cerceve.png');
       background-repeat: repeat-x;
-      background-size: auto 100%;
+      /* Görsel 941x1672px — dikey/uzun bir dosya, yatay banner değil. Bu yüzden
+         tamamını 80px'e sıkıştırmak yerine, dosyayı büyük ölçekte tutup sadece en
+         üst / en alt kesitini bir "pencere" gibi gösteriyoruz (background-size ile
+         büyütüp overflow:hidden ile kırpıyoruz). Bu bir tahmin — görselin gerçek
+         süsleme bandının tam olarak nerede olduğunu göremiyorum, ekran görüntüsü
+         gelince ince ayar gerekebilir. */
+      background-size: auto 420px;
     }
     .cerceve-ust-bant { top: 0; background-position: top left; }
     .cerceve-alt-bant { bottom: 0; background-position: bottom left; }
@@ -449,6 +455,12 @@
 
   <script>
     function scrollToNextStory() {
+      // "Aşağı Kaydır" butonu isimler sayfasındayken basılırsa, güvercin sekansını
+      // atlayıp direkt sonraki sayfaya zıplıyordu — artık önce sekansı tetikliyor.
+      if (typeof isimlerEkranAktifMi === 'function' && isimlerEkranAktifMi() && !gecisBasladi) {
+        baslatGecisSekansi();
+        return;
+      }
       const container = document.getElementById('story-slider');
       const nextScroll = container.scrollTop + container.clientHeight;
       gsap.to(container, { scrollTop: nextScroll, duration: 0.85, ease: "power3.inOut" });
