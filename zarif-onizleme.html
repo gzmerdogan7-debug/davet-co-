@@ -70,18 +70,19 @@
     }
 
     /* KATMAN 2: Zeytin dalı çerçeve — üst ve alt sabit bantlar (tüm sayfalarda ortak,
-       kayan içeriğin üzerinde kalması için yüksek z-index'te) */
+       kayan içeriğin üzerinde kalması için yüksek z-index'te). Görsel dar/uzun bir
+       dosya olduğu için tek parça basılınca küçük bir kutuya büzülüyordu — bunun yerine
+       motifi yatayda tekrarlayıp (repeat-x) baştan başa uzanan gerçek bir banner yapıyoruz,
+       en-boy oranı böylece bozulmuyor. */
     .cerceve-ust-bant, .cerceve-alt-bant {
       position: absolute; left: 0; right: 0; z-index: 24; pointer-events: none;
-      height: 108px; overflow: hidden;
+      height: 100px;
+      background-image: url('yaprak-cerceve.png');
+      background-repeat: repeat-x;
+      background-size: auto 100%;
     }
-    .cerceve-ust-bant { top: 0; }
-    .cerceve-alt-bant { bottom: 0; }
-    .cerceve-ust-bant img, .cerceve-alt-bant img {
-      width: 100%; height: 100%; object-fit: contain; display: block;
-    }
-    .cerceve-ust-bant img { object-position: top; }
-    .cerceve-alt-bant img { object-position: bottom; }
+    .cerceve-ust-bant { top: 0; background-position: top left; }
+    .cerceve-alt-bant { bottom: 0; background-position: bottom left; }
 
     .arch-content-box {
       width: 100%; max-width: 300px; padding: 46px 22px; position: relative; z-index: 25;
@@ -140,7 +141,7 @@
     /* Güvercin Sekanslı Geçiş — cinema-viewport'a sabit, isimler sayfasının kendi
        scroll akışından bağımsız, JS ile sınıf değiştirerek üç aşamalı hareket */
     .guvercin-gecis {
-      position: absolute; width: 130px; z-index: 30; pointer-events: none;
+      position: absolute; width: 155px; z-index: 30; pointer-events: none;
       top: 42%; left: 50%;
       transform: translate(-260%, -50%) rotate(-8deg);
       opacity: 0;
@@ -261,8 +262,8 @@
 
   <div class="cinema-viewport">
     <div class="zemin-katman"></div>
-    <div class="cerceve-ust-bant"><img src="yaprak-cerceve.png" alt=""></div>
-    <div class="cerceve-alt-bant"><img src="yaprak-cerceve.png" alt=""></div>
+    <div class="cerceve-ust-bant"></div>
+    <div class="cerceve-alt-bant"></div>
     <img src="guvercin.png" class="guvercin-gecis" alt="">
 
     <!-- SAYFA 1: ZARF & MÜHÜR (AÇILIŞ VİDEOSU) -->
@@ -486,13 +487,28 @@
     const acilisVideo = document.getElementById('acilis-video');
     const isimlerEkran = document.querySelector('.isimler-ekran');
     let crossfadeBasladi = false;
+    let crossfadeZamanlayici = null;
 
     function kapakBitir() {
+      if (crossfadeZamanlayici) { clearTimeout(crossfadeZamanlayici); crossfadeZamanlayici = null; }
       acilisVideo.classList.add('soluyor');
       isimlerEkran.classList.add('gorundu');
       setTimeout(function () {
         if (kapakEl.parentNode) kapakEl.parentNode.removeChild(kapakEl);
       }, 800);
+    }
+
+    // Süreyi timeupdate ile tekrar tekrar kontrol etmek yerine (bazı mp4'lerde
+    // tarayıcı gerçek süreyi geç bildiriyor ve bu yüzden erken solma hiç tetiklenmiyordu),
+    // süre öğrenilir öğrenilmez TEK bir kesin zamanlayıcı kuruyoruz.
+    function crossfadeZamanla() {
+      if (crossfadeBasladi || crossfadeZamanlayici) return;
+      const sure = acilisVideo.duration;
+      if (!isFinite(sure) || sure <= 0.8) return;
+      const kalanMs = Math.max(0, (sure - acilisVideo.currentTime - 0.8) * 1000);
+      crossfadeZamanlayici = setTimeout(function () {
+        if (!crossfadeBasladi) { crossfadeBasladi = true; kapakBitir(); }
+      }, kalanMs);
     }
 
     kapakEl.addEventListener('click', function () {
@@ -503,14 +519,9 @@
       audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
     }, { once: true });
 
-    acilisVideo.addEventListener('timeupdate', function () {
-      if (crossfadeBasladi) return;
-      if (!isFinite(acilisVideo.duration)) return;
-      if (acilisVideo.duration - acilisVideo.currentTime <= 0.8) {
-        crossfadeBasladi = true;
-        kapakBitir();
-      }
-    });
+    acilisVideo.addEventListener('loadedmetadata', crossfadeZamanla);
+    acilisVideo.addEventListener('durationchange', crossfadeZamanla);
+    acilisVideo.addEventListener('playing', crossfadeZamanla);
     acilisVideo.addEventListener('ended', function () {
       if (crossfadeBasladi) return;
       crossfadeBasladi = true;
