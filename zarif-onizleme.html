@@ -3,15 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Selin & Emir — Düğün Davetiyesi | DAVET & CO. Zarif</title>
+  <title>Gizem & Yiğitcan — Düğün Davetiyesi | DAVET & CO. Zarif</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
-
   <style>
+    @font-face {
+      font-family: 'PinyonScript';
+      src: url('pinyon.ttf') format('truetype');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'CinzelFont';
+      src: url('cinzel.ttf') format('truetype');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'CormorantFont';
+      src: url('cormorant.ttf') format('truetype');
+      font-display: swap;
+    }
+
     :root {
       --keten: #F5F2EB;
       --zeytin: #3A4535;
@@ -24,7 +36,7 @@
     .hidden { display: none; }
 
     body {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'CormorantFont', serif;
       background-color: var(--siyah);
       background-image: radial-gradient(circle at 50% 50%, #3A4535 0%, #1A1A1A 100%);
       color: var(--zeytin);
@@ -33,10 +45,10 @@
       overflow: hidden;
     }
 
-    .font-baslik-etiket { font-family: 'Cinzel', serif; letter-spacing: 0.22em; }
-    .font-govde { font-family: 'Cormorant Garamond', serif; }
-    .font-govde-italik-buyuk { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-style: italic; }
-    .font-govde-caps { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 0.26em; }
+    .font-baslik-etiket { font-family: 'CinzelFont', serif; letter-spacing: 0.22em; }
+    .font-govde { font-family: 'CormorantFont', serif; }
+    .font-govde-italik-buyuk { font-family: 'CormorantFont', serif; font-weight: 600; font-style: italic; }
+    .font-govde-caps { font-family: 'CormorantFont', serif; font-weight: 600; letter-spacing: 0.26em; }
 
     .cinema-viewport {
       width: 100%; max-width: 414px; height: 100vh; max-height: 896px;
@@ -49,6 +61,27 @@
     @media (max-width: 640px) {
       .cinema-viewport { max-width: 100%; height: 100vh; max-height: 100%; border-radius: 0; box-shadow: none; }
     }
+
+    /* KATMAN 1: Zemin — keten dokusu */
+    .zemin-katman {
+      position: absolute; inset: 0; z-index: 1;
+      background-image: url('keten-doku.png');
+      background-size: cover; background-repeat: no-repeat; background-position: center;
+    }
+
+    /* KATMAN 2: Zeytin dalı çerçeve — üst ve alt sabit bantlar (tüm sayfalarda ortak,
+       kayan içeriğin üzerinde kalması için yüksek z-index'te) */
+    .cerceve-ust-bant, .cerceve-alt-bant {
+      position: absolute; left: 0; right: 0; z-index: 24; pointer-events: none;
+      height: 108px; overflow: hidden;
+    }
+    .cerceve-ust-bant { top: 0; }
+    .cerceve-alt-bant { bottom: 0; }
+    .cerceve-ust-bant img, .cerceve-alt-bant img {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+    }
+    .cerceve-ust-bant img { object-position: top; }
+    .cerceve-alt-bant img { object-position: bottom; }
 
     .arch-content-box {
       width: 100%; max-width: 300px; padding: 46px 22px; position: relative; z-index: 25;
@@ -68,32 +101,6 @@
       padding: 16px 20px 78px 20px; position: relative;
     }
 
-    /* Bulanık Doku Arka Planı */
-    .doku-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
-    .doku-bg {
-      position: absolute; inset: -50px;
-      background-image: url('muhur-zarif.jpg');
-      background-size: 175%; background-position: 30% 20%;
-      filter: blur(18px) saturate(0.9) brightness(1.05);
-      animation: kenburns 36s ease-in-out infinite;
-    }
-    .doku-wrap::after {
-      content: ""; position: absolute; inset: 0;
-      background: var(--keten); opacity: 0.42;
-    }
-    @keyframes kenburns {
-      0%   { transform: scale(1) translate(0, 0); }
-      50%  { transform: scale(1.06) translate(-1%, 1%); }
-      100% { transform: scale(1) translate(0, 0); }
-    }
-
-    /* Zeytin Dalı Çerçeve — tüm sayfaların üst/alt kısmında sabit */
-    .cerceve-katman {
-      position: absolute; inset: 0; z-index: 24; pointer-events: none;
-      background-image: url('yaprak-cerceve.png');
-      background-size: cover; background-position: center; background-repeat: no-repeat;
-    }
-
     /* Kart Giriş Animasyonu */
     .kart-giris {
       opacity: 0;
@@ -103,13 +110,18 @@
     .kart-giris.gorundu { opacity: 1; transform: translateY(0) scale(1); }
 
     /* İsim Bloğu */
-    .kapak-isim { display: flex; flex-direction: column; align-items: center; position: relative; }
-    .kapak-isim span { color: var(--zeytin); line-height: 1.25; }
-    .isim-ilk, .isim-ikinci {
-      font-family: 'Cormorant Garamond', serif; font-weight: 600; font-style: normal;
-      letter-spacing: 0.01em; font-size: 56px;
+    .kapak-isim {
+      display: flex; flex-direction: column; align-items: center; position: relative;
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .ve-satir { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-style: italic; font-size: 30px; color: var(--zeytin-soft); margin: 2px 0; }
+    .kapak-isim span { color: var(--zeytin); line-height: 1.25; }
+    .kapak-isim.yukari-eriyor { opacity: 0; transform: translateY(-30px); }
+
+    .isim-ilk, .isim-ikinci {
+      font-family: 'PinyonScript', cursive; font-weight: 400; font-style: normal;
+      font-size: 64px;
+    }
+    .ve-satir { font-family: 'PinyonScript', cursive; font-weight: 400; font-style: normal; font-size: 34px; color: var(--zeytin-soft); margin: -6px 0; }
 
     .isimler-ekran .isim-ilk, .isimler-ekran .ve-satir, .isimler-ekran .isim-ikinci {
       opacity: 0; transform: translateY(14px);
@@ -125,41 +137,42 @@
     }
     .isimler-ekran.gorundu .arch-content-box { opacity: 1; transform: scale(1) translateY(0); }
 
-    /* Güvercin Geçiş — isimler sayfasından sonrakine kaydırırken görünür,
-       cinema-viewport'a sabitli, iç scroll'dan etkilenmemesi için ekranın kendi
-       içinde değil */
+    /* Güvercin Sekanslı Geçiş — cinema-viewport'a sabit, isimler sayfasının kendi
+       scroll akışından bağımsız, JS ile sınıf değiştirerek üç aşamalı hareket */
     .guvercin-gecis {
-      position: absolute; top: 40%; left: 50%; width: 130px; z-index: 30; pointer-events: none;
-      transform: translate(-220%, -10%) rotate(-6deg);
+      position: absolute; width: 130px; z-index: 30; pointer-events: none;
+      top: 42%; left: 50%;
+      transform: translate(-260%, -50%) rotate(-8deg);
       opacity: 0;
+      transition: transform 0.9s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
+    }
+    .guvercin-gecis.iceri-giriyor {
+      transform: translate(-50%, -50%) rotate(0deg);
+      opacity: 1;
+    }
+    .guvercin-gecis.disari-cikiyor {
+      transform: translate(160%, -230%) rotate(20deg);
+      opacity: 0;
+      transition: transform 0.9s cubic-bezier(0.4,0,0.65,1), opacity 0.7s ease 0.25s;
     }
 
     /* Küçük dal ayracı */
     .dal-ayrac { width: 64px; height: auto; margin: 14px auto; display: block; opacity: 0.9; }
 
-    /* Zarf & Video Açılışı */
+    /* SAYFA 1: Zarf & Video Açılışı */
     .kapak-overlay {
-      position: absolute; inset: 0; z-index: 100; overflow: hidden;
-      transition: opacity 2.6s cubic-bezier(0.4,0,0.2,1) 0.5s;
-    }
-    .kapak-overlay.acik { opacity: 0; pointer-events: none; }
-    .kapak-overlay.acik .zarf { transform: scale(1.06); }
-    .zarf {
-      position: absolute; inset: 0;
-      background-image: url('muhur-zarif.jpg');
-      background-size: cover; background-position: center;
-      transition: transform 2.6s cubic-bezier(0.4,0,0.2,1) 0.5s;
+      position: absolute; inset: 0; z-index: 100; overflow: hidden; cursor: pointer;
     }
     .acilis-video {
       position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      opacity: 0; transition: opacity 0.4s ease; z-index: 6;
+      transition: opacity 0.8s ease;
     }
-    .acilis-video.oynatiliyor { opacity: 1; }
+    .acilis-video.soluyor { opacity: 0; }
+
     .muhur-dokun {
-      position: absolute; left: 50%; top: 46%; width: 100px; height: 100px;
+      position: absolute; left: 50%; top: 50%; width: 100px; height: 100px;
       transform: translate(-50%,-50%); border-radius: 50%;
-      background: transparent; border: none; padding: 0; cursor: pointer; z-index: 15;
-      transition: opacity 0.6s ease;
+      pointer-events: none; transition: opacity 0.4s ease; z-index: 105;
     }
     .muhur-dokun::before {
       content: ""; position: absolute; inset: 0; border-radius: 50%;
@@ -170,14 +183,19 @@
       70% { transform: scale(1.38); opacity: 0; }
       100% { transform: scale(1.38); opacity: 0; }
     }
-    .muhur-dokun.gizli, .kapak-overlay.acik .muhur-dokun { opacity: 0; pointer-events: none; }
+    .kapak-ipucu {
+      position: absolute; left: 0; right: 0; bottom: 90px; text-align: center;
+      font-size: 10px; color: var(--keten); z-index: 105; transition: opacity 0.4s ease;
+    }
+    .kapak-overlay.baslatildi .muhur-dokun,
+    .kapak-overlay.baslatildi .kapak-ipucu { opacity: 0; }
 
     .aksiyon-btn {
       background: rgba(245, 242, 235, 0.85);
       border: 1px solid rgba(58, 69, 53, 0.55);
       border-radius: 999px; padding: 8px 19px; font-size: 8.5px;
       letter-spacing: 0.22em; text-transform: uppercase; color: var(--zeytin);
-      font-family: 'Cinzel', serif; font-weight: 600; display: inline-block; transition: all 0.2s; text-decoration: none;
+      font-family: 'CinzelFont', serif; font-weight: 600; display: inline-block; transition: all 0.2s; text-decoration: none;
     }
     .aksiyon-btn:hover { background: var(--zeytin); color: var(--keten); }
 
@@ -186,8 +204,8 @@
 
     /* Canlı Takvim */
     .takvim-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; max-width: 250px; margin: 14px auto 18px; }
-    .takvim-gun-adi { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.05em; color: var(--zeytin-soft); text-transform: uppercase; text-align: center; }
-    .takvim-hucre { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--zeytin); text-align: center; padding: 6px 0; position: relative; }
+    .takvim-gun-adi { font-family: 'CinzelFont', serif; font-size: 8px; letter-spacing: 0.05em; color: var(--zeytin-soft); text-transform: uppercase; text-align: center; }
+    .takvim-hucre { font-family: 'CormorantFont', serif; font-size: 14px; color: var(--zeytin); text-align: center; padding: 6px 0; position: relative; }
     .takvim-hedef { font-weight: 700; color: var(--keten); position: relative; z-index: 2; }
     .takvim-hedef-daire { position: absolute; inset: 0; margin: auto; width: 24px; height: 24px; border-radius: 50%; background: var(--zeytin); z-index: 1; }
     .takvim-hedef-glow { position: absolute; inset: 0; margin: auto; width: 24px; height: 24px; border-radius: 50%; animation: takvim-pulse 2.4s ease-out infinite; z-index: 0; }
@@ -209,8 +227,8 @@
     }
     .zaman-nokta { width: 19px; height: 19px; min-width: 19px; border-radius: 50%; background: var(--keten); border: 1.5px solid var(--zeytin); margin-top: 3px; position: relative; z-index: 1; }
     .zaman-metin { text-align: left; }
-    .zaman-saat { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.14em; color: var(--zeytin-soft); font-weight: 600; }
-    .zaman-baslik { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--zeytin); font-weight: 500; margin: 3px 0 0; }
+    .zaman-saat { font-family: 'CinzelFont', serif; font-size: 10px; letter-spacing: 0.14em; color: var(--zeytin-soft); font-weight: 600; }
+    .zaman-baslik { font-family: 'CormorantFont', serif; font-size: 18px; color: var(--zeytin); font-weight: 500; margin: 3px 0 0; }
     .kart-giris.gorundu .zaman-satiri { opacity: 1; transform: none; }
     .kart-giris.gorundu .zaman-satiri:nth-child(2) { transition-delay: 0.18s; }
     .kart-giris.gorundu .zaman-satiri:nth-child(3) { transition-delay: 0.36s; }
@@ -242,15 +260,16 @@
   </audio>
 
   <div class="cinema-viewport">
-    <div class="doku-wrap"><div class="doku-bg"></div></div>
-    <div class="cerceve-katman"></div>
+    <div class="zemin-katman"></div>
+    <div class="cerceve-ust-bant"><img src="yaprak-cerceve.png" alt=""></div>
+    <div class="cerceve-alt-bant"><img src="yaprak-cerceve.png" alt=""></div>
     <img src="guvercin.png" class="guvercin-gecis" alt="">
 
     <!-- SAYFA 1: ZARF & MÜHÜR (AÇILIŞ VİDEOSU) -->
     <div id="kapak" class="kapak-overlay">
-      <div class="zarf"></div>
       <video id="acilis-video" class="acilis-video" src="zarf-acilis.mp4" playsinline preload="auto"></video>
-      <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
+      <div class="muhur-dokun" aria-hidden="true"></div>
+      <span class="font-baslik-etiket kapak-ipucu">DOKUNUN</span>
     </div>
 
     <div id="story-slider">
@@ -259,9 +278,9 @@
       <section class="story-screen isimler-ekran">
         <div class="arch-content-box text-center">
           <div class="kapak-isim">
-            <span class="isim-ilk">Selin</span>
+            <span class="isim-ilk">Gizem</span>
             <span class="ve-satir">&amp;</span>
-            <span class="isim-ikinci">Emir</span>
+            <span class="isim-ikinci">Yiğitcan</span>
           </div>
         </div>
       </section>
@@ -296,7 +315,7 @@
 
           <div id="takvim-gunler" class="takvim-grid"></div>
 
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20260919T160000Z/20260919T200000Z&details=Selin+%26+Emir+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Ses+Lounge+Events,+Eskisehir" target="_blank" class="aksiyon-btn">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Gizem+%26+Yi%C4%9Fitcan+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20260919T160000Z/20260919T200000Z&details=Gizem+%26+Yi%C4%9Fitcan+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Ses+Lounge+Events,+Eskisehir" target="_blank" class="aksiyon-btn">
             + GOOGLE TAKVİME EKLE
           </a>
         </div>
@@ -388,11 +407,11 @@
           <form id="rsvp-form" onsubmit="submitRSVP(event)" style="text-align:center; width:100%;">
             <div style="margin-bottom:18px;">
               <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'Cormorant Garamond',serif;">
+              <input type="text" required placeholder="Örn: Aslı Güneş" style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif;">
             </div>
             <div style="margin-bottom:18px;">
               <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Kişi Sayısı</label>
-              <select style="width:100%; text-align:center; text-align-last:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'Cormorant Garamond',serif;">
+              <select style="width:100%; text-align:center; text-align-last:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif;">
                 <option value="1">1 Kişi Katılacağım</option>
                 <option value="2">2 Kişi Katılacağız</option>
                 <option value="3">3 Kişi Katılacağız</option>
@@ -402,9 +421,9 @@
             </div>
             <div style="margin-bottom:20px;">
               <label class="font-baslik-etiket" style="display:block; text-align:center; font-size:9.5px; color:var(--zeytin-soft); margin-bottom:6px; font-weight:500;">Özel Not</label>
-              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'Cormorant Garamond',serif; resize:none;"></textarea>
+              <textarea rows="1" placeholder="Vegan, alerji veya notunuz..." style="width:100%; text-align:center; padding-bottom:6px; background:transparent; border:0; border-bottom:1px solid rgba(58,69,53,0.5); font-size:15px; color:var(--zeytin); font-family:'CormorantFont',serif; resize:none;"></textarea>
             </div>
-            <button type="submit" style="width:100%; padding:11px 0; background:transparent; border:1px solid var(--zeytin); color:var(--zeytin); text-transform:uppercase; font-weight:600; border-radius:999px; letter-spacing:0.24em; font-size:11px; font-family:'Cinzel',serif; cursor:pointer;">
+            <button type="submit" style="width:100%; padding:11px 0; background:transparent; border:1px solid var(--zeytin); color:var(--zeytin); text-transform:uppercase; font-weight:600; border-radius:999px; letter-spacing:0.24em; font-size:11px; font-family:'CinzelFont',serif; cursor:pointer;">
               GÖNDER
             </button>
           </form>
@@ -462,52 +481,86 @@
       }
     }, 1000);
 
-    // SAYFA 1: Zarf & Mühür — dokunma, video oynatma, SAYFA 2'ye geçiş
+    /* ---------- SAYFA 1: Zarf & Mühür — video + erken çapraz geçiş ---------- */
     const kapakEl = document.getElementById('kapak');
-    const acBtn = document.getElementById('acBtn');
     const acilisVideo = document.getElementById('acilis-video');
+    const isimlerEkran = document.querySelector('.isimler-ekran');
+    let crossfadeBasladi = false;
 
     function kapakBitir() {
-      kapakEl.classList.add('acik');
-      const isimlerEkrani = document.querySelector('.isimler-ekran');
-      if (isimlerEkrani) { setTimeout(function () { isimlerEkrani.classList.add('gorundu'); }, 2700); }
-      setTimeout(function () { kapakEl.remove(); }, 3300);
+      acilisVideo.classList.add('soluyor');
+      isimlerEkran.classList.add('gorundu');
+      setTimeout(function () {
+        if (kapakEl.parentNode) kapakEl.parentNode.removeChild(kapakEl);
+      }, 800);
     }
 
-    acBtn.addEventListener('click', function () {
-      acBtn.classList.add('gizli');
-      acilisVideo.classList.add('oynatiliyor');
+    kapakEl.addEventListener('click', function () {
+      kapakEl.classList.add('baslatildi');
       acilisVideo.play().catch(function () { kapakBitir(); });
       const audio = document.getElementById('bg-audio');
       const dalga = document.getElementById('ses-dalga');
       audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
     }, { once: true });
 
-    acilisVideo.addEventListener('ended', kapakBitir);
+    acilisVideo.addEventListener('timeupdate', function () {
+      if (crossfadeBasladi) return;
+      if (!isFinite(acilisVideo.duration)) return;
+      if (acilisVideo.duration - acilisVideo.currentTime <= 0.8) {
+        crossfadeBasladi = true;
+        kapakBitir();
+      }
+    });
+    acilisVideo.addEventListener('ended', function () {
+      if (crossfadeBasladi) return;
+      crossfadeBasladi = true;
+      kapakBitir();
+    });
 
-    // SAYFA 2 → SAYFA 3: Güvercin geçiş animasyonu (scroll ile senkron)
+    /* ---------- SAYFA 2 → SAYFA 3: Sekanslı güvercin geçişi ---------- */
     const slider = document.getElementById('story-slider');
-    const isimlerEkran = document.querySelector('.isimler-ekran');
     const guvercinGecis = document.querySelector('.guvercin-gecis');
     const isimBlok = document.querySelector('.isimler-ekran .kapak-isim');
+    let gecisBasladi = false;
 
-    function guvercinGecisGuncelle() {
-      if (!isimlerEkran || !guvercinGecis) return;
-      const yukseklik = slider.clientHeight;
-      const baslangic = isimlerEkran.offsetTop;
-      const ilerleme = Math.min(1, Math.max(0, (slider.scrollTop - baslangic) / yukseklik));
-      const guvercinX = -220 + ilerleme * 440;
-      guvercinGecis.style.transform = 'translate(' + guvercinX + '%, -10%) rotate(' + (-6 + ilerleme * 12) + 'deg)';
-      guvercinGecis.style.opacity = String(ilerleme > 0.05 && ilerleme < 0.95 ? Math.min(1, ilerleme * 4, (1 - ilerleme) * 4) : 0);
-      if (isimBlok) {
-        isimBlok.style.opacity = String(Math.max(0, 1 - ilerleme * 1.6));
-        isimBlok.style.transform = 'translateY(' + (-ilerleme * 40) + 'px)';
-      }
+    function isimlerEkranAktifMi() {
+      return Math.abs(slider.scrollTop - isimlerEkran.offsetTop) < 4;
     }
-    slider.addEventListener('scroll', guvercinGecisGuncelle, { passive: true });
-    window.addEventListener('load', guvercinGecisGuncelle);
 
-    // SAYFA 4: Eylül 2026 canlı takvimi
+    function baslatGecisSekansi() {
+      if (gecisBasladi) return;
+      gecisBasladi = true;
+      slider.style.overflowY = 'hidden';
+
+      // Adım 1: güvercin sol kenardan içeri süzülür
+      guvercinGecis.classList.add('iceri-giriyor');
+
+      // Adım 2 (0.9sn sonra): güvercin isimlerin hizasına gelir, isimler yukarı eriyerek kaybolur,
+      // güvercin sağ üst köşeye doğru çıkışa geçer
+      setTimeout(function () {
+        if (isimBlok) isimBlok.classList.add('yukari-eriyor');
+        guvercinGecis.classList.remove('iceri-giriyor');
+        guvercinGecis.classList.add('disari-cikiyor');
+      }, 900);
+
+      // Adım 3 (güvercin tamamen çıktıktan sonra): 3. sayfaya akıcı geçiş
+      setTimeout(function () {
+        const hedef = isimlerEkran.offsetTop + slider.clientHeight;
+        slider.style.overflowY = 'scroll';
+        gsap.to(slider, { scrollTop: hedef, duration: 0.9, ease: 'power3.inOut' });
+      }, 1800);
+    }
+
+    function gecisTetikle() {
+      if (gecisBasladi || !isimlerEkranAktifMi()) return;
+      baslatGecisSekansi();
+    }
+
+    isimlerEkran.addEventListener('wheel', gecisTetikle, { passive: true });
+    isimlerEkran.addEventListener('touchstart', gecisTetikle, { passive: true });
+    isimlerEkran.addEventListener('click', gecisTetikle);
+
+    /* ---------- SAYFA 4: Eylül 2026 canlı takvimi ---------- */
     (function takvimOlustur() {
       const kapsayici = document.getElementById('takvim-gunler');
       if (!kapsayici) return;
