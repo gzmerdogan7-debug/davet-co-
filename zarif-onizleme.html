@@ -159,13 +159,16 @@
     }
     .isimler-ekran.gorundu .guvercin-amblem { opacity: 1; transform: scale(1); }
 
-    /* Küçük dal ayracı — davet metni ile aile isimleri arasında (ve benzer yerlerde) */
+    /* Küçük dal ayracı — davet metni ile aile isimleri arasında (ve benzer yerlerde).
+       Görsel açık renkli/soluk çıktığı için keten zeminde neredeyse görünmüyordu;
+       brightness/contrast filtreleriyle koyulaştırılıp belirginleştirildi. */
     .detay-dal {
-      width: 55px;
-      height: auto;
-      display: block;
-      margin: 20px auto;
-      opacity: 0.85;
+      width: 65px !important;
+      height: auto !important;
+      display: block !important;
+      margin: 25px auto !important;
+      opacity: 1 !important;
+      filter: brightness(0.4) contrast(1.4) !important;
     }
 
     /* SAYFA 1: Zarf & Video Açılışı */
