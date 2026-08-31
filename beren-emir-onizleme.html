@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Beren & Emir — Düğün Davetiyesi</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap');
+
+  :root {
+    --krem: #F7F4EE;
+    --zeytin: #3B4234;
+    --khaki: #E2DED4;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0; padding: 0;
+    background-color: var(--krem);
+    color: var(--zeytin);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Keten doku — dışarıdan görsel gerektirmeyen, ince çapraz doku efekti */
+  body {
+    background-image:
+      repeating-linear-gradient(0deg, rgba(59,66,52,0.028) 0px, rgba(59,66,52,0.028) 1px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(90deg, rgba(59,66,52,0.028) 0px, rgba(59,66,52,0.028) 1px, transparent 1px, transparent 3px);
+  }
+
+  body.kilitli { overflow: hidden; height: 100vh; }
+
+  .font-baslik { font-family: 'Cormorant Garamond', serif; }
+
+  .sahne {
+    min-height: 100vh;
+    width: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 60px 24px;
+    position: relative;
+    text-align: center;
+  }
+
+  /* ---------- Yaprak ikonu (vektörel, SVG) — sahneler arasında ortak kullanılır ---------- */
+  .yaprak-ikon { color: var(--zeytin); display: block; }
+  .yaprak-ikon path { fill: currentColor; }
+
+  /* ================= SAHNE 1: ZARF & MÜHÜR ================= */
+  #sahne1 {
+    position: fixed; inset: 0; z-index: 50;
+    background-color: var(--krem);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: opacity 0.5s ease;
+  }
+  #sahne1.gizli { opacity: 0; pointer-events: none; }
+
+  .zarf-alani {
+    width: min(320px, 78vw);
+    aspect-ratio: 3 / 2;
+    position: relative;
+    perspective: 1400px;
+  }
+  .zarf-govde {
+    position: absolute; inset: 0;
+    background-color: #FBF9F4;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(59,66,52,0.05) 0px, rgba(59,66,52,0.05) 1px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(90deg, rgba(59,66,52,0.05) 0px, rgba(59,66,52,0.05) 1px, transparent 1px, transparent 3px);
+    border: 1px solid var(--khaki);
+    border-radius: 3px;
+    box-shadow: 0 30px 70px -20px rgba(59,66,52,0.35);
+  }
+  .zarf-kapak {
+    position: absolute; top: 0; left: 0; right: 0; height: 58%;
+    background-color: #EFEAE0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(59,66,52,0.06) 0px, rgba(59,66,52,0.06) 1px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(90deg, rgba(59,66,52,0.06) 0px, rgba(59,66,52,0.06) 1px, transparent 1px, transparent 3px);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    border-bottom: 1px solid var(--khaki);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+    transform-style: preserve-3d;
+    z-index: 3;
+  }
+  .zarf-kapak.acik { transform: rotateX(-165deg); }
+
+  .muhur {
+    position: absolute; top: 40%; left: 50%; z-index: 5;
+    width: 72px; height: 72px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%; border: none; cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #5A6650, #2C3526 78%);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35), inset 0 2px 3px rgba(255,255,255,0.18);
+    color: #F3EFE2;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; letter-spacing: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+  }
+  .muhur.ayrilan { transform: translate(-50%, -50%) scale(1.18); }
+  .muhur.gizli { opacity: 0; transform: translate(-50%, -50%) scale(0.4); pointer-events: none; }
+
+  .zarf-ipucu {
+    margin-top: 26px;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--zeytin); opacity: 0.55;
+  }
+
+  /* ================= SAHNE 2: İSİMLER ================= */
+  #sahne2 { position: relative; }
+  .isim-cerceve { position: relative; max-width: 420px; }
+  .isim-cerceve .yaprak-ikon.sol-ust {
+    position: absolute; top: -34px; left: -30px; width: 46px; height: 46px;
+    transform: rotate(-20deg); opacity: 0.5;
+  }
+  .isim-cerceve .yaprak-ikon.sag-alt {
+    position: absolute; bottom: -34px; right: -30px; width: 46px; height: 46px;
+    transform: rotate(160deg); opacity: 0.5;
+  }
+  .isim-baslik {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(2.6rem, 9vw, 4.4rem);
+    color: var(--zeytin);
+    margin: 0;
+    opacity: 0;
+    filter: blur(8px);
+    letter-spacing: 2px;
+    transition: opacity 1.2s ease, filter 1.2s ease, letter-spacing 1.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  #sahne2.gorundu .isim-baslik {
+    opacity: 1; filter: blur(0); letter-spacing: 8px;
+  }
+  #sahne2.gorundu .isim-cerceve .yaprak-ikon {
+    animation: yaprak-belir 1.4s ease forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+  @keyframes yaprak-belir {
+    0% { opacity: 0; transform: scale(0.6) rotate(0deg); }
+    100% { opacity: 0.5; }
+  }
+  #sahne2.gorundu .yaprak-ikon.sol-ust { animation-name: yaprak-belir-sol; }
+  #sahne2.gorundu .yaprak-ikon.sag-alt { animation-name: yaprak-belir-sag; }
+  @keyframes yaprak-belir-sol {
+    0% { opacity: 0; transform: rotate(40deg) scale(0.6); }
+    100% { opacity: 0.5; transform: rotate(-20deg) scale(1); }
+  }
+  @keyframes yaprak-belir-sag {
+    0% { opacity: 0; transform: rotate(120deg) scale(0.6); }
+    100% { opacity: 0.5; transform: rotate(160deg) scale(1); }
+  }
+
+  /* ================= Genel: kaydırınca beliren sahneler (3 & 4) ================= */
+  .reveal-fade-top { opacity: 0; transform: translateY(-20px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+  .reveal-fade-bottom { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+  .sahne.gorundu .reveal-fade-top,
+  .sahne.gorundu .reveal-fade-bottom { opacity: 1; transform: translateY(0); }
+
+  /* ================= SAHNE 3: DAVET METNİ & TARİH ================= */
+  .davet-metni {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 4vw, 1.5rem);
+    line-height: 1.6;
+    max-width: 480px;
+    color: var(--zeytin);
+    margin: 0 0 30px;
+  }
+  .dal-ayrac-cizgi {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin: 0 auto 30px;
+    width: 160px;
+    opacity: 0; transform: scaleX(0);
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+    transition-delay: 0.3s;
+  }
+  .sahne.gorundu .dal-ayrac-cizgi { opacity: 1; transform: scaleX(1); }
+  .dal-ayrac-cizgi::before, .dal-ayrac-cizgi::after {
+    content: ""; flex: 1; height: 1px; background: var(--khaki);
+  }
+  .dal-ayrac-cizgi .yaprak-ikon { width: 22px; height: 22px; opacity: 0.7; }
+
+  .tarih-sehir {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--zeytin);
+    transition-delay: 0.55s;
+  }
+
+  /* ================= SAHNE 4: AİLELERİMİZ ================= */
+  .aile-baslik {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--zeytin);
+    margin-bottom: 44px;
+  }
+  .aileler-satir {
+    display: flex; align-items: center; justify-content: center;
+    gap: 28px; flex-wrap: wrap;
+    max-width: 520px;
+  }
+  .aile-blok {
+    flex: 1; min-width: 180px;
+    opacity: 0;
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+  }
+  .aile-blok.gelin { transform: translateX(-60px); }
+  .aile-blok.damat { transform: translateX(60px); }
+  .sahne.gorundu .aile-blok { opacity: 1; transform: translateX(0); }
+  .aile-etiket {
+    display: block; font-family: 'Montserrat', sans-serif; font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--zeytin);
+    opacity: 0.55; margin-bottom: 8px;
+  }
+  .aile-isim {
+    font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--zeytin);
+  }
+  .aile-ayrac {
+    width: 1px; align-self: stretch; min-height: 70px;
+    background: var(--khaki); position: relative;
+    opacity: 0; transform: scaleY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: 0.7s;
+  }
+  .sahne.gorundu .aile-ayrac { opacity: 1; transform: scaleY(1); }
+  .aile-ayrac .yaprak-ikon {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    width: 26px; height: 26px;
+    background: var(--krem);
+    opacity: 0.8;
+  }
+
+</style>
+</head>
+<body class="kilitli">
+
+  <!-- SAHNE 1: ZARF & MÜHÜR AÇILIŞI -->
+  <section id="sahne1">
+    <div class="zarf-alani">
+      <div class="zarf-govde"></div>
+      <div class="zarf-kapak" id="zarfKapak"></div>
+      <button class="muhur" id="muhurBtn" aria-label="Mührü açıp davetiyeyi görüntüle">D&amp;CO</button>
+    </div>
+    <span class="zarf-ipucu">Açmak için mühre dokunun</span>
+  </section>
+
+  <!-- SAHNE 2: İSİMLER -->
+  <section id="sahne2" class="sahne">
+    <div class="isim-cerceve">
+      <svg class="yaprak-ikon sol-ust" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C12 2 3 8 3 15C3 19.4 6.6 23 11 23H12C16.4 23 20 19.4 20 15C20 8 12 2 12 2Z" opacity="0.9"/>
+        <path d="M12 4V21" stroke="#F7F4EE" stroke-width="0.8" fill="none"/>
+      </svg>
+      <h1 class="isim-baslik">BEREN &amp; EMİR</h1>
+      <svg class="yaprak-ikon sag-alt" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C12 2 3 8 3 15C3 19.4 6.6 23 11 23H12C16.4 23 20 19.4 20 15C20 8 12 2 12 2Z" opacity="0.9"/>
+        <path d="M12 4V21" stroke="#F7F4EE" stroke-width="0.8" fill="none"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SAHNE 3: DAVET METNİ & TARİH -->
+  <section id="sahne3" class="sahne">
+    <p class="davet-metni reveal-fade-top">
+      "Hayatımızın en özel gününe adım atarken, bu mutlu anımızı sizlerle paylaşmak dileğiyle."
+    </p>
+    <div class="dal-ayrac-cizgi">
+      <svg class="yaprak-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C12 2 3 8 3 15C3 19.4 6.6 23 11 23H12C16.4 23 20 19.4 20 15C20 8 12 2 12 2Z"/>
+      </svg>
+    </div>
+    <span class="tarih-sehir reveal-fade-bottom">19 EYLÜL 2026 &middot; BURSA</span>
+  </section>
+
+  <!-- SAHNE 4: AİLELERİMİZ -->
+  <section id="sahne4" class="sahne">
+    <span class="aile-baslik">Ailelerimiz</span>
+    <div class="aileler-satir">
+      <div class="aile-blok gelin">
+        <span class="aile-etiket">Gelin Ailesi</span>
+        <span class="aile-isim">Gülten ve Ahmet İnce</span>
+      </div>
+      <div class="aile-ayrac">
+        <svg class="yaprak-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C12 2 3 8 3 15C3 19.4 6.6 23 11 23H12C16.4 23 20 19.4 20 15C20 8 12 2 12 2Z"/>
+        </svg>
+      </div>
+      <div class="aile-blok damat">
+        <span class="aile-etiket">Damat Ailesi</span>
+        <span class="aile-isim">Fatma ve Serdar Kaya</span>
+      </div>
+    </div>
+  </section>
+
+<script>
+  // ---------- SAHNE 1: Zarf & Mühür — tıklama sonrası kesin zamanlamalı sekans ----------
+  var acildiMi = false;
+  var muhurBtn = document.getElementById('muhurBtn');
+  var zarfKapak = document.getElementById('zarfKapak');
+  var sahne1 = document.getElementById('sahne1');
+  var sahne2 = document.getElementById('sahne2');
+
+  muhurBtn.addEventListener('click', function () {
+    if (acildiMi) return;
+    acildiMi = true;
+
+    // t=0: mühür ağır bir hisle ayrılır (kısa punch + küçülüp kaybolma)
+    muhurBtn.classList.add('ayrilan');
+    setTimeout(function () { muhurBtn.classList.add('gizli'); }, 160);
+
+    // t=0.4s -> 1.2s: zarf kapağı açılır (CSS transition zaten 0.4s delay + 0.8s süre taşıyor)
+    zarfKapak.classList.add('acik');
+
+    // t=1.2s (tam): sahne 1 opacity:0 ile erir, sahne 2 belirir
+    setTimeout(function () {
+      sahne1.classList.add('gizli');
+      document.body.classList.remove('kilitli');
+      sahne2.classList.add('gorundu');
+    }, 1200);
+  }, { once: true });
+
+  // ---------- SAHNE 3 & 4: sayfa kaydırıldıkça beliren sahneler ----------
+  var gozlemci = new IntersectionObserver(function (girisler) {
+    girisler.forEach(function (giris) {
+      if (giris.isIntersecting) {
+        giris.target.classList.add('gorundu');
+        gozlemci.unobserve(giris.target);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  gozlemci.observe(document.getElementById('sahne3'));
+  gozlemci.observe(document.getElementById('sahne4'));
+</script>
+
+</body>
+</html>
