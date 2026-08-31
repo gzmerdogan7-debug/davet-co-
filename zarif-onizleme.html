@@ -140,7 +140,7 @@
       filter: brightness(0.35) contrast(1.5);
     }
 
-    /* SAYFA 11 (Kapanış): en yavaş, en asil geçiş — film jeneriği hissi */
+    /* SAYFA 12 (Kapanış): en yavaş, en asil geçiş — film jeneriği hissi */
     .kapanis-sahne.kart-giris { transition: opacity 1.5s ease-out, transform 1.5s ease-out; }
 
     /* İsim Bloğu (Sayfa 2) */
@@ -349,7 +349,15 @@
     .kart-giris.gorundu .zaman-satiri:nth-child(2) { transition-delay: 0.18s; }
     .kart-giris.gorundu .zaman-satiri:nth-child(3) { transition-delay: 0.36s; }
 
-    /* SAYFA 10: RSVP / Katılım Bildirimi — lüks & interaktif */
+    /* SAYFA 10: Dress Code — minimalist ikon + muted renk paleti */
+    .dress-ikon { display: block; margin: 0 auto 16px; }
+    .dress-swatch-row { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+    .dress-swatch {
+      width: 14px; height: 14px; border-radius: 50%; display: inline-block;
+      border: 1px solid rgba(58,69,53,0.25);
+    }
+
+    /* SAYFA 11: RSVP / Katılım Bildirimi — lüks & interaktif */
     .baslik-editoryal-genis {
       font-family: 'Bodoni Moda', serif;
       font-size: 1.3rem;
@@ -375,7 +383,7 @@
     }
     .onay-btn:active { transform: scale(0.92); }
 
-    /* SAYFA 11: Teşekkür & Marka Kapanışı */
+    /* SAYFA 12: Teşekkür & Marka Kapanışı */
     .tesekkur-baslik {
       font-family: 'Pinyon Script', cursive;
       font-size: 4rem;
@@ -419,7 +427,7 @@
 
     <!-- SAYFA 1: ZARF & MÜHÜR (AÇILIŞ VİDEOSU) -->
     <div id="kapak" class="kapak-overlay">
-      <video id="acilis-video" class="acilis-video" src="zarf-acilis.mp4" playsinline preload="auto"></video>
+      <video id="acilis-video" class="acilis-video" src="zarf-acilis.mp4" playsinline preload="auto" muted></video>
       <div class="muhur-dokun" aria-hidden="true"></div>
       <span class="font-baslik-etiket kapak-ipucu">DOKUNUN</span>
     </div>
@@ -585,7 +593,25 @@
         </div>
       </section>
 
-      <!-- SAYFA 10: KATILIM BİLDİRİMİ (RSVP — Lüks & İnteraktif) -->
+      <!-- SAYFA 10: DRESS CODE (KIYAFET KODU) -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:22px;">DRESS CODE</span>
+          <svg class="dress-ikon" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="var(--zeytin)" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 8l7 4-7 4V8zM22 8l-7 4 7 4V8zM9 12h6"/>
+          </svg>
+          <p class="font-govde" style="font-size:19px; font-style:italic; color:var(--zeytin); margin:0;">Siyah Kravat &amp; Pastel Tonlar</p>
+          <div class="dress-swatch-row" aria-hidden="true">
+            <span class="dress-swatch" style="background:#1A1A1A;"></span>
+            <span class="dress-swatch" style="background:#D9C7B8;"></span>
+            <span class="dress-swatch" style="background:#C9D3C0;"></span>
+            <span class="dress-swatch" style="background:#E8DCC8;"></span>
+            <span class="dress-swatch" style="background:var(--zeytin);"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAYFA 11: KATILIM BİLDİRİMİ (RSVP — Lüks & İnteraktif) -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="baslik-editoryal-genis">Katılım Bildirimi</span>
@@ -631,7 +657,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 11: TEŞEKKÜR & MARKA KAPANIŞI -->
+      <!-- SAYFA 12: TEŞEKKÜR & MARKA KAPANIŞI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris kapanis-sahne">
           <span class="tesekkur-baslik">Teşekkür Ederiz</span>
@@ -729,6 +755,7 @@
     const isimlerEkran = document.querySelector('.isimler-ekran');
     const KAPAK_ACILMA_SANIYE = 4.0;
     let crossfadeBasladi = false;
+    acilisVideo.muted = true;
 
     function kapakBitir() {
       if (crossfadeBasladi) return;
