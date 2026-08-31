@@ -683,12 +683,20 @@
       }
     }, 1000);
 
-    /* ---------- SAYFA 1: Zarf & Mühür — tıklamadan tam 1.2sn sonra sabit çapraz geçiş ---------- */
+    /* ---------- SAYFA 1: Zarf & Mühür — mühür kırılıp kapaklar açılmaya
+       başladığı TAM ANDA (videonun kendi 4.0sn'lik karesinde) çapraz geçiş.
+       Tıklamadan itibaren geçen süreye göre değil, videonun gerçek oynatma
+       pozisyonuna (currentTime) göre tetikleniyor — böylece yükleme gecikmesi
+       olsa bile kırılma anı hiçbir zaman yarıda kesilmez. ---------- */
     const kapakEl = document.getElementById('kapak');
     const acilisVideo = document.getElementById('acilis-video');
     const isimlerEkran = document.querySelector('.isimler-ekran');
+    const KAPAK_ACILMA_SANIYE = 4.0;
+    let crossfadeBasladi = false;
 
     function kapakBitir() {
+      if (crossfadeBasladi) return;
+      crossfadeBasladi = true;
       acilisVideo.classList.add('soluyor');
       isimlerEkran.classList.add('gorundu');
       setTimeout(function () {
@@ -698,13 +706,20 @@
 
     kapakEl.addEventListener('click', function () {
       kapakEl.classList.add('baslatildi');
-      acilisVideo.play().catch(function () {});
+      acilisVideo.play().catch(function () { kapakBitir(); });
       const audio = document.getElementById('bg-audio');
       const dalga = document.getElementById('ses-dalga');
       audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
-      // Videonun gerçek süresi ne olursa olsun, tıklamadan tam 1.2sn sonra sabit geçiş
-      setTimeout(kapakBitir, 1200);
     }, { once: true });
+
+    acilisVideo.addEventListener('timeupdate', function () {
+      if (!crossfadeBasladi && acilisVideo.currentTime >= KAPAK_ACILMA_SANIYE) {
+        kapakBitir();
+      }
+    });
+
+    // Güvenlik: video 4.0sn'ye ulaşamadan biterse (ör. çok kısa/hatalı yüklenirse) yine de geçiş yapılır
+    acilisVideo.addEventListener('ended', kapakBitir);
 
     /* ---------- Eylül 2026 canlı takvimi ---------- */
     (function takvimOlustur() {
@@ -747,4 +762,3 @@
 
 </body>
 </html>
-
