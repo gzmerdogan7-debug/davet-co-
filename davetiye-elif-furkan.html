@@ -49,14 +49,19 @@
   }
 
   /* ================= TELEFON ÇERÇEVESİ (PHONE FRAME WRAPPER) =================
-     Masaüstünde dikey 9:16 oranlı, ortalanmış bir mobil ekran görünümü;
-     mobil cihazlarda tam ekran. Görsel/video hep bu kutunun sınırları
-     içinde object-fit: cover ile orantılı kalır — asla gerilip bulanıklaşmaz. */
+     Masaüstünde dikey, ortalanmış bir mobil ekran görünümü; mobil cihazlarda
+     tam ekran. (Not: CSS aspect-ratio yerine bilinçli olarak max-width +
+     height/max-height kombinasyonu kullanılıyor — diğer DAVET&CO şablonlarında
+     da kanıtlanmış, iOS/WebKit'te aspect-ratio + absolute konumlu iç katmanlar
+     kombinasyonunda görülen sıfır-yükseklik/bomboş ekran sorununu önlüyor.)
+     Görsel/video hep bu kutunun sınırları içinde object-fit: cover ile
+     orantılı kalır — asla gerilip bulanıklaşmaz. */
   .cinema-viewport {
     position: relative;
     width: 100%;
     max-width: 430px;
-    aspect-ratio: 9 / 16;
+    height: 100vh;
+    max-height: 896px;
     margin: auto;
     border-radius: 32px;
     overflow: hidden;
@@ -69,7 +74,7 @@
       max-width: 100%;
       width: 100%;
       height: 100vh;
-      aspect-ratio: auto;
+      max-height: 100%;
       border-radius: 0;
       box-shadow: none;
     }
@@ -98,9 +103,8 @@
 
   .muhur-btn {
     position: relative;
-    width: 26%;
-    aspect-ratio: 1 / 1;
-    max-width: 132px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     background: transparent;
     border: none;
