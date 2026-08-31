@@ -53,7 +53,8 @@
     .font-govde-caps { font-family: 'CormorantFont', serif; font-weight: 600; letter-spacing: 0.26em; }
 
     .cinema-viewport {
-      width: 100%; max-width: 414px; height: 100vh; max-height: 896px;
+      width: 100%; max-width: 430px; height: 100vh; max-height: 896px;
+      margin: 0 auto;
       position: relative; border-radius: 42px;
       box-shadow: 0 45px 120px -20px rgba(0,0,0,0.98), 0 0 0 1px rgba(255,255,255,0.1);
       overflow: hidden;
@@ -210,11 +211,13 @@
     .kart-giris.gorundu .menu-satiri:nth-child(4) .menu-baslik,
     .kart-giris.gorundu .menu-satiri:nth-child(4) .menu-detay { transition-delay: 0.36s; }
 
-    /* SAYFA 1: Zarf & Video Açılışı — position:fixed + opak arka plan rengiyle,
-       sayfa ilk boyandığı milisaniyede bile arkadaki içerik asla görünmez
-       (video henüz ilk karesini boyamamış olsa dahi). */
+    /* SAYFA 1: Zarf & Video Açılışı — .cinema-viewport'a göre position:absolute,
+       böylece mühür/zarf katmanı masaüstünde de mobil kart genişliğinin (430px)
+       DIŞINA taşmaz. Opak arka plan rengiyle, sayfa ilk boyandığı milisaniyede
+       bile arkadaki içerik asla görünmez (video henüz ilk karesini boyamamış
+       olsa dahi). */
     .kapak-overlay {
-      position: fixed; inset: 0; z-index: 9999;
+      position: absolute; inset: 0; z-index: 9999;
       background-color: #F7F4EE;
       overflow: hidden; cursor: pointer;
       transition: opacity 0.8s ease;
@@ -407,9 +410,7 @@
 </head>
 <body>
 
-  <audio id="bg-audio" loop preload="auto">
-    <source src="muzik.mp3" type="audio/mpeg">
-  </audio>
+  <audio id="bg-music" src="bg-music.mp3" loop preload="auto"></audio>
 
   <div class="cinema-viewport">
     <div class="zemin-katman"></div>
@@ -668,7 +669,7 @@
     }
 
     function toggleAudio() {
-      const audio = document.getElementById('bg-audio');
+      const audio = document.getElementById('bg-music');
       const dalga = document.getElementById('ses-dalga');
       if (audio.paused) {
         audio.play().then(() => { if (dalga) dalga.style.opacity = '1'; }).catch(() => {});
@@ -743,7 +744,7 @@
     kapakEl.addEventListener('click', function () {
       kapakEl.classList.add('baslatildi');
       acilisVideo.play().catch(function () { kapakBitir(); });
-      const audio = document.getElementById('bg-audio');
+      const audio = document.getElementById('bg-music');
       const dalga = document.getElementById('ses-dalga');
       audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
     }, { once: true });
