@@ -114,7 +114,25 @@
     .fade-merkez { transform: scale(0.96); }
     .fade-merkez.gorundu { transform: scale(1); }
 
-    /* SAYFA 7 (Kapanış): en yavaş, en asil geçiş — film jeneriği hissi */
+    /* SAYFA 3 içeriği: metin üstten süzülür, tarih/şehir etiketi alttan yükselir */
+    .davet-reveal-top { opacity: 0; transform: translateY(-18px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+    .davet-reveal-bottom { opacity: 0; transform: translateY(18px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); transition-delay: 0.4s; }
+    .kart-giris.gorundu .davet-reveal-top,
+    .kart-giris.gorundu .davet-reveal-bottom { opacity: 1; transform: translateY(0); }
+
+    /* SAYFA 4 (yeni, ayrıştırılan): Ailelerimiz — zıt yönlerden süzülme + ortada beliren ayraç */
+    .aile-slide { opacity: 0; transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+    .aile-slide-sol { transform: translateX(-50px); }
+    .aile-slide-sag { transform: translateX(50px); }
+    .kart-giris.gorundu .aile-slide { opacity: 1; transform: translateX(0); }
+    .aile-ayrac-dikey {
+      width: 1px; height: 44px; background: rgba(58,69,53,0.35);
+      opacity: 0; transform: scaleY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease; transition-delay: 0.7s;
+    }
+    .kart-giris.gorundu .aile-ayrac-dikey { opacity: 1; transform: scaleY(1); }
+
+    /* SAYFA 11 (Kapanış): en yavaş, en asil geçiş — film jeneriği hissi */
     .kapanis-sahne.kart-giris { transition: opacity 1.5s ease-out, transform 1.5s ease-out; }
 
     /* İsim Bloğu (Sayfa 2) */
@@ -133,14 +151,15 @@
     }
 
     /* Sinematik sekans: önce güvercin (0-0.8sn) sabitlenir, 0.4sn sonra (1.4sn'den
-       itibaren) isimler alttan yukarı, blur çözülerek gelir */
+       itibaren) isimler kaymadan, merkezde dumanlı bir netleşmeyle (blur + harf
+       aralığı genişlemesi) belirir */
     .isimler-ekran .isim-gizem, .isimler-ekran .ve-isareti, .isimler-ekran .isim-yigitcan {
-      opacity: 0; transform: translateY(25px); filter: blur(5px);
-      transition: opacity 1s ease, transform 1s cubic-bezier(0.22,1,0.36,1), filter 1s ease;
+      opacity: 0; filter: blur(8px); letter-spacing: 2px;
+      transition: opacity 1.2s ease, filter 1.2s ease, letter-spacing 1.2s cubic-bezier(0.22,1,0.36,1);
     }
-    .isimler-ekran.gorundu .isim-gizem { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 1.4s; }
-    .isimler-ekran.gorundu .ve-isareti { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 1.6s; }
-    .isimler-ekran.gorundu .isim-yigitcan { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 1.8s; }
+    .isimler-ekran.gorundu .isim-gizem { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 1.4s; }
+    .isimler-ekran.gorundu .ve-isareti { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 1.6s; }
+    .isimler-ekran.gorundu .isim-yigitcan { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 1.8s; }
 
     .isimler-ekran .arch-content-box {
       opacity: 0; transform: scale(0.88) translateY(22px);
@@ -170,7 +189,7 @@
       filter: brightness(0.35) contrast(1.5) !important;
     }
 
-    /* SAYFA 4: Düğün Menüsü — başlıklar soldan, detaylar sağdan, eşzamanlı zıt süzülme */
+    /* SAYFA 5: Düğün Menüsü — başlıklar soldan, detaylar sağdan, eşzamanlı zıt süzülme */
     .menu-satiri {
       display: flex; justify-content: space-between; align-items: baseline;
       padding: 11px 0; border-bottom: 1px solid rgba(58,69,53,0.18);
@@ -253,7 +272,7 @@
       100% { box-shadow: 0 0 0 0 rgba(58,69,53,0); }
     }
 
-    /* SAYFA 6: Sayaç — Vogue editoryal tipografi */
+    /* SAYFA 7: Sayaç — Vogue editoryal tipografi */
     .baslik-sayac {
       font-family: 'Bodoni Moda', serif !important;
       font-size: 1.15rem !important;
@@ -318,7 +337,7 @@
     .kart-giris.gorundu .zaman-satiri:nth-child(2) { transition-delay: 0.18s; }
     .kart-giris.gorundu .zaman-satiri:nth-child(3) { transition-delay: 0.36s; }
 
-    /* SAYFA 9: RSVP / Katılım Bildirimi — lüks & interaktif */
+    /* SAYFA 10: RSVP / Katılım Bildirimi — lüks & interaktif */
     .baslik-editoryal-genis {
       font-family: 'Bodoni Moda', serif;
       font-size: 1.3rem;
@@ -344,7 +363,7 @@
     }
     .onay-btn:active { transform: scale(0.92); }
 
-    /* SAYFA 10: Teşekkür & Marka Kapanışı */
+    /* SAYFA 11: Teşekkür & Marka Kapanışı */
     .tesekkur-baslik {
       font-family: 'Pinyon Script', cursive;
       font-size: 4rem;
@@ -409,20 +428,28 @@
         </div>
       </section>
 
-      <!-- SAYFA 3: DAVET METNİ -->
+      <!-- SAYFA 3: DAVET METNİ & TARİH -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris fade-merkez" style="max-width:320px; margin:0 auto;">
-          <p class="font-govde" style="font-size:20px; font-style:italic; color:var(--zeytin); line-height:1.5; margin-bottom:6px;">
+          <p class="font-govde davet-reveal-top" style="font-size:20px; font-style:italic; color:var(--zeytin); line-height:1.5; margin-bottom:6px;">
             Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
           </p>
           <img src="yaprak-dal-kucuk.png" class="detay-dal" alt="Zeytin Dalı">
-          <span class="font-baslik-etiket" style="font-size:11px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:12px;">AİLELERİMİZ</span>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center;">
-            <div>
+          <span class="font-baslik-etiket davet-reveal-bottom" style="font-size:11px; letter-spacing:0.18em; color:var(--zeytin-soft); font-weight:600; display:block;">19 EYLÜL 2026 &middot; SES LOUNGE EVENTS, ESKİŞEHİR</span>
+        </div>
+      </section>
+
+      <!-- SAYFA 4: AİLELERİMİZ (YENİ, ayrıştırıldı) -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:28px;">AİLELERİMİZ</span>
+          <div style="display:flex; align-items:center; justify-content:center; gap:22px;">
+            <div class="aile-slide aile-slide-sol">
               <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin); font-weight:600; display:block;">KAYA</span>
               <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); display:block; margin-top:2px;">AİLESİ</span>
             </div>
-            <div>
+            <div class="aile-ayrac-dikey"></div>
+            <div class="aile-slide aile-slide-sag">
               <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin); font-weight:600; display:block;">ÖZDEMİR</span>
               <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); display:block; margin-top:2px;">AİLESİ</span>
             </div>
@@ -430,7 +457,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 4: DÜĞÜN MENÜSÜ (YENİ) -->
+      <!-- SAYFA 5: DÜĞÜN MENÜSÜ -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN MENÜSÜ</span>
@@ -455,7 +482,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 5: TARİH & CANLI TAKVİM -->
+      <!-- SAYFA 6: TARİH & CANLI TAKVİM -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600;">TARİH &amp; SAAT</span>
@@ -469,7 +496,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 6: BULUŞMAYA KALAN (SAYAÇ — Vogue Editoryal) -->
+      <!-- SAYFA 7: BULUŞMAYA KALAN (SAYAÇ — Vogue Editoryal) -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="baslik-sayac">Buluşmaya Kalan</span>
@@ -496,7 +523,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 7: KUTLAMA MEKANI -->
+      <!-- SAYFA 8: KUTLAMA MEKANI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:16px;">KUTLAMA MEKANI</span>
@@ -511,7 +538,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 8: DÜĞÜN AKIŞI -->
+      <!-- SAYFA 9: DÜĞÜN AKIŞI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN AKIŞI</span>
@@ -541,7 +568,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 9: KATILIM BİLDİRİMİ (RSVP — Lüks & İnteraktif) -->
+      <!-- SAYFA 10: KATILIM BİLDİRİMİ (RSVP — Lüks & İnteraktif) -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="baslik-editoryal-genis">Katılım Bildirimi</span>
@@ -578,7 +605,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 10: TEŞEKKÜR & MARKA KAPANIŞI (YENİ) -->
+      <!-- SAYFA 11: TEŞEKKÜR & MARKA KAPANIŞI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris kapanis-sahne">
           <span class="tesekkur-baslik">Teşekkür Ederiz</span>
