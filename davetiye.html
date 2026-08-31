@@ -86,7 +86,7 @@
       transform: translateY(0) scale(1);
     }
 
-    /* 1. Ekran (Açılış & İsimler) — sayfa yüklenir yüklenmez, tıklama beklemeden kendiliğinden belirir */
+    /* 1. Ekran (Açılış, İsimler & Aileler) — mühür kırılıp kapak kalktıktan sonra sırayla belirir */
     .kapak-ekran .arch-content-box {
       opacity: 0;
       transform: scale(0.9) translateY(14px);
@@ -107,13 +107,14 @@
       color: #44372C;
       line-height: 1.2;
     }
-    .isim-ilk, .isim-ikinci { font-size: 76px; }
-    .ve-satir { font-size: 34px; color: #8E7047; margin: -4px 0; }
+    .isim-ilk, .isim-ikinci { font-size: 62px; }
+    .ve-satir { font-size: 28px; color: #8E7047; margin: -2px 0; }
 
     .kapak-ekran .isim-ilk,
     .kapak-ekran .ve-satir,
     .kapak-ekran .isim-ikinci,
-    .kapak-ekran .kapak-davet-cumlesi {
+    .kapak-ekran .kapak-davet-cumlesi,
+    .kapak-ekran .kapak-aile-blok {
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
@@ -121,19 +122,61 @@
     .kapak-ekran.gorundu .isim-ilk { opacity: 1; transform: none; transition-delay: 0.15s; }
     .kapak-ekran.gorundu .ve-satir { opacity: 1; transform: none; transition-delay: 0.35s; }
     .kapak-ekran.gorundu .isim-ikinci { opacity: 1; transform: none; transition-delay: 0.55s; }
-    .kapak-ekran.gorundu .kapak-davet-cumlesi { opacity: 1; transform: none; transition-delay: 0.85s; }
+    .kapak-ekran.gorundu .kapak-davet-cumlesi { opacity: 1; transform: none; transition-delay: 0.8s; }
+    .kapak-ekran.gorundu .kapak-aile-blok { opacity: 1; transform: none; transition-delay: 1.05s; }
 
     .kapak-davet-cumlesi {
       display: block;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-weight: 400;
-      font-size: 17px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.55;
       color: var(--text-muted);
-      max-width: 230px;
-      margin: 26px auto 0;
+      max-width: 220px;
+      margin: 16px auto 0;
     }
+
+    .kapak-aile-blok { margin-top: 6px; }
+
+    /* SAYFA 1: Mühür & Zarf Açılış Videosu — .cinema-viewport'a göre position:absolute,
+       böylece masaüstünde de mobil kart genişliğinin dışına taşmaz. Opak arka plan
+       rengiyle, video ilk karesini boyamadan önce arkadaki içerik asla görünmez. */
+    .kapak-overlay {
+      position: absolute; inset: 0; z-index: 9999;
+      background-color: #F3ECE0;
+      overflow: hidden; cursor: pointer;
+      transition: opacity 0.8s ease;
+    }
+    .kapak-overlay.soluyor { opacity: 0; }
+    .acilis-video {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .acilis-video.soluyor { transform: scale(1.06); }
+
+    .muhur-dokun {
+      position: absolute; left: 50%; top: 50%;
+      width: 92px; height: 92px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: transparent; border: none; padding: 0; cursor: pointer;
+      z-index: 15;
+      transition: opacity 0.4s ease;
+    }
+    .muhur-dokun::before {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid rgba(197, 168, 128, 0.85);
+      animation: nabiz 2.2s ease-out infinite;
+    }
+    @keyframes nabiz {
+      0% { transform: scale(0.82); opacity: 0.9; }
+      70% { transform: scale(1.38); opacity: 0; }
+      100% { transform: scale(1.38); opacity: 0; }
+    }
+    .kapak-overlay.baslatildi .muhur-dokun { opacity: 0; }
 
     /* Kartın Kendisi */
     .arch-content-box {
@@ -264,10 +307,16 @@
   <!-- ================= CINEMA VIEWPORT ================= -->
   <div class="cinema-viewport">
 
+    <!-- ================= MÜHÜR & ZARF AÇILIŞ VİDEOSU ================= -->
+    <div id="kapak" class="kapak-overlay">
+      <video id="acilis-video" class="acilis-video" src="zarf-acilis.mp4" playsinline preload="auto" muted></video>
+      <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
+    </div>
+
     <!-- ================= 3 SİNEMATİK STORY SAHNESİ ================= -->
     <div id="story-slider" class="story-scroll-container">
 
-      <!-- ================= 1. EKRAN: AÇILIŞ & İSİMLER ================= -->
+      <!-- ================= 1. EKRAN: İSİMLER & AİLELERİ KAPSAYAN GİRİŞ ================= -->
       <section class="story-screen kapak-ekran">
         <div class="arch-content-box text-center">
           <div class="kapak-isim">
@@ -276,7 +325,22 @@
             <span class="isim-ikinci">Kaan</span>
           </div>
 
-          <span class="kapak-davet-cumlesi">Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde sizi de aramızda görmek isteriz.</span>
+          <span class="kapak-davet-cumlesi">Sizleri de aramızda görmekten mutluluk duyarız.</span>
+
+          <div class="kapak-aile-blok">
+            <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-4"></div>
+            <span class="font-sans-sub text-[10px] tracking-[0.25em] text-[#8E7047] font-semibold block mb-3">AİLELERİMİZ</span>
+            <div class="grid grid-cols-2 gap-2.5 text-center">
+              <div>
+                <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">ERDOĞAN</span>
+                <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
+              </div>
+              <div>
+                <span class="font-sans-sub text-[11px] text-[#44372C] block font-semibold">İNCE</span>
+                <span class="font-sans-sub text-[8.5px] text-[#6E5E50] uppercase block">AİLESİ</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -331,6 +395,14 @@
               GÖNDER
             </button>
           </form>
+
+          <div class="w-8 h-[0.5px] bg-[#C5A880] mx-auto my-5"></div>
+
+          <p class="font-cormorant text-[14px] text-[#6E5E50] italic leading-relaxed max-w-[220px] mx-auto mb-4">
+            Mutluluğumuza ortak olacağınız için şimdiden teşekkür ederiz.
+          </p>
+
+          <span class="font-cormorant-caps block text-[15px] font-bold tracking-[0.3em] text-[#44372C]">DAVET &amp; CO.</span>
         </div>
       </section>
 
@@ -389,15 +461,37 @@
       document.getElementById('rsvp-ok').classList.remove('hidden');
     }
 
-    /* Sayfa mühürsüz, doğrudan açılır: 1. ekran yüklenir yüklenmez kendiliğinden belirir */
-    document.addEventListener('DOMContentLoaded', function () {
-      const kapakEkrani = document.querySelector('.kapak-ekran');
-      if (kapakEkrani) {
-        requestAnimationFrame(function () {
-          kapakEkrani.classList.add('gorundu');
-        });
-      }
-    });
+    /* ---------- Mühür & Zarf Açılış Videosu ---------- */
+    const kapakEl = document.getElementById('kapak');
+    const acilisVideo = document.getElementById('acilis-video');
+    const kapakEkrani = document.querySelector('.kapak-ekran');
+    let crossfadeBasladi = false;
+    acilisVideo.muted = true;
+
+    function kapakBitir() {
+      if (crossfadeBasladi) return;
+      crossfadeBasladi = true;
+      kapakEl.classList.add('soluyor');
+      acilisVideo.classList.add('soluyor');
+      if (kapakEkrani) kapakEkrani.classList.add('gorundu');
+      setTimeout(function () {
+        if (kapakEl.parentNode) kapakEl.parentNode.removeChild(kapakEl);
+      }, 800);
+    }
+
+    document.getElementById('acBtn').addEventListener('click', function () {
+      kapakEl.classList.add('baslatildi');
+      acilisVideo.play().catch(function () { kapakBitir(); });
+
+      const audio = document.getElementById('bg-music');
+      const icon = document.getElementById('audio-icon');
+      audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
+
+      // Güvenlik: video oynatılamaz ya da 'ended' hiç tetiklenmezse yine de geçiş yapılır
+      setTimeout(function () { kapakBitir(); }, 6000);
+    }, { once: true });
+
+    acilisVideo.addEventListener('ended', kapakBitir);
 
     /* Kaydırınca Kartların Belirmesi */
     const kartGozlemci = new IntersectionObserver(function (girisler) {
