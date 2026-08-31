@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Elif & Furkan — Düğün Davetiyesi | DAVET & CO.</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --coffee-dark: #3B2A1E;
+    --coffee: #6B4A31;
+    --gold: #C9A24B;
+    --gold-soft: #E4CFA0;
+    --cream: #FBF6EC;
+    --ink: #2A1D14;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--coffee-dark);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  .font-display { font-family: 'Playfair Display', serif; }
+  .font-label { font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ================= 1. AÇILIŞ EKRANI (ZARF KAPAĞI) ================= */
+  #envelope-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background-image: url('envelope-cover.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: var(--coffee-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.7s ease;
+  }
+  #envelope-screen.kapaniyor {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .muhur-btn {
+    position: relative;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .muhur-btn::before,
+  .muhur-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(228, 207, 160, 0.85);
+  }
+  .muhur-btn::before {
+    animation: muhur-nabiz 2.4s ease-out infinite;
+  }
+  .muhur-btn::after {
+    animation: muhur-parla 2.4s ease-in-out infinite;
+  }
+  @keyframes muhur-nabiz {
+    0%   { transform: scale(0.85); opacity: 0.95; }
+    70%  { transform: scale(1.55); opacity: 0; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+  @keyframes muhur-parla {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(228, 207, 160, 0); }
+    50%      { box-shadow: 0 0 24px 6px rgba(228, 207, 160, 0.45); }
+  }
+
+  .muhur-etiket {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -46px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--cream);
+    text-transform: uppercase;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+    animation: etiket-nefes 2.4s ease-in-out infinite;
+  }
+  @keyframes etiket-nefes {
+    0%, 100% { opacity: 0.65; }
+    50%      { opacity: 1; }
+  }
+
+  /* ================= 2. VİDEO GEÇİŞ KATMANI ================= */
+  #video-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: var(--coffee-dark);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  #video-layer.gorunur { opacity: 1; pointer-events: auto; }
+  #video-layer.soluyor { opacity: 0; }
+
+  #reveal-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ================= 3. İÇ SAYFA (KART + METİN KATMANI) ================= */
+  #content-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    opacity: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-image: url('card-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: opacity 1.1s ease;
+  }
+  #content-layer.gorunur { opacity: 1; }
+
+  #content-layer::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,251,242,0.42) 0%, rgba(255,251,242,0.18) 55%, rgba(255,251,242,0.06) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .content-inner {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 22px 64px;
+  }
+
+  .davet-baslik {
+    font-size: clamp(2.6rem, 9vw, 3.6rem);
+    color: var(--coffee-dark);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.15;
+    text-shadow: 0 2px 18px rgba(255,255,255,0.55);
+  }
+
+  .davet-ve {
+    display: inline-block;
+    margin: 0 10px;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .davet-metni {
+    max-width: 380px;
+    margin: 18px auto 0;
+    text-align: center;
+    font-size: clamp(1rem, 3.6vw, 1.15rem);
+    font-style: italic;
+    color: var(--coffee);
+    line-height: 1.65;
+  }
+
+  .ayrac {
+    width: 42px;
+    height: 1px;
+    background: var(--gold);
+    margin: 26px auto;
+  }
+
+  /* Sekmeler */
+  .sekme-grup {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .sekme-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(107, 74, 49, 0.45);
+    background: rgba(255, 251, 242, 0.55);
+    color: var(--coffee);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .sekme-btn.aktif {
+    background: var(--coffee-dark);
+    color: var(--cream);
+    border-color: var(--coffee-dark);
+  }
+
+  .etkinlik-panel {
+    display: none;
+    text-align: center;
+    margin-top: 26px;
+    animation: panel-belir 0.5s ease;
+  }
+  .etkinlik-panel.aktif { display: block; }
+  @keyframes panel-belir {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .etkinlik-tarih {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    color: var(--coffee-dark);
+  }
+  .etkinlik-saat {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 6px;
+  }
+  .etkinlik-mekan {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--coffee);
+    margin-top: 10px;
+  }
+  .etkinlik-konum {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(58,42,30,0.65);
+    margin-top: 4px;
+  }
+
+  /* Aksiyon Butonları */
+  .aksiyon-grup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 34px;
+    max-width: 420px;
+  }
+  .aksiyon-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--coffee-dark);
+    color: var(--coffee-dark);
+    background: rgba(255, 251, 242, 0.7);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .aksiyon-btn:hover {
+    background: var(--coffee-dark);
+    color: var(--cream);
+  }
+  .aksiyon-btn.dolu {
+    background: var(--coffee-dark);
+    color: var(--cream);
+  }
+  .aksiyon-btn.dolu:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+
+  /* ================= LCV MODAL ================= */
+  #lcv-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(42, 29, 20, 0.55);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #lcv-modal.acik { display: flex; }
+
+  .lcv-kutu {
+    width: 100%;
+    max-width: 360px;
+    background: var(--cream);
+    border-radius: 18px;
+    padding: 32px 26px 26px;
+    position: relative;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.5);
+    animation: lcv-belir 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  @keyframes lcv-belir {
+    from { opacity: 0; transform: scale(0.94) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .lcv-kapat {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--coffee);
+    cursor: pointer;
+  }
+
+  .lcv-baslik {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--coffee-dark);
+    text-align: center;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .lcv-alt {
+    text-align: center;
+    font-style: italic;
+    color: var(--coffee);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .katilim-secim {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .katilim-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 9px 15px;
+    border-radius: 999px;
+    border: 1px solid rgba(107,74,49,0.4);
+    background: transparent;
+    color: var(--coffee);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .katilim-btn.aktif {
+    background: var(--coffee-dark);
+    color: var(--cream);
+    border-color: var(--coffee-dark);
+  }
+
+  .lcv-alan { margin-bottom: 18px; }
+  .lcv-alan label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--coffee);
+    margin-bottom: 6px;
+  }
+  .lcv-alan input {
+    width: 100%;
+    padding-bottom: 7px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(107,74,49,0.4);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .lcv-alan input:focus { outline: none; border-color: var(--gold); }
+
+  .lcv-gonder {
+    width: 100%;
+    padding: 13px 0;
+    background: var(--coffee-dark);
+    color: var(--cream);
+    border: none;
+    border-radius: 999px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease;
+  }
+  .lcv-gonder:hover { background: var(--gold); color: var(--ink); }
+
+  #lcv-tesekkur {
+    display: none;
+    text-align: center;
+    padding: 10px 0 4px;
+  }
+  #lcv-tesekkur.gorunur { display: block; }
+  #lcv-tesekkur .buyuk {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    color: var(--coffee-dark);
+    display: block;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= 1. AÇILIŞ EKRANI ================= -->
+  <div id="envelope-screen">
+    <button id="muhur-btn" class="muhur-btn" aria-label="Davetiyeyi aç">
+      <span class="muhur-etiket font-label">Davetiyeyi Açmak İçin<br>Mühre Dokunun</span>
+    </button>
+  </div>
+
+  <!-- ================= 2. VİDEO GEÇİŞ KATMANI ================= -->
+  <div id="video-layer">
+    <video id="reveal-video" playsinline preload="auto" muted>
+      <source src="opening-reveal.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- ================= 3. İÇ SAYFA & METİN KATMANI ================= -->
+  <div id="content-layer">
+    <div class="content-inner">
+
+      <h1 class="davet-baslik font-display">Elif<span class="davet-ve">&amp;</span>Furkan</h1>
+
+      <p class="davet-metni">
+        Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+      </p>
+
+      <div class="ayrac"></div>
+
+      <!-- Sekmeli Yapı -->
+      <div class="sekme-grup">
+        <button type="button" class="sekme-btn font-label aktif" onclick="sekmeSec('kina', this)">Kına Gecesi</button>
+        <button type="button" class="sekme-btn font-label" onclick="sekmeSec('dugun', this)">Düğün Töreni</button>
+      </div>
+
+      <div id="panel-kina" class="etkinlik-panel aktif">
+        <span class="etkinlik-tarih">24 Eylül 2026</span>
+        <span class="etkinlik-saat font-label">19:30</span>
+        <p class="etkinlik-mekan">Mekan Adı</p>
+        <span class="etkinlik-konum font-label">Konum, Şehir</span>
+      </div>
+
+      <div id="panel-dugun" class="etkinlik-panel">
+        <span class="etkinlik-tarih">26 Eylül 2026</span>
+        <span class="etkinlik-saat font-label">19:00</span>
+        <p class="etkinlik-mekan">Mekan Adı</p>
+        <span class="etkinlik-konum font-label">Konum, Şehir</span>
+      </div>
+
+      <!-- İnteraktif Butonlar -->
+      <div class="aksiyon-grup">
+        <a id="harita-link" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
+        <a id="takvim-link" href="#" download="elif-furkan-davet.ics" class="aksiyon-btn font-label">Takvime Ekle</a>
+        <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc()">LCV Katılım Formu</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= LCV MODAL ================= -->
+  <div id="lcv-modal">
+    <div class="lcv-kutu">
+      <button class="lcv-kapat" onclick="lcvKapat()" aria-label="Kapat">&times;</button>
+
+      <div id="lcv-form-alani">
+        <span class="lcv-baslik font-display">Katılım Bildirimi</span>
+        <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
+
+        <form id="lcv-form" onsubmit="lcvGonder(event)">
+          <div class="katilim-secim">
+            <button type="button" class="katilim-btn aktif" data-deger="evet" onclick="katilimSec(this)">Katılıyorum</button>
+            <button type="button" class="katilim-btn" data-deger="hayir" onclick="katilimSec(this)">Katılamıyorum</button>
+          </div>
+          <input type="hidden" id="katilim-durumu" value="evet">
+
+          <div class="lcv-alan">
+            <label class="font-label">Adınız Soyadınız</label>
+            <input type="text" required placeholder="Örn: Ayşe Yıldız">
+          </div>
+
+          <button type="submit" class="lcv-gonder font-label">Gönder</button>
+        </form>
+      </div>
+
+      <div id="lcv-tesekkur">
+        <span class="buyuk font-display">Teşekkürler</span>
+        <p class="lcv-alt" style="margin-bottom:0;">Yanıtınız alındı.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- Etkinlik Verileri (Kına / Düğün) ---------- */
+    const ETKINLIKLER = {
+      kina: {
+        baslikOzet: 'Kina Gecesi',
+        mekan: 'Mekan Adi',
+        konum: 'Konum, Sehir',
+        mapsSorgu: 'Mekan+Adi,+Konum,+Sehir',
+        icsBaslangic: '20260924T163000Z',
+        icsBitis: '20260924T203000Z'
+      },
+      dugun: {
+        baslikOzet: 'Dugun Toreni',
+        mekan: 'Mekan Adi',
+        konum: 'Konum, Sehir',
+        mapsSorgu: 'Mekan+Adi,+Konum,+Sehir',
+        icsBaslangic: '20260926T160000Z',
+        icsBitis: '20260926T200000Z'
+      }
+    };
+    let aktifEtkinlik = 'kina';
+
+    function sekmeSec(anahtar, btn) {
+      aktifEtkinlik = anahtar;
+
+      document.querySelectorAll('.sekme-btn').forEach(function (b) { b.classList.remove('aktif'); });
+      btn.classList.add('aktif');
+
+      document.querySelectorAll('.etkinlik-panel').forEach(function (p) { p.classList.remove('aktif'); });
+      document.getElementById('panel-' + anahtar).classList.add('aktif');
+
+      aksiyonLinkleriGuncelle();
+    }
+
+    function aksiyonLinkleriGuncelle() {
+      const e = ETKINLIKLER[aktifEtkinlik];
+
+      document.getElementById('harita-link').href = 'https://maps.google.com/?q=' + e.mapsSorgu;
+
+      const icsIcerik = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+        'SUMMARY:Elif & Furkan - ' + e.baslikOzet,
+        'DTSTART:' + e.icsBaslangic,
+        'DTEND:' + e.icsBitis,
+        'LOCATION:' + e.mekan + ', ' + e.konum,
+        'DESCRIPTION:Elif & Furkan ' + e.baslikOzet + ' davetlisiniz.',
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n');
+      document.getElementById('takvim-link').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsIcerik);
+    }
+
+    /* ---------- LCV Modal ---------- */
+    function lcvAc() {
+      document.getElementById('lcv-modal').classList.add('acik');
+    }
+    function lcvKapat() {
+      document.getElementById('lcv-modal').classList.remove('acik');
+    }
+    function katilimSec(btn) {
+      document.querySelectorAll('.katilim-btn').forEach(function (b) { b.classList.remove('aktif'); });
+      btn.classList.add('aktif');
+      document.getElementById('katilim-durumu').value = btn.dataset.deger;
+    }
+    function lcvGonder(e) {
+      e.preventDefault();
+      document.getElementById('lcv-form-alani').style.display = 'none';
+      document.getElementById('lcv-tesekkur').classList.add('gorunur');
+    }
+
+    /* ---------- 1 & 2. Zarf Açılışı + Yavaş Çekim Video Geçişi ---------- */
+    const envelopeScreen = document.getElementById('envelope-screen');
+    const videoLayer = document.getElementById('video-layer');
+    const revealVideo = document.getElementById('reveal-video');
+    const contentLayer = document.getElementById('content-layer');
+    const VIDEO_HIZI = 0.75;
+    let gecisTamamlandi = false;
+
+    function icerigeGec() {
+      if (gecisTamamlandi) return;
+      gecisTamamlandi = true;
+
+      videoLayer.classList.add('soluyor');
+      contentLayer.classList.add('gorunur');
+      aksiyonLinkleriGuncelle();
+
+      setTimeout(function () {
+        if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
+        if (envelopeScreen.parentNode) envelopeScreen.parentNode.removeChild(envelopeScreen);
+      }, 1000);
+    }
+
+    revealVideo.addEventListener('loadedmetadata', function () {
+      revealVideo.playbackRate = VIDEO_HIZI;
+    });
+
+    document.getElementById('muhur-btn').addEventListener('click', function () {
+      envelopeScreen.classList.add('kapaniyor');
+      videoLayer.classList.add('gorunur');
+
+      revealVideo.playbackRate = VIDEO_HIZI;
+      revealVideo.play().then(function () {
+        revealVideo.playbackRate = VIDEO_HIZI;
+      }).catch(function () {
+        icerigeGec();
+      });
+
+      // Güvenlik: video hiç oynatılamaz ya da 'ended' tetiklenmezse yine de geçiş yapılır
+      setTimeout(icerigeGec, 15000);
+    }, { once: true });
+
+    revealVideo.addEventListener('ended', icerigeGec);
+
+    /* İlk yüklemede aksiyon linklerini hazırla (kullanıcı hızlıca mühre dokunursa boş kalmasın) */
+    aksiyonLinkleriGuncelle();
+  </script>
+
+</body>
+</html>
