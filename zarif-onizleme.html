@@ -129,11 +129,15 @@
     .aile-slide-sag { transform: translateX(50px); }
     .kart-giris.gorundu .aile-slide { opacity: 1; transform: translateX(0); }
     .aile-ayrac-dikey {
-      width: 1px; height: 44px; background: rgba(58,69,53,0.35);
+      display: flex; align-items: center; justify-content: center; width: 32px;
       opacity: 0; transform: scaleY(0);
       transition: opacity 0.5s ease, transform 0.5s ease; transition-delay: 0.7s;
     }
     .kart-giris.gorundu .aile-ayrac-dikey { opacity: 1; transform: scaleY(1); }
+    .aile-ayrac-gorsel {
+      width: 26px; height: auto; transform: rotate(90deg);
+      filter: brightness(0.35) contrast(1.5);
+    }
 
     /* SAYFA 11 (Kapanış): en yavaş, en asil geçiş — film jeneriği hissi */
     .kapanis-sahne.kart-giris { transition: opacity 1.5s ease-out, transform 1.5s ease-out; }
@@ -277,9 +281,9 @@
     .kart-giris.gorundu .baslik-sayac { opacity: 1; transform: translateY(0); }
 
     .sayac-rakam {
-      font-family: 'Bodoni Moda', serif !important;
-      font-size: 2.2rem !important;
-      font-weight: 400 !important;
+      font-family: 'CormorantFont', serif !important;
+      font-size: 2.9rem !important;
+      font-weight: 700 !important;
       color: #1a1a1a !important;
       display: block; line-height: 1;
       opacity: 0;
@@ -307,19 +311,18 @@
     }
 
     .sayac-grid { display: grid; grid-template-columns: repeat(4,1fr); margin: 16px 0; }
-    .sayac-grid > div { padding: 6px 0; border-left: 1px solid rgba(58,69,53,0.3); }
+    .sayac-grid > div { padding: 6px 0; border-left: 1px solid rgba(58,69,53,0.12); }
 
-    /* Düğün Akışı — Zaman Çizelgesi */
+    /* Davet Akışı — çizgi/daire kaldırıldı, her maddenin solunda küçük zeytin dalı ikonu var */
     .program-zaman-cizgisi { position: relative; max-width: 230px; margin: 0 auto; }
-    .program-zaman-cizgisi::before {
-      content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 1px;
-      background: rgba(58,69,53,0.25);
-    }
     .zaman-satiri {
-      display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; position: relative;
+      display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; position: relative;
       opacity: 0; transform: translateX(-10px); transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .zaman-nokta { width: 19px; height: 19px; min-width: 19px; border-radius: 50%; background: var(--keten); border: 1.5px solid var(--zeytin); margin-top: 3px; position: relative; z-index: 1; }
+    .zaman-yaprak {
+      width: 20px; height: auto; margin-top: 4px; flex-shrink: 0;
+      filter: brightness(0.35) contrast(1.5); opacity: 0.85;
+    }
     .zaman-metin { text-align: left; }
     .zaman-saat { font-family: 'CinzelFont', serif; font-size: 10px; letter-spacing: 0.14em; color: var(--zeytin-soft); font-weight: 600; }
     .zaman-baslik { font-family: 'CormorantFont', serif; font-size: 18px; color: var(--zeytin); font-weight: 500; margin: 3px 0 0; }
@@ -437,7 +440,7 @@
               <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin); font-weight:600; display:block;">KAYA</span>
               <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); display:block; margin-top:2px;">AİLESİ</span>
             </div>
-            <div class="aile-ayrac-dikey"></div>
+            <div class="aile-ayrac-dikey"><img src="yaprak-dal-kucuk.png" alt="Zeytin Dalı" class="aile-ayrac-gorsel"></div>
             <div class="aile-slide aile-slide-sag">
               <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin); font-weight:600; display:block;">ÖZDEMİR</span>
               <span class="font-baslik-etiket" style="font-size:9px; color:var(--zeytin-soft); display:block; margin-top:2px;">AİLESİ</span>
@@ -491,24 +494,24 @@
       <!-- SAYFA 7: DÜĞÜN AKIŞI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
-          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN AKIŞI</span>
+          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DAVET AKIŞI</span>
           <div class="program-zaman-cizgisi">
             <div class="zaman-satiri">
-              <span class="zaman-nokta"></span>
+              <img src="yaprak-dal-kucuk.png" class="zaman-yaprak" alt="">
               <div class="zaman-metin">
                 <span class="zaman-saat">19:00</span>
                 <h5 class="zaman-baslik">Karşılama</h5>
               </div>
             </div>
             <div class="zaman-satiri">
-              <span class="zaman-nokta"></span>
+              <img src="yaprak-dal-kucuk.png" class="zaman-yaprak" alt="">
               <div class="zaman-metin">
                 <span class="zaman-saat">20:00</span>
                 <h5 class="zaman-baslik">Nikah Töreni</h5>
               </div>
             </div>
             <div class="zaman-satiri">
-              <span class="zaman-nokta"></span>
+              <img src="yaprak-dal-kucuk.png" class="zaman-yaprak" alt="">
               <div class="zaman-metin">
                 <span class="zaman-saat">20:30</span>
                 <h5 class="zaman-baslik">Yemek &amp; Eğlence</h5>
