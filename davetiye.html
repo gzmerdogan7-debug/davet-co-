@@ -139,30 +139,32 @@
 
     .kapak-aile-blok { margin-top: 6px; }
 
-    /* SAYFA 1: Mühür & Zarf Açılış Videosu — .cinema-viewport'a göre position:absolute,
-       böylece masaüstünde de mobil kart genişliğinin dışına taşmaz. Opak arka plan
-       rengiyle, video ilk karesini boyamadan önce arkadaki içerik asla görünmez. */
+    /* SAYFA 1: Krem Mühür & Zarf Açılışı — Sade Paket'e özel orijinal tasarım
+       (görsel tabanlı zarf, video değil). Zarif Paket'in yeşil video mühürüyle
+       karıştırılmasın diye burada birebir korunuyor. */
     .kapak-overlay {
-      position: absolute; inset: 0; z-index: 9999;
-      background-color: #F3ECE0;
-      overflow: hidden; cursor: pointer;
-      transition: opacity 0.8s ease;
+      position: absolute; inset: 0; z-index: 100;
+      overflow: hidden;
+      transition: opacity 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
     }
-    .kapak-overlay.soluyor { opacity: 0; }
-    .acilis-video {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.8s ease;
+    .zarf {
+      position: absolute; inset: 0;
+      background-image: url('kapi.png');
+      background-size: cover;
+      background-position: center;
+      filter: contrast(1.08) saturate(1.04) brightness(1.02);
+      transition: transform 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
     }
-    .acilis-video.soluyor { transform: scale(1.06); }
-
+    .kapak-overlay.acik { opacity: 0; pointer-events: none; }
+    .kapak-overlay.acik .zarf { transform: scale(1.06); }
     .muhur-dokun {
-      position: absolute; left: 50%; top: 50%;
+      position: absolute; left: 50%; top: 46.5%;
       width: 92px; height: 92px;
       transform: translate(-50%, -50%);
       border-radius: 50%;
       background: transparent; border: none; padding: 0; cursor: pointer;
       z-index: 15;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.6s ease;
     }
     .muhur-dokun::before {
       content: "";
@@ -176,7 +178,7 @@
       70% { transform: scale(1.38); opacity: 0; }
       100% { transform: scale(1.38); opacity: 0; }
     }
-    .kapak-overlay.baslatildi .muhur-dokun { opacity: 0; }
+    .kapak-overlay.acik .muhur-dokun { opacity: 0; }
 
     /* Kartın Kendisi */
     .arch-content-box {
@@ -301,15 +303,17 @@
 </head>
 <body>
 
-  <!-- ARKA PLAN MÜZİĞİ -->
-  <audio id="bg-music" src="bg-music.mp3" loop preload="auto"></audio>
+  <!-- ARKA PLAN ENSTRÜMANTAL PİYANO MÜZİĞİ -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="muzik.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- ================= CINEMA VIEWPORT ================= -->
   <div class="cinema-viewport">
 
-    <!-- ================= MÜHÜR & ZARF AÇILIŞ VİDEOSU ================= -->
+    <!-- ================= KREM MÜHÜR & ZARF AÇILIŞI ================= -->
     <div id="kapak" class="kapak-overlay">
-      <video id="acilis-video" class="acilis-video" src="zarf-acilis.mp4" playsinline preload="auto" muted></video>
+      <div class="zarf"></div>
       <button id="acBtn" class="muhur-dokun" aria-label="Davetiyeyi aç"></button>
     </div>
 
@@ -435,7 +439,7 @@
     }
 
     function toggleAudio() {
-      const audio = document.getElementById('bg-music');
+      const audio = document.getElementById('bg-audio');
       const icon = document.getElementById('audio-icon');
       if (audio.paused) {
         audio.play().then(() => {
@@ -461,37 +465,19 @@
       document.getElementById('rsvp-ok').classList.remove('hidden');
     }
 
-    /* ---------- Mühür & Zarf Açılış Videosu ---------- */
-    const kapakEl = document.getElementById('kapak');
-    const acilisVideo = document.getElementById('acilis-video');
-    const kapakEkrani = document.querySelector('.kapak-ekran');
-    let crossfadeBasladi = false;
-    acilisVideo.muted = true;
-
-    function kapakBitir() {
-      if (crossfadeBasladi) return;
-      crossfadeBasladi = true;
-      kapakEl.classList.add('soluyor');
-      acilisVideo.classList.add('soluyor');
-      if (kapakEkrani) kapakEkrani.classList.add('gorundu');
-      setTimeout(function () {
-        if (kapakEl.parentNode) kapakEl.parentNode.removeChild(kapakEl);
-      }, 800);
-    }
-
+    /* ---------- Krem Mühür & Zarf Açılışı ---------- */
     document.getElementById('acBtn').addEventListener('click', function () {
-      kapakEl.classList.add('baslatildi');
-      acilisVideo.play().catch(function () { kapakBitir(); });
+      document.getElementById('kapak').classList.add('acik');
 
-      const audio = document.getElementById('bg-music');
+      const kapakEkrani = document.querySelector('.kapak-ekran');
+      if (kapakEkrani) { setTimeout(function () { kapakEkrani.classList.add('gorundu'); }, 2700); }
+
+      const audio = document.getElementById('bg-audio');
       const icon = document.getElementById('audio-icon');
       audio.play().then(function () { if (icon) icon.innerText = '🎵'; }).catch(function () {});
 
-      // Güvenlik: video oynatılamaz ya da 'ended' hiç tetiklenmezse yine de geçiş yapılır
-      setTimeout(function () { kapakBitir(); }, 6000);
+      setTimeout(function () { document.getElementById('kapak').remove(); }, 3300);
     }, { once: true });
-
-    acilisVideo.addEventListener('ended', kapakBitir);
 
     /* Kaydırınca Kartların Belirmesi */
     const kartGozlemci = new IntersectionObserver(function (girisler) {
