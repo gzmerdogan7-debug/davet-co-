@@ -120,7 +120,10 @@
     .kart-giris.gorundu .davet-reveal-top,
     .kart-giris.gorundu .davet-reveal-bottom { opacity: 1; transform: translateY(0); }
 
-    /* SAYFA 4 (yeni, ayrıştırılan): Ailelerimiz — zıt yönlerden süzülme + ortada beliren ayraç */
+    /* SAYFA 4: Ailelerimiz — zıt yönlerden süzülme + ortada beliren ayraç.
+       Kutunun standart translateY/scale girişini iptal ediyoruz, tek hareket
+       ailelerin zıt yönlerden gelmesi olsun. */
+    .aile-sahne-kutu { transform: none !important; }
     .aile-slide { opacity: 0; transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); }
     .aile-slide-sol { transform: translateX(-50px); }
     .aile-slide-sag { transform: translateX(50px); }
@@ -150,34 +153,21 @@
       font-size: 1.5rem; display: block; margin: 5px 0;
     }
 
-    /* Sinematik sekans: önce güvercin (0-0.8sn) sabitlenir, 0.4sn sonra (1.4sn'den
-       itibaren) isimler kaymadan, merkezde dumanlı bir netleşmeyle (blur + harf
-       aralığı genişlemesi) belirir */
+    /* İsimler kaymadan, merkezde dumanlı bir netleşmeyle (blur + harf aralığı
+       genişlemesi) belirir — güvercin adımı kaldırıldığı için doğrudan başlar */
     .isimler-ekran .isim-gizem, .isimler-ekran .ve-isareti, .isimler-ekran .isim-yigitcan {
       opacity: 0; filter: blur(8px); letter-spacing: 2px;
       transition: opacity 1.2s ease, filter 1.2s ease, letter-spacing 1.2s cubic-bezier(0.22,1,0.36,1);
     }
-    .isimler-ekran.gorundu .isim-gizem { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 1.4s; }
-    .isimler-ekran.gorundu .ve-isareti { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 1.6s; }
-    .isimler-ekran.gorundu .isim-yigitcan { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 1.8s; }
+    .isimler-ekran.gorundu .isim-gizem { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 0.1s; }
+    .isimler-ekran.gorundu .ve-isareti { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 0.3s; }
+    .isimler-ekran.gorundu .isim-yigitcan { opacity: 1; filter: blur(0); letter-spacing: 8px; transition-delay: 0.5s; }
 
     .isimler-ekran .arch-content-box {
       opacity: 0; transform: scale(0.88) translateY(22px);
       transition: opacity 1.3s ease, transform 1.3s cubic-bezier(0.16,1,0.3,1);
     }
     .isimler-ekran.gorundu .arch-content-box { opacity: 1; transform: scale(1) translateY(0); }
-
-    /* Güvercin Amblemi — doğal dolgunluğunu koruyan büyük boyut, sekansın ilk adımı */
-    .guvercin-amblem {
-      width: 180px;
-      height: auto;
-      display: block;
-      margin: 0 auto 20px auto;
-      opacity: 0; transform: scale(0.95);
-      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
-      transition-delay: 0.15s;
-    }
-    .isimler-ekran.gorundu .guvercin-amblem { opacity: 1; transform: scale(1); }
 
     /* Küçük dal ayracı — koyulaştırma filtresiyle keten zeminde belirgin */
     .detay-dal {
@@ -416,11 +406,10 @@
 
     <div id="story-slider">
 
-      <!-- SAYFA 2: İSİMLER & GÜVERCİN AMBLEMİ -->
+      <!-- SAYFA 2: İSİMLER -->
       <section class="story-screen isimler-ekran">
         <div class="arch-content-box text-center">
           <div class="isimler-wrapper">
-            <img src="guvercin.png" class="guvercin-amblem" alt="Güvercin">
             <h1 class="isim-gizem">Gizem</h1>
             <span class="ve-isareti">&amp;</span>
             <h2 class="isim-yigitcan">Yiğitcan</h2>
@@ -435,13 +424,13 @@
             Sevgimizi ve geleceğimizi birleştirdiğimiz bu anlamlı günde yanımızda olmanızı dileriz.
           </p>
           <img src="yaprak-dal-kucuk.png" class="detay-dal" alt="Zeytin Dalı">
-          <span class="font-baslik-etiket davet-reveal-bottom" style="font-size:11px; letter-spacing:0.18em; color:var(--zeytin-soft); font-weight:600; display:block;">19 EYLÜL 2026 &middot; SES LOUNGE EVENTS, ESKİŞEHİR</span>
+          <span class="font-baslik-etiket davet-reveal-bottom" style="font-size:11px; letter-spacing:0.18em; color:var(--zeytin-soft); font-weight:600; display:block;">19 EYLÜL 2026 &middot; ESKİŞEHİR</span>
         </div>
       </section>
 
-      <!-- SAYFA 4: AİLELERİMİZ (YENİ, ayrıştırıldı) -->
+      <!-- SAYFA 4: AİLELERİMİZ -->
       <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
+        <div class="arch-content-box text-center kart-giris aile-sahne-kutu">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:28px;">AİLELERİMİZ</span>
           <div style="display:flex; align-items:center; justify-content:center; gap:22px;">
             <div class="aile-slide aile-slide-sol">
@@ -457,37 +446,13 @@
         </div>
       </section>
 
-      <!-- SAYFA 5: DÜĞÜN MENÜSÜ -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN MENÜSÜ</span>
-          <div style="max-width:260px; margin:0 auto;">
-            <div class="menu-satiri">
-              <span class="menu-baslik">BAŞLANGIÇ</span>
-              <span class="menu-detay">Akdeniz Mezze Tabağı</span>
-            </div>
-            <div class="menu-satiri">
-              <span class="menu-baslik">ANA YEMEK</span>
-              <span class="menu-detay">Kekik Aromalı Kuzu Pirzola</span>
-            </div>
-            <div class="menu-satiri">
-              <span class="menu-baslik">TATLI</span>
-              <span class="menu-detay">Portakallı Zeytinyağlı Kek</span>
-            </div>
-            <div class="menu-satiri">
-              <span class="menu-baslik">İÇECEK</span>
-              <span class="menu-detay">Seçili Şarap &amp; Taze Meyve Suları</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SAYFA 6: TARİH & CANLI TAKVİM -->
+      <!-- SAYFA 5: TARİH, SAAT & TAKVİM -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600;">TARİH &amp; SAAT</span>
           <p class="font-govde" style="font-size:17px; font-style:italic; color:var(--zeytin); margin:10px 0 4px;">19 Eylül 2026 &middot; Cumartesi &middot; 19.00</p>
 
+          <img src="yaprak-dal-kucuk.png" class="detay-dal" alt="Zeytin Dalı">
           <div id="takvim-gunler" class="takvim-grid"></div>
 
           <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Gizem+%26+Yi%C4%9Fitcan+D%C3%BC%C4%9F%C3%BCn+T%C3%B6reni&dates=20260919T160000Z/20260919T200000Z&details=Gizem+%26+Yi%C4%9Fitcan+D%C3%BC%C4%9F%C3%BCn%C3%BCne+Davetlisiniz.&location=Ses+Lounge+Events,+Eskisehir" target="_blank" class="aksiyon-btn">
@@ -496,7 +461,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 7: BULUŞMAYA KALAN (SAYAÇ — Vogue Editoryal) -->
+      <!-- SAYFA 6: BULUŞMAYA KALAN (SAYAÇ — Vogue Editoryal) -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="baslik-sayac">Buluşmaya Kalan</span>
@@ -523,22 +488,7 @@
         </div>
       </section>
 
-      <!-- SAYFA 8: KUTLAMA MEKANI -->
-      <section class="story-screen">
-        <div class="arch-content-box text-center kart-giris">
-          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:16px;">KUTLAMA MEKANI</span>
-          <svg class="mekan-pin" style="width:42px; height:42px; margin:0 auto 12px;" viewBox="0 0 24 24" fill="none" stroke="var(--zeytin)" stroke-width="1.1">
-            <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21z"/>
-            <circle cx="12" cy="9.5" r="2.6" fill="var(--zeytin)" stroke="none"/>
-          </svg>
-          <h3 class="font-govde-caps" style="font-size:19px; color:var(--zeytin); margin-bottom:16px;">SES LOUNGE EVENTS</h3>
-          <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="aksiyon-btn">
-            KONUMA GİT &amp; YOL TARİFİ →
-          </a>
-        </div>
-      </section>
-
-      <!-- SAYFA 9: DÜĞÜN AKIŞI -->
+      <!-- SAYFA 7: DÜĞÜN AKIŞI -->
       <section class="story-screen">
         <div class="arch-content-box text-center kart-giris">
           <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN AKIŞI</span>
@@ -563,6 +513,46 @@
                 <span class="zaman-saat">20:30</span>
                 <h5 class="zaman-baslik">Yemek &amp; Eğlence</h5>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAYFA 8: KUTLAMA MEKANI -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:16px;">KUTLAMA MEKANI</span>
+          <svg class="mekan-pin" style="width:42px; height:42px; margin:0 auto 12px;" viewBox="0 0 24 24" fill="none" stroke="var(--zeytin)" stroke-width="1.1">
+            <path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21z"/>
+            <circle cx="12" cy="9.5" r="2.6" fill="var(--zeytin)" stroke="none"/>
+          </svg>
+          <h3 class="font-govde-caps" style="font-size:19px; color:var(--zeytin); margin-bottom:16px;">SES LOUNGE EVENTS</h3>
+          <a href="https://maps.google.com/?q=Ses+Lounge+Events+Eskisehir" target="_blank" class="aksiyon-btn">
+            KONUMA GİT &amp; YOL TARİFİ →
+          </a>
+        </div>
+      </section>
+
+      <!-- SAYFA 9: DÜĞÜN MENÜSÜ -->
+      <section class="story-screen">
+        <div class="arch-content-box text-center kart-giris">
+          <span class="font-baslik-etiket" style="font-size:12px; color:var(--zeytin-soft); font-weight:600; display:block; margin-bottom:18px;">DÜĞÜN MENÜSÜ</span>
+          <div style="max-width:260px; margin:0 auto;">
+            <div class="menu-satiri">
+              <span class="menu-baslik">BAŞLANGIÇ</span>
+              <span class="menu-detay">Akdeniz Mezze Tabağı</span>
+            </div>
+            <div class="menu-satiri">
+              <span class="menu-baslik">ANA YEMEK</span>
+              <span class="menu-detay">Kekik Aromalı Kuzu Pirzola</span>
+            </div>
+            <div class="menu-satiri">
+              <span class="menu-baslik">TATLI</span>
+              <span class="menu-detay">Portakallı Zeytinyağlı Kek</span>
+            </div>
+            <div class="menu-satiri">
+              <span class="menu-baslik">İÇECEK</span>
+              <span class="menu-detay">Seçili Şarap &amp; Taze Meyve Suları</span>
             </div>
           </div>
         </div>
@@ -693,15 +683,12 @@
       }
     }, 1000);
 
-    /* ---------- SAYFA 1: Zarf & Mühür — video + erken çapraz geçiş (zoom ile) ---------- */
+    /* ---------- SAYFA 1: Zarf & Mühür — tıklamadan tam 1.2sn sonra sabit çapraz geçiş ---------- */
     const kapakEl = document.getElementById('kapak');
     const acilisVideo = document.getElementById('acilis-video');
     const isimlerEkran = document.querySelector('.isimler-ekran');
-    let crossfadeBasladi = false;
-    let crossfadeZamanlayici = null;
 
     function kapakBitir() {
-      if (crossfadeZamanlayici) { clearTimeout(crossfadeZamanlayici); crossfadeZamanlayici = null; }
       acilisVideo.classList.add('soluyor');
       isimlerEkran.classList.add('gorundu');
       setTimeout(function () {
@@ -709,32 +696,15 @@
       }, 800);
     }
 
-    function crossfadeZamanla() {
-      if (crossfadeBasladi || crossfadeZamanlayici) return;
-      const sure = acilisVideo.duration;
-      if (!isFinite(sure) || sure <= 0.8) return;
-      const kalanMs = Math.max(0, (sure - acilisVideo.currentTime - 0.8) * 1000);
-      crossfadeZamanlayici = setTimeout(function () {
-        if (!crossfadeBasladi) { crossfadeBasladi = true; kapakBitir(); }
-      }, kalanMs);
-    }
-
     kapakEl.addEventListener('click', function () {
       kapakEl.classList.add('baslatildi');
-      acilisVideo.play().catch(function () { kapakBitir(); });
+      acilisVideo.play().catch(function () {});
       const audio = document.getElementById('bg-audio');
       const dalga = document.getElementById('ses-dalga');
       audio.play().then(function () { if (dalga) dalga.style.opacity = '1'; }).catch(function () {});
+      // Videonun gerçek süresi ne olursa olsun, tıklamadan tam 1.2sn sonra sabit geçiş
+      setTimeout(kapakBitir, 1200);
     }, { once: true });
-
-    acilisVideo.addEventListener('loadedmetadata', crossfadeZamanla);
-    acilisVideo.addEventListener('durationchange', crossfadeZamanla);
-    acilisVideo.addEventListener('playing', crossfadeZamanla);
-    acilisVideo.addEventListener('ended', function () {
-      if (crossfadeBasladi) return;
-      crossfadeBasladi = true;
-      kapakBitir();
-    });
 
     /* ---------- Eylül 2026 canlı takvimi ---------- */
     (function takvimOlustur() {
@@ -777,3 +747,4 @@
 
 </body>
 </html>
+
