@@ -615,13 +615,15 @@
     margin-bottom: 6px;
   }
 
-  /* Alt Yüzen "Aşağı Kaydır" Kapsülü */
+  /* Alt Yüzen Kapsüller: "Aşağı Kaydır" + Müzik Çalar */
   .floating-pill-bar {
     position: absolute;
     bottom: 22px;
     left: 0; right: 0;
     display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 10px;
     z-index: 40;
   }
   .scroll-pill-btn {
@@ -634,9 +636,28 @@
     transition: all 0.2s ease;
   }
   .scroll-pill-btn:active { transform: scale(0.96); }
+
+  .audio-pill-btn {
+    background: rgba(255, 251, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(197, 160, 89, 0.55);
+    border-radius: 999px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 22px -6px rgba(0,0,0,0.18);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .audio-pill-btn:active { transform: scale(0.94); }
 </style>
 </head>
 <body>
+
+  <!-- ARKA PLAN MÜZİĞİ -->
+  <audio id="bg-music" src="sonfon.mp3" loop preload="auto"></audio>
 
   <div class="cinema-viewport">
 
@@ -892,10 +913,13 @@
         </div>
       </div>
 
-      <!-- Alt Yüzen "Aşağı Kaydır" Kapsülü -->
+      <!-- Alt Yüzen Kapsüller: Aşağı Kaydır + Müzik Çalar -->
       <div class="floating-pill-bar">
         <button onclick="scrollToNextStory()" class="scroll-pill-btn">
           <span class="font-label" style="font-size:10px; color:var(--coffee-dark);">Aşağı Kaydır ↓</span>
+        </button>
+        <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
+          <span id="audio-icon" style="font-size:15px;">🎧</span>
         </button>
       </div>
 
@@ -989,6 +1013,18 @@
       }
     }, 1000);
 
+    /* ---------- Müzik Çalar ---------- */
+    function toggleAudio() {
+      const audio = document.getElementById('bg-music');
+      const icon = document.getElementById('audio-icon');
+      if (audio.paused) {
+        audio.play().then(function () { icon.innerText = '🎵'; }).catch(function () {});
+      } else {
+        audio.pause();
+        icon.innerText = '🔇';
+      }
+    }
+
     /* ---------- LCV Formları (Kına / Düğün — akışa gömülü) ---------- */
     function katilimSec(btn) {
       const grup = btn.closest('.katilim-secim');
@@ -1039,6 +1075,11 @@
       }).catch(function () {
         icerigeGec();
       });
+
+      // Mühre dokunma anı: video ile aynı anda arka plan müziği de başlar
+      const bgMusic = document.getElementById('bg-music');
+      const audioIcon = document.getElementById('audio-icon');
+      bgMusic.play().then(function () { if (audioIcon) audioIcon.innerText = '🎵'; }).catch(function () {});
 
       // Güvenlik: video hiç oynatılamaz ya da 'ended' tetiklenmezse yine de geçiş yapılır
       setTimeout(icerigeGec, 15000);
