@@ -317,6 +317,35 @@
     margin-top: 4px;
   }
 
+  /* Düğün Töreni: Canlı Geri Sayım Sayacı */
+  .sayac-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 22px auto 6px;
+    max-width: 280px;
+  }
+  .sayac-grid > div {
+    padding: 4px 0;
+    border-left: 1px solid rgba(107, 74, 49, 0.22);
+  }
+  .sayac-grid > div:first-child { border-left: none; }
+  .sayac-rakam {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--coffee-dark);
+    display: block;
+    line-height: 1;
+  }
+  .sayac-etiket {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coffee);
+    opacity: 0.75;
+  }
+
   /* Aksiyon Butonları */
   .aksiyon-grup {
     display: flex;
@@ -514,39 +543,72 @@
     <div id="content-layer">
       <div class="content-inner">
 
+        <!-- 1. Üst Kısım: Sadece İsimler -->
         <h1 class="davet-baslik font-display">Elif<span class="davet-ve">&amp;</span>Furkan</h1>
 
-        <p class="davet-metni">
-          Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
-        </p>
-
-        <div class="ayrac"></div>
-
-        <!-- Sekmeli Yapı -->
+        <!-- 2. Dinamik Sekmeler -->
         <div class="sekme-grup">
           <button type="button" class="sekme-btn font-label aktif" onclick="sekmeSec('kina', this)">Kına Gecesi</button>
           <button type="button" class="sekme-btn font-label" onclick="sekmeSec('dugun', this)">Düğün Töreni</button>
         </div>
 
+        <!-- 3a. Kına Gecesi İçeriği -->
         <div id="panel-kina" class="etkinlik-panel aktif">
+          <p class="davet-metni">
+            Kına gecemizde sizleri de aramızda görmekten mutluluk duyarız.
+          </p>
+
+          <div class="ayrac"></div>
+
           <span class="etkinlik-tarih">24 Eylül 2026</span>
           <span class="etkinlik-saat font-label">19:30</span>
           <p class="etkinlik-mekan">Mekan Adı</p>
           <span class="etkinlik-konum font-label">Konum, Şehir</span>
+
+          <div class="aksiyon-grup">
+            <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
+            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc()">LCV Katılım Formu</button>
+          </div>
         </div>
 
+        <!-- 3b. Düğün Töreni İçeriği -->
         <div id="panel-dugun" class="etkinlik-panel">
+          <p class="davet-metni">
+            Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+          </p>
+
+          <div class="ayrac"></div>
+
           <span class="etkinlik-tarih">26 Eylül 2026</span>
           <span class="etkinlik-saat font-label">19:00</span>
+
+          <div class="sayac-grid">
+            <div>
+              <span id="cd-gun" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">GÜN</span>
+            </div>
+            <div>
+              <span id="cd-saat" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">SAAT</span>
+            </div>
+            <div>
+              <span id="cd-dakika" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">DAKİKA</span>
+            </div>
+            <div>
+              <span id="cd-saniye" class="sayac-rakam">00</span>
+              <span class="sayac-etiket">SANİYE</span>
+            </div>
+          </div>
+
           <p class="etkinlik-mekan">Mekan Adı</p>
           <span class="etkinlik-konum font-label">Konum, Şehir</span>
-        </div>
 
-        <!-- İnteraktif Butonlar -->
-        <div class="aksiyon-grup">
-          <a id="harita-link" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
-          <a id="takvim-link" href="#" download="elif-furkan-davet.ics" class="aksiyon-btn font-label">Takvime Ekle</a>
-          <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc()">LCV Katılım Formu</button>
+          <div class="aksiyon-grup">
+            <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
+            <a id="takvim-link" href="#" download="elif-furkan-davet.ics" class="aksiyon-btn font-label">Takvime Ekle</a>
+            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc()">LCV Katılım Formu</button>
+          </div>
         </div>
 
       </div>
@@ -606,25 +668,20 @@
         icsBitis: '20260926T200000Z'
       }
     };
-    let aktifEtkinlik = 'kina';
-
     function sekmeSec(anahtar, btn) {
-      aktifEtkinlik = anahtar;
-
       document.querySelectorAll('.sekme-btn').forEach(function (b) { b.classList.remove('aktif'); });
       btn.classList.add('aktif');
 
       document.querySelectorAll('.etkinlik-panel').forEach(function (p) { p.classList.remove('aktif'); });
       document.getElementById('panel-' + anahtar).classList.add('aktif');
-
-      aksiyonLinkleriGuncelle();
     }
 
-    function aksiyonLinkleriGuncelle() {
-      const e = ETKINLIKLER[aktifEtkinlik];
+    /* Her sekmenin kendi Harita/Yol Tarifi bağlantısı + Düğün'ün .ics takvim bağlantısı — sabit, sekme değişiminden bağımsız */
+    function baglantilariHazirla() {
+      document.getElementById('harita-link-kina').href = 'https://maps.google.com/?q=' + ETKINLIKLER.kina.mapsSorgu;
+      document.getElementById('harita-link-dugun').href = 'https://maps.google.com/?q=' + ETKINLIKLER.dugun.mapsSorgu;
 
-      document.getElementById('harita-link').href = 'https://maps.google.com/?q=' + e.mapsSorgu;
-
+      const e = ETKINLIKLER.dugun;
       const icsIcerik = [
         'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
         'SUMMARY:Elif & Furkan - ' + e.baslikOzet,
@@ -636,6 +693,18 @@
       ].join('\r\n');
       document.getElementById('takvim-link').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsIcerik);
     }
+
+    /* Düğün Töreni: Canlı Geri Sayım Sayacı — 26 Eylül 2026, 19:00 */
+    const DUGUN_TARIHI = new Date('2026-09-26T19:00:00').getTime();
+    setInterval(function () {
+      const fark = DUGUN_TARIHI - new Date().getTime();
+      if (fark > 0) {
+        document.getElementById('cd-gun').innerText = String(Math.floor(fark / 86400000)).padStart(2, '0');
+        document.getElementById('cd-saat').innerText = String(Math.floor((fark % 86400000) / 3600000)).padStart(2, '0');
+        document.getElementById('cd-dakika').innerText = String(Math.floor((fark % 3600000) / 60000)).padStart(2, '0');
+        document.getElementById('cd-saniye').innerText = String(Math.floor((fark % 60000) / 1000)).padStart(2, '0');
+      }
+    }, 1000);
 
     /* ---------- LCV Modal ---------- */
     function lcvAc() {
@@ -669,7 +738,7 @@
 
       videoLayer.classList.add('soluyor');
       contentLayer.classList.add('gorunur');
-      aksiyonLinkleriGuncelle();
+      baglantilariHazirla();
 
       setTimeout(function () {
         if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
@@ -699,7 +768,7 @@
     revealVideo.addEventListener('ended', icerigeGec);
 
     /* İlk yüklemede aksiyon linklerini hazırla (kullanıcı hızlıca mühre dokunursa boş kalmasın) */
-    aksiyonLinkleriGuncelle();
+    baglantilariHazirla();
   </script>
 
 </body>
