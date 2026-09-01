@@ -10,12 +10,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --coffee-dark: #3B2A1E;
+    --coffee-dark: #3D2B1F;
     --coffee: #6B4A31;
-    --gold: #C9A24B;
+    --gold: #C5A059;
     --gold-soft: #E4CFA0;
     --cream: #FBF6EC;
     --ink: #2A1D14;
@@ -214,40 +215,53 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 48px 22px 64px;
+    padding: 58px 24px 76px;
   }
 
   .davet-baslik {
-    font-size: clamp(2.1rem, 9vw, 3.1rem);
-    color: var(--coffee-dark);
-    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 8px;
     text-align: center;
-    line-height: 1.15;
-    text-shadow: 0 2px 18px rgba(255,255,255,0.55);
+  }
+
+  .isim-parca {
+    font-family: 'Pinyon Script', cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(2.8rem, 15vw, 4.1rem);
+    color: #3D2B1F;
+    line-height: 1;
+    text-shadow: 0 3px 16px rgba(197, 160, 89, 0.4), 0 1px 0 rgba(255, 251, 242, 0.65);
   }
 
   .davet-ve {
     display: inline-block;
-    margin: 0 10px;
-    color: var(--gold);
-    font-style: italic;
+    font-family: 'Pinyon Script', cursive;
+    font-weight: 400;
+    font-size: clamp(3.4rem, 18vw, 4.9rem);
+    line-height: 0.75;
+    color: #3D2B1F;
+    text-shadow: 0 3px 16px rgba(197, 160, 89, 0.4), 0 1px 0 rgba(255, 251, 242, 0.65);
   }
 
   .davet-metni {
     max-width: 320px;
-    margin: 16px auto 0;
+    margin: 24px auto 0;
     text-align: center;
     font-size: clamp(0.95rem, 3.6vw, 1.05rem);
     font-style: italic;
     color: var(--coffee);
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .ayrac {
     width: 42px;
     height: 1px;
     background: var(--gold);
-    margin: 22px auto;
+    margin: 30px auto;
   }
 
   /* Sekmeler */
@@ -262,24 +276,24 @@
     font-size: 10.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    padding: 9px 18px;
+    padding: 10px 19px;
     border-radius: 999px;
-    border: 1px solid rgba(107, 74, 49, 0.45);
-    background: rgba(255, 251, 242, 0.55);
-    color: var(--coffee);
+    border: 1px solid rgba(197, 160, 89, 0.55);
+    background: rgba(255, 251, 242, 0.6);
+    color: var(--coffee-dark);
     cursor: pointer;
     transition: all 0.25s ease;
   }
   .sekme-btn.aktif {
     background: var(--coffee-dark);
     color: var(--cream);
-    border-color: var(--coffee-dark);
+    border-color: var(--gold);
   }
 
   .etkinlik-panel {
     display: none;
     text-align: center;
-    margin-top: 26px;
+    margin-top: 34px;
     width: 100%;
     animation: panel-belir 0.5s ease;
   }
@@ -291,23 +305,28 @@
 
   .etkinlik-tarih {
     font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     color: var(--coffee-dark);
   }
   .etkinlik-saat {
     font-family: 'Montserrat', sans-serif;
     font-size: 10.5px;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--gold);
     text-transform: uppercase;
     display: block;
-    margin-top: 6px;
+    margin-top: 10px;
+  }
+  .etkinlik-ayrac-ince {
+    width: 30px;
+    height: 1px;
+    background: rgba(197, 160, 89, 0.55);
+    margin: 26px auto;
   }
   .etkinlik-mekan {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-style: italic;
     color: var(--coffee);
-    margin-top: 10px;
   }
   .etkinlik-konum {
     font-family: 'Montserrat', sans-serif;
@@ -315,19 +334,19 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(58,42,30,0.65);
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   /* Düğün Töreni: Canlı Geri Sayım Sayacı */
   .sayac-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 22px auto 6px;
+    margin: 28px auto 14px;
     max-width: 280px;
   }
   .sayac-grid > div {
     padding: 4px 0;
-    border-left: 1px solid rgba(107, 74, 49, 0.22);
+    border-left: 1px solid rgba(197, 160, 89, 0.3);
   }
   .sayac-grid > div:first-child { border-left: none; }
   .sayac-rakam {
@@ -351,9 +370,9 @@
   .aksiyon-grup {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
-    margin-top: 28px;
+    margin-top: 36px;
     max-width: 340px;
   }
   .aksiyon-btn {
@@ -361,11 +380,11 @@
     font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 11px 16px;
+    padding: 11px 17px;
     border-radius: 999px;
-    border: 1px solid var(--coffee-dark);
+    border: 1px solid var(--gold);
     color: var(--coffee-dark);
-    background: rgba(255, 251, 242, 0.7);
+    background: rgba(255, 251, 242, 0.75);
     text-decoration: none;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -376,15 +395,17 @@
   .aksiyon-btn:hover {
     background: var(--coffee-dark);
     color: var(--cream);
+    border-color: var(--coffee-dark);
   }
   .aksiyon-btn.dolu {
     background: var(--coffee-dark);
     color: var(--cream);
+    border-color: var(--gold);
   }
   .aksiyon-btn.dolu:hover {
     background: var(--gold);
     border-color: var(--gold);
-    color: var(--ink);
+    color: var(--coffee-dark);
   }
 
   /* Geçiş Kartı: diğer etkinliğe yönlendiren tıklanabilir kart */
@@ -393,11 +414,11 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 34px;
-    padding: 15px 20px;
+    margin-top: 40px;
+    padding: 16px 20px;
     border-radius: 16px;
-    border: 1px dashed rgba(107, 74, 49, 0.4);
-    background: rgba(255, 251, 242, 0.5);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    background: rgba(255, 251, 242, 0.4);
     color: var(--coffee-dark);
     font-family: 'Montserrat', sans-serif;
     font-size: 10.5px;
@@ -410,7 +431,6 @@
     background: var(--coffee-dark);
     color: var(--cream);
     border-color: var(--coffee-dark);
-    border-style: solid;
   }
 
   /* ================= LCV MODAL ================= */
@@ -571,7 +591,9 @@
       <div class="content-inner">
 
         <!-- 1. Üst Karşılama Alanı -->
-        <h1 class="davet-baslik font-display">Elif<span class="davet-ve">&amp;</span>Furkan</h1>
+        <h1 class="davet-baslik">
+          <span class="isim-parca">Elif</span><span class="davet-ve">&amp;</span><span class="isim-parca">Furkan</span>
+        </h1>
         <p class="davet-metni">
           Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
         </p>
@@ -588,6 +610,7 @@
         <div id="panel-kina" class="etkinlik-panel aktif">
           <span class="etkinlik-tarih">24 Eylül 2026</span>
           <span class="etkinlik-saat font-label">19:30</span>
+          <div class="etkinlik-ayrac-ince"></div>
           <p class="etkinlik-mekan">Mekan Adı</p>
           <span class="etkinlik-konum font-label">Konum, Şehir</span>
 
