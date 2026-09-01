@@ -213,8 +213,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 48px 20px 56px;
+    justify-content: flex-start;
+    padding: 48px 22px 64px;
   }
 
   .davet-baslik {
@@ -279,7 +279,8 @@
   .etkinlik-panel {
     display: none;
     text-align: center;
-    margin-top: 22px;
+    margin-top: 26px;
+    width: 100%;
     animation: panel-belir 0.5s ease;
   }
   .etkinlik-panel.aktif { display: block; }
@@ -384,6 +385,32 @@
     background: var(--gold);
     border-color: var(--gold);
     color: var(--ink);
+  }
+
+  /* Geçiş Kartı: diğer etkinliğe yönlendiren tıklanabilir kart */
+  .gecis-kart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 34px;
+    padding: 15px 20px;
+    border-radius: 16px;
+    border: 1px dashed rgba(107, 74, 49, 0.4);
+    background: rgba(255, 251, 242, 0.5);
+    color: var(--coffee-dark);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .gecis-kart:hover {
+    background: var(--coffee-dark);
+    color: var(--cream);
+    border-color: var(--coffee-dark);
+    border-style: solid;
   }
 
   /* ================= LCV MODAL ================= */
@@ -543,23 +570,22 @@
     <div id="content-layer">
       <div class="content-inner">
 
-        <!-- 1. Üst Kısım: Sadece İsimler -->
+        <!-- 1. Üst Karşılama Alanı -->
         <h1 class="davet-baslik font-display">Elif<span class="davet-ve">&amp;</span>Furkan</h1>
+        <p class="davet-metni">
+          Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+        </p>
 
-        <!-- 2. Dinamik Sekmeler -->
+        <div class="ayrac"></div>
+
+        <!-- 2. Sekme Kutucukları -->
         <div class="sekme-grup">
-          <button type="button" class="sekme-btn font-label aktif" onclick="sekmeSec('kina', this)">Kına Gecesi</button>
-          <button type="button" class="sekme-btn font-label" onclick="sekmeSec('dugun', this)">Düğün Töreni</button>
+          <button type="button" class="sekme-btn font-label aktif" data-sekme="kina" onclick="sekmeSec('kina')">🌸 Kına Gecesi</button>
+          <button type="button" class="sekme-btn font-label" data-sekme="dugun" onclick="sekmeSec('dugun')">💍 Düğün Töreni</button>
         </div>
 
         <!-- 3a. Kına Gecesi İçeriği -->
         <div id="panel-kina" class="etkinlik-panel aktif">
-          <p class="davet-metni">
-            Kına gecemizde sizleri de aramızda görmekten mutluluk duyarız.
-          </p>
-
-          <div class="ayrac"></div>
-
           <span class="etkinlik-tarih">24 Eylül 2026</span>
           <span class="etkinlik-saat font-label">19:30</span>
           <p class="etkinlik-mekan">Mekan Adı</p>
@@ -567,18 +593,16 @@
 
           <div class="aksiyon-grup">
             <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
-            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc()">LCV Katılım Formu</button>
+            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc('kina')">Kına İçin LCV Bildir</button>
+          </div>
+
+          <div class="gecis-kart font-label" onclick="sekmeSec('dugun')">
+            💍 Düğün Töreni Detayları İçin Tıklayın ➔
           </div>
         </div>
 
         <!-- 3b. Düğün Töreni İçeriği -->
         <div id="panel-dugun" class="etkinlik-panel">
-          <p class="davet-metni">
-            Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
-          </p>
-
-          <div class="ayrac"></div>
-
           <span class="etkinlik-tarih">26 Eylül 2026</span>
           <span class="etkinlik-saat font-label">19:00</span>
 
@@ -607,7 +631,11 @@
           <div class="aksiyon-grup">
             <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
             <a id="takvim-link" href="#" download="elif-furkan-davet.ics" class="aksiyon-btn font-label">Takvime Ekle</a>
-            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc()">LCV Katılım Formu</button>
+            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc('dugun')">Düğün İçin LCV Bildir</button>
+          </div>
+
+          <div class="gecis-kart font-label" onclick="sekmeSec('kina')">
+            🌸 Kına Gecesi Detayları İçin Tıklayın ➔
           </div>
         </div>
 
@@ -620,7 +648,7 @@
         <button class="lcv-kapat" onclick="lcvKapat()" aria-label="Kapat">&times;</button>
 
         <div id="lcv-form-alani">
-          <span class="lcv-baslik font-display">Katılım Bildirimi</span>
+          <span id="lcv-baslik" class="lcv-baslik font-display">Katılım Bildirimi</span>
           <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
 
           <form id="lcv-form" onsubmit="lcvGonder(event)">
@@ -668,12 +696,15 @@
         icsBitis: '20260926T200000Z'
       }
     };
-    function sekmeSec(anahtar, btn) {
+    function sekmeSec(anahtar) {
       document.querySelectorAll('.sekme-btn').forEach(function (b) { b.classList.remove('aktif'); });
-      btn.classList.add('aktif');
+      document.querySelector('.sekme-btn[data-sekme="' + anahtar + '"]').classList.add('aktif');
 
       document.querySelectorAll('.etkinlik-panel').forEach(function (p) { p.classList.remove('aktif'); });
       document.getElementById('panel-' + anahtar).classList.add('aktif');
+
+      // Geçiş kartı veya sekme değiştiğinde içerik alanı en üste kayar
+      document.getElementById('content-layer').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* Her sekmenin kendi Harita/Yol Tarifi bağlantısı + Düğün'ün .ics takvim bağlantısı — sabit, sekme değişiminden bağımsız */
@@ -707,7 +738,9 @@
     }, 1000);
 
     /* ---------- LCV Modal ---------- */
-    function lcvAc() {
+    function lcvAc(anahtar) {
+      const baslik = anahtar === 'dugun' ? 'Düğün Töreni Katılım Bildirimi' : 'Kına Gecesi Katılım Bildirimi';
+      document.getElementById('lcv-baslik').textContent = baslik;
       document.getElementById('lcv-modal').classList.add('acik');
     }
     function lcvKapat() {
