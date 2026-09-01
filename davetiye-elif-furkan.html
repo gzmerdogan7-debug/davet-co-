@@ -46,6 +46,7 @@
 
   .font-display { font-family: 'Playfair Display', serif; }
   .font-label { font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em; }
+  .hidden { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -55,14 +56,7 @@
     }
   }
 
-  /* ================= TELEFON ÇERÇEVESİ (PHONE FRAME WRAPPER) =================
-     Masaüstünde dikey, ortalanmış bir mobil ekran görünümü; mobil cihazlarda
-     tam ekran. (Not: CSS aspect-ratio yerine bilinçli olarak max-width +
-     height/max-height kombinasyonu kullanılıyor — diğer DAVET&CO şablonlarında
-     da kanıtlanmış, iOS/WebKit'te aspect-ratio + absolute konumlu iç katmanlar
-     kombinasyonunda görülen sıfır-yükseklik/bomboş ekran sorununu önlüyor.)
-     Görsel/video hep bu kutunun sınırları içinde object-fit: cover ile
-     orantılı kalır — asla gerilip bulanıklaşmaz. */
+  /* ================= TELEFON ÇERÇEVESİ (PHONE FRAME WRAPPER) ================= */
   .cinema-viewport {
     position: relative;
     width: 100%;
@@ -145,22 +139,6 @@
     50%      { box-shadow: 0 0 24px 6px rgba(228, 207, 160, 0.45); }
   }
 
-  .muhur-etiket {
-    position: absolute;
-    left: 0; right: 0;
-    bottom: -20%;
-    text-align: center;
-    font-size: 11px;
-    color: var(--cream);
-    text-transform: uppercase;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.55);
-    animation: etiket-nefes 2.4s ease-in-out infinite;
-  }
-  @keyframes etiket-nefes {
-    0%, 100% { opacity: 0.65; }
-    50%      { opacity: 1; }
-  }
-
   /* ================= 2. VİDEO GEÇİŞ KATMANI ================= */
   #video-layer {
     position: absolute;
@@ -181,14 +159,15 @@
     display: block;
   }
 
-  /* ================= 3. İÇ SAYFA (KART + METİN KATMANI) ================= */
+  /* ================= 3. İÇ SAYFA (KART + DİKEY KAYDIRMALI AKIŞ) =================
+     zarif-onizleme.html'deki story-slider mimarisi: her sekme (Kına/Düğün)
+     kendi bağımsız dikey kaydırma (scroll-snap) akışına sahiptir. */
   #content-layer {
     position: absolute;
     inset: 0;
     z-index: 10;
     opacity: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     background-image: url('card-background.jpg');
     background-size: cover;
     background-position: center;
@@ -207,15 +186,65 @@
     pointer-events: none;
   }
 
-  .content-inner {
-    position: relative;
+  .etkinlik-panel {
+    display: none;
+    position: absolute;
+    inset: 0;
     z-index: 1;
-    min-height: 100%;
+    animation: panel-belir 0.5s ease;
+  }
+  .etkinlik-panel.aktif { display: block; }
+  @keyframes panel-belir {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .story-scroll-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  .story-scroll-container::-webkit-scrollbar { display: none; }
+
+  .story-screen {
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start;
-    padding: 58px 24px 76px;
+    padding: 30px 26px 96px;
+    position: relative;
+  }
+
+  .sahne-kutu {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  /* Kaydırınca beliren kartlar */
+  .kart-giris {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .kart-giris.gorundu { opacity: 1; transform: translateY(0) scale(1); }
+
+  .sahne-etiket {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--coffee);
+    opacity: 0.8;
+    display: block;
   }
 
   .davet-baslik {
@@ -248,7 +277,7 @@
   }
 
   .davet-metni {
-    max-width: 320px;
+    max-width: 300px;
     margin: 24px auto 0;
     text-align: center;
     font-size: clamp(0.95rem, 3.6vw, 1.05rem);
@@ -290,43 +319,27 @@
     border-color: var(--gold);
   }
 
-  .etkinlik-panel {
-    display: none;
-    text-align: center;
-    margin-top: 34px;
-    width: 100%;
-    animation: panel-belir 0.5s ease;
-  }
-  .etkinlik-panel.aktif { display: block; }
-  @keyframes panel-belir {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
   .etkinlik-tarih {
     font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
+    font-size: 1.7rem;
     color: var(--coffee-dark);
+    display: block;
+    margin-top: 16px;
   }
   .etkinlik-saat {
     font-family: 'Montserrat', sans-serif;
-    font-size: 10.5px;
-    letter-spacing: 0.16em;
+    font-size: 11px;
+    letter-spacing: 0.18em;
     color: var(--gold);
     text-transform: uppercase;
     display: block;
     margin-top: 10px;
   }
-  .etkinlik-ayrac-ince {
-    width: 30px;
-    height: 1px;
-    background: rgba(197, 160, 89, 0.55);
-    margin: 26px auto;
-  }
   .etkinlik-mekan {
-    font-size: 1.05rem;
+    font-size: 1.4rem;
     font-style: italic;
-    color: var(--coffee);
+    color: var(--coffee-dark);
+    margin: 0;
   }
   .etkinlik-konum {
     font-family: 'Montserrat', sans-serif;
@@ -334,14 +347,46 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(58,42,30,0.65);
-    margin-top: 6px;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* Ailelerimiz */
+  .aile-grup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    margin-top: 22px;
+  }
+  .aile-ayrac-dikey {
+    width: 1px;
+    height: 36px;
+    background: rgba(197, 160, 89, 0.5);
+  }
+  .aile-adi {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--coffee-dark);
+    font-weight: 600;
+    display: block;
+  }
+  .aile-etiket {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--coffee);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
   }
 
   /* Düğün Töreni: Canlı Geri Sayım Sayacı */
   .sayac-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 28px auto 14px;
+    margin: 26px auto 0;
     max-width: 280px;
   }
   .sayac-grid > div {
@@ -351,7 +396,7 @@
   .sayac-grid > div:first-child { border-left: none; }
   .sayac-rakam {
     font-family: 'Playfair Display', serif;
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     font-weight: 600;
     color: var(--coffee-dark);
     display: block;
@@ -366,13 +411,53 @@
     opacity: 0.75;
   }
 
+  /* Davet Akışı (Timeline) */
+  .program-zaman-cizgisi {
+    position: relative;
+    max-width: 230px;
+    margin: 24px auto 0;
+    padding-left: 26px;
+  }
+  .program-zaman-cizgisi::before {
+    content: "";
+    position: absolute; left: 4px; top: 6px; bottom: 6px; width: 1px;
+    background: rgba(197, 160, 89, 0.35);
+  }
+  .zaman-satiri {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px 0;
+    position: relative;
+    text-align: left;
+  }
+  .zaman-ikon {
+    position: absolute; left: -26px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px;
+    stroke: var(--gold); fill: none; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .zaman-saat {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .zaman-baslik {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--coffee-dark);
+    font-weight: 500;
+    margin: 4px 0 0;
+  }
+
   /* Aksiyon Butonları */
   .aksiyon-grup {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-    margin-top: 36px;
+    margin-top: 26px;
     max-width: 340px;
   }
   .aksiyon-btn {
@@ -414,7 +499,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 40px;
+    margin-top: 34px;
     padding: 16px 20px;
     border-radius: 16px;
     border: 1px solid rgba(197, 160, 89, 0.4);
@@ -433,46 +518,7 @@
     border-color: var(--coffee-dark);
   }
 
-  /* ================= LCV MODAL ================= */
-  #lcv-modal {
-    position: absolute;
-    inset: 0;
-    z-index: 100;
-    background: rgba(42, 29, 20, 0.55);
-    backdrop-filter: blur(4px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  #lcv-modal.acik { display: flex; }
-
-  .lcv-kutu {
-    width: 100%;
-    max-width: 320px;
-    background: var(--cream);
-    border-radius: 18px;
-    padding: 28px 22px 22px;
-    position: relative;
-    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.5);
-    animation: lcv-belir 0.35s cubic-bezier(0.22,1,0.36,1);
-  }
-  @keyframes lcv-belir {
-    from { opacity: 0; transform: scale(0.94) translateY(10px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .lcv-kapat {
-    position: absolute;
-    top: 12px; right: 14px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    line-height: 1;
-    color: var(--coffee);
-    cursor: pointer;
-  }
-
+  /* LCV (Katılım Bildirimi) — akışın içine gömülü sahne */
   .lcv-baslik {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
@@ -487,14 +533,14 @@
     font-style: italic;
     color: var(--coffee);
     font-size: 0.9rem;
-    margin-bottom: 18px;
+    margin-bottom: 22px;
   }
 
   .katilim-secim {
     display: flex;
     gap: 8px;
     justify-content: center;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
   .katilim-btn {
     font-family: 'Montserrat', sans-serif;
@@ -515,7 +561,7 @@
     border-color: var(--coffee-dark);
   }
 
-  .lcv-alan { margin-bottom: 16px; }
+  .lcv-alan { margin-bottom: 18px; text-align: left; }
   .lcv-alan label {
     display: block;
     font-family: 'Montserrat', sans-serif;
@@ -524,6 +570,7 @@
     text-transform: uppercase;
     color: var(--coffee);
     margin-bottom: 6px;
+    text-align: center;
   }
   .lcv-alan input {
     width: 100%;
@@ -534,6 +581,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
     color: var(--ink);
+    text-align: center;
   }
   .lcv-alan input:focus { outline: none; border-color: var(--gold); }
 
@@ -553,19 +601,39 @@
   }
   .lcv-gonder:hover { background: var(--gold); color: var(--ink); }
 
-  #lcv-tesekkur {
+  .lcv-tesekkur {
     display: none;
     text-align: center;
     padding: 8px 0 4px;
   }
-  #lcv-tesekkur.gorunur { display: block; }
-  #lcv-tesekkur .buyuk {
+  .lcv-tesekkur.gorunur { display: block; }
+  .lcv-tesekkur .buyuk {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     color: var(--coffee-dark);
     display: block;
     margin-bottom: 6px;
   }
+
+  /* Alt Yüzen "Aşağı Kaydır" Kapsülü */
+  .floating-pill-bar {
+    position: absolute;
+    bottom: 22px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 40;
+  }
+  .scroll-pill-btn {
+    background: rgba(255, 251, 242, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(197, 160, 89, 0.5);
+    border-radius: 999px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .scroll-pill-btn:active { transform: scale(0.96); }
 </style>
 </head>
 <body>
@@ -574,9 +642,7 @@
 
     <!-- ================= 1. AÇILIŞ EKRANI ================= -->
     <div id="envelope-screen">
-      <button id="muhur-btn" class="muhur-btn" aria-label="Davetiyeyi aç">
-        <span class="muhur-etiket font-label">Davetiyeyi Açmak İçin<br>Mühre Dokunun</span>
-      </button>
+      <button id="muhur-btn" class="muhur-btn" aria-label="Davetiyeyi aç"></button>
     </div>
 
     <!-- ================= 2. VİDEO GEÇİŞ KATMANI ================= -->
@@ -586,115 +652,253 @@
       </video>
     </div>
 
-    <!-- ================= 3. İÇ SAYFA & METİN KATMANI ================= -->
+    <!-- ================= 3. İÇ SAYFA: DİKEY KAYDIRMALI AKIŞ ================= -->
     <div id="content-layer">
-      <div class="content-inner">
 
-        <!-- 1. Üst Karşılama Alanı -->
-        <h1 class="davet-baslik">
-          <span class="isim-parca">Elif</span><span class="davet-ve">&amp;</span><span class="isim-parca">Furkan</span>
-        </h1>
-        <p class="davet-metni">
-          Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
-        </p>
+      <!-- ============ KINA GECESİ AKIŞI ============ -->
+      <div id="panel-kina" class="etkinlik-panel aktif">
+        <div class="story-scroll-container">
 
-        <div class="ayrac"></div>
-
-        <!-- 2. Sekme Kutucukları -->
-        <div class="sekme-grup">
-          <button type="button" class="sekme-btn font-label aktif" data-sekme="kina" onclick="sekmeSec('kina')">🌸 Kına Gecesi</button>
-          <button type="button" class="sekme-btn font-label" data-sekme="dugun" onclick="sekmeSec('dugun')">💍 Düğün Töreni</button>
-        </div>
-
-        <!-- 3a. Kına Gecesi İçeriği -->
-        <div id="panel-kina" class="etkinlik-panel aktif">
-          <span class="etkinlik-tarih">24 Eylül 2026</span>
-          <span class="etkinlik-saat font-label">19:30</span>
-          <div class="etkinlik-ayrac-ince"></div>
-          <p class="etkinlik-mekan">Mekan Adı</p>
-          <span class="etkinlik-konum font-label">Konum, Şehir</span>
-
-          <div class="aksiyon-grup">
-            <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
-            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc('kina')">Kına İçin LCV Bildir</button>
-          </div>
-
-          <div class="gecis-kart font-label" onclick="sekmeSec('dugun')">
-            💍 Düğün Töreni Detayları İçin Tıklayın ➔
-          </div>
-        </div>
-
-        <!-- 3b. Düğün Töreni İçeriği -->
-        <div id="panel-dugun" class="etkinlik-panel">
-          <span class="etkinlik-tarih">26 Eylül 2026</span>
-          <span class="etkinlik-saat font-label">19:00</span>
-
-          <div class="sayac-grid">
-            <div>
-              <span id="cd-gun" class="sayac-rakam">00</span>
-              <span class="sayac-etiket">GÜN</span>
+          <!-- Sahne 1: Karşılama + Sekmeler -->
+          <section class="story-screen">
+            <div class="sahne-kutu">
+              <h1 class="davet-baslik">
+                <span class="isim-parca">Elif</span><span class="davet-ve">&amp;</span><span class="isim-parca">Furkan</span>
+              </h1>
+              <p class="davet-metni">
+                Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+              </p>
+              <div class="ayrac"></div>
+              <div class="sekme-grup">
+                <button type="button" class="sekme-btn font-label aktif" data-sekme="kina" onclick="sekmeSec('kina')">🌸 Kına Gecesi</button>
+                <button type="button" class="sekme-btn font-label" data-sekme="dugun" onclick="sekmeSec('dugun')">💍 Düğün Töreni</button>
+              </div>
             </div>
-            <div>
-              <span id="cd-saat" class="sayac-rakam">00</span>
-              <span class="sayac-etiket">SAAT</span>
+          </section>
+
+          <!-- Sahne 2: Kına Tarih & Saat -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Kına Gecesi</span>
+              <span class="etkinlik-tarih">24 Eylül 2026</span>
+              <span class="etkinlik-saat font-label">19:30</span>
             </div>
-            <div>
-              <span id="cd-dakika" class="sayac-rakam">00</span>
-              <span class="sayac-etiket">DAKİKA</span>
+          </section>
+
+          <!-- Sahne 3: Kına Mekanı + Harita -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <p class="etkinlik-mekan font-display">Mekan Adı</p>
+              <span class="etkinlik-konum font-label">Konum, Şehir</span>
+              <div class="aksiyon-grup">
+                <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
+              </div>
             </div>
-            <div>
-              <span id="cd-saniye" class="sayac-rakam">00</span>
-              <span class="sayac-etiket">SANİYE</span>
+          </section>
+
+          <!-- Sahne 4: Kına LCV + Geçiş Kartı -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="lcv-baslik">Kına Gecesi Katılım</span>
+              <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
+
+              <div id="lcv-tesekkur-kina" class="lcv-tesekkur">
+                <span class="buyuk">Teşekkürler</span>
+                <p class="lcv-alt" style="margin-bottom:0;">Yanıtınız alındı.</p>
+              </div>
+
+              <form id="lcv-form-kina" onsubmit="lcvGonder(event, 'kina')">
+                <div class="katilim-secim" data-form="kina">
+                  <button type="button" class="katilim-btn aktif" data-deger="evet" onclick="katilimSec(this)">Katılıyorum</button>
+                  <button type="button" class="katilim-btn" data-deger="hayir" onclick="katilimSec(this)">Katılamıyorum</button>
+                </div>
+                <input type="hidden" id="katilim-durumu-kina" value="evet">
+
+                <div class="lcv-alan">
+                  <label class="font-label">Adınız Soyadınız</label>
+                  <input type="text" required placeholder="Örn: Ayşe Yıldız">
+                </div>
+
+                <button type="submit" class="lcv-gonder font-label">Gönder</button>
+              </form>
+
+              <div class="gecis-kart font-label" onclick="sekmeSec('dugun')">
+                💍 Düğün Töreni Detayları İçin Tıklayın ➔
+              </div>
             </div>
-          </div>
+          </section>
 
-          <p class="etkinlik-mekan">Mekan Adı</p>
-          <span class="etkinlik-konum font-label">Konum, Şehir</span>
-
-          <div class="aksiyon-grup">
-            <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
-            <a id="takvim-link" href="#" download="elif-furkan-davet.ics" class="aksiyon-btn font-label">Takvime Ekle</a>
-            <button type="button" class="aksiyon-btn dolu font-label" onclick="lcvAc('dugun')">Düğün İçin LCV Bildir</button>
-          </div>
-
-          <div class="gecis-kart font-label" onclick="sekmeSec('kina')">
-            🌸 Kına Gecesi Detayları İçin Tıklayın ➔
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ================= LCV MODAL ================= -->
-    <div id="lcv-modal">
-      <div class="lcv-kutu">
-        <button class="lcv-kapat" onclick="lcvKapat()" aria-label="Kapat">&times;</button>
-
-        <div id="lcv-form-alani">
-          <span id="lcv-baslik" class="lcv-baslik font-display">Katılım Bildirimi</span>
-          <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
-
-          <form id="lcv-form" onsubmit="lcvGonder(event)">
-            <div class="katilim-secim">
-              <button type="button" class="katilim-btn aktif" data-deger="evet" onclick="katilimSec(this)">Katılıyorum</button>
-              <button type="button" class="katilim-btn" data-deger="hayir" onclick="katilimSec(this)">Katılamıyorum</button>
-            </div>
-            <input type="hidden" id="katilim-durumu" value="evet">
-
-            <div class="lcv-alan">
-              <label class="font-label">Adınız Soyadınız</label>
-              <input type="text" required placeholder="Örn: Ayşe Yıldız">
-            </div>
-
-            <button type="submit" class="lcv-gonder font-label">Gönder</button>
-          </form>
-        </div>
-
-        <div id="lcv-tesekkur">
-          <span class="buyuk font-display">Teşekkürler</span>
-          <p class="lcv-alt" style="margin-bottom:0;">Yanıtınız alındı.</p>
         </div>
       </div>
+
+      <!-- ============ DÜĞÜN TÖRENİ AKIŞI ============ -->
+      <div id="panel-dugun" class="etkinlik-panel">
+        <div class="story-scroll-container">
+
+          <!-- Sahne 1: Karşılama + Sekmeler -->
+          <section class="story-screen">
+            <div class="sahne-kutu">
+              <h1 class="davet-baslik">
+                <span class="isim-parca">Elif</span><span class="davet-ve">&amp;</span><span class="isim-parca">Furkan</span>
+              </h1>
+              <p class="davet-metni">
+                Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+              </p>
+              <div class="ayrac"></div>
+              <div class="sekme-grup">
+                <button type="button" class="sekme-btn font-label" data-sekme="kina" onclick="sekmeSec('kina')">🌸 Kına Gecesi</button>
+                <button type="button" class="sekme-btn font-label aktif" data-sekme="dugun" onclick="sekmeSec('dugun')">💍 Düğün Töreni</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 2: Ailelerimiz -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Ailelerimiz</span>
+              <div class="aile-grup">
+                <div>
+                  <span class="aile-adi">KAYA</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+                <div class="aile-ayrac-dikey"></div>
+                <div>
+                  <span class="aile-adi">DEMİR</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 3: Düğün Tarih & Saat -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Düğün Töreni</span>
+              <span class="etkinlik-tarih">26 Eylül 2026</span>
+              <span class="etkinlik-saat font-label">19:00</span>
+            </div>
+          </section>
+
+          <!-- Sahne 4: Canlı Geri Sayım -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="lcv-baslik">Buluşmaya Kalan</span>
+              <div class="sayac-grid">
+                <div>
+                  <span id="cd-gun" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">GÜN</span>
+                </div>
+                <div>
+                  <span id="cd-saat" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">SAAT</span>
+                </div>
+                <div>
+                  <span id="cd-dakika" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">DAKİKA</span>
+                </div>
+                <div>
+                  <span id="cd-saniye" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">SANİYE</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 5: Düğün Mekanı + Harita -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <p class="etkinlik-mekan font-display">Mekan Adı</p>
+              <span class="etkinlik-konum font-label">Konum, Şehir</span>
+              <div class="aksiyon-grup">
+                <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn font-label">Harita / Yol Tarifi</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 6: Davet Akışı (Timeline) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Davet Akışı</span>
+              <div class="program-zaman-cizgisi">
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16l-7.2 8v7M8 19h8"/>
+                  </svg>
+                  <div>
+                    <span class="zaman-saat">19:00</span>
+                    <h5 class="zaman-baslik">Kokteyl &amp; Karşılama</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="14" r="5"/>
+                    <circle cx="15" cy="14" r="5"/>
+                  </svg>
+                  <div>
+                    <span class="zaman-saat">20:00</span>
+                    <h5 class="zaman-baslik">Düğün Töreni</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2v6a1 1 0 0 1-2 0V2M4.5 2v6M8 2v6M5 8v14"/>
+                    <path d="M18 2c-1.8 1-3 3-3 5.5S16.2 12 18 13v9"/>
+                  </svg>
+                  <div>
+                    <span class="zaman-saat">21:00</span>
+                    <h5 class="zaman-baslik">Yemek &amp; Eğlence</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 7: Takvim + Düğün LCV + Geçiş Kartı -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="lcv-baslik">Düğün Töreni Katılım</span>
+              <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
+
+              <div class="aksiyon-grup" style="margin-top:0; margin-bottom:24px;">
+                <a id="takvim-link" href="#" download="elif-furkan-dugun.ics" class="aksiyon-btn font-label">Takvime Ekle</a>
+              </div>
+
+              <div id="lcv-tesekkur-dugun" class="lcv-tesekkur">
+                <span class="buyuk">Teşekkürler</span>
+                <p class="lcv-alt" style="margin-bottom:0;">Yanıtınız alındı.</p>
+              </div>
+
+              <form id="lcv-form-dugun" onsubmit="lcvGonder(event, 'dugun')">
+                <div class="katilim-secim" data-form="dugun">
+                  <button type="button" class="katilim-btn aktif" data-deger="evet" onclick="katilimSec(this)">Katılıyorum</button>
+                  <button type="button" class="katilim-btn" data-deger="hayir" onclick="katilimSec(this)">Katılamıyorum</button>
+                </div>
+                <input type="hidden" id="katilim-durumu-dugun" value="evet">
+
+                <div class="lcv-alan">
+                  <label class="font-label">Adınız Soyadınız</label>
+                  <input type="text" required placeholder="Örn: Ayşe Yıldız">
+                </div>
+
+                <button type="submit" class="lcv-gonder font-label">Gönder</button>
+              </form>
+
+              <div class="gecis-kart font-label" onclick="sekmeSec('kina')">
+                🌸 Kına Gecesi Detayları İçin Tıklayın ➔
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Alt Yüzen "Aşağı Kaydır" Kapsülü -->
+      <div class="floating-pill-bar">
+        <button onclick="scrollToNextStory()" class="scroll-pill-btn">
+          <span class="font-label" style="font-size:10px; color:var(--coffee-dark);">Aşağı Kaydır ↓</span>
+        </button>
+      </div>
+
     </div>
 
   </div>
@@ -719,18 +923,43 @@
         icsBitis: '20260926T200000Z'
       }
     };
-    function sekmeSec(anahtar) {
-      document.querySelectorAll('.sekme-btn').forEach(function (b) { b.classList.remove('aktif'); });
-      document.querySelector('.sekme-btn[data-sekme="' + anahtar + '"]').classList.add('aktif');
 
-      document.querySelectorAll('.etkinlik-panel').forEach(function (p) { p.classList.remove('aktif'); });
-      document.getElementById('panel-' + anahtar).classList.add('aktif');
-
-      // Geçiş kartı veya sekme değiştiğinde içerik alanı en üste kayar
-      document.getElementById('content-layer').scrollTo({ top: 0, behavior: 'smooth' });
+    /* ---------- Sahne Gözlemcisi: aktif sekmenin akışını izleyip kartları belirtir ---------- */
+    let sahneGozlemci = null;
+    function gozlemciKur(anahtar) {
+      if (sahneGozlemci) sahneGozlemci.disconnect();
+      const kok = document.querySelector('#panel-' + anahtar + ' .story-scroll-container');
+      if (!kok) return;
+      sahneGozlemci = new IntersectionObserver(function (girisler) {
+        girisler.forEach(function (giris) {
+          if (giris.isIntersecting) giris.target.classList.add('gorundu');
+        });
+      }, { root: kok, threshold: 0.35 });
+      kok.querySelectorAll('.kart-giris').forEach(function (el) { sahneGozlemci.observe(el); });
     }
 
-    /* Her sekmenin kendi Harita/Yol Tarifi bağlantısı + Düğün'ün .ics takvim bağlantısı — sabit, sekme değişiminden bağımsız */
+    function sekmeSec(anahtar) {
+      document.querySelectorAll('.sekme-btn').forEach(function (b) {
+        b.classList.toggle('aktif', b.dataset.sekme === anahtar);
+      });
+
+      document.querySelectorAll('.etkinlik-panel').forEach(function (p) { p.classList.remove('aktif'); });
+      const hedefPanel = document.getElementById('panel-' + anahtar);
+      hedefPanel.classList.add('aktif');
+
+      const kok = hedefPanel.querySelector('.story-scroll-container');
+      if (kok) kok.scrollTop = 0;
+
+      gozlemciKur(anahtar);
+    }
+
+    function scrollToNextStory() {
+      const kok = document.querySelector('.etkinlik-panel.aktif .story-scroll-container');
+      if (!kok) return;
+      kok.scrollTo({ top: kok.scrollTop + kok.clientHeight, behavior: 'smooth' });
+    }
+
+    /* Her sekmenin kendi Harita/Yol Tarifi bağlantısı + Düğün'ün .ics takvim bağlantısı */
     function baglantilariHazirla() {
       document.getElementById('harita-link-kina').href = 'https://maps.google.com/?q=' + ETKINLIKLER.kina.mapsSorgu;
       document.getElementById('harita-link-dugun').href = 'https://maps.google.com/?q=' + ETKINLIKLER.dugun.mapsSorgu;
@@ -760,24 +989,17 @@
       }
     }, 1000);
 
-    /* ---------- LCV Modal ---------- */
-    function lcvAc(anahtar) {
-      const baslik = anahtar === 'dugun' ? 'Düğün Töreni Katılım Bildirimi' : 'Kına Gecesi Katılım Bildirimi';
-      document.getElementById('lcv-baslik').textContent = baslik;
-      document.getElementById('lcv-modal').classList.add('acik');
-    }
-    function lcvKapat() {
-      document.getElementById('lcv-modal').classList.remove('acik');
-    }
+    /* ---------- LCV Formları (Kına / Düğün — akışa gömülü) ---------- */
     function katilimSec(btn) {
-      document.querySelectorAll('.katilim-btn').forEach(function (b) { b.classList.remove('aktif'); });
+      const grup = btn.closest('.katilim-secim');
+      grup.querySelectorAll('.katilim-btn').forEach(function (b) { b.classList.remove('aktif'); });
       btn.classList.add('aktif');
-      document.getElementById('katilim-durumu').value = btn.dataset.deger;
+      document.getElementById('katilim-durumu-' + grup.dataset.form).value = btn.dataset.deger;
     }
-    function lcvGonder(e) {
+    function lcvGonder(e, anahtar) {
       e.preventDefault();
-      document.getElementById('lcv-form-alani').style.display = 'none';
-      document.getElementById('lcv-tesekkur').classList.add('gorunur');
+      document.getElementById('lcv-form-' + anahtar).style.display = 'none';
+      document.getElementById('lcv-tesekkur-' + anahtar).classList.add('gorunur');
     }
 
     /* ---------- 1 & 2. Zarf Açılışı + Yavaş Çekim Video Geçişi ---------- */
@@ -795,6 +1017,7 @@
       videoLayer.classList.add('soluyor');
       contentLayer.classList.add('gorunur');
       baglantilariHazirla();
+      gozlemciKur('kina');
 
       setTimeout(function () {
         if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
@@ -823,8 +1046,9 @@
 
     revealVideo.addEventListener('ended', icerigeGec);
 
-    /* İlk yüklemede aksiyon linklerini hazırla (kullanıcı hızlıca mühre dokunursa boş kalmasın) */
+    /* İlk yüklemede aksiyon linklerini ve gözlemciyi hazırla (kullanıcı hızlıca mühre dokunursa boş kalmasın) */
     baglantilariHazirla();
+    gozlemciKur('kina');
   </script>
 
 </body>
