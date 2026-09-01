@@ -297,6 +297,51 @@
     color: var(--gold); text-transform: uppercase; font-weight: 600;
   }
 
+  /* Zeytin Dalı Ayracı */
+  .zeytin-dali { width: 100px; height: 20px; margin: 14px auto 10px; display: block; }
+
+  /* Ay Takvimi — zarif-onizleme.html'deki tam ay matrisi */
+  .ay-takvimi { max-width: 270px; margin: 4px auto 0; }
+  .ay-takvimi-baslik {
+    font-family: 'Bodoni Moda', serif; font-size: 13px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--coffee-dark); display: block; margin-bottom: 12px;
+  }
+  .ay-takvimi-grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 6px; column-gap: 2px; }
+  .ay-gun-adi {
+    font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: 0.06em;
+    color: var(--coffee); text-transform: uppercase; opacity: 0.75;
+  }
+  .ay-gun-sayi {
+    font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--coffee-dark);
+    width: 26px; height: 26px; line-height: 26px; margin: 0 auto; border-radius: 50%;
+  }
+  .ay-gun-sayi.bos { visibility: hidden; }
+  .ay-gun-sayi.secili {
+    border: 1.4px solid var(--coffee-dark); font-weight: 600; color: var(--coffee-dark);
+  }
+
+  /* Renk Paleti — Dress Code */
+  .renk-palet { display: flex; gap: 14px; justify-content: center; margin-top: 22px; }
+  .renk-daire {
+    width: 34px; height: 34px; border-radius: 50%;
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.5);
+  }
+
+  /* Ziyafet Menüsü */
+  .menu-alani { margin-top: 20px; text-align: center; }
+  .menu-bolum { margin-bottom: 16px; }
+  .menu-bolum-baslik {
+    font-family: 'Bodoni Moda', serif; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 4px;
+  }
+  .menu-madde { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--coffee-dark); margin: 0; }
+
+  /* Küçük onay notu (IBAN / Fotoğraf) */
+  .mini-onay {
+    margin-top: 10px; font-size: 11px; letter-spacing: 0.08em; color: var(--coffee);
+    font-family: 'Montserrat', sans-serif;
+  }
+
   .etkinlik-konum {
     font-family: 'Montserrat', sans-serif;
     font-size: 10px;
@@ -691,19 +736,67 @@
             </div>
           </section>
 
-          <!-- Sahne 3: Düğün Tarih, Saat & Takvim Yaprağı -->
+          <!-- Sahne 3: Düğün Tarih, Saat & Tam Ay Takvimi -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket">Tarih &amp; Saat</span>
               <p class="davet-metni" style="margin-top:12px; font-size:18px;">26 Eylül 2026 - Cumartesi | Saat: 19:00</p>
-              <div class="altin-igne"></div>
-              <div class="takvim-yapragi">
-                <span class="takvim-yapragi-ay">Eylül</span>
-                <span class="takvim-yapragi-gun">26</span>
-                <span class="takvim-yapragi-hafta">Cumartesi</span>
+
+              <svg class="zeytin-dali" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--coffee-soft)" stroke-width="1">
+                <line x1="2" y1="10" x2="98" y2="10"/>
+                <ellipse cx="20" cy="7" rx="5" ry="2.4" transform="rotate(-24 20 7)"/>
+                <ellipse cx="35" cy="13" rx="5" ry="2.4" transform="rotate(24 35 13)"/>
+                <ellipse cx="50" cy="7" rx="5" ry="2.4" transform="rotate(-24 50 7)"/>
+                <ellipse cx="65" cy="13" rx="5" ry="2.4" transform="rotate(24 65 13)"/>
+                <ellipse cx="80" cy="7" rx="5" ry="2.4" transform="rotate(-24 80 7)"/>
+              </svg>
+
+              <div class="ay-takvimi">
+                <span class="ay-takvimi-baslik">Eylül 2026</span>
+                <div class="ay-takvimi-grid">
+                  <span class="ay-gun-adi">PZT</span>
+                  <span class="ay-gun-adi">SAL</span>
+                  <span class="ay-gun-adi">ÇAR</span>
+                  <span class="ay-gun-adi">PER</span>
+                  <span class="ay-gun-adi">CUM</span>
+                  <span class="ay-gun-adi">CMT</span>
+                  <span class="ay-gun-adi">PAZ</span>
+                  <span class="ay-gun-sayi bos"></span>
+                  <span class="ay-gun-sayi">1</span>
+                  <span class="ay-gun-sayi">2</span>
+                  <span class="ay-gun-sayi">3</span>
+                  <span class="ay-gun-sayi">4</span>
+                  <span class="ay-gun-sayi">5</span>
+                  <span class="ay-gun-sayi">6</span>
+                  <span class="ay-gun-sayi">7</span>
+                  <span class="ay-gun-sayi">8</span>
+                  <span class="ay-gun-sayi">9</span>
+                  <span class="ay-gun-sayi">10</span>
+                  <span class="ay-gun-sayi">11</span>
+                  <span class="ay-gun-sayi">12</span>
+                  <span class="ay-gun-sayi">13</span>
+                  <span class="ay-gun-sayi">14</span>
+                  <span class="ay-gun-sayi">15</span>
+                  <span class="ay-gun-sayi">16</span>
+                  <span class="ay-gun-sayi">17</span>
+                  <span class="ay-gun-sayi">18</span>
+                  <span class="ay-gun-sayi">19</span>
+                  <span class="ay-gun-sayi">20</span>
+                  <span class="ay-gun-sayi">21</span>
+                  <span class="ay-gun-sayi">22</span>
+                  <span class="ay-gun-sayi">23</span>
+                  <span class="ay-gun-sayi">24</span>
+                  <span class="ay-gun-sayi">25</span>
+                  <span class="ay-gun-sayi secili">26</span>
+                  <span class="ay-gun-sayi">27</span>
+                  <span class="ay-gun-sayi">28</span>
+                  <span class="ay-gun-sayi">29</span>
+                  <span class="ay-gun-sayi">30</span>
+                </div>
               </div>
+
               <div class="aksiyon-grup">
-                <a id="takvim-link-dugun" href="#" download="elif-furkan-dugun.ics" class="aksiyon-btn">Takvime Ekle</a>
+                <a id="google-takvim-link-dugun" href="#" target="_blank" class="aksiyon-btn">Google Takvime Ekle</a>
               </div>
             </div>
           </section>
@@ -750,7 +843,115 @@
             </div>
           </section>
 
-          <!-- Sahne 6: LCV (Ekran Üzerinde) + Geçiş Kartı -->
+          <!-- Sahne 6: Kıyafet Kodu / Dress Code -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Kıyafet Kodu / Dress Code</span>
+              <p class="davet-metni" style="margin-top:14px; font-size:15px;">Zarafetinizi siyah, vizon ve krem tonlarıyla tamamlamanız dileğiyle.</p>
+              <div class="renk-palet">
+                <span class="renk-daire" style="background:#1C1C1C;"></span>
+                <span class="renk-daire" style="background:#A9917E;"></span>
+                <span class="renk-daire" style="background:#F3ECDF;"></span>
+                <span class="renk-daire" style="background:#C5A059;"></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 7: Düğün Programı (Timeline) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:18px;">Düğün Programı</span>
+              <div class="program-zaman-cizgisi">
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16l-7.2 8v7M8 19h8"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">19:00</span>
+                    <h5 class="zaman-baslik">Karşılama Kokteyli</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="14" r="5"/>
+                    <circle cx="15" cy="14" r="5"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">20:00</span>
+                    <h5 class="zaman-baslik">Nikah Töreni &amp; İlk Dans</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2v6a1 1 0 0 1-2 0V2M4.5 2v6M8 2v6M5 8v14"/>
+                    <path d="M18 2c-1.8 1-3 3-3 5.5S16.2 12 18 13v9"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">21:00</span>
+                    <h5 class="zaman-baslik">Yemek Töreni</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="18" r="3"/>
+                    <path d="M11 18V4l9-2v13"/>
+                    <circle cx="17" cy="15" r="3"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">23:00</span>
+                    <h5 class="zaman-baslik">Eğlence &amp; After Party</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 8: Ziyafet Menüsü -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:18px;">Ziyafet Menüsü</span>
+              <button type="button" class="aksiyon-btn" onclick="menuyuAcKapat()">Menüyü İncele</button>
+              <div id="menu-icerik" class="hidden menu-alani">
+                <div class="menu-bolum">
+                  <span class="menu-bolum-baslik">Başlangıç</span>
+                  <p class="menu-madde">Mevsim Yeşillikleri, Közlenmiş Biber Ezmesi</p>
+                </div>
+                <div class="menu-bolum">
+                  <span class="menu-bolum-baslik">Ana Yemek</span>
+                  <p class="menu-madde">Fırınlanmış Dana Bonfile, Safranlı Pilav</p>
+                </div>
+                <div class="menu-bolum">
+                  <span class="menu-bolum-baslik">Tatlı</span>
+                  <p class="menu-madde">Karamelize İncir, Vanilyalı Panna Cotta</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 9: Katkı & Hediye (IBAN) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Katkı &amp; Hediye</span>
+              <p class="davet-metni" style="font-size:15px;">En büyük hediyeniz yanımızda olmanızdır. Katkıda bulunmak isteyen sevdiklerimiz için;</p>
+              <button type="button" class="aksiyon-btn" style="margin-top:18px;" onclick="ibanKopyala()">IBAN'ı Kopyala</button>
+              <p id="iban-onay" class="hidden mini-onay">IBAN kopyalandı ✓</p>
+            </div>
+          </section>
+
+          <!-- Sahne 10: Misafir Anı Galerisi -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Bizimle Paylaşın</span>
+              <p class="davet-metni" style="font-size:15px;">Bu özel gecede çektiğiniz en güzel kareleri anı galerimize yükleyebilirsiniz.</p>
+              <label class="aksiyon-btn" style="margin-top:18px; cursor:pointer;">
+                📸 Fotoğraf Yükle / Anılar
+                <input type="file" accept="image/*" multiple onchange="fotografSecildi(this)" style="display:none;">
+              </label>
+              <p id="foto-onay" class="hidden mini-onay">Teşekkürler! Anılarınız için sabırsızlanıyoruz.</p>
+            </div>
+          </section>
+
+          <!-- Sahne 11: LCV (Ekran Üzerinde) + Müzik İsteği + Geçiş Kartı -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="baslik-editoryal-genis" style="font-size:1.05rem;">Düğün Töreni Katılım Bildirimi</span>
@@ -776,6 +977,11 @@
                     <option value="3">3 Kişi</option>
                     <option value="4+">4+ Kişi</option>
                   </select>
+                </div>
+
+                <div class="lcv-alan">
+                  <label>Müzik İsteği</label>
+                  <input type="text" placeholder="Gece çalmasını istediğiniz bir şarkı var mı?">
                 </div>
 
                 <button type="submit" class="onay-btn">GÖNDER</button>
@@ -881,6 +1087,44 @@
         const takvimEl = document.getElementById('takvim-link-' + anahtar);
         if (takvimEl) takvimEl.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsIcerik);
       });
+
+      const dugun = ETKINLIKLER.dugun;
+      const googleTakvimEl = document.getElementById('google-takvim-link-dugun');
+      if (googleTakvimEl) {
+        googleTakvimEl.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+          + '&text=' + encodeURIComponent('Elif & Furkan - ' + dugun.baslikOzet)
+          + '&dates=' + dugun.icsBaslangic + '/' + dugun.icsBitis
+          + '&location=' + encodeURIComponent(dugun.mekan + ', ' + dugun.konum)
+          + '&details=' + encodeURIComponent('Elif & Furkan ' + dugun.baslikOzet + ' davetlisiniz.');
+      }
+    }
+
+    /* ---------- Ziyafet Menüsü ---------- */
+    function menuyuAcKapat() {
+      document.getElementById('menu-icerik').classList.toggle('hidden');
+    }
+
+    /* ---------- IBAN Kopyalama ---------- */
+    const IBAN_NO = 'TR00 0000 0000 0000 0000 0000 00';
+    function ibanKopyala() {
+      const metin = IBAN_NO.replace(/\s/g, '');
+      const onay = document.getElementById('iban-onay');
+      const goster = function () {
+        onay.classList.remove('hidden');
+        setTimeout(function () { onay.classList.add('hidden'); }, 2500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(metin).then(goster).catch(goster);
+      } else {
+        goster();
+      }
+    }
+
+    /* ---------- Misafir Anı Galerisi ---------- */
+    function fotografSecildi(input) {
+      if (input.files && input.files.length) {
+        document.getElementById('foto-onay').classList.remove('hidden');
+      }
     }
 
     /* Canlı Geri Sayım Sayaçları — Kına (24 Eylül 19:30) ve Düğün (26 Eylül 19:00) ayrı ayrı */
