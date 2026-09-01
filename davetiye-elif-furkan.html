@@ -220,33 +220,27 @@
     line-height: 1.55;
   }
 
-  /* İyi Dilek Kutusu — sayacın altında şeffaf krem şerit */
-  .iyi-dilek-kutu {
-    background: rgba(255, 251, 242, 0.5);
-    border: 1px solid rgba(197, 160, 89, 0.35);
-    border-radius: 14px;
-    padding: 14px 18px;
-    margin: 18px auto 0;
-    max-width: 250px;
-  }
-  .iyi-dilek-kutu .davet-metni { max-width: 100%; font-size: 14px; margin: 0; }
-
-  /* Saray Şakayığı Motifi — saray-sakayigi.png (yatay ayraç düzeni) */
+  /* Saray Şakayığı Motifi — saray-sakayigi.png (doğal eğimli, koyulaştırılmış) */
   .motif-buyuk {
-    width: 92px; height: 92px; max-width: 92px;
-    margin: 12px auto; display: block;
-    transform: rotate(90deg);
+    width: 145px; height: 145px; max-width: 145px;
+    margin: 14px auto; display: block;
+    transform: rotate(-14deg);
+    filter: contrast(1.4) brightness(0.82) saturate(1.15);
   }
-  .motif-kucuk { width: 80px; height: auto; margin: 20px auto; display: block; }
+  .motif-kucuk {
+    width: 80px; height: auto; margin: 20px auto; display: block;
+    filter: contrast(1.4) brightness(0.82) saturate(1.15);
+  }
 
-  /* Sekmeler — buton yazıları Cinzel, geniş harf aralığı, büyük harf */
-  .sekme-grup { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  /* Sekmeler — buton yazıları Cinzel, geniş harf aralığı, büyük harf, ALT ALTA */
+  .sekme-grup { display: flex; flex-direction: column; gap: 10px; align-items: center; }
   .sekme-btn {
     font-family: 'Cinzel', serif;
     font-size: 10.5px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    padding: 10px 20px;
+    padding: 11px 20px;
+    min-width: 190px;
     border-radius: 999px;
     border: 1px solid rgba(90, 69, 56, 0.4);
     background: rgba(255, 251, 242, 0.6);
@@ -319,6 +313,14 @@
     font-size: 19px;
     color: var(--coffee-dark);
     margin: 0;
+  }
+
+  /* Mekan Pin İkonu — narin çizgi ikon */
+  .mekan-pin-ikon {
+    width: 26px; height: 26px;
+    display: block; margin: 0 auto 14px;
+    stroke: var(--coffee-soft); fill: none;
+    stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round;
   }
 
   /* Sayaç — zarif-onizleme.html'deki Vogue editoryal tipografi birebir */
@@ -432,43 +434,7 @@
   }
   .onay-btn:active { transform: scale(0.94); }
 
-  /* ================= LCV MODAL — aynı krem/alçı doku stiliyle ================= */
-  #lcv-modal {
-    position: absolute; inset: 0; z-index: 100;
-    background: rgba(42, 29, 20, 0.55);
-    backdrop-filter: blur(4px);
-    display: none; align-items: center; justify-content: center; padding: 20px;
-  }
-  #lcv-modal.acik { display: flex; }
-
-  .lcv-kutu {
-    width: 100%; max-width: 320px;
-    border-radius: 20px;
-    padding: 30px 24px 24px;
-    position: relative;
-    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.5);
-    animation: lcv-belir 0.35s cubic-bezier(0.22,1,0.36,1);
-    background-image: url('card-background.jpg');
-    background-size: cover; background-position: center;
-    overflow: hidden;
-  }
-  .lcv-kutu::before {
-    content: ""; position: absolute; inset: 0;
-    background: rgba(255, 251, 242, 0.82);
-    z-index: 0;
-  }
-  .lcv-kutu > * { position: relative; z-index: 1; }
-  @keyframes lcv-belir {
-    from { opacity: 0; transform: scale(0.94) translateY(10px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .lcv-kapat {
-    position: absolute; top: 14px; right: 16px; z-index: 2;
-    background: none; border: none; font-size: 20px; line-height: 1;
-    color: var(--coffee); cursor: pointer;
-  }
-
+  /* ================= LCV — ekran üzerinde doğrudan ================= */
   .lcv-alt { text-align: center; font-style: italic; color: var(--coffee); font-size: 0.92rem; margin: 8px 0 20px; }
 
   .katilim-secim { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
@@ -619,20 +585,22 @@
                   <span class="sayac-etiket">SANİYE</span>
                 </div>
               </div>
-              <div class="iyi-dilek-kutu">
-                <p class="davet-metni">"Kınamızda sizlerle olmanın heyecanını yaşıyoruz."</p>
-              </div>
+              <p class="davet-metni" style="margin-top:20px; font-size:15px;">"Kınamızda sizlerle olmanın heyecanını yaşıyoruz."</p>
             </div>
           </section>
 
-          <!-- Sahne 5: Kutlama Mekanı + Açık Adres + Harita -->
+          <!-- Sahne 5: Kutlama Mekanı + Açık Adres + Harita (zarif-onizleme birebir) -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket" style="margin-bottom:14px;">Kutlama Mekanı</span>
-              <p class="etkinlik-mekan">Seslenç Events</p>
+              <svg class="mekan-pin-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/>
+                <circle cx="12" cy="9" r="2.3"/>
+              </svg>
+              <p class="etkinlik-mekan">Ses Lounge Events</p>
               <span class="etkinlik-konum">Bursa</span>
               <div class="aksiyon-grup">
-                <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn">Konuma Git</a>
+                <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn">Konuma Git &amp; Yol Tarifi ➔</a>
               </div>
             </div>
           </section>
@@ -702,25 +670,45 @@
             </div>
           </section>
 
-          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı -->
+          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <p class="davet-metni">
-                Hayatımızın bu en özel gününde, mutluluğumuzu sizinle paylaşmaktan onur duyarız.
+                Hayatımızın en özel başlangıcına, sevdiklerimizle birlikte adım atmak dileğiyle.
               </p>
               <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-kucuk">
+              <div class="aile-grup">
+                <div>
+                  <span class="aile-adi">KILIÇ</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+                <div class="aile-ayrac-dikey"></div>
+                <div>
+                  <span class="aile-adi">DEMİR</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+              </div>
             </div>
           </section>
 
-          <!-- Sahne 3: Düğün Tarih & Saat -->
+          <!-- Sahne 3: Düğün Tarih, Saat & Takvim Yaprağı -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket">Tarih &amp; Saat</span>
-              <p class="davet-metni" style="margin-top:12px; font-size:18px;">26 Eylül 2026 &middot; Cumartesi | Saat: 19:00</p>
+              <p class="davet-metni" style="margin-top:12px; font-size:18px;">26 Eylül 2026 - Cumartesi | Saat: 19:00</p>
+              <div class="altin-igne"></div>
+              <div class="takvim-yapragi">
+                <span class="takvim-yapragi-ay">Eylül</span>
+                <span class="takvim-yapragi-gun">26</span>
+                <span class="takvim-yapragi-hafta">Cumartesi</span>
+              </div>
+              <div class="aksiyon-grup">
+                <a id="takvim-link-dugun" href="#" download="elif-furkan-dugun.ics" class="aksiyon-btn">Takvime Ekle</a>
+              </div>
             </div>
           </section>
 
-          <!-- Sahne 4: Canlı Geri Sayım -->
+          <!-- Sahne 4: Buluşmaya Kalan Sayaç & İyi Dilek -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="baslik-sayac">Buluşmaya Kalan</span>
@@ -742,68 +730,61 @@
                   <span class="sayac-etiket">SANİYE</span>
                 </div>
               </div>
-              <p class="davet-metni" style="margin-top:22px; font-size:16px;">
-                "Sizinle bu anı paylaşmak için sabırsızlanıyoruz."
-              </p>
+              <p class="davet-metni" style="margin-top:20px; font-size:15px;">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
             </div>
           </section>
 
-          <!-- Sahne 5: Mekan + Açık Adres + Harita + Takvim -->
+          <!-- Sahne 5: Kutlama Mekanı + Açık Adres + Harita (zarif-onizleme birebir) -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket" style="margin-bottom:14px;">Kutlama Mekanı</span>
-              <p class="etkinlik-mekan">Mekan Adı</p>
-              <span class="etkinlik-konum">Açık Adres, Konum, Şehir</span>
+              <svg class="mekan-pin-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/>
+                <circle cx="12" cy="9" r="2.3"/>
+              </svg>
+              <p class="etkinlik-mekan">Ses Lounge Events</p>
+              <span class="etkinlik-konum">Bursa</span>
               <div class="aksiyon-grup">
-                <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn">📍 Konuma Git / Harita</a>
-                <a id="takvim-link-dugun" href="#" download="elif-furkan-dugun.ics" class="aksiyon-btn">📅 Takvime Ekle</a>
+                <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn">Konuma Git &amp; Yol Tarifi ➔</a>
               </div>
             </div>
           </section>
 
-          <!-- Sahne 6: Davet Akışı (Timeline) -->
+          <!-- Sahne 6: LCV (Ekran Üzerinde) + Geçiş Kartı -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
-              <span class="sahne-etiket" style="margin-bottom:18px;">Davet Akışı</span>
-              <div class="program-zaman-cizgisi">
-                <div class="zaman-satiri">
-                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4h16l-7.2 8v7M8 19h8"/>
-                  </svg>
-                  <div class="zaman-metin">
-                    <span class="zaman-saat">19:00</span>
-                    <h5 class="zaman-baslik">Kokteyl &amp; Karşılama</h5>
-                  </div>
-                </div>
-                <div class="zaman-satiri">
-                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="9" cy="14" r="5"/>
-                    <circle cx="15" cy="14" r="5"/>
-                  </svg>
-                  <div class="zaman-metin">
-                    <span class="zaman-saat">20:00</span>
-                    <h5 class="zaman-baslik">Düğün Töreni</h5>
-                  </div>
-                </div>
-                <div class="zaman-satiri">
-                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 2v6a1 1 0 0 1-2 0V2M4.5 2v6M8 2v6M5 8v14"/>
-                    <path d="M18 2c-1.8 1-3 3-3 5.5S16.2 12 18 13v9"/>
-                  </svg>
-                  <div class="zaman-metin">
-                    <span class="zaman-saat">21:00</span>
-                    <h5 class="zaman-baslik">Yemek &amp; Eğlence</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+              <span class="baslik-editoryal-genis" style="font-size:1.05rem;">Düğün Töreni Katılım Bildirimi</span>
+              <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
 
-          <!-- Sahne 7: LCV + Geçiş Kartı -->
-          <section class="story-screen">
-            <div class="sahne-kutu kart-giris">
-              <span class="sahne-etiket" style="margin-bottom:20px;">Katılımınızı Bildirin</span>
-              <button type="button" class="onay-btn" onclick="lcvAc('dugun')">DÜĞÜN İÇİN LCV BİLDİR</button>
+              <form id="dugun-lcv-form" onsubmit="submitInlineLCV(event,'dugun')">
+                <div class="katilim-secim">
+                  <button type="button" class="katilim-chip aktif" onclick="katilimSecInline(this,'dugun','evet')">Geliyorum</button>
+                  <button type="button" class="katilim-chip" onclick="katilimSecInline(this,'dugun','hayir')">Gelemiyorum</button>
+                </div>
+                <input type="hidden" id="dugun-katilim-durumu" value="evet">
+
+                <div class="lcv-alan">
+                  <label>Adınız Soyadınız</label>
+                  <input type="text" required placeholder="Örn: Ayşe Yıldız">
+                </div>
+
+                <div class="lcv-alan">
+                  <label>Kişi Sayısı</label>
+                  <select id="dugun-kisi-sayisi">
+                    <option value="1">1 Kişi</option>
+                    <option value="2">2 Kişi</option>
+                    <option value="3">3 Kişi</option>
+                    <option value="4+">4+ Kişi</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="onay-btn">GÖNDER</button>
+              </form>
+
+              <div id="dugun-lcv-tesekkur" class="hidden" style="text-align:center; padding:10px 0;">
+                <span style="font-family:'Pinyon Script', cursive; font-size:2.3rem; color:var(--coffee-dark); display:block; margin-bottom:4px;">Teşekkürler</span>
+                <h4 class="font-baslik-etiket" style="font-size:11px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
+              </div>
 
               <div class="gecis-kart font-baslik-etiket" onclick="sekmeSec('kina')">
                 KINA GECESİ DETAYLARI İÇİN TIKLAYIN ➔
@@ -828,64 +809,22 @@
 
   </div>
 
-  <!-- ================= LCV MODAL ================= -->
-  <div id="lcv-modal">
-    <div class="lcv-kutu">
-      <button class="lcv-kapat" onclick="lcvKapat()" aria-label="Kapat">&times;</button>
-
-      <div id="lcv-form-alani">
-        <span id="lcv-baslik" class="baslik-editoryal-genis">Katılım Bildirimi</span>
-        <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
-
-        <form id="lcv-form" onsubmit="submitLCV(event)">
-          <div class="katilim-secim">
-            <button type="button" class="katilim-chip aktif" onclick="katilimSec(this,'evet')">Geliyorum</button>
-            <button type="button" class="katilim-chip" onclick="katilimSec(this,'hayir')">Gelemiyorum</button>
-          </div>
-          <input type="hidden" id="katilim-durumu" value="evet">
-
-          <div class="lcv-alan">
-            <label>Adınız Soyadınız</label>
-            <input type="text" required placeholder="Örn: Ayşe Yıldız">
-          </div>
-
-          <div class="lcv-alan">
-            <label>Kişi Sayısı</label>
-            <select id="kisi-sayisi">
-              <option value="1">1 Kişi</option>
-              <option value="2">2 Kişi</option>
-              <option value="3">3 Kişi</option>
-              <option value="4+">4+ Kişi</option>
-            </select>
-          </div>
-
-          <button type="submit" class="onay-btn">GÖNDER</button>
-        </form>
-      </div>
-
-      <div id="lcv-tesekkur" class="hidden" style="text-align:center; padding:14px 0;">
-        <span class="font-govde" style="font-family:'Pinyon Script', cursive; font-size:2.6rem; color:var(--coffee-dark); display:block; margin-bottom:6px;">Teşekkürler</span>
-        <h4 class="font-baslik-etiket" style="font-size:12px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
-      </div>
-    </div>
-  </div>
-
   <script>
     /* ---------- Etkinlik Verileri (Kına / Düğün) ---------- */
     const ETKINLIKLER = {
       kina: {
         baslikOzet: 'Kina Gecesi',
-        mekan: 'Seslenc Events',
+        mekan: 'Ses Lounge Events',
         konum: 'Bursa',
-        mapsSorgu: 'Seslenc+Events,+Bursa',
+        mapsSorgu: 'Ses+Lounge+Events,+Bursa',
         icsBaslangic: '20260924T163000Z',
         icsBitis: '20260924T203000Z'
       },
       dugun: {
         baslikOzet: 'Dugun Toreni',
-        mekan: 'Mekan Adi',
-        konum: 'Acik Adres, Konum, Sehir',
-        mapsSorgu: 'Mekan+Adi,+Konum,+Sehir',
+        mekan: 'Ses Lounge Events',
+        konum: 'Bursa',
+        mapsSorgu: 'Ses+Lounge+Events,+Bursa',
         icsBaslangic: '20260926T160000Z',
         icsBitis: '20260926T200000Z'
       }
@@ -972,32 +911,7 @@
       }
     }
 
-    /* ---------- LCV Modal (Düğün — Kına artık ekranda doğrudan) ---------- */
-    let aktifLcvEtkinlik = 'kina';
-    function lcvAc(anahtar) {
-      aktifLcvEtkinlik = anahtar;
-      const baslik = anahtar === 'dugun' ? 'Düğün Töreni Katılım' : 'Kına Gecesi Katılım';
-      document.getElementById('lcv-baslik').textContent = baslik;
-      document.getElementById('lcv-form-alani').classList.remove('hidden');
-      document.getElementById('lcv-tesekkur').classList.add('hidden');
-      document.getElementById('lcv-form').reset();
-      document.getElementById('lcv-modal').classList.add('acik');
-    }
-    function lcvKapat() {
-      document.getElementById('lcv-modal').classList.remove('acik');
-    }
-    function katilimSec(btn, deger) {
-      document.querySelectorAll('.katilim-chip').forEach(function (c) { c.classList.remove('aktif'); });
-      btn.classList.add('aktif');
-      document.getElementById('katilim-durumu').value = deger;
-    }
-    function submitLCV(e) {
-      e.preventDefault();
-      document.getElementById('lcv-form-alani').classList.add('hidden');
-      document.getElementById('lcv-tesekkur').classList.remove('hidden');
-    }
-
-    /* ---------- Kına LCV — ekran üzerinde doğrudan (modal değil) ---------- */
+    /* ---------- Kına & Düğün LCV — ekran üzerinde doğrudan (modal yok) ---------- */
     function katilimSecInline(btn, anahtar, deger) {
       btn.closest('.katilim-secim').querySelectorAll('.katilim-chip').forEach(function (c) { c.classList.remove('aktif'); });
       btn.classList.add('aktif');
