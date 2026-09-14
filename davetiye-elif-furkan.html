@@ -128,7 +128,7 @@
     position: absolute; inset: 0; z-index: 60;
     background: var(--coffee-dark);
     opacity: 0; pointer-events: none;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.15s linear;
   }
   #video-layer.gorunur { opacity: 1; pointer-events: auto; }
   #video-layer.soluyor { opacity: 0; }
@@ -142,7 +142,7 @@
     background-image: url('card-background.jpg');
     background-size: cover; background-position: center; background-repeat: no-repeat;
     background-color: var(--cream);
-    transition: opacity 1.1s ease;
+    transition: opacity 0.1s linear;
   }
   #content-layer.gorunur { opacity: 1; }
   #content-layer::before {
@@ -152,9 +152,8 @@
     z-index: 0; pointer-events: none;
   }
 
-  .etkinlik-panel { display: none; position: absolute; inset: 0; z-index: 1; animation: panel-belir 0.5s ease; }
+  .etkinlik-panel { display: none; position: absolute; inset: 0; z-index: 1; }
   .etkinlik-panel.aktif { display: block; }
-  @keyframes panel-belir { from { opacity: 0; } to { opacity: 1; } }
 
   .story-scroll-container {
     width: 100%; height: 100%;
@@ -220,18 +219,6 @@
     line-height: 1.55;
   }
 
-  /* Saray Şakayığı Motifi — saray-sakayigi.png (doğal eğimli, koyulaştırılmış) */
-  .motif-buyuk {
-    width: 145px; height: 145px; max-width: 145px;
-    margin: 14px auto; display: block;
-    transform: rotate(-14deg);
-    filter: contrast(1.4) brightness(0.82) saturate(1.15);
-  }
-  .motif-kucuk {
-    width: 80px; height: auto; margin: 20px auto; display: block;
-    filter: contrast(1.4) brightness(0.82) saturate(1.15);
-  }
-
   /* Sekmeler — buton yazıları Cinzel, geniş harf aralığı, büyük harf, ALT ALTA */
   .sekme-grup { display: flex; flex-direction: column; gap: 10px; align-items: center; }
   .sekme-btn {
@@ -266,12 +253,39 @@
     color: var(--coffee); text-transform: uppercase; display: block; margin-top: 4px;
   }
 
-  /* Altın İğne Motifi — Tarih & Saat ayracı */
-  .altin-igne { width: 1px; height: 24px; background: var(--gold); margin: 20px auto; position: relative; }
-  .altin-igne::before {
-    content: ""; position: absolute; top: 50%; left: 50%;
-    width: 6px; height: 6px; background: var(--gold);
-    transform: translate(-50%, -50%) rotate(45deg);
+  /* Saray Şakayığı Motifi — saray-sakayigi.png (doğal eğimli, koyulaştırılmış) */
+  .motif-buyuk {
+    width: 145px; height: 145px; max-width: 145px;
+    margin: 14px auto; display: block;
+    transform: rotate(-14deg);
+    filter: contrast(1.4) brightness(0.82) saturate(1.15);
+  }
+  .motif-kucuk {
+    width: 80px; height: auto; margin: 20px auto; display: block;
+    filter: contrast(1.4) brightness(0.82) saturate(1.15);
+  }
+
+  /* Zeytin Dalı Ayracı */
+  .zeytin-dali { width: 100px; height: 20px; margin: 14px auto 10px; display: block; }
+
+  /* Ay Takvimi — zarif-onizleme.html'deki tam ay matrisi */
+  .ay-takvimi { max-width: 270px; margin: 4px auto 0; }
+  .ay-takvimi-baslik {
+    font-family: 'Bodoni Moda', serif; font-size: 13px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--coffee-dark); display: block; margin-bottom: 12px;
+  }
+  .ay-takvimi-grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 6px; column-gap: 2px; }
+  .ay-gun-adi {
+    font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: 0.06em;
+    color: var(--coffee); text-transform: uppercase; opacity: 0.75;
+  }
+  .ay-gun-sayi {
+    font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--coffee-dark);
+    width: 26px; height: 26px; line-height: 26px; margin: 0 auto; border-radius: 50%;
+  }
+  .ay-gun-sayi.bos { visibility: hidden; }
+  .ay-gun-sayi.secili {
+    border: 1.4px solid var(--coffee-dark); font-weight: 600; color: var(--coffee-dark);
   }
 
   /* Takvim Yaprağı — şık tek günlük takvim kartı */
@@ -297,27 +311,12 @@
     color: var(--gold); text-transform: uppercase; font-weight: 600;
   }
 
-  /* Zeytin Dalı Ayracı */
-  .zeytin-dali { width: 100px; height: 20px; margin: 14px auto 10px; display: block; }
-
-  /* Ay Takvimi — zarif-onizleme.html'deki tam ay matrisi */
-  .ay-takvimi { max-width: 270px; margin: 4px auto 0; }
-  .ay-takvimi-baslik {
-    font-family: 'Bodoni Moda', serif; font-size: 13px; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--coffee-dark); display: block; margin-bottom: 12px;
-  }
-  .ay-takvimi-grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 6px; column-gap: 2px; }
-  .ay-gun-adi {
-    font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: 0.06em;
-    color: var(--coffee); text-transform: uppercase; opacity: 0.75;
-  }
-  .ay-gun-sayi {
-    font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--coffee-dark);
-    width: 26px; height: 26px; line-height: 26px; margin: 0 auto; border-radius: 50%;
-  }
-  .ay-gun-sayi.bos { visibility: hidden; }
-  .ay-gun-sayi.secili {
-    border: 1.4px solid var(--coffee-dark); font-weight: 600; color: var(--coffee-dark);
+  /* Altın İğne Motifi — Tarih & Saat ayracı */
+  .altin-igne { width: 1px; height: 24px; background: var(--gold); margin: 20px auto; position: relative; }
+  .altin-igne::before {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 6px; height: 6px; background: var(--gold);
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 
   /* Renk Paleti — Dress Code */
@@ -443,8 +442,6 @@
   .zaman-saat { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.14em; color: var(--coffee); font-weight: 600; text-transform: uppercase; }
   .zaman-baslik { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--coffee-dark); font-weight: 400; margin: 3px 0 0; }
   .kart-giris.gorundu .zaman-satiri { opacity: 1; transform: none; }
-  .kart-giris.gorundu .zaman-satiri:nth-child(2) { transition-delay: 0.18s; }
-  .kart-giris.gorundu .zaman-satiri:nth-child(3) { transition-delay: 0.36s; }
 
   /* Aksiyon Butonları — zarif-onizleme.html'deki .aksiyon-btn birebir */
   .aksiyon-grup { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 24px; max-width: 340px; }
@@ -458,18 +455,6 @@
     text-decoration: none; cursor: pointer; transition: all 0.2s ease;
   }
   .aksiyon-btn:hover { background: var(--coffee-dark); color: var(--cream); }
-
-  /* Geçiş Kartı: diğer etkinliğe yönlendiren tıklanabilir kart */
-  .gecis-kart {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin-top: 34px; padding: 16px 20px; border-radius: 16px;
-    border: 1px solid rgba(90, 69, 56, 0.35);
-    background: rgba(255, 251, 242, 0.4);
-    color: var(--coffee-dark);
-    font-size: 10.5px;
-    cursor: pointer; transition: all 0.25s ease;
-  }
-  .gecis-kart:hover { background: var(--coffee-dark); color: var(--cream); border-color: var(--coffee-dark); }
 
   /* RSVP — zarif-onizleme.html'deki lüks & interaktif katılım bildirimi birebir */
   .baslik-editoryal-genis {
@@ -570,7 +555,6 @@
                 <span class="davet-ve">&amp;</span>
                 <span class="isim-parca">Furkan</span>
               </div>
-              <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-buyuk">
               <div class="sekme-grup">
                 <button type="button" class="sekme-btn aktif" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
                 <button type="button" class="sekme-btn" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
@@ -692,10 +676,6 @@
               <div id="kina-lcv-tesekkur" class="hidden" style="text-align:center; padding:10px 0;">
                 <span style="font-family:'Pinyon Script', cursive; font-size:2.3rem; color:var(--coffee-dark); display:block; margin-bottom:4px;">Teşekkürler</span>
                 <h4 class="font-baslik-etiket" style="font-size:11px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
-              </div>
-
-              <div class="gecis-kart font-baslik-etiket" onclick="sekmeSec('dugun')">
-                DÜĞÜN TÖRENİ DETAYLARI İÇİN TIKLAYIN ➔
               </div>
             </div>
           </section>
@@ -851,21 +831,7 @@
             </div>
           </section>
 
-          <!-- Sahne 6: Kıyafet Kodu / Dress Code -->
-          <section class="story-screen">
-            <div class="sahne-kutu kart-giris">
-              <span class="sahne-etiket">Kıyafet Kodu / Dress Code</span>
-              <p class="davet-metni" style="margin-top:14px; font-size:15px;">Zarafetinizi siyah, vizon ve krem tonlarıyla tamamlamanız dileğiyle.</p>
-              <div class="renk-palet">
-                <span class="renk-daire" style="background:#1C1C1C;"></span>
-                <span class="renk-daire" style="background:#A9917E;"></span>
-                <span class="renk-daire" style="background:#F3ECDF;"></span>
-                <span class="renk-daire" style="background:#C5A059;"></span>
-              </div>
-            </div>
-          </section>
-
-          <!-- Sahne 7: Düğün Programı (Timeline) -->
+          <!-- Sahne 6: Düğün Programı (Timeline) -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket" style="margin-bottom:18px;">Düğün Programı</span>
@@ -914,7 +880,7 @@
             </div>
           </section>
 
-          <!-- Sahne 8: Davet Menüsü -->
+          <!-- Sahne 7: Davet Menüsü -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket" style="margin-bottom:18px;">Davet Menüsü</span>
@@ -931,6 +897,20 @@
                   <span class="menu-bolum-baslik">Tatlı</span>
                   <p class="menu-madde">Karamelize İncir, Vanilyalı Panna Cotta</p>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 8: Kıyafet Kodu / Dress Code -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Kıyafet Kodu / Dress Code</span>
+              <p class="davet-metni" style="margin-top:14px; font-size:15px;">Zarafetinizi siyah, vizon ve krem tonlarıyla tamamlamanız dileğiyle.</p>
+              <div class="renk-palet">
+                <span class="renk-daire" style="background:#1C1C1C;"></span>
+                <span class="renk-daire" style="background:#A9917E;"></span>
+                <span class="renk-daire" style="background:#F3ECDF;"></span>
+                <span class="renk-daire" style="background:#C5A059;"></span>
               </div>
             </div>
           </section>
@@ -958,7 +938,7 @@
             </div>
           </section>
 
-          <!-- Sahne 11: LCV (Ekran Üzerinde) + Müzik İsteği + Geçiş Kartı -->
+          <!-- Sahne 11: LCV (Ekran Üzerinde) + Müzik İsteği -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="baslik-editoryal-genis" style="font-size:1.05rem;">Düğün Töreni Katılım Bildirimi</span>
@@ -998,24 +978,19 @@
                 <span style="font-family:'Pinyon Script', cursive; font-size:2.3rem; color:var(--coffee-dark); display:block; margin-bottom:4px;">Teşekkürler</span>
                 <h4 class="font-baslik-etiket" style="font-size:11px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
               </div>
-
-              <div class="gecis-kart font-baslik-etiket" onclick="sekmeSec('kina')">
-                KINA GECESİ DETAYLARI İÇİN TIKLAYIN ➔
-              </div>
             </div>
           </section>
 
           <!-- Sahne 12: Teşekkür Ekranı & Marka İmzası -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
-              <p class="davet-metni" style="font-size:17px;">Bu Özel Günümüzde Yanımızda Olduğunuz İçin Teşekkür Ederiz.</p>
+              <p class="davet-metni" style="font-size:17px;">Bu özel günümüzde yanımızda olduğunuz için teşekkür ederiz.</p>
               <svg class="zeytin-dali" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--coffee-soft)" stroke-width="1">
                 <line x1="2" y1="10" x2="98" y2="10"/>
                 <ellipse cx="20" cy="7" rx="5" ry="2.4" transform="rotate(-24 20 7)"/>
                 <ellipse cx="35" cy="13" rx="5" ry="2.4" transform="rotate(24 35 13)"/>
                 <ellipse cx="50" cy="7" rx="5" ry="2.4" transform="rotate(-24 50 7)"/>
-                <ellipse cx="65" cy="13" rx="5" ry="2.4" transform="rotate(24 65 13)"/>
-                <ellipse cx="80" cy="7" rx="5" ry="2.4" transform="rotate(-24 80 7)"/>
+                <ellipse cx="65" cy="13" rx="5" ry="2.4" transform="rotate(-24 80 7)"/>
               </svg>
               <span class="marka-imza"><span class="marka-vurgu">DAVET &amp; CO.</span> | Dijital Davetiye Deneyimi</span>
             </div>
@@ -1200,10 +1175,8 @@
       contentLayer.classList.add('gorunur');
       baglantilariHazirla();
       gozlemciKur('kina');
-      setTimeout(function () {
-        if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
-        if (envelopeScreen.parentNode) envelopeScreen.parentNode.removeChild(envelopeScreen);
-      }, 1000);
+      if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
+      if (envelopeScreen.parentNode) envelopeScreen.parentNode.removeChild(envelopeScreen);
     }
 
     revealVideo.addEventListener('loadedmetadata', function () {
