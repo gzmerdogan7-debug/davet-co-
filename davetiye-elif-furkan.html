@@ -573,7 +573,7 @@
       <div id="panel-kina" class="etkinlik-panel aktif">
         <div class="story-scroll-container">
 
-          <!-- Sahne 1: İsimler (3 satır) + Sekmeler -->
+          <!-- Sahne 1: İsimler (Ana Açılış) -->
           <section class="story-screen">
             <div class="sahne-kutu">
               <div class="isimler-wrapper">
@@ -581,14 +581,10 @@
                 <span class="davet-ve">&amp;</span>
                 <span class="isim-parca">Ceyhun</span>
               </div>
-              <div class="sekme-grup">
-                <button type="button" class="sekme-btn aktif" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
-                <button type="button" class="sekme-btn" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
-              </div>
             </div>
           </section>
 
-          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler -->
+          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler + Etkinlik Seçimi -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <p class="davet-metni">
@@ -605,6 +601,10 @@
                   <span class="aile-adi">DEMİR</span>
                   <span class="aile-etiket">Ailesi</span>
                 </div>
+              </div>
+              <div class="sekme-grup" style="margin-top:24px;">
+                <button type="button" class="sekme-btn aktif" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
+                <button type="button" class="sekme-btn" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
               </div>
             </div>
           </section>
@@ -713,7 +713,7 @@
       <div id="panel-dugun" class="etkinlik-panel">
         <div class="story-scroll-container">
 
-          <!-- Sahne 1: İsimler (3 satır) + Sekmeler -->
+          <!-- Sahne 1: İsimler (Ana Açılış) -->
           <section class="story-screen">
             <div class="sahne-kutu">
               <div class="isimler-wrapper">
@@ -722,14 +722,10 @@
                 <span class="isim-parca">Ceyhun</span>
               </div>
               <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-buyuk">
-              <div class="sekme-grup">
-                <button type="button" class="sekme-btn" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
-                <button type="button" class="sekme-btn aktif" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
-              </div>
             </div>
           </section>
 
-          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler -->
+          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler + Etkinlik Seçimi -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris">
               <p class="davet-metni">
@@ -746,6 +742,10 @@
                   <span class="aile-adi">DEMİR</span>
                   <span class="aile-etiket">Ailesi</span>
                 </div>
+              </div>
+              <div class="sekme-grup" style="margin-top:24px;">
+                <button type="button" class="sekme-btn" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
+                <button type="button" class="sekme-btn aktif" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
               </div>
             </div>
           </section>
