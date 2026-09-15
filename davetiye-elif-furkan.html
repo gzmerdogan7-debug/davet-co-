@@ -456,6 +456,18 @@
   }
   .aksiyon-btn:hover { background: var(--coffee-dark); color: var(--cream); }
 
+  /* Geçiş Kartı: diğer etkinliğe yönlendiren tıklanabilir kart */
+  .gecis-kart {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 34px; padding: 16px 20px; border-radius: 16px;
+    border: 1px solid rgba(90, 69, 56, 0.35);
+    background: rgba(255, 251, 242, 0.4);
+    color: var(--coffee-dark);
+    font-size: 10.5px;
+    cursor: pointer; transition: all 0.25s ease;
+  }
+  .gecis-kart:hover { background: var(--coffee-dark); color: var(--cream); border-color: var(--coffee-dark); }
+
   /* RSVP — zarif-onizleme.html'deki lüks & interaktif katılım bildirimi birebir */
   .baslik-editoryal-genis {
     font-family: 'Bodoni Moda', serif;
@@ -1196,9 +1208,15 @@
       const audioIcon = document.getElementById('audio-icon');
       bgMusic.play().then(function () { if (audioIcon) audioIcon.innerText = '🎵'; }).catch(function () {});
 
-      setTimeout(icerigeGec, 11000);
+      setTimeout(icerigeGec, 8500);
     }, { once: true });
 
+    /* Video, mühür kırılıp kart tam yerleştikten sonra ~1.8s hareketsiz kalan bir
+       kuyruk içeriyor (ölçüldü: kart t=7.8s'de sabitleniyor, video t=9.6s'de bitiyor).
+       İçeriği videonun sonunu (ended) beklemek yerine kart sabitlenir sabitlenmez göster. */
+    revealVideo.addEventListener('timeupdate', function () {
+      if (revealVideo.currentTime >= 7.8) icerigeGec();
+    });
     revealVideo.addEventListener('ended', icerigeGec);
 
     baglantilariHazirla();
