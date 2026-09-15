@@ -150,14 +150,19 @@
   }
 
   /* Yazı/Buton Katmanı — kart zemininden bağımsız, sadece kendisi tül gibi belirginleşir */
+  @keyframes smoothFadeIn {
+    0% { opacity: 0; pointer-events: none; }
+    10% { opacity: 0; pointer-events: none; } /* Kartın tam oturması için mikro bir tampon bölge */
+    100% { opacity: 1; pointer-events: auto; }
+  }
   #content-inner {
     position: absolute; inset: 0; z-index: 1;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(0);
-    transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  #content-inner.gorunur { opacity: 1; pointer-events: auto; }
+  #content-inner.gorunur {
+    animation: smoothFadeIn 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
 
   .etkinlik-panel { display: none; position: absolute; inset: 0; z-index: 1; }
   .etkinlik-panel.aktif { display: block; }
