@@ -137,21 +137,25 @@
   /* ================= 3. İÇ SAYFA: DİKEY KAYDIRMALI AKIŞ ================= */
   #content-layer {
     position: absolute; inset: 0; z-index: 10;
-    opacity: 0;
-    transform: translateY(10px);
     overflow: hidden;
     background-image: url('card-background.jpg');
     background-size: cover; background-position: center; background-repeat: no-repeat;
     background-color: var(--cream);
-    transition: opacity 0.8s ease-in-out, transform 0.8s ease-out;
   }
-  #content-layer.gorunur { opacity: 1; transform: translateY(0); }
   #content-layer::before {
     content: "";
     position: absolute; inset: 0;
     background: radial-gradient(ellipse at center, rgba(255,251,242,0.42) 0%, rgba(255,251,242,0.18) 55%, rgba(255,251,242,0.06) 100%);
     z-index: 0; pointer-events: none;
   }
+
+  /* Yazı/Buton Katmanı — kart zemininden bağımsız, sadece kendisi tül gibi belirginleşir */
+  #content-inner {
+    position: absolute; inset: 0; z-index: 1;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+  #content-inner.gorunur { opacity: 1; }
 
   .etkinlik-panel { display: none; position: absolute; inset: 0; z-index: 1; }
   .etkinlik-panel.aktif { display: block; }
@@ -555,6 +559,7 @@
 
     <!-- ================= 3. İÇ SAYFA: DİKEY KAYDIRMALI AKIŞ ================= -->
     <div id="content-layer">
+     <div id="content-inner">
 
       <!-- ============ KINA GECESİ AKIŞI ============ -->
       <div id="panel-kina" class="etkinlik-panel aktif">
@@ -1022,6 +1027,7 @@
         </button>
       </div>
 
+     </div>
     </div>
 
   </div>
@@ -1177,7 +1183,7 @@
     const envelopeScreen = document.getElementById('envelope-screen');
     const videoLayer = document.getElementById('video-layer');
     const revealVideo = document.getElementById('reveal-video');
-    const contentLayer = document.getElementById('content-layer');
+    const contentInner = document.getElementById('content-inner');
     const VIDEO_HIZI = 0.75;
     let gecisTamamlandi = false;
 
@@ -1185,7 +1191,7 @@
       if (gecisTamamlandi) return;
       gecisTamamlandi = true;
       videoLayer.classList.add('soluyor');
-      contentLayer.classList.add('gorunur');
+      contentInner.classList.add('gorunur');
       baglantilariHazirla();
       gozlemciKur('kina');
       if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
