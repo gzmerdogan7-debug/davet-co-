@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Elif & Furkan — Düğün Davetiyesi | DAVET & CO.</title>
+<title>Selin & Ceyhun — Düğün Davetiyesi | DAVET & CO.</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -128,7 +128,7 @@
     position: absolute; inset: 0; z-index: 60;
     background: var(--coffee-dark);
     opacity: 0; pointer-events: none;
-    transition: opacity 0.15s linear;
+    transition: opacity 0s linear;
   }
   #video-layer.gorunur { opacity: 1; pointer-events: auto; }
   #video-layer.soluyor { opacity: 0; }
@@ -142,7 +142,7 @@
     background-image: url('card-background.jpg');
     background-size: cover; background-position: center; background-repeat: no-repeat;
     background-color: var(--cream);
-    transition: opacity 0.1s linear;
+    transition: opacity 0s linear;
   }
   #content-layer.gorunur { opacity: 1; }
   #content-layer::before {
@@ -551,9 +551,9 @@
           <section class="story-screen">
             <div class="sahne-kutu">
               <div class="isimler-wrapper">
-                <span class="isim-parca">Elif</span>
+                <span class="isim-parca">Selin</span>
                 <span class="davet-ve">&amp;</span>
-                <span class="isim-parca">Furkan</span>
+                <span class="isim-parca">Ceyhun</span>
               </div>
               <div class="sekme-grup">
                 <button type="button" class="sekme-btn aktif" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
@@ -595,7 +595,7 @@
                 <span class="takvim-yapragi-hafta">Perşembe</span>
               </div>
               <div class="aksiyon-grup">
-                <a id="takvim-link-kina" href="#" download="elif-furkan-kina.ics" class="aksiyon-btn">Takvime Ekle</a>
+                <a id="takvim-link-kina" href="#" download="selin-ceyhun-kina.ics" class="aksiyon-btn">Takvime Ekle</a>
               </div>
             </div>
           </section>
@@ -691,9 +691,9 @@
           <section class="story-screen">
             <div class="sahne-kutu">
               <div class="isimler-wrapper">
-                <span class="isim-parca">Elif</span>
+                <span class="isim-parca">Selin</span>
                 <span class="davet-ve">&amp;</span>
-                <span class="isim-parca">Furkan</span>
+                <span class="isim-parca">Ceyhun</span>
               </div>
               <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-buyuk">
               <div class="sekme-grup">
@@ -1075,11 +1075,11 @@
 
         const icsIcerik = [
           'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
-          'SUMMARY:Elif & Furkan - ' + e.baslikOzet,
+          'SUMMARY:Selin & Ceyhun - ' + e.baslikOzet,
           'DTSTART:' + e.icsBaslangic,
           'DTEND:' + e.icsBitis,
           'LOCATION:' + e.mekan + ', ' + e.konum,
-          'DESCRIPTION:Elif & Furkan ' + e.baslikOzet + ' davetlisiniz.',
+          'DESCRIPTION:Selin & Ceyhun ' + e.baslikOzet + ' davetlisiniz.',
           'END:VEVENT', 'END:VCALENDAR'
         ].join('\r\n');
         const takvimEl = document.getElementById('takvim-link-' + anahtar);
@@ -1090,10 +1090,10 @@
       const googleTakvimEl = document.getElementById('google-takvim-link-dugun');
       if (googleTakvimEl) {
         googleTakvimEl.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-          + '&text=' + encodeURIComponent('Elif & Furkan - ' + dugun.baslikOzet)
+          + '&text=' + encodeURIComponent('Selin & Ceyhun - ' + dugun.baslikOzet)
           + '&dates=' + dugun.icsBaslangic + '/' + dugun.icsBitis
           + '&location=' + encodeURIComponent(dugun.mekan + ', ' + dugun.konum)
-          + '&details=' + encodeURIComponent('Elif & Furkan ' + dugun.baslikOzet + ' davetlisiniz.');
+          + '&details=' + encodeURIComponent('Selin & Ceyhun ' + dugun.baslikOzet + ' davetlisiniz.');
       }
     }
 
