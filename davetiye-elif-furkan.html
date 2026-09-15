@@ -153,9 +153,11 @@
   #content-inner {
     position: absolute; inset: 0; z-index: 1;
     opacity: 0;
-    transition: opacity 1.2s ease-in-out;
+    pointer-events: none;
+    transform: translateY(0);
+    transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  #content-inner.gorunur { opacity: 1; }
+  #content-inner.gorunur { opacity: 1; pointer-events: auto; }
 
   .etkinlik-panel { display: none; position: absolute; inset: 0; z-index: 1; }
   .etkinlik-panel.aktif { display: block; }
@@ -1190,12 +1192,15 @@
     function icerigeGec() {
       if (gecisTamamlandi) return;
       gecisTamamlandi = true;
-      videoLayer.classList.add('soluyor');
-      contentInner.classList.add('gorunur');
       baglantilariHazirla();
       gozlemciKur('kina');
       if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
       if (envelopeScreen.parentNode) envelopeScreen.parentNode.removeChild(envelopeScreen);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          contentInner.classList.add('gorunur');
+        });
+      });
     }
 
     revealVideo.addEventListener('loadedmetadata', function () {
