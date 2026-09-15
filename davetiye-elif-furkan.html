@@ -138,13 +138,14 @@
   #content-layer {
     position: absolute; inset: 0; z-index: 10;
     opacity: 0;
+    transform: translateY(10px);
     overflow: hidden;
     background-image: url('card-background.jpg');
     background-size: cover; background-position: center; background-repeat: no-repeat;
     background-color: var(--cream);
-    transition: opacity 0s linear;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-out;
   }
-  #content-layer.gorunur { opacity: 1; }
+  #content-layer.gorunur { opacity: 1; transform: translateY(0); }
   #content-layer::before {
     content: "";
     position: absolute; inset: 0;
