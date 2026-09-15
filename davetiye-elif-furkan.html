@@ -1165,7 +1165,7 @@
     const videoLayer = document.getElementById('video-layer');
     const revealVideo = document.getElementById('reveal-video');
     const contentLayer = document.getElementById('content-layer');
-    const VIDEO_HIZI = 0.75;
+    const VIDEO_HIZI = 1;
     let gecisTamamlandi = false;
 
     function icerigeGec() {
@@ -1196,7 +1196,7 @@
       const audioIcon = document.getElementById('audio-icon');
       bgMusic.play().then(function () { if (audioIcon) audioIcon.innerText = '🎵'; }).catch(function () {});
 
-      setTimeout(icerigeGec, 15000);
+      setTimeout(icerigeGec, 11000);
     }, { once: true });
 
     revealVideo.addEventListener('ended', icerigeGec);
