@@ -618,7 +618,7 @@
           </section>
 
           <!-- Sahne 4: Kına Tarih, Saat & Takvim Yaprağı -->
-          <section class="story-screen">
+          <section id="kina-ilk-icerik" class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket">Tarih &amp; Saat</span>
               <p class="davet-metni" style="margin-top:12px; font-size:18px;">24 Eylül 2026 - Perşembe | Saat: 19:30</p>
@@ -711,6 +711,10 @@
                 <span style="font-family:'Pinyon Script', cursive; font-size:2.3rem; color:var(--coffee-dark); display:block; margin-bottom:4px;">Teşekkürler</span>
                 <h4 class="font-baslik-etiket" style="font-size:11px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
               </div>
+
+              <div class="gecis-kart" onclick="sekmeSec('dugun')">
+                <span class="font-baslik-etiket" style="font-size:10.5px;">DÜĞÜN TÖRENİNE GEÇ ➔</span>
+              </div>
             </div>
           </section>
 
@@ -767,7 +771,7 @@
           </section>
 
           <!-- Sahne 4: Düğün Tarih, Saat & Tam Ay Takvimi -->
-          <section class="story-screen">
+          <section id="dugun-ilk-icerik" class="story-screen">
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket">Tarih &amp; Saat</span>
               <p class="davet-metni" style="margin-top:12px; font-size:18px;">26 Eylül 2026 - Cumartesi | Saat: 19:00</p>
@@ -1099,7 +1103,8 @@
       const hedefPanel = document.getElementById('panel-' + anahtar);
       hedefPanel.classList.add('aktif');
       const kok = hedefPanel.querySelector('.story-scroll-container');
-      if (kok) kok.scrollTop = 0;
+      const ilkIcerik = document.getElementById(anahtar + '-ilk-icerik');
+      if (kok) kok.scrollTop = ilkIcerik ? ilkIcerik.offsetTop : 0;
       gozlemciKur(anahtar);
     }
 
