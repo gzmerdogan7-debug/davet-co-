@@ -362,23 +362,24 @@
   }
   .marka-imza .marka-vurgu { color: var(--coffee-dark); font-weight: 600; }
 
-  /* Teşekkür Ekranı Yerleşimi — metin dikeyde üst-orta alanda, marka imzası sayfa tabanında */
+  /* Teşekkür Ekranı Yerleşimi — metin kartın tam ortasında (absolute center), marka imzası sayfa tabanında */
   .tesekkur-kutu {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
+    position: relative;
   }
-  .tesekkur-govde {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 14%;
+  .thank-you-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
   }
-  .tesekkur-govde .davet-metni { padding: 0 40px; }
   .tesekkur-kutu .marka-imza { margin-top: 32px; }
 
   .etkinlik-konum {
@@ -1050,7 +1051,7 @@
           <!-- Sahne 12: Teşekkür Ekranı & Marka İmzası -->
           <section class="story-screen">
             <div class="sahne-kutu kart-giris tesekkur-kutu">
-              <div class="tesekkur-govde">
+              <div class="thank-you-text">
                 <p class="davet-metni" style="font-size:17px;">Bu özel günümüzde,<br>yanımızda olduğunuz için<br>teşekkür ederiz.</p>
               </div>
               <span class="marka-imza">
