@@ -362,6 +362,23 @@
   }
   .marka-imza .marka-vurgu { color: var(--coffee-dark); font-weight: 600; }
 
+  /* Teşekkür Ekranı Yerleşimi — metin dikeyde ortada, marka imzası sayfa tabanında */
+  .tesekkur-kutu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tesekkur-govde {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .tesekkur-kutu .marka-imza { margin-top: 32px; }
+
   .etkinlik-konum {
     font-family: 'Montserrat', sans-serif;
     font-size: 10px;
@@ -966,7 +983,7 @@
             <div class="sahne-kutu kart-giris">
               <span class="sahne-etiket" style="margin-bottom:14px;">Hediye</span>
               <p class="davet-metni" style="font-size:15px;">En büyük hediyeniz yanımızda olmanızdır. Katkıda bulunmak isteyen sevdiklerimiz için;</p>
-              <p class="mini-onay" style="margin-top:14px;">Hesap Sahibi: Selin Kılıç &amp; Ceyhun Demir</p>
+              <p class="mini-onay" style="margin-top:14px;">Hesap Sahibi: Selin Kılıç</p>
               <button type="button" class="aksiyon-btn" style="margin-top:12px;" onclick="ibanKopyala()">IBAN'ı Kopyala</button>
               <p id="iban-onay" class="hidden mini-onay">IBAN kopyalandı ✓</p>
             </div>
@@ -1030,15 +1047,17 @@
 
           <!-- Sahne 12: Teşekkür Ekranı & Marka İmzası -->
           <section class="story-screen">
-            <div class="sahne-kutu kart-giris">
-              <p class="davet-metni" style="font-size:17px;">Bu özel günümüzde yanımızda olduğunuz için teşekkür ederiz.</p>
-              <svg class="zeytin-dali" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--coffee-soft)" stroke-width="1">
-                <line x1="2" y1="10" x2="98" y2="10"/>
-                <ellipse cx="20" cy="7" rx="5" ry="2.4" transform="rotate(-24 20 7)"/>
-                <ellipse cx="35" cy="13" rx="5" ry="2.4" transform="rotate(24 35 13)"/>
-                <ellipse cx="50" cy="7" rx="5" ry="2.4" transform="rotate(-24 50 7)"/>
-                <ellipse cx="65" cy="13" rx="5" ry="2.4" transform="rotate(-24 80 7)"/>
-              </svg>
+            <div class="sahne-kutu kart-giris tesekkur-kutu">
+              <div class="tesekkur-govde">
+                <p class="davet-metni" style="font-size:17px;">Bu özel günümüzde yanımızda olduğunuz için teşekkür ederiz.</p>
+                <svg class="zeytin-dali" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--coffee-soft)" stroke-width="1">
+                  <line x1="2" y1="10" x2="98" y2="10"/>
+                  <ellipse cx="20" cy="7" rx="5" ry="2.4" transform="rotate(-24 20 7)"/>
+                  <ellipse cx="35" cy="13" rx="5" ry="2.4" transform="rotate(24 35 13)"/>
+                  <ellipse cx="50" cy="7" rx="5" ry="2.4" transform="rotate(-24 50 7)"/>
+                  <ellipse cx="65" cy="13" rx="5" ry="2.4" transform="rotate(-24 80 7)"/>
+                </svg>
+              </div>
               <span class="marka-imza"><span class="marka-vurgu">DAVET &amp; CO.</span> | Dijital Davetiye Deneyimi</span>
             </div>
           </section>
