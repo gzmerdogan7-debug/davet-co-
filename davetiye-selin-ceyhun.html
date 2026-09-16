@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Selin & Ceyhun — Düğün Davetiyesi | DAVET & CO.</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --coffee-dark: #3D2B1F;
+    --coffee: #6B4A31;
+    --coffee-soft: #5A4538;
+    --gold: #C5A059;
+    --gold-soft: #E4CFA0;
+    --cream: #FBF6EC;
+    --ink: #2A1D14;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html { margin: 0; padding: 0; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--coffee-dark);
+    background-image: radial-gradient(circle at 50% 50%, #4A3423 0%, #241A11 100%);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hidden { display: none; }
+
+  /* Tek Tipografi Dili — zarif-onizleme.html'deki .font-baslik-etiket birebir */
+  .font-baslik-etiket { font-family: 'Montserrat', sans-serif; letter-spacing: 0.22em; }
+  .font-govde { font-family: 'Cormorant Garamond', serif; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ================= TELEFON ÇERÇEVESİ ================= */
+  .cinema-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 100vh;
+    max-height: 896px;
+    margin: auto;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 45px 120px -20px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    background-color: var(--coffee-dark);
+  }
+
+  @media (max-width: 640px) {
+    .cinema-viewport {
+      max-width: 100%;
+      width: 100%;
+      height: 100vh;
+      max-height: 100%;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+
+  /* ================= 1. AÇILIŞ EKRANI (ZARF KAPAĞI) ================= */
+  #envelope-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 70;
+    background-image: url('envelope-cover.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--coffee-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.7s ease;
+  }
+  #envelope-screen.kapaniyor { opacity: 0; pointer-events: none; }
+
+  .muhur-btn {
+    position: relative;
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: transparent; border: none; padding: 0; cursor: pointer;
+  }
+  .muhur-btn::before, .muhur-btn::after {
+    content: "";
+    position: absolute; inset: 0; margin: auto;
+    width: 70%; height: 70%;
+    border-radius: 50%;
+    border: 1.5px solid rgba(228, 207, 160, 0.85);
+  }
+  .muhur-btn::before { animation: muhur-nabiz 2.4s ease-out infinite; }
+  .muhur-btn::after { animation: muhur-parla 2.4s ease-in-out infinite; }
+  @keyframes muhur-nabiz {
+    0%   { transform: scale(0.85); opacity: 0.95; }
+    70%  { transform: scale(1.55); opacity: 0; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+  @keyframes muhur-parla {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(228, 207, 160, 0); }
+    50%      { box-shadow: 0 0 24px 6px rgba(228, 207, 160, 0.45); }
+  }
+
+  /* ================= 2. VİDEO GEÇİŞ KATMANI ================= */
+  #video-layer {
+    position: absolute; inset: 0; z-index: 60;
+    background: var(--coffee-dark);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0s linear;
+  }
+  #video-layer.gorunur { opacity: 1; pointer-events: auto; }
+  #video-layer.soluyor { opacity: 0; }
+  #reveal-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ================= 3. İÇ SAYFA: DİKEY KAYDIRMALI AKIŞ ================= */
+  #content-layer {
+    position: absolute; inset: 0; z-index: 10;
+    overflow: hidden;
+    background-image: url('card-background.jpg');
+    background-size: cover; background-position: center; background-repeat: no-repeat;
+    background-color: var(--cream);
+  }
+  #content-layer::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,251,242,0.42) 0%, rgba(255,251,242,0.18) 55%, rgba(255,251,242,0.06) 100%);
+    z-index: 0; pointer-events: none;
+  }
+
+  /* Yazı/Buton Katmanı — kart zemininden bağımsız, sadece kendisi tül gibi belirginleşir */
+  #content-inner {
+    position: absolute; inset: 0; z-index: 1;
+    opacity: 0;
+    will-change: opacity, transform;
+    transform: translate3d(0, 10px, 0);
+    pointer-events: none;
+  }
+  #content-layer.is-flipped #content-inner {
+    animation: cinematicFadeIn 1s ease-out forwards;
+  }
+  @keyframes cinematicFadeIn {
+    0% { opacity: 0; transform: translate3d(0, 10px, 0); pointer-events: none; }
+    100% { opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; }
+  }
+
+  .etkinlik-panel { display: none; position: absolute; inset: 0; z-index: 1; }
+  .etkinlik-panel.aktif { display: block; }
+
+  .story-scroll-container {
+    width: 100%; height: 100%;
+    overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  .story-scroll-container::-webkit-scrollbar { display: none; }
+
+  .story-screen {
+    width: 100%; height: 100%;
+    scroll-snap-align: start; scroll-snap-stop: always;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 30px 26px 96px;
+    position: relative;
+  }
+
+  .sahne-kutu { width: 100%; max-width: 320px; text-align: center; }
+
+  /* Kart Giriş Animasyonu — zarif-onizleme.html'deki .kart-giris birebir */
+  .kart-giris {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .kart-giris.gorundu { opacity: 1; transform: translateY(0) scale(1); }
+
+  .sahne-etiket {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coffee);
+    font-weight: 600;
+    opacity: 0.85;
+    display: block;
+  }
+
+  /* İsim Bloğu — zarif-onizleme.html'deki 3 satırlı isimler-wrapper birebir */
+  .isimler-wrapper { display: flex; flex-direction: column; align-items: center; }
+  .isim-parca {
+    font-family: 'Pinyon Script', cursive;
+    font-weight: 400; font-style: normal;
+    color: #3D2B1F; line-height: 1.25; margin: 0;
+    font-size: 3.4rem;
+  }
+  .isim-parca:first-child { margin-bottom: 5px; }
+  .isim-parca:last-child { margin-top: 5px; }
+  .davet-ve {
+    font-family: 'Pinyon Script', cursive;
+    font-weight: 400; font-style: italic;
+    color: #3D2B1F;
+    font-size: 1.6rem; display: block; margin: 5px 0;
+  }
+
+  .davet-metni {
+    max-width: 258px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--coffee-dark);
+    line-height: 1.55;
+  }
+
+  /* Sekmeler — buton yazıları Cinzel, geniş harf aralığı, büyük harf, ALT ALTA */
+  .sekme-grup { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .sekme-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    min-width: 190px;
+    border-radius: 999px;
+    border: 1px solid rgba(90, 69, 56, 0.4);
+    background: rgba(255, 251, 242, 0.6);
+    color: var(--coffee-dark);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .sekme-btn.aktif {
+    background: var(--coffee-dark);
+    color: var(--cream);
+    border-color: var(--coffee-dark);
+  }
+
+  /* Ailelerimiz — Kına Gecesi 1. Sayfa */
+  .aile-grup { display: flex; align-items: center; justify-content: center; gap: 26px; margin-top: 20px; }
+  .aile-ayrac-dikey { width: 1px; height: 36px; background: rgba(197, 160, 89, 0.5); }
+  .aile-adi {
+    font-family: 'Montserrat', sans-serif; font-size: 13px; letter-spacing: 0.12em;
+    color: var(--coffee-dark); font-weight: 600; display: block;
+  }
+  .aile-etiket {
+    font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 0.1em;
+    color: var(--coffee); text-transform: uppercase; display: block; margin-top: 4px;
+  }
+
+  /* Saray Şakayığı Motifi — saray-sakayigi.png (doğal eğimli, koyulaştırılmış) */
+  .motif-buyuk {
+    width: 145px; height: 145px; max-width: 145px;
+    margin: 14px auto; display: block;
+    transform: rotate(-14deg);
+    filter: contrast(1.4) brightness(0.82) saturate(1.15);
+  }
+  .motif-kucuk {
+    width: 80px; height: auto; margin: 20px auto; display: block;
+    filter: contrast(1.4) brightness(0.82) saturate(1.15);
+  }
+
+  /* Zeytin Dalı Ayracı */
+  .zeytin-dali { width: 100px; height: 20px; margin: 14px auto 10px; display: block; }
+
+  /* Ay Takvimi — zarif-onizleme.html'deki tam ay matrisi */
+  .ay-takvimi { max-width: 270px; margin: 4px auto 0; }
+  .ay-takvimi-baslik {
+    font-family: 'Bodoni Moda', serif; font-size: 13px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--coffee-dark); display: block; margin-bottom: 12px;
+  }
+  .ay-takvimi-grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 6px; column-gap: 2px; }
+  .ay-gun-adi {
+    font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: 0.06em;
+    color: var(--coffee); text-transform: uppercase; opacity: 0.75;
+  }
+  .ay-gun-sayi {
+    font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--coffee-dark);
+    width: 26px; height: 26px; line-height: 26px; margin: 0 auto; border-radius: 50%;
+  }
+  .ay-gun-sayi.bos { visibility: hidden; }
+  .ay-gun-sayi.secili {
+    border: 1.4px solid var(--coffee-dark); font-weight: 600; color: var(--coffee-dark);
+  }
+
+  /* Takvim Yaprağı — şık tek günlük takvim kartı */
+  .takvim-yapragi {
+    display: inline-flex; flex-direction: column; align-items: center;
+    background: rgba(255, 251, 242, 0.85);
+    border: 1px solid rgba(197, 160, 89, 0.5);
+    border-radius: 12px;
+    padding: 16px 30px;
+    margin: 0 auto;
+    box-shadow: 0 12px 28px -12px rgba(0,0,0,0.18);
+  }
+  .takvim-yapragi-ay {
+    font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em;
+    color: var(--coffee); text-transform: uppercase;
+  }
+  .takvim-yapragi-gun {
+    font-family: 'Bodoni Moda', serif; font-size: 2.6rem; color: var(--coffee-dark);
+    line-height: 1; margin: 4px 0;
+  }
+  .takvim-yapragi-hafta {
+    font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 0.16em;
+    color: var(--gold); text-transform: uppercase; font-weight: 600;
+  }
+
+  /* Altın İğne Motifi — Tarih & Saat ayracı */
+  .altin-igne { width: 1px; height: 24px; background: var(--gold); margin: 20px auto; position: relative; }
+  .altin-igne::before {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 6px; height: 6px; background: var(--gold);
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  /* Renk Paleti — Dress Code */
+  .renk-palet { display: flex; gap: 14px; justify-content: center; margin-top: 22px; }
+  .renk-daire {
+    width: 34px; height: 34px; border-radius: 50%;
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.5);
+  }
+
+  /* Ziyafet Menüsü */
+  .menu-alani { margin-top: 20px; text-align: center; }
+  .menu-bolum { margin-bottom: 16px; }
+  .menu-bolum-baslik {
+    font-family: 'Bodoni Moda', serif; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 4px;
+  }
+  .menu-madde { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--coffee-dark); margin: 0; }
+
+  /* Küçük onay notu (IBAN / Fotoğraf) */
+  .mini-onay {
+    margin-top: 10px; font-size: 11px; letter-spacing: 0.08em; color: var(--coffee);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Marka İmzası — Teşekkür Ekranı */
+  .marka-imza {
+    display: block; margin-top: 22px;
+    font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--coffee);
+  }
+  .marka-imza .marka-vurgu { color: var(--coffee-dark); font-weight: 600; }
+
+  /* Teşekkür Ekranı Yerleşimi — metin dikeyde üst-orta alanda, marka imzası sayfa tabanında */
+  .tesekkur-kutu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tesekkur-govde {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 14%;
+  }
+  .tesekkur-govde .davet-metni { padding: 0 40px; }
+  .tesekkur-kutu .marka-imza { margin-top: 32px; }
+
+  .etkinlik-konum {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(58,42,30,0.65);
+    margin-top: 8px;
+    display: block;
+  }
+  .etkinlik-mekan {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-size: 19px;
+    color: var(--coffee-dark);
+    margin: 0;
+  }
+
+  /* Mekan Pin İkonu — narin çizgi ikon */
+  .mekan-pin-ikon {
+    width: 26px; height: 26px;
+    display: block; margin: 0 auto 14px;
+    stroke: var(--coffee-soft); fill: none;
+    stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* Sayaç — zarif-onizleme.html'deki Vogue editoryal tipografi birebir */
+  .baslik-sayac {
+    font-family: 'Bodoni Moda', serif !important;
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 4px !important;
+    text-transform: uppercase !important;
+    color: var(--coffee-dark) !important;
+    display: block;
+    opacity: 0; transform: translateY(-16px);
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);
+  }
+  .kart-giris.gorundu .baslik-sayac { opacity: 1; transform: translateY(0); }
+
+  .sayac-rakam {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 2.5rem !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.08em !important;
+    color: var(--coffee-dark) !important;
+    display: block; line-height: 1;
+    opacity: 0;
+  }
+  .kart-giris.gorundu .sayac-rakam { animation: sayac-yaylan 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .kart-giris.gorundu .sayac-grid > div:nth-child(1) .sayac-rakam { animation-delay: 0.1s; }
+  .kart-giris.gorundu .sayac-grid > div:nth-child(2) .sayac-rakam { animation-delay: 0.22s; }
+  .kart-giris.gorundu .sayac-grid > div:nth-child(3) .sayac-rakam { animation-delay: 0.34s; }
+  .kart-giris.gorundu .sayac-grid > div:nth-child(4) .sayac-rakam { animation-delay: 0.46s; }
+  @keyframes sayac-yaylan {
+    0% { opacity: 0; transform: translateY(10px) scale(0.82); }
+    60% { opacity: 1; transform: translateY(-3px) scale(1.06); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .sayac-etiket {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.48rem !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.13em !important;
+    text-transform: uppercase !important;
+    opacity: 0.7 !important;
+    color: var(--coffee);
+  }
+
+  .sayac-grid { display: grid; grid-template-columns: repeat(4,1fr); margin: 14px 0 0; max-width: 280px; margin-left: auto; margin-right: auto; }
+  .sayac-grid > div { padding: 4px 2px; border-left: 1px solid rgba(90,69,56,0.15); }
+  .sayac-grid > div:first-child { border-left: none; }
+
+  /* Davet Akışı — zarif-onizleme.html'deki sade dikey timeline birebir */
+  .program-zaman-cizgisi { position: relative; max-width: 230px; margin: 8px auto 0; padding-left: 20px; }
+  .program-zaman-cizgisi::before {
+    content: ""; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 1px;
+    border-left: 1px solid #DCD2C4;
+  }
+  .zaman-satiri {
+    display: flex; align-items: flex-start; padding: 12px 0; position: relative;
+    opacity: 0; transform: translateX(-10px); transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .zaman-ikon {
+    position: absolute; left: -25px; top: 50%; transform: translateY(-50%);
+    width: 15px; height: 15px;
+    stroke: var(--coffee-soft); fill: none; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .zaman-metin { text-align: left; }
+  .zaman-saat { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.14em; color: var(--coffee); font-weight: 600; text-transform: uppercase; }
+  .zaman-baslik { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--coffee-dark); font-weight: 400; margin: 3px 0 0; }
+  .kart-giris.gorundu .zaman-satiri { opacity: 1; transform: none; }
+
+  /* Aksiyon Butonları — zarif-onizleme.html'deki .aksiyon-btn birebir */
+  .aksiyon-grup { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 24px; max-width: 340px; }
+  .aksiyon-btn {
+    background: rgba(255, 251, 242, 0.85);
+    border: 1px solid rgba(90, 69, 56, 0.45);
+    border-radius: 999px; padding: 9px 17px; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--coffee-dark);
+    font-family: 'Montserrat', sans-serif; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none; cursor: pointer; transition: all 0.2s ease;
+  }
+  .aksiyon-btn:hover { background: var(--coffee-dark); color: var(--cream); }
+
+  /* Geçiş Kartı: diğer etkinliğe yönlendiren tıklanabilir kart */
+  .gecis-kart {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 34px; padding: 16px 20px; border-radius: 16px;
+    border: 1px solid rgba(90, 69, 56, 0.35);
+    background: rgba(255, 251, 242, 0.4);
+    color: var(--coffee-dark);
+    font-size: 10.5px;
+    cursor: pointer; transition: all 0.25s ease;
+  }
+  .gecis-kart:hover { background: var(--coffee-dark); color: var(--cream); border-color: var(--coffee-dark); }
+
+  /* RSVP — zarif-onizleme.html'deki lüks & interaktif katılım bildirimi birebir */
+  .baslik-editoryal-genis {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.25rem; font-weight: 400; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--coffee-dark); display: block;
+  }
+  .onay-btn {
+    width: 100%; padding: 13px 0;
+    background: var(--coffee-dark); color: var(--cream);
+    border: none; border-radius: 999px;
+    font-family: 'Montserrat', sans-serif; font-weight: 600;
+    letter-spacing: 0.24em; font-size: 11px; text-transform: uppercase;
+    cursor: pointer; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .onay-btn:active { transform: scale(0.94); }
+
+  /* ================= LCV — ekran üzerinde doğrudan ================= */
+  .lcv-alt { text-align: center; font-style: italic; color: var(--coffee); font-size: 0.92rem; margin: 8px 0 20px; }
+
+  .katilim-secim { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+  .katilim-chip {
+    font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 9px 15px; border-radius: 999px; border: 1px solid rgba(90,69,56,0.4);
+    background: transparent; color: var(--coffee); cursor: pointer; transition: all 0.25s ease;
+  }
+  .katilim-chip.aktif { background: var(--coffee-dark); color: var(--cream); border-color: var(--coffee-dark); }
+
+  .lcv-alan { margin-bottom: 18px; }
+  .lcv-alan label {
+    display: block; font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--coffee); margin-bottom: 6px; text-align: center; font-weight: 500;
+  }
+  .lcv-alan input {
+    width: 100%; text-align: center; padding-bottom: 6px;
+    background: transparent; border: 0; border-bottom: 1px solid rgba(90,69,56,0.5);
+    font-size: 15px; color: var(--coffee-dark); font-family: 'Cormorant Garamond', serif;
+  }
+  .lcv-alan input:focus { outline: none; border-color: var(--coffee-dark); }
+  .lcv-alan select {
+    width: 100%; text-align: center; text-align-last: center; padding-bottom: 6px;
+    background: transparent; border: 0; border-bottom: 1px solid rgba(90,69,56,0.5);
+    font-size: 15px; color: var(--coffee-dark); font-family: 'Cormorant Garamond', serif;
+  }
+  .lcv-alan select:focus { outline: none; border-color: var(--coffee-dark); }
+
+  /* Alt Yüzen Kapsüller: "Aşağı Kaydır" + Müzik Çalar */
+  .floating-pill-bar {
+    position: absolute; bottom: 22px; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center; gap: 10px; z-index: 40;
+  }
+  .scroll-pill-btn {
+    background: rgba(255, 251, 242, 0.85); backdrop-filter: blur(12px);
+    border: 1px solid rgba(90, 69, 56, 0.4); border-radius: 999px; padding: 9px 20px;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .scroll-pill-btn:active { transform: scale(0.96); }
+  .audio-pill-btn {
+    background: rgba(255, 251, 242, 0.92); backdrop-filter: blur(12px);
+    border: 1px solid rgba(90, 69, 56, 0.45); border-radius: 999px;
+    width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 22px -6px rgba(0,0,0,0.18); cursor: pointer; transition: all 0.2s ease;
+  }
+  .audio-pill-btn:active { transform: scale(0.94); }
+</style>
+</head>
+<body>
+
+  <!-- ARKA PLAN MÜZİĞİ -->
+  <audio id="bg-music" src="sonfon.mp3" loop preload="auto"></audio>
+
+  <div class="cinema-viewport">
+
+    <!-- ================= 1. AÇILIŞ EKRANI ================= -->
+    <div id="envelope-screen">
+      <button id="muhur-btn" class="muhur-btn" aria-label="Davetiyeyi aç"></button>
+    </div>
+
+    <!-- ================= 2. VİDEO GEÇİŞ KATMANI ================= -->
+    <div id="video-layer">
+      <video id="reveal-video" playsinline preload="auto" muted poster="envelope-cover.png">
+        <source src="opening-reveal.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- ================= 3. İÇ SAYFA: DİKEY KAYDIRMALI AKIŞ ================= -->
+    <div id="content-layer">
+     <div id="content-inner">
+
+      <!-- ============ KINA GECESİ AKIŞI ============ -->
+      <div id="panel-kina" class="etkinlik-panel aktif">
+        <div class="story-scroll-container">
+
+          <!-- Sahne 1: İsimler (Ana Açılış) -->
+          <section class="story-screen">
+            <div class="sahne-kutu">
+              <div class="isimler-wrapper">
+                <span class="isim-parca">Selin</span>
+                <span class="davet-ve">&amp;</span>
+                <span class="isim-parca">Ceyhun</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <p class="davet-metni">
+                Hayatımızın en özel başlangıcına, sevdiklerimizle birlikte adım atmak dileğiyle.
+              </p>
+              <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-kucuk">
+              <div class="aile-grup">
+                <div>
+                  <span class="aile-adi">KILIÇ</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+                <div class="aile-ayrac-dikey"></div>
+                <div>
+                  <span class="aile-adi">DEMİR</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 3: Etkinlik Seçim Ekranı -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Etkinliği Seçin</span>
+              <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-kucuk">
+              <div class="sekme-grup" style="margin-top:14px;">
+                <button type="button" class="sekme-btn aktif" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
+                <button type="button" class="sekme-btn" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 4: Kına Tarih, Saat & Takvim Yaprağı -->
+          <section id="kina-ilk-icerik" class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Tarih &amp; Saat</span>
+              <p class="davet-metni" style="margin-top:12px; font-size:18px;">24 Eylül 2026 - Perşembe | Saat: 19:30</p>
+              <div class="altin-igne"></div>
+              <div class="takvim-yapragi">
+                <span class="takvim-yapragi-ay">Eylül</span>
+                <span class="takvim-yapragi-gun">24</span>
+                <span class="takvim-yapragi-hafta">Perşembe</span>
+              </div>
+              <div class="aksiyon-grup">
+                <a id="takvim-link-kina" href="#" download="selin-ceyhun-kina.ics" class="aksiyon-btn">Takvime Ekle</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 4: Buluşmaya Kalan Sayaç & İyi Dilek -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="baslik-sayac">Buluşmaya Kalan</span>
+              <div class="sayac-grid">
+                <div>
+                  <span id="cd-gun-kina" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">GÜN</span>
+                </div>
+                <div>
+                  <span id="cd-saat-kina" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">SAAT</span>
+                </div>
+                <div>
+                  <span id="cd-dakika-kina" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">DAKİKA</span>
+                </div>
+                <div>
+                  <span id="cd-saniye-kina" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">SANİYE</span>
+                </div>
+              </div>
+              <p class="davet-metni" style="margin-top:20px; font-size:15px;">"Kınamızda sizlerle olmanın heyecanını yaşıyoruz."</p>
+            </div>
+          </section>
+
+          <!-- Sahne 5: Kutlama Mekanı + Açık Adres + Harita (zarif-onizleme birebir) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Kutlama Mekanı</span>
+              <svg class="mekan-pin-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/>
+                <circle cx="12" cy="9" r="2.3"/>
+              </svg>
+              <p class="etkinlik-mekan">Ses Lounge Events</p>
+              <span class="etkinlik-konum">Tepebaşı / ESKİŞEHİR</span>
+              <div class="aksiyon-grup">
+                <a id="harita-link-kina" href="#" target="_blank" class="aksiyon-btn">Konuma Git &amp; Yol Tarifi ➔</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 6: LCV (Ekran Üzerinde) + Geçiş Kartı -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="baslik-editoryal-genis" style="font-size:1.05rem;">Katılımınızı Bildirin</span>
+              <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
+
+              <form id="kina-lcv-form" onsubmit="submitInlineLCV(event,'kina')">
+                <div class="katilim-secim">
+                  <button type="button" class="katilim-chip aktif" onclick="katilimSecInline(this,'kina','evet')">Geliyorum</button>
+                  <button type="button" class="katilim-chip" onclick="katilimSecInline(this,'kina','hayir')">Gelemiyorum</button>
+                </div>
+                <input type="hidden" id="kina-katilim-durumu" value="evet">
+
+                <div class="lcv-alan">
+                  <label>Adınız Soyadınız</label>
+                  <input type="text" required placeholder="Örn: Ayşe Yıldız">
+                </div>
+
+                <div class="lcv-alan">
+                  <label>Kişi Sayısı</label>
+                  <select id="kina-kisi-sayisi">
+                    <option value="1">1 Kişi</option>
+                    <option value="2">2 Kişi</option>
+                    <option value="3">3 Kişi</option>
+                    <option value="4+">4+ Kişi</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="onay-btn">GÖNDER</button>
+              </form>
+
+              <div id="kina-lcv-tesekkur" class="hidden" style="text-align:center; padding:10px 0;">
+                <span style="font-family:'Pinyon Script', cursive; font-size:2.3rem; color:var(--coffee-dark); display:block; margin-bottom:4px;">Teşekkürler</span>
+                <h4 class="font-baslik-etiket" style="font-size:11px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
+              </div>
+
+              <div class="gecis-kart" onclick="sekmeSec('dugun')">
+                <span class="font-baslik-etiket" style="font-size:10.5px;">DÜĞÜN TÖRENİNE GEÇ ➔</span>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- ============ DÜĞÜN TÖRENİ AKIŞI ============ -->
+      <div id="panel-dugun" class="etkinlik-panel">
+        <div class="story-scroll-container">
+
+          <!-- Sahne 1: İsimler (Ana Açılış) -->
+          <section class="story-screen">
+            <div class="sahne-kutu">
+              <div class="isimler-wrapper">
+                <span class="isim-parca">Selin</span>
+                <span class="davet-ve">&amp;</span>
+                <span class="isim-parca">Ceyhun</span>
+              </div>
+              <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-buyuk">
+            </div>
+          </section>
+
+          <!-- Sahne 2: Davet Metni + Saray Şakayığı Ayracı + Aileler -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <p class="davet-metni">
+                Hayatımızın en özel başlangıcına, sevdiklerimizle birlikte adım atmak dileğiyle.
+              </p>
+              <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-kucuk">
+              <div class="aile-grup">
+                <div>
+                  <span class="aile-adi">KILIÇ</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+                <div class="aile-ayrac-dikey"></div>
+                <div>
+                  <span class="aile-adi">DEMİR</span>
+                  <span class="aile-etiket">Ailesi</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 3: Etkinlik Seçim Ekranı -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Etkinliği Seçin</span>
+              <img src="saray-sakayigi.png" alt="Saray Şakayığı" class="motif-kucuk">
+              <div class="sekme-grup" style="margin-top:14px;">
+                <button type="button" class="sekme-btn" data-sekme="kina" onclick="sekmeSec('kina')">KINA GECESİ</button>
+                <button type="button" class="sekme-btn aktif" data-sekme="dugun" onclick="sekmeSec('dugun')">DÜĞÜN TÖRENİ</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 4: Düğün Tarih, Saat & Tam Ay Takvimi -->
+          <section id="dugun-ilk-icerik" class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Tarih &amp; Saat</span>
+              <p class="davet-metni" style="margin-top:12px; font-size:18px;">26 Eylül 2026 - Cumartesi | Saat: 19:00</p>
+
+              <svg class="zeytin-dali" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--coffee-soft)" stroke-width="1">
+                <line x1="2" y1="10" x2="98" y2="10"/>
+                <ellipse cx="20" cy="7" rx="5" ry="2.4" transform="rotate(-24 20 7)"/>
+                <ellipse cx="35" cy="13" rx="5" ry="2.4" transform="rotate(24 35 13)"/>
+                <ellipse cx="50" cy="7" rx="5" ry="2.4" transform="rotate(-24 50 7)"/>
+                <ellipse cx="65" cy="13" rx="5" ry="2.4" transform="rotate(24 65 13)"/>
+                <ellipse cx="80" cy="7" rx="5" ry="2.4" transform="rotate(-24 80 7)"/>
+              </svg>
+
+              <div class="ay-takvimi">
+                <span class="ay-takvimi-baslik">Eylül 2026</span>
+                <div class="ay-takvimi-grid">
+                  <span class="ay-gun-adi">PZT</span>
+                  <span class="ay-gun-adi">SAL</span>
+                  <span class="ay-gun-adi">ÇAR</span>
+                  <span class="ay-gun-adi">PER</span>
+                  <span class="ay-gun-adi">CUM</span>
+                  <span class="ay-gun-adi">CMT</span>
+                  <span class="ay-gun-adi">PAZ</span>
+                  <span class="ay-gun-sayi bos"></span>
+                  <span class="ay-gun-sayi">1</span>
+                  <span class="ay-gun-sayi">2</span>
+                  <span class="ay-gun-sayi">3</span>
+                  <span class="ay-gun-sayi">4</span>
+                  <span class="ay-gun-sayi">5</span>
+                  <span class="ay-gun-sayi">6</span>
+                  <span class="ay-gun-sayi">7</span>
+                  <span class="ay-gun-sayi">8</span>
+                  <span class="ay-gun-sayi">9</span>
+                  <span class="ay-gun-sayi">10</span>
+                  <span class="ay-gun-sayi">11</span>
+                  <span class="ay-gun-sayi">12</span>
+                  <span class="ay-gun-sayi">13</span>
+                  <span class="ay-gun-sayi">14</span>
+                  <span class="ay-gun-sayi">15</span>
+                  <span class="ay-gun-sayi">16</span>
+                  <span class="ay-gun-sayi">17</span>
+                  <span class="ay-gun-sayi">18</span>
+                  <span class="ay-gun-sayi">19</span>
+                  <span class="ay-gun-sayi">20</span>
+                  <span class="ay-gun-sayi">21</span>
+                  <span class="ay-gun-sayi">22</span>
+                  <span class="ay-gun-sayi">23</span>
+                  <span class="ay-gun-sayi">24</span>
+                  <span class="ay-gun-sayi">25</span>
+                  <span class="ay-gun-sayi secili">26</span>
+                  <span class="ay-gun-sayi">27</span>
+                  <span class="ay-gun-sayi">28</span>
+                  <span class="ay-gun-sayi">29</span>
+                  <span class="ay-gun-sayi">30</span>
+                </div>
+              </div>
+
+              <div class="aksiyon-grup">
+                <a id="google-takvim-link-dugun" href="#" target="_blank" class="aksiyon-btn">Google Takvime Ekle</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 4: Buluşmaya Kalan Sayaç & İyi Dilek -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="baslik-sayac">Buluşmaya Kalan</span>
+              <div class="sayac-grid">
+                <div>
+                  <span id="cd-gun-dugun" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">GÜN</span>
+                </div>
+                <div>
+                  <span id="cd-saat-dugun" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">SAAT</span>
+                </div>
+                <div>
+                  <span id="cd-dakika-dugun" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">DAKİKA</span>
+                </div>
+                <div>
+                  <span id="cd-saniye-dugun" class="sayac-rakam">00</span>
+                  <span class="sayac-etiket">SANİYE</span>
+                </div>
+              </div>
+              <p class="davet-metni" style="margin-top:20px; font-size:15px;">"Sizinle bu anı paylaşmak için sabırsızlanıyoruz."</p>
+            </div>
+          </section>
+
+          <!-- Sahne 5: Kutlama Mekanı + Açık Adres + Harita (zarif-onizleme birebir) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Kutlama Mekanı</span>
+              <svg class="mekan-pin-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/>
+                <circle cx="12" cy="9" r="2.3"/>
+              </svg>
+              <p class="etkinlik-mekan">Ses Lounge Events</p>
+              <span class="etkinlik-konum">Tepebaşı / ESKİŞEHİR</span>
+              <div class="aksiyon-grup">
+                <a id="harita-link-dugun" href="#" target="_blank" class="aksiyon-btn">Konuma Git &amp; Yol Tarifi ➔</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 6: Düğün Programı (Timeline) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:18px;">Düğün Programı</span>
+              <div class="program-zaman-cizgisi">
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16l-7.2 8v7M8 19h8"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">19:00</span>
+                    <h5 class="zaman-baslik">Karşılama Kokteyli</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="14" r="5"/>
+                    <circle cx="15" cy="14" r="5"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">20:00</span>
+                    <h5 class="zaman-baslik">Nikah Töreni &amp; İlk Dans</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2v6a1 1 0 0 1-2 0V2M4.5 2v6M8 2v6M5 8v14"/>
+                    <path d="M18 2c-1.8 1-3 3-3 5.5S16.2 12 18 13v9"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">21:00</span>
+                    <h5 class="zaman-baslik">Yemek Töreni</h5>
+                  </div>
+                </div>
+                <div class="zaman-satiri">
+                  <svg class="zaman-ikon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="18" r="3"/>
+                    <path d="M11 18V4l9-2v13"/>
+                    <circle cx="17" cy="15" r="3"/>
+                  </svg>
+                  <div class="zaman-metin">
+                    <span class="zaman-saat">23:00</span>
+                    <h5 class="zaman-baslik">Eğlence &amp; After Party</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 7: Davet Menüsü -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:18px;">Davet Menüsü</span>
+              <div class="menu-alani">
+                <div class="menu-bolum">
+                  <span class="menu-bolum-baslik">Başlangıç</span>
+                  <p class="menu-madde">Mevsim Yeşillikleri, Közlenmiş Biber Ezmesi</p>
+                </div>
+                <div class="menu-bolum">
+                  <span class="menu-bolum-baslik">Ana Yemek</span>
+                  <p class="menu-madde">Fırınlanmış Dana Bonfile, Safranlı Pilav</p>
+                </div>
+                <div class="menu-bolum">
+                  <span class="menu-bolum-baslik">Tatlı</span>
+                  <p class="menu-madde">Karamelize İncir, Vanilyalı Panna Cotta</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 8: Kıyafet Kodu / Dress Code -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket">Kıyafet Kodu / Dress Code</span>
+              <p class="davet-metni" style="margin-top:14px; font-size:15px;">Zarafetinizi siyah, vizon ve krem tonlarıyla tamamlamanız dileğiyle.</p>
+              <div class="renk-palet">
+                <span class="renk-daire" title="Siyah" style="background-color:#1C1C1C;"></span>
+                <span class="renk-daire" title="Vizon" style="background-color:#A9917E;"></span>
+                <span class="renk-daire" title="Krem" style="background-color:#F3ECDF;"></span>
+                <span class="renk-daire" title="Altın" style="background-color:#C5A059;"></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 9: Hediye (IBAN) -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Hediye</span>
+              <p class="davet-metni" style="font-size:15px;">En büyük hediyeniz yanımızda olmanızdır. Katkıda bulunmak isteyen sevdiklerimiz için;</p>
+              <p class="mini-onay" style="margin-top:14px;">Hesap Sahibi: Selin Kılıç</p>
+              <button type="button" class="aksiyon-btn" style="margin-top:12px;" onclick="ibanKopyala()">IBAN'ı Kopyala</button>
+              <p id="iban-onay" class="hidden mini-onay">IBAN kopyalandı ✓</p>
+            </div>
+          </section>
+
+          <!-- Sahne 10: Misafir Anı Galerisi -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="sahne-etiket" style="margin-bottom:14px;">Bizimle Paylaşabilirsiniz</span>
+              <p class="davet-metni" style="font-size:15px;">Bu özel gecede çektiğiniz en güzel kareleri anı galerimize yükleyebilirsiniz.</p>
+              <label class="aksiyon-btn" style="margin-top:18px; cursor:pointer;">
+                📸 Fotoğraf Yükle / Anılar
+                <input type="file" accept="image/*" multiple onchange="fotografSecildi(this)" style="display:none;">
+              </label>
+              <p id="foto-onay" class="hidden mini-onay">Teşekkürler! Anılarınız için sabırsızlanıyoruz.</p>
+            </div>
+          </section>
+
+          <!-- Sahne 11: LCV (Ekran Üzerinde) + Müzik İsteği -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris">
+              <span class="baslik-editoryal-genis" style="font-size:1.05rem;">Düğün Töreni Katılım Bildirimi</span>
+              <p class="lcv-alt">Lütfen yanıtınızı bildiriniz.</p>
+
+              <form id="dugun-lcv-form" onsubmit="submitInlineLCV(event,'dugun')">
+                <div class="katilim-secim">
+                  <button type="button" class="katilim-chip aktif" onclick="katilimSecInline(this,'dugun','evet')">Geliyorum</button>
+                  <button type="button" class="katilim-chip" onclick="katilimSecInline(this,'dugun','hayir')">Gelemiyorum</button>
+                </div>
+                <input type="hidden" id="dugun-katilim-durumu" value="evet">
+
+                <div class="lcv-alan">
+                  <label>Adınız Soyadınız</label>
+                  <input type="text" required placeholder="Örn: Ayşe Yıldız">
+                </div>
+
+                <div class="lcv-alan">
+                  <label>Kişi Sayısı</label>
+                  <select id="dugun-kisi-sayisi">
+                    <option value="1">1 Kişi</option>
+                    <option value="2">2 Kişi</option>
+                    <option value="3">3 Kişi</option>
+                    <option value="4+">4+ Kişi</option>
+                  </select>
+                </div>
+
+                <div class="lcv-alan">
+                  <label>Müzik İsteği</label>
+                  <input type="text" placeholder="Gece çalmasını istediğiniz bir şarkı var mı?">
+                </div>
+
+                <button type="submit" class="onay-btn">GÖNDER</button>
+              </form>
+
+              <div id="dugun-lcv-tesekkur" class="hidden" style="text-align:center; padding:10px 0;">
+                <span style="font-family:'Pinyon Script', cursive; font-size:2.3rem; color:var(--coffee-dark); display:block; margin-bottom:4px;">Teşekkürler</span>
+                <h4 class="font-baslik-etiket" style="font-size:11px; color:var(--coffee-dark); font-weight:600;">Yanıtınız Alındı</h4>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sahne 12: Teşekkür Ekranı & Marka İmzası -->
+          <section class="story-screen">
+            <div class="sahne-kutu kart-giris tesekkur-kutu">
+              <div class="tesekkur-govde">
+                <p class="davet-metni" style="font-size:17px;">Bu özel günümüzde,<br>yanımızda olduğunuz için<br>teşekkür ederiz.</p>
+              </div>
+              <span class="marka-imza">
+                <span class="marka-vurgu" style="display:block;">DAVET &amp; CO.</span>
+                <span style="display:block; margin-top:5px;">DİJİTAL TASARIM ATÖLYESİ</span>
+              </span>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Alt Yüzen Kapsüller: Aşağı Kaydır + Müzik Çalar -->
+      <div class="floating-pill-bar">
+        <button onclick="scrollToNextStory()" class="scroll-pill-btn">
+          <span class="font-baslik-etiket" style="font-size:10px; color:var(--coffee-dark);">Aşağı Kaydır ↓</span>
+        </button>
+        <button onclick="toggleAudio()" class="audio-pill-btn" title="Müzik">
+          <span id="audio-icon" style="font-size:15px;">🎧</span>
+        </button>
+      </div>
+
+     </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ---------- Etkinlik Verileri (Kına / Düğün) ---------- */
+    const ETKINLIKLER = {
+      kina: {
+        baslikOzet: 'Kina Gecesi',
+        mekan: 'Ses Lounge Events',
+        konum: 'Sazova, Tepebasi / Eskisehir',
+        mapsSorgu: 'Ses+Lounge+Eski%C5%9Fehir+Sazova',
+        icsBaslangic: '20260924T163000Z',
+        icsBitis: '20260924T203000Z'
+      },
+      dugun: {
+        baslikOzet: 'Dugun Toreni',
+        mekan: 'Ses Lounge Events',
+        konum: 'Sazova, Tepebasi / Eskisehir',
+        mapsSorgu: 'Ses+Lounge+Eski%C5%9Fehir+Sazova',
+        icsBaslangic: '20260926T160000Z',
+        icsBitis: '20260926T200000Z'
+      }
+    };
+
+    /* ---------- Sahne Gözlemcisi ---------- */
+    let sahneGozlemci = null;
+    function gozlemciKur(anahtar) {
+      if (sahneGozlemci) sahneGozlemci.disconnect();
+      const kok = document.querySelector('#panel-' + anahtar + ' .story-scroll-container');
+      if (!kok) return;
+      sahneGozlemci = new IntersectionObserver(function (girisler) {
+        girisler.forEach(function (giris) {
+          if (giris.isIntersecting) giris.target.classList.add('gorundu');
+        });
+      }, { root: kok, threshold: 0.35 });
+      kok.querySelectorAll('.kart-giris').forEach(function (el) { sahneGozlemci.observe(el); });
+    }
+
+    function sekmeSec(anahtar) {
+      document.querySelectorAll('.sekme-btn').forEach(function (b) {
+        b.classList.toggle('aktif', b.dataset.sekme === anahtar);
+      });
+      document.querySelectorAll('.etkinlik-panel').forEach(function (p) { p.classList.remove('aktif'); });
+      const hedefPanel = document.getElementById('panel-' + anahtar);
+      hedefPanel.classList.add('aktif');
+      const kok = hedefPanel.querySelector('.story-scroll-container');
+      const ilkIcerik = document.getElementById(anahtar + '-ilk-icerik');
+      if (kok) kok.scrollTop = ilkIcerik ? ilkIcerik.offsetTop : 0;
+      gozlemciKur(anahtar);
+    }
+
+    function scrollToNextStory() {
+      const kok = document.querySelector('.etkinlik-panel.aktif .story-scroll-container');
+      if (!kok) return;
+      kok.scrollTo({ top: kok.scrollTop + kok.clientHeight, behavior: 'smooth' });
+    }
+
+    /* Harita + .ics bağlantıları (Kına ve Düğün için ayrı ayrı) */
+    function baglantilariHazirla() {
+      ['kina', 'dugun'].forEach(function (anahtar) {
+        const e = ETKINLIKLER[anahtar];
+        const haritaEl = document.getElementById('harita-link-' + anahtar);
+        if (haritaEl) haritaEl.href = 'https://maps.google.com/?q=' + e.mapsSorgu;
+
+        const icsIcerik = [
+          'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+          'SUMMARY:Selin & Ceyhun - ' + e.baslikOzet,
+          'DTSTART:' + e.icsBaslangic,
+          'DTEND:' + e.icsBitis,
+          'LOCATION:' + e.mekan + ', ' + e.konum,
+          'DESCRIPTION:Selin & Ceyhun ' + e.baslikOzet + ' davetlisiniz.',
+          'END:VEVENT', 'END:VCALENDAR'
+        ].join('\r\n');
+        const takvimEl = document.getElementById('takvim-link-' + anahtar);
+        if (takvimEl) takvimEl.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsIcerik);
+      });
+
+      const dugun = ETKINLIKLER.dugun;
+      const googleTakvimEl = document.getElementById('google-takvim-link-dugun');
+      if (googleTakvimEl) {
+        googleTakvimEl.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+          + '&text=' + encodeURIComponent('Selin & Ceyhun - ' + dugun.baslikOzet)
+          + '&dates=' + dugun.icsBaslangic + '/' + dugun.icsBitis
+          + '&location=' + encodeURIComponent(dugun.mekan + ', ' + dugun.konum)
+          + '&details=' + encodeURIComponent('Selin & Ceyhun ' + dugun.baslikOzet + ' davetlisiniz.');
+      }
+    }
+
+    /* ---------- IBAN Kopyalama ---------- */
+    const IBAN_NO = 'TR00 0000 0000 0000 0000 0000 00';
+    function ibanKopyala() {
+      const metin = IBAN_NO.replace(/\s/g, '');
+      const onay = document.getElementById('iban-onay');
+      const goster = function () {
+        onay.classList.remove('hidden');
+        setTimeout(function () { onay.classList.add('hidden'); }, 2500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(metin).then(goster).catch(goster);
+      } else {
+        goster();
+      }
+    }
+
+    /* ---------- Misafir Anı Galerisi ---------- */
+    function fotografSecildi(input) {
+      if (input.files && input.files.length) {
+        document.getElementById('foto-onay').classList.remove('hidden');
+      }
+    }
+
+    /* Canlı Geri Sayım Sayaçları — Kına (24 Eylül 19:30) ve Düğün (26 Eylül 19:00) ayrı ayrı */
+    function sayacBaslat(onEk, hedefTarihStr) {
+      const hedef = new Date(hedefTarihStr).getTime();
+      setInterval(function () {
+        const fark = hedef - new Date().getTime();
+        if (fark > 0) {
+          document.getElementById('cd-gun-' + onEk).innerText = String(Math.floor(fark / 86400000)).padStart(2, '0');
+          document.getElementById('cd-saat-' + onEk).innerText = String(Math.floor((fark % 86400000) / 3600000)).padStart(2, '0');
+          document.getElementById('cd-dakika-' + onEk).innerText = String(Math.floor((fark % 3600000) / 60000)).padStart(2, '0');
+          document.getElementById('cd-saniye-' + onEk).innerText = String(Math.floor((fark % 60000) / 1000)).padStart(2, '0');
+        }
+      }, 1000);
+    }
+    sayacBaslat('kina', '2026-09-24T19:30:00');
+    sayacBaslat('dugun', '2026-09-26T19:00:00');
+
+    /* ---------- Müzik Çalar ---------- */
+    function toggleAudio() {
+      const audio = document.getElementById('bg-music');
+      const icon = document.getElementById('audio-icon');
+      if (audio.paused) {
+        audio.play().then(function () { icon.innerText = '🎵'; }).catch(function () {});
+      } else {
+        audio.pause();
+        icon.innerText = '🔇';
+      }
+    }
+
+    /* ---------- Kına & Düğün LCV — ekran üzerinde doğrudan (modal yok) ---------- */
+    function katilimSecInline(btn, anahtar, deger) {
+      btn.closest('.katilim-secim').querySelectorAll('.katilim-chip').forEach(function (c) { c.classList.remove('aktif'); });
+      btn.classList.add('aktif');
+      document.getElementById(anahtar + '-katilim-durumu').value = deger;
+    }
+    function submitInlineLCV(e, anahtar) {
+      e.preventDefault();
+      document.getElementById(anahtar + '-lcv-form').classList.add('hidden');
+      document.getElementById(anahtar + '-lcv-tesekkur').classList.remove('hidden');
+    }
+
+    /* Kart zemini görselini video oynarken önceden çözümle (decode), böylece kart
+       göründüğü anda tarayıcı görseli ilk kez çözmek zorunda kalıp bir tık/sıçrama yaratmaz. */
+    (function () {
+      const bgOnizleme = new Image();
+      bgOnizleme.src = 'card-background.jpg';
+      if (bgOnizleme.decode) bgOnizleme.decode().catch(function () {});
+    })();
+
+    /* ---------- Zarf Açılışı + Yavaş Çekim Video Geçişi ---------- */
+    const envelopeScreen = document.getElementById('envelope-screen');
+    const videoLayer = document.getElementById('video-layer');
+    const revealVideo = document.getElementById('reveal-video');
+    const contentLayer = document.getElementById('content-layer');
+    const VIDEO_HIZI = 0.75;
+    let gecisTamamlandi = false;
+
+    function icerigeGec() {
+      if (gecisTamamlandi) return;
+      gecisTamamlandi = true;
+      baglantilariHazirla();
+      gozlemciKur('kina');
+      if (videoLayer.parentNode) videoLayer.parentNode.removeChild(videoLayer);
+      if (envelopeScreen.parentNode) envelopeScreen.parentNode.removeChild(envelopeScreen);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          contentLayer.classList.add('is-flipped');
+        });
+      });
+    }
+
+    revealVideo.addEventListener('loadedmetadata', function () {
+      revealVideo.playbackRate = VIDEO_HIZI;
+    });
+
+    document.getElementById('muhur-btn').addEventListener('click', function () {
+      envelopeScreen.classList.add('kapaniyor');
+      videoLayer.classList.add('gorunur');
+
+      revealVideo.playbackRate = VIDEO_HIZI;
+      revealVideo.play().then(function () {
+        revealVideo.playbackRate = VIDEO_HIZI;
+      }).catch(function () { icerigeGec(); });
+
+      const bgMusic = document.getElementById('bg-music');
+      const audioIcon = document.getElementById('audio-icon');
+      bgMusic.play().then(function () { if (audioIcon) audioIcon.innerText = '🎵'; }).catch(function () {});
+
+      setTimeout(icerigeGec, 13000);
+    }, { once: true });
+
+    /* Video artık kart tam ekrana oturduğu anda bitecek şekilde kırpıldı,
+       bu yüzden içerik SADECE videonun 'ended' event'inde açılır. */
+    revealVideo.addEventListener('ended', icerigeGec);
+
+    baglantilariHazirla();
+    gozlemciKur('kina');
+  </script>
+
+</body>
+</html>
